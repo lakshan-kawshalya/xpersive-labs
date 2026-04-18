@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function HeroSection() {
+  const reduced = useReducedMotion();
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-dark">
       {/* Dot grid pattern */}
@@ -17,23 +19,23 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Floating gradient orbs */}
+      {/* Floating gradient orbs — static when reduced motion requested */}
       <motion.div
         className="absolute -top-20 -left-40 w-[500px] h-[500px] rounded-full blur-[120px]"
         style={{ background: "radial-gradient(circle, rgba(109,113,249,0.4) 0%, transparent 70%)" }}
-        animate={{ y: [0, -50, 0], x: [0, 30, 0] }}
+        animate={reduced ? {} : { y: [0, -50, 0], x: [0, 30, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute -bottom-20 -right-40 w-[500px] h-[500px] rounded-full blur-[120px]"
         style={{ background: "radial-gradient(circle, rgba(84,193,251,0.35) 0%, transparent 70%)" }}
-        animate={{ y: [0, 50, 0], x: [0, -30, 0] }}
+        animate={reduced ? {} : { y: [0, 50, 0], x: [0, -30, 0] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[140px] opacity-10"
         style={{ background: "conic-gradient(from 0deg, #6D71F9, #54C1FB, #6D71F9)" }}
-        animate={{ rotate: [0, 360] }}
+        animate={reduced ? {} : { rotate: [0, 360] }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
       />
 
@@ -86,6 +88,7 @@ export default function HeroSection() {
             <ArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform duration-200"
+              aria-hidden="true"
             />
           </Link>
 
@@ -101,13 +104,16 @@ export default function HeroSection() {
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
+        aria-hidden="true"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.6, duration: 0.6 }}
       >
-        <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">Scroll</span>
+        <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">
+          Scroll
+        </span>
         <motion.div
-          animate={{ y: [0, 7, 0] }}
+          animate={reduced ? {} : { y: [0, 7, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <ArrowDown size={15} />

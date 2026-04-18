@@ -26,9 +26,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobileOpen]);
 
   return (
     <header
@@ -124,6 +131,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
+                    onClick={() => setIsMobileOpen(false)}
                     className={`block py-2.5 text-base font-medium transition-colors hover:text-primary ${
                       pathname === link.href ? "text-primary" : "text-white/70"
                     }`}
@@ -141,6 +149,7 @@ export default function Navbar() {
               >
                 <Link
                   href="/contact"
+                  onClick={() => setIsMobileOpen(false)}
                   className="inline-flex items-center justify-center w-full px-5 py-3 rounded-full bg-primary text-white text-sm font-medium"
                 >
                   Get in Touch
