@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #6D71F9;
+  --color-accent: #54C1FB;
+  --color-dark: #272848;
+  --color-subtle-gray: #DCDDE5;
+
+  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-syne), "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+
+  --background-image-gradient-brand: linear-gradient(135deg, #6D71F9, #54C1FB);
+}
+
+/* Hide default cursor */
+* {
+  cursor: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: #6D71F9;
+  color: white;
+}
+
+/* Glow utilities */
+.glow-primary {
+  box-shadow: 0 0 40px rgba(109, 113, 249, 0.3);
+}
+
+.glow-accent {
+  box-shadow: 0 0 40px rgba(84, 193, 251, 0.3);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #6D71F9, #54C1FB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reduced motion — disable animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
