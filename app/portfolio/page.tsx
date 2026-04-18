@@ -1,0 +1,323 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, ArrowRight } from "lucide-react";
+import { fadeUp, staggerContainer } from "@/lib/animations";
+
+/* ─── Types ─────────────────────────────────────────────────────────── */
+
+type Category = "All" | "Web" | "Mobile" | "Design";
+
+interface Project {
+  slug: string;
+  title: string;
+  shortDesc: string;
+  category: Exclude<Category, "All">;
+  tags: string[];
+  gradient: string;
+  accentLight: string;
+}
+
+/* ─── Data ──────────────────────────────────────────────────────────── */
+
+const projects: Project[] = [
+  {
+    slug: "healthsync",
+    title: "HealthSync Platform",
+    shortDesc:
+      "A comprehensive healthcare management platform with real-time data sync, AI-powered diagnostics, and patient portal.",
+    category: "Web",
+    tags: ["Web App", "React", "Next.js", "PostgreSQL"],
+    gradient: "from-[#6D71F9] via-violet-500 to-[#54C1FB]",
+    accentLight: "rgba(109,113,249,0.6)",
+  },
+  {
+    slug: "tradeflow",
+    title: "TradeFlow Mobile",
+    shortDesc:
+      "Cross-platform trading app with live market feeds, portfolio analytics, and real-time push alerts.",
+    category: "Mobile",
+    tags: ["Mobile", "React Native", "TypeScript"],
+    gradient: "from-[#54C1FB] via-sky-400 to-cyan-300",
+    accentLight: "rgba(84,193,251,0.6)",
+  },
+  {
+    slug: "lumina-ds",
+    title: "Lumina Design System",
+    shortDesc:
+      "A cohesive, accessible design language powering 5+ enterprise products with a shared component library.",
+    category: "Design",
+    tags: ["Design System", "Figma", "UI/UX"],
+    gradient: "from-purple-600 via-[#6D71F9] to-pink-500",
+    accentLight: "rgba(168,85,247,0.6)",
+  },
+  {
+    slug: "edunest",
+    title: "EduNest LMS",
+    shortDesc:
+      "Full-featured learning management system with video streaming, quizzes, certificates, and instructor dashboards.",
+    category: "Web",
+    tags: ["Web App", "Next.js", "Prisma", "AWS"],
+    gradient: "from-emerald-500 via-teal-500 to-[#54C1FB]",
+    accentLight: "rgba(16,185,129,0.6)",
+  },
+  {
+    slug: "wanderly",
+    title: "Wanderly Travel App",
+    shortDesc:
+      "AI-assisted travel planner app with offline maps, itinerary builder, and local recommendations.",
+    category: "Mobile",
+    tags: ["Mobile", "React Native", "Expo", "AI"],
+    gradient: "from-orange-500 via-amber-400 to-yellow-300",
+    accentLight: "rgba(249,115,22,0.6)",
+  },
+  {
+    slug: "nova-brand",
+    title: "Nova Brand Identity",
+    shortDesc:
+      "End-to-end brand and product design for a fintech startup — from logo to a complete design system.",
+    category: "Design",
+    tags: ["Branding", "UI/UX", "Figma"],
+    gradient: "from-rose-500 via-pink-500 to-[#6D71F9]",
+    accentLight: "rgba(244,63,94,0.6)",
+  },
+];
+
+const categories: Category[] = ["All", "Web", "Mobile", "Design"];
+
+/* ─── Component ─────────────────────────────────────────────────────── */
+
+export default function PortfolioPage() {
+  const [active, setActive] = useState<Category>("All");
+
+  const filtered =
+    active === "All" ? projects : projects.filter((p) => p.category === active);
+
+  return (
+    <div className="bg-dark text-white min-h-screen">
+      {/* ── Hero ───────────────────────────────────────────────────── */}
+      <section className="relative pt-40 pb-16 overflow-hidden">
+        {/* Orbs */}
+        <motion.div
+          className="absolute -top-32 -right-24 w-[480px] h-[480px] rounded-full blur-[130px] pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.32) 0%, transparent 70%)" }}
+          animate={{ scale: [1, 1.12, 1] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-0 -left-24 w-[380px] h-[380px] rounded-full blur-[110px] pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
+            backgroundSize: "36px 36px",
+          }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <motion.div variants={staggerContainer} initial="hidden" animate="visible">
+            <motion.span
+              variants={fadeUp}
+              className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
+            >
+              Selected Work
+            </motion.span>
+            <motion.h1
+              variants={fadeUp}
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6"
+            >
+              Our{" "}
+              <span className="text-gradient">Portfolio</span>
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl"
+            >
+              A curated selection of projects spanning web applications, mobile
+              apps, and design systems — each built to solve real problems.
+            </motion.p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Filter tabs ────────────────────────────────────────────── */}
+      <section className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/[0.07] py-4">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            className="flex items-center gap-2 flex-wrap"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`relative px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  active === cat
+                    ? "text-white"
+                    : "text-white/45 hover:text-white/75"
+                }`}
+              >
+                {active === cat && (
+                  <motion.span
+                    layoutId="pill"
+                    className="absolute inset-0 rounded-full bg-primary"
+                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                  />
+                )}
+                <span className="relative z-10">{cat}</span>
+              </button>
+            ))}
+
+            <span className="ml-auto text-xs text-white/30 font-medium">
+              {filtered.length} project{filtered.length !== 1 ? "s" : ""}
+            </span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Project grid ───────────────────────────────────────────── */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={active}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            >
+              {filtered.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {filtered.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-24 text-white/30"
+            >
+              <p className="text-lg font-medium">No projects in this category yet.</p>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Bottom CTA ─────────────────────────────────────────────── */}
+      <section className="py-20 border-t border-white/[0.07]">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            className="text-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+          >
+            <motion.h2
+              variants={fadeUp}
+              className="font-display text-3xl sm:text-4xl font-bold mb-5"
+            >
+              Ready to be our next project?
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="text-white/50 mb-8 max-w-md mx-auto"
+            >
+              Tell us what you&apos;re building and let&apos;s create something remarkable together.
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
+                style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+              >
+                Start a Project
+                <ArrowRight size={17} />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ─── ProjectCard ────────────────────────────────────────────────────── */
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <motion.div
+      variants={fadeUp}
+      layout
+      className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
+    >
+      {/* Gradient thumbnail */}
+      <div className={`relative h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+        {/* Texture overlays */}
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 25% 60%, rgba(255,255,255,0.25) 0%, transparent 45%), radial-gradient(circle at 75% 30%, rgba(255,255,255,0.15) 0%, transparent 40%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.4) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Category badge */}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+            {project.category}
+          </span>
+        </div>
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-dark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-4 px-6 text-center">
+          <p className="text-white/85 text-sm leading-relaxed">{project.shortDesc}</p>
+          <Link
+            href={`/portfolio/${project.slug}`}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-white text-sm font-semibold hover:bg-white/20 transition-colors"
+          >
+            <ExternalLink size={14} />
+            View Project
+          </Link>
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div className="p-6">
+        <Link href={`/portfolio/${project.slug}`} className="group/title">
+          <h3 className="font-display text-lg font-bold mb-3 group-hover/title:text-primary transition-colors duration-200">
+            {project.title}
+          </h3>
+        </Link>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs text-white/50 font-medium"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}

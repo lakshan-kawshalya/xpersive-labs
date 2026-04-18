@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Globe, Code2, Share2, Mail } from "lucide-react";
+import { Briefcase, Code2, Share2, Mail } from "lucide-react";
 
 const footerSections = {
   Company: [
@@ -21,7 +21,11 @@ const footerSections = {
 
 const socialLinks = [
   { href: "https://github.com/xpersivelabs", icon: Code2, label: "GitHub" },
-  { href: "https://linkedin.com/company/xpersivelabs", icon: Globe, label: "LinkedIn" },
+  {
+    href: "https://linkedin.com/company/xpersivelabs",
+    icon: Briefcase,
+    label: "LinkedIn",
+  },
   { href: "https://twitter.com/xpersivelabs", icon: Share2, label: "Twitter" },
   { href: "mailto:hello@xpersivelabs.com", icon: Mail, label: "Email" },
 ];

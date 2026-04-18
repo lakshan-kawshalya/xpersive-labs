@@ -278,7 +278,7 @@ html {
 - [x] **Phase 0** — Planning & brief (complete)
 - [x] **Phase 1** — Scaffold: Next.js setup, Tailwind config, fonts, design tokens, Navbar, Footer, CustomCursor
 - [x] **Phase 2** — Home page: all sections
-- [ ] **Phase 3** — About, Services, Portfolio pages
+- [x] **Phase 3** — About, Services, Portfolio pages
 - [ ] **Phase 4** — Team, Blog (MDX), Contact (form + email)
 - [ ] **Phase 5** — Polish: animations audit, mobile responsiveness, performance
 - [ ] **Phase 6** — Client dashboard (future: auth + project tracker)
