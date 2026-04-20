@@ -26,9 +26,9 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
      TEMPLATE_ID → EmailJS dashboard → Email Templates → Template ID
      PUBLIC_KEY  → EmailJS dashboard → Account → Public Key
    ──────────────────────────────────────────────────────────────────── */
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "***REMOVED***";
+const EMAILJS_TEMPLATE_ID = "***REMOVED***";
+const EMAILJS_PUBLIC_KEY = "***REMOVED***";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -87,8 +87,16 @@ const infoCards = [
 
 const socialLinks = [
   { icon: Code2, href: "https://github.com/xpersivelabs", label: "GitHub" },
-  { icon: Briefcase, href: "https://linkedin.com/company/xpersivelabs", label: "LinkedIn" },
-  { icon: Share2, href: "https://twitter.com/xpersivelabs", label: "Twitter / X" },
+  {
+    icon: Briefcase,
+    href: "https://linkedin.com/company/xpersivelabs",
+    label: "LinkedIn",
+  },
+  {
+    icon: Share2,
+    href: "https://twitter.com/xpersivelabs",
+    label: "Twitter / X",
+  },
 ];
 
 /* ─── Page ──────────────────────────────────────────────────────────── */
@@ -116,7 +124,7 @@ export default function ContactPage() {
           service: data.service || "Not specified",
           message: data.message,
         },
-        EMAILJS_PUBLIC_KEY
+        EMAILJS_PUBLIC_KEY,
       );
       setSubmitState("success");
       reset();
@@ -131,26 +139,42 @@ export default function ContactPage() {
       <section className="relative pt-40 pb-20 overflow-hidden">
         <motion.div
           className="absolute -top-28 -right-20 w-[480px] h-[480px] rounded-full blur-[130px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)",
+          }}
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="absolute -bottom-10 -left-20 w-[380px] h-[380px] rounded-full blur-[110px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)",
+          }}
           animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{
+            duration: 11,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
         />
         <div
           className="absolute inset-0 opacity-[0.05] pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
+            backgroundImage:
+              "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
             backgroundSize: "36px 36px",
           }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
             <motion.span
               variants={fadeUp}
               className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
@@ -179,7 +203,6 @@ export default function ContactPage() {
       <section className="pb-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 xl:gap-16 items-start">
-
             {/* ── LEFT: Form ───────────────────────────────────── */}
             <motion.div
               variants={staggerContainer}
@@ -189,7 +212,10 @@ export default function ContactPage() {
             >
               <AnimatePresence mode="wait">
                 {submitState === "success" ? (
-                  <SuccessBanner key="success" onReset={() => setSubmitState("idle")} />
+                  <SuccessBanner
+                    key="success"
+                    onReset={() => setSubmitState("idle")}
+                  />
                 ) : (
                   <motion.form
                     key="form"
@@ -207,7 +233,10 @@ export default function ContactPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="flex items-start gap-3 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm"
                       >
-                        <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
+                        <AlertCircle
+                          size={16}
+                          className="flex-shrink-0 mt-0.5"
+                        />
                         <span>
                           Something went wrong. Please try again or email us
                           directly at{" "}
@@ -235,7 +264,10 @@ export default function ContactPage() {
                             className={inputClass(!!errors.name)}
                             {...register("name", {
                               required: "Name is required",
-                              minLength: { value: 2, message: "At least 2 characters" },
+                              minLength: {
+                                value: 2,
+                                message: "At least 2 characters",
+                              },
                             })}
                           />
                         </Field>
@@ -317,7 +349,8 @@ export default function ContactPage() {
                             required: "Message is required",
                             minLength: {
                               value: 20,
-                              message: "Please give us a bit more detail (20+ characters)",
+                              message:
+                                "Please give us a bit more detail (20+ characters)",
                             },
                           })}
                         />
@@ -330,7 +363,10 @@ export default function ContactPage() {
                         type="submit"
                         disabled={submitState === "loading"}
                         className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-base transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-                        style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #6D71F9, #54C1FB)",
+                        }}
                       >
                         {submitState === "loading" ? (
                           <>
@@ -497,8 +533,8 @@ function SuccessBanner({ onReset }: { onReset: () => void }) {
       <div>
         <h3 className="font-display text-2xl font-bold mb-2">Message sent!</h3>
         <p className="text-white/50 text-sm leading-relaxed max-w-sm">
-          Thanks for reaching out. We&apos;ll review your message and get back to
-          you within 24 hours.
+          Thanks for reaching out. We&apos;ll review your message and get back
+          to you within 24 hours.
         </p>
       </div>
       <button
