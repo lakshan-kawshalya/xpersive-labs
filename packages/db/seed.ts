@@ -1,17 +1,35 @@
-import { PrismaClient, GlobalRole, ProjectRole, ProjectStatus, MilestoneStatus, TaskStatus, Priority } from "@prisma/client";
+import { config as loadEnv } from "dotenv";
+import { join } from "node:path";
+
+loadEnv({ path: join(__dirname, ".env") });
+
+import {
+  PrismaClient,
+  GlobalRole,
+  ProjectRole,
+  ProjectStatus,
+  MilestoneStatus,
+  TaskStatus,
+  Priority,
+} from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 import { createHash } from "crypto";
 
-const prisma = new PrismaClient();
+const pool = new Pool({
+  connectionString: process.env.DIRECT_URL || process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 function hashPassword(password: string): string {
-  // Simple SHA-256 hash for seed purposes — use bcrypt in production auth
   return createHash("sha256").update(password).digest("hex");
 }
 
 async function main() {
   console.log("Seeding database...");
 
-  // Admin user
   const admin = await prisma.user.upsert({
     where: { email: "admin@xpersivelabs.com" },
     update: {},
@@ -23,7 +41,6 @@ async function main() {
     },
   });
 
-  // Team member
   const dev = await prisma.user.upsert({
     where: { email: "dev@xpersivelabs.com" },
     update: {},
@@ -35,7 +52,6 @@ async function main() {
     },
   });
 
-  // Client company
   const client = await prisma.client.upsert({
     where: { contactEmail: "contact@democlient.com" },
     update: {},
@@ -47,7 +63,6 @@ async function main() {
     },
   });
 
-  // Client user account
   const clientUser = await prisma.user.upsert({
     where: { email: "john@democlient.com" },
     update: {},
@@ -64,7 +79,6 @@ async function main() {
     create: { clientId: client.id, userId: clientUser.id },
   });
 
-  // Sample project
   const project = await prisma.project.upsert({
     where: { id: "seed-project-001" },
     update: { status: ProjectStatus.IN_PROGRESS },
@@ -80,7 +94,6 @@ async function main() {
     },
   });
 
-  // Project members
   await prisma.projectMember.upsert({
     where: { projectId_userId: { projectId: project.id, userId: admin.id } },
     update: {},
@@ -99,7 +112,6 @@ async function main() {
     create: { projectId: project.id, userId: clientUser.id, role: ProjectRole.CLIENT_STAKEHOLDER },
   });
 
-  // Milestones
   const m1 = await prisma.milestone.upsert({
     where: { id: "seed-ms-001" },
     update: {},
@@ -142,7 +154,6 @@ async function main() {
     },
   });
 
-  // Tasks
   const tasks = [
     {
       id: "seed-task-001",
@@ -194,7 +205,6 @@ async function main() {
     });
   }
 
-  // Progress updates
   await prisma.update.upsert({
     where: { id: "seed-update-001" },
     update: {},
@@ -202,7 +212,8 @@ async function main() {
       id: "seed-update-001",
       projectId: project.id,
       authorId: admin.id,
-      content: "Project kicked off successfully. Discovery phase is complete and we have signed off on the wireframes.",
+      content:
+        "Project kicked off successfully. Discovery phase is complete and we have signed off on the wireframes.",
     },
   });
 
@@ -213,13 +224,14 @@ async function main() {
       id: "seed-update-002",
       projectId: project.id,
       authorId: dev.id,
-      content: "Authentication system is 60% complete. JWT tokens and role-based middleware are in place.",
+      content:
+        "Authentication system is 60% complete. JWT tokens and role-based middleware are in place.",
     },
   });
 
   console.log("Seed complete.");
-  console.log(`  Admin: admin@xpersivelabs.com / Admin@123`);
-  console.log(`  Client: john@democlient.com`);
+  console.log(`  Admin:   admin@xpersivelabs.com / Admin@123`);
+  console.log(`  Client:  john@democlient.com`);
   console.log(`  Project: "${project.name}" (${project.id})`);
 }
 
