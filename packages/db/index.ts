@@ -1,4 +1,10 @@
-// Prisma client — installed and generated in Phase 7 (packages/db setup)
-// Run: npm install @prisma/client prisma -w @xpersive/db && npx prisma generate
+import { PrismaClient } from "@prisma/client";
 
-export {};
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+
+export const db =
+  globalForPrisma.prisma || new PrismaClient({ log: ["query"] });
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+
+export * from "@prisma/client";
