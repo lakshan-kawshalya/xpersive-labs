@@ -4,15 +4,7 @@
   "private": true,
   "main": "./index.ts",
   "types": "./index.ts",
-  "dependencies": {
-    "@auth/prisma-adapter": "^2.0.0",
-    "@xpersive/db": "*",
-    "next-auth": "^5.0.0-beta.28"
-  },
   "devDependencies": {
     "typescript": "^5"
-  },
-  "peerDependencies": {
-    "next": ">=14"
   }
 }

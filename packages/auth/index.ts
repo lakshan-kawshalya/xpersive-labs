@@ -1,4 +1,4 @@
 // NextAuth.js v5 configuration — implemented in Phase 8
-// Placeholder for monorepo wiring
+// Dependencies (next-auth, @auth/prisma-adapter) added when building auth flows
 
-export type { Session, User } from "next-auth";
+export type AuthRole = "SUPER_ADMIN" | "ADMIN" | "TEAM_MEMBER" | "CLIENT";
