@@ -10,14 +10,11 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@xpersive/db": "*",
-    "@xpersive/auth": "*",
     "@xpersive/types": "*",
     "@xpersive/ui": "*",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "next": "16.2.4",
-    "next-auth": "^5.0.0-beta.28",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
