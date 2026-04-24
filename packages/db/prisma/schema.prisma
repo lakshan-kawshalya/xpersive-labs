@@ -1,0 +1,185 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum GlobalRole {
+  SUPER_ADMIN
+  ADMIN
+  TEAM_MEMBER
+  CLIENT
+}
+
+enum ProjectRole {
+  PROJECT_MANAGER
+  TECH_LEAD
+  DEVELOPER
+  DESIGNER
+  QA_ENGINEER
+  CLIENT_STAKEHOLDER
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  ON_HOLD
+  REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+enum MilestoneStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  name           String?
+  avatar         String?
+  role           GlobalRole      @default(TEAM_MEMBER)
+  password       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  clientUsers    ClientUser[]
+  projectMembers ProjectMember[]
+  updates        Update[]
+  uploadedFiles  File[]
+  assignedTasks  Task[]          @relation("AssignedTo")
+}
+
+model Client {
+  id           String       @id @default(cuid())
+  companyName  String
+  contactEmail String       @unique
+  logo         String?
+  phone        String?
+  address      String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  users        ClientUser[]
+  projects     Project[]
+}
+
+model ClientUser {
+  id       String @id @default(cuid())
+  clientId String
+  userId   String
+  client   Client @relation(fields: [clientId], references: [id])
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([clientId, userId])
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus   @default(PLANNING)
+  clientId    String
+  startDate   DateTime?
+  endDate     DateTime?
+  budget      Float?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  client      Client          @relation(fields: [clientId], references: [id])
+  members     ProjectMember[]
+  milestones  Milestone[]
+  tasks       Task[]
+  updates     Update[]
+  files       File[]
+}
+
+model ProjectMember {
+  id        String      @id @default(cuid())
+  projectId String
+  userId    String
+  role      ProjectRole
+  project   Project     @relation(fields: [projectId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+
+  @@unique([projectId, userId])
+}
+
+model Milestone {
+  id          String          @id @default(cuid())
+  projectId   String
+  title       String
+  description String?
+  dueDate     DateTime?
+  status      MilestoneStatus @default(PENDING)
+  order       Int             @default(0)
+  project     Project         @relation(fields: [projectId], references: [id])
+  tasks       Task[]
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  projectId   String
+  milestoneId String?
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  assigneeId  String?
+  dueDate     DateTime?
+  createdAt   DateTime   @default(now())
+  project     Project    @relation(fields: [projectId], references: [id])
+  milestone   Milestone? @relation(fields: [milestoneId], references: [id])
+  assignee    User?      @relation("AssignedTo", fields: [assigneeId], references: [id])
+}
+
+model Update {
+  id        String   @id @default(cuid())
+  projectId String
+  content   String
+  authorId  String
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model File {
+  id           String   @id @default(cuid())
+  projectId    String
+  name         String
+  url          String
+  size         Int?
+  type         String?
+  uploadedById String
+  createdAt    DateTime @default(now())
+  project      Project  @relation(fields: [projectId], references: [id])
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+}
+
+model InviteToken {
+  id        String     @id @default(cuid())
+  email     String
+  token     String     @unique
+  clientId  String?
+  role      GlobalRole
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime   @default(now())
+}
