@@ -7,9 +7,9 @@
   --color-dark-surface: #1e1f3a;
   --color-subtle-gray:  #DCDDE5;
 
-  --font-sans:    var(--font-dm-sans),        "DM Sans",        ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-syne),           "Syne",           ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-sans:    "DM Sans",        ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne",           ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
 }
 
 html { scroll-behavior: smooth; }
