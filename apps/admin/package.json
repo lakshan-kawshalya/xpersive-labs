@@ -14,7 +14,6 @@
     "@xpersive/auth": "^0.1.0",
     "@xpersive/db": "^0.1.0",
     "@xpersive/types": "*",
-    "@xpersive/ui": "*",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "next": "16.2.4",
