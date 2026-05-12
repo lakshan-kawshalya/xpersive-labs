@@ -6,13 +6,13 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev --filter=web",
+    "dev:all": "turbo dev",
+    "dev:client": "turbo dev --filter=client",
+    "dev:admin": "turbo dev --filter=admin",
     "build": "turbo build",
     "lint": "turbo lint",
-    "type-check": "turbo type-check",
-    "dev:web": "turbo dev --filter=web",
-    "dev:client": "turbo dev --filter=client",
-    "dev:admin": "turbo dev --filter=admin"
+    "type-check": "turbo type-check"
   },
   "devDependencies": {
     "turbo": "^2.9.6",
