@@ -1,5 +1,13 @@
 # Xpersive Labs — Project Bible for Claude Code
 
+## Current Focus
+**Active development: apps/web (marketing site)**
+Dashboard apps (apps/client, apps/admin) are on hold until first clients
+are onboarded. The auth layer and DB schema are complete and preserved.
+Resume dashboard development at Phase 9 when ready.
+
+---
+
 ## Company Overview
 
 **Xpersive Labs** is a Sri Lankan-based software startup focused on immersive tech experiences.
