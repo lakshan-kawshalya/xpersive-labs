@@ -7,8 +7,8 @@ export const metadata = {
     "Insights on web development, mobile engineering, UI/UX design, and building software that lasts.",
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPosts();
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort();
 
   return (

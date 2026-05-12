@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { format } from "date-fns";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import { getPostBySlug, getAllSlugs, getAllPosts } from "@/lib/blog";
@@ -8,8 +7,9 @@ import type { Metadata } from "next";
 
 /* ─── Static params (SSG) ────────────────────────────────────────────── */
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 /* ─── Metadata ───────────────────────────────────────────────────────── */
@@ -20,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
     title: `${post.title} — Xpersive Labs Blog`,
@@ -36,13 +36,13 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
   const formattedDate = format(new Date(post.date), "MMMM d, yyyy");
 
   /* Adjacent posts for prev/next nav */
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const idx = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
   const nextPost = idx > 0 ? allPosts[idx - 1] : null;
@@ -115,12 +115,13 @@ export default async function BlogPostPage({
         </div>
       </section>
 
-      {/* ── MDX body ─────────────────────────────────────────────── */}
+      {/* ── Post body ────────────────────────────────────────────── */}
       <section className="py-14">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="mdx-prose">
-            <MDXRemote source={post.content} />
-          </div>
+          <div
+            className="mdx-prose"
+            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+          />
         </div>
       </section>
 
