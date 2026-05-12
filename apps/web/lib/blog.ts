@@ -1,8 +1,8 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { createReader } from "@keystatic/core/reader";
+import Markdoc from "@markdoc/markdoc";
+import keystaticConfig from "../keystatic.config";
 
-const postsDir = path.join(process.cwd(), "content/blog");
+const reader = createReader(process.cwd(), keystaticConfig);
 
 export interface PostMeta {
   slug: string;
@@ -14,57 +14,47 @@ export interface PostMeta {
 }
 
 export interface Post extends PostMeta {
-  content: string;
+  contentHtml: string;
 }
 
-function readingTime(content: string): number {
-  return Math.max(1, Math.ceil(content.split(/\s+/).length / 200));
+function wordCount(html: string): number {
+  return html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
 }
 
-export function getAllPosts(): PostMeta[] {
-  if (!fs.existsSync(postsDir)) return [];
-
-  return fs
-    .readdirSync(postsDir)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((fileName) => {
-      const slug = fileName.replace(/\.mdx$/, "");
-      const raw = fs.readFileSync(path.join(postsDir, fileName), "utf8");
-      const { data, content } = matter(raw);
-      return {
-        slug,
-        title: data.title as string,
-        date: data.date as string,
-        description: data.description as string,
-        tags: (data.tags as string[]) ?? [],
-        readingTime: readingTime(content),
-      };
-    })
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const entries = await reader.collections.posts.all();
+  return entries
+    .filter((e) => e.entry.publishedDate !== null)
+    .map((e) => ({
+      slug: e.slug,
+      title: e.entry.title,
+      date: e.entry.publishedDate as string,
+      description: e.entry.description ?? "",
+      tags: (e.entry.tags as string[]) ?? [],
+      readingTime: 3,
+    }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostBySlug(slug: string): Post | null {
-  const filePath = path.join(postsDir, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const entry = await reader.collections.posts.read(slug);
+  if (!entry) return null;
 
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(raw);
+  const { node } = await entry.content();
+  const transformed = Markdoc.transform(node, {});
+  const contentHtml = Markdoc.renderers.html(transformed);
 
   return {
     slug,
-    title: data.title as string,
-    date: data.date as string,
-    description: data.description as string,
-    tags: (data.tags as string[]) ?? [],
-    readingTime: readingTime(content),
-    content,
+    title: entry.title,
+    date: entry.publishedDate ?? "",
+    description: entry.description ?? "",
+    tags: (entry.tags as string[]) ?? [],
+    readingTime: Math.max(1, Math.ceil(wordCount(contentHtml) / 200)),
+    contentHtml,
   };
 }
 
-export function getAllSlugs(): string[] {
-  if (!fs.existsSync(postsDir)) return [];
-  return fs
-    .readdirSync(postsDir)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+export async function getAllSlugs(): Promise<string[]> {
+  return reader.collections.posts.list();
 }
