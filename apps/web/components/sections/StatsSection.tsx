@@ -2,42 +2,42 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Trophy, Users, Clock, Cpu } from "lucide-react";
+import { Clock, Trophy, Cpu, Layers } from "lucide-react";
 import { staggerContainer, fadeUp } from "@/lib/animations";
 
 const stats = [
-  {
-    icon: Trophy,
-    value: 20,
-    suffix: "+",
-    label: "Projects Completed",
-    color: "text-primary",
-    bg: "bg-primary/10",
-    glow: "rgba(109, 113, 249, 0.15)",
-  },
-  {
-    icon: Users,
-    value: 15,
-    suffix: "+",
-    label: "Happy Clients",
-    color: "text-accent",
-    bg: "bg-accent/10",
-    glow: "rgba(84, 193, 251, 0.15)",
-  },
   {
     icon: Clock,
     value: 2,
     suffix: "+",
     label: "Years of Experience",
+    color: "text-primary",
+    bg: "bg-primary/10",
+    glow: "rgba(109, 113, 249, 0.15)",
+  },
+  {
+    icon: Trophy,
+    value: 2,
+    suffix: "",
+    label: "Projects Delivered",
+    color: "text-accent",
+    bg: "bg-accent/10",
+    glow: "rgba(84, 193, 251, 0.15)",
+  },
+  {
+    icon: Cpu,
+    value: 5,
+    suffix: "+",
+    label: "Technologies Used",
     color: "text-purple-400",
     bg: "bg-purple-500/10",
     glow: "rgba(168, 85, 247, 0.15)",
   },
   {
-    icon: Cpu,
-    value: 10,
-    suffix: "+",
-    label: "Technologies Used",
+    icon: Layers,
+    value: 2,
+    suffix: "",
+    label: "Core Services",
     color: "text-pink-400",
     bg: "bg-pink-500/10",
     glow: "rgba(236, 72, 153, 0.15)",
@@ -66,7 +66,6 @@ function AnimatedCounter({
     const timer = setInterval(() => {
       step++;
       const progress = step / steps;
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.round(eased * target));
       if (step >= steps) clearInterval(timer);
@@ -87,12 +86,10 @@ export default function StatsSection() {
     <section className="py-24 relative overflow-hidden border-y border-white/[0.07]">
       <div className="absolute inset-0 bg-dark" />
 
-      {/* Side glows */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-primary/10 pointer-events-none" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-accent/10 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Optional eyebrow */}
         <motion.div
           className="text-center mb-14"
           initial="hidden"
@@ -118,7 +115,6 @@ export default function StatsSection() {
               variants={fadeUp}
               className="flex flex-col items-center text-center group"
             >
-              {/* Icon */}
               <div
                 className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${stat.bg} mb-5 transition-transform duration-300 group-hover:scale-110`}
                 style={{ boxShadow: `0 0 20px ${stat.glow}` }}
@@ -126,14 +122,12 @@ export default function StatsSection() {
                 <stat.icon size={20} className={stat.color} />
               </div>
 
-              {/* Counter */}
               <AnimatedCounter
                 target={stat.value}
                 suffix={stat.suffix}
                 color={stat.color}
               />
 
-              {/* Label */}
               <p className="mt-2 text-white/45 text-sm font-medium">{stat.label}</p>
             </motion.div>
           ))}
