@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Code2, Briefcase, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
@@ -19,6 +20,7 @@ interface TeamMember {
   bio: string;
   gradient: string;
   initials: string;
+  avatar?: string;
   social: SocialLink[];
 }
 
@@ -31,6 +33,7 @@ const team: TeamMember[] = [
     bio: "Building immersive web experiences and scalable software from Colombo, Sri Lanka. Passionate about clean code, great design, and technology that makes a real difference.",
     gradient: "from-[#6D71F9] to-[#54C1FB]",
     initials: "LK",
+    avatar: "/team/lakshan-kawshalya.png",
     social: [
       { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
       { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
@@ -211,14 +214,27 @@ function MemberCard({ member }: { member: TeamMember }) {
 
       {/* Avatar */}
       <div className="relative mb-6">
-        <div
-          className={`w-24 h-24 rounded-full bg-gradient-to-br ${member.gradient} flex items-center justify-center text-white text-2xl font-bold font-display shadow-lg transition-transform duration-300 group-hover:scale-105`}
-          style={{
-            boxShadow: "0 0 0 4px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)",
-          }}
-        >
-          {member.initials}
-        </div>
+        {member.avatar ? (
+          <div
+            className="w-24 h-24 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105"
+            style={{ boxShadow: "0 0 0 4px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)" }}
+          >
+            <Image
+              src={member.avatar}
+              alt={member.name}
+              width={96}
+              height={96}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div
+            className={`w-24 h-24 rounded-full bg-linear-to-br ${member.gradient} flex items-center justify-center text-white text-2xl font-bold font-display shadow-lg transition-transform duration-300 group-hover:scale-105`}
+            style={{ boxShadow: "0 0 0 4px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)" }}
+          >
+            {member.initials}
+          </div>
+        )}
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
       </div>
 
