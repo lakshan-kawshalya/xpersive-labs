@@ -10,8 +10,8 @@ const footerSections = {
   ],
   Services: [
     { href: "/services#web", label: "Web Development" },
-    { href: "/services#mobile", label: "Mobile Development" },
     { href: "/services#design", label: "UI/UX Design" },
+    { href: "/services#automation", label: "Automation & Scraping" },
   ],
   Connect: [
     { href: "/contact", label: "Contact Us" },
@@ -20,13 +20,9 @@ const footerSections = {
 };
 
 const socialLinks = [
-  { href: "https://github.com/xpersivelabs", icon: Code2, label: "GitHub" },
-  {
-    href: "https://linkedin.com/company/xpersivelabs",
-    icon: Briefcase,
-    label: "LinkedIn",
-  },
-  { href: "https://twitter.com/xpersivelabs", icon: Share2, label: "Twitter" },
+  { href: "https://github.com/Xpersive-Labs", icon: Code2, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/xpersive-labs/", icon: Briefcase, label: "LinkedIn" },
+  { href: "#", icon: Share2, label: "Twitter" /* TODO: add when Twitter/X account is created */ },
   { href: "mailto:hello@xpersivelabs.com", icon: Mail, label: "Email" },
 ];
 
