@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Tag } from "lucide-react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -12,117 +12,57 @@ interface ProjectDetail {
   year: string;
   gradient: string;
   summary: string;
+  highlight: string;
   challenge: string;
   solution: string;
   result: string;
   tech: string[];
-  liveUrl?: string;
+  status: string;
+  privateBadge?: boolean;
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
 const projects: ProjectDetail[] = [
   {
-    slug: "healthsync",
-    title: "HealthSync Platform",
+    slug: "xpersive-labs-website",
+    title: "Xpersive Labs Website",
     category: "Web",
-    tags: ["Web App", "React", "Next.js", "PostgreSQL"],
-    year: "2024",
-    gradient: "from-[#6D71F9] via-violet-500 to-[#54C1FB]",
-    summary:
-      "A comprehensive healthcare management platform serving clinics and hospitals with real-time data sync, AI-powered diagnostics, and a patient-facing portal.",
-    challenge:
-      "The client — a growing healthcare network — was managing patient records across three disconnected systems. Staff spent hours reconciling data, errors were common, and patients had no visibility into their own care. They needed a unified platform that could handle HIPAA-compliant data, real-time collaboration between clinicians, and a consumer-grade patient experience.",
-    solution:
-      "We architected a multi-tenant Next.js application with a PostgreSQL database managed through Prisma, deployed on AWS with row-level security policies enforcing data isolation between clinic accounts. A real-time sync layer using WebSockets keeps clinician dashboards live. The patient portal is a separate Next.js app sharing the same API, with a clean, accessible UI designed for low-tech-literacy users.",
-    result:
-      "Onboarded 3 clinic locations within the first month. Staff data-entry time dropped by 60%. Patient portal adoption hit 78% within 8 weeks of launch. Zero data incidents in the first year of operation.",
-    tech: ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma", "AWS RDS", "WebSockets", "Tailwind CSS", "Vercel"],
-  },
-  {
-    slug: "tradeflow",
-    title: "TradeFlow Mobile",
-    category: "Mobile",
-    tags: ["Mobile", "React Native", "TypeScript", "Firebase"],
-    year: "2024",
-    gradient: "from-[#54C1FB] via-sky-400 to-cyan-300",
-    summary:
-      "Cross-platform trading app for retail investors with live market feeds, portfolio analytics, real-time push alerts, and an intuitive trade execution flow.",
-    challenge:
-      "An early-stage fintech startup had a web-only product that was losing mobile users to competitors. Their existing web experience was not designed for thumb-first navigation, and the performance on mobile browsers was poor. They needed a native-feeling app shipped simultaneously for iOS and Android within a tight timeline.",
-    solution:
-      "We built a React Native application with Expo for the development workflow and OTA update capability. Market data is streamed via WebSocket from their existing API. We used React Query for server state with optimistic updates on trade execution, giving the UI instant feedback. Firebase handles push notifications with topic-based subscriptions for watchlist alerts.",
-    result:
-      "Shipped to both app stores within 10 weeks. Within 3 months, 65% of active users migrated from web to mobile. App Store rating: 4.7★. Average session time 2.4× longer than the web equivalent.",
-    tech: ["React Native", "Expo", "TypeScript", "React Query", "Firebase", "Redux Toolkit", "Reanimated 3", "WebSockets"],
-  },
-  {
-    slug: "lumina-ds",
-    title: "Lumina Design System",
-    category: "Design",
-    tags: ["Design System", "Figma", "UI/UX", "Accessibility"],
-    year: "2023",
-    gradient: "from-purple-600 via-[#6D71F9] to-pink-500",
-    summary:
-      "A cohesive, accessible design language powering 5+ enterprise products, with a Figma library and a React component library published to npm.",
-    challenge:
-      "The client's product suite had grown organically over 4 years, leaving them with 5 products that each had their own visual language, inconsistent spacing systems, and untested accessibility. New feature development was slow because designers and engineers were solving the same UI problems repeatedly in each product.",
-    solution:
-      "We ran a 2-week design audit across all 5 products, cataloguing every unique component, spacing value, and colour usage. From that foundation we built a token-based Figma library — starting from colour and typography primitives — then composed those into a full component library. Each component was built in React with Storybook, tested to WCAG 2.1 AA, and published as a versioned npm package.",
-    result:
-      "New feature UI time cut by 45% in the first quarter post-adoption. Accessibility compliance went from partial to full WCAG 2.1 AA across all products. Design–dev handoff time reduced from days to hours.",
-    tech: ["Figma", "React", "TypeScript", "Storybook", "Chromatic", "Radix UI", "CSS Modules", "npm"],
-  },
-  {
-    slug: "edunest",
-    title: "EduNest LMS",
-    category: "Web",
-    tags: ["Web App", "Next.js", "Prisma", "AWS"],
-    year: "2024",
-    gradient: "from-emerald-500 via-teal-500 to-[#54C1FB]",
-    summary:
-      "Full-featured learning management system with video streaming, adaptive quizzes, certificate generation, and instructor analytics dashboards.",
-    challenge:
-      "An EdTech startup needed to launch an LMS that could handle video-heavy courses, support hundreds of concurrent learners, and give instructors rich analytics — without breaking their seed-round budget on infrastructure.",
-    solution:
-      "We built a Next.js App Router application with a multi-role auth system (learner, instructor, admin). Video delivery uses AWS CloudFront + S3 with adaptive bitrate streaming. Quizzes are stored as JSON in PostgreSQL, graded server-side. PDF certificates are generated on-demand using a Puppeteer Lambda function. Instructor dashboards use real-time aggregations with incremental static regeneration for performance.",
-    result:
-      "Launched with 400+ enrolled learners on day one. Video load time under 2 seconds globally. Instructor NPS score of 72 after first cohort. Infrastructure costs 60% below initial estimates.",
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "AWS S3", "CloudFront", "Lambda", "Puppeteer", "Tailwind CSS"],
-  },
-  {
-    slug: "wanderly",
-    title: "Wanderly Travel App",
-    category: "Mobile",
-    tags: ["Mobile", "React Native", "Expo", "AI"],
+    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
     year: "2025",
-    gradient: "from-orange-500 via-amber-400 to-yellow-300",
+    gradient: "from-[#6D71F9] to-[#54C1FB]",
+    status: "Live",
+    highlight: "Built with performance, SEO, and immersion in mind.",
     summary:
-      "AI-assisted travel planner with offline maps, drag-and-drop itinerary builder, local recommendations, and real-time flight and hotel prices.",
+      "Our own company website built from the ground up — a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
     challenge:
-      "The founder had a clear vision: a travel app that felt like a knowledgeable local friend, not a booking engine. The core challenge was making AI suggestions feel contextual and personal — not generic — while keeping the app fast and functional in regions with poor connectivity.",
+      "We needed a website that would represent Xpersive Labs accurately — immersive, fast, and polished — while being maintainable without touching code for every blog update. Most templates didn't come close to the standard we wanted to hold ourselves to.",
     solution:
-      "Itinerary data is stored locally using SQLite via Expo SQLite, with selective sync to the server. Map tiles for popular regions are bundled at install time. AI recommendations are generated via a fine-tuned model on the backend, with results cached per-destination so repeat queries feel instant. The drag-and-drop itinerary UI uses Reanimated 3 gestures for fluid, native-feeling interactions.",
+      "Built entirely in Next.js 14 with the App Router, using Framer Motion for scroll-triggered animations and Keystatic as a Git-based CMS so blog posts can be written and published without a developer. Tailwind CSS powers the design system with a custom colour palette. Deployed to Vercel with automatic preview builds on every push.",
     result:
-      "4.8★ on App Store at launch. Featured by Apple in the Travel category for 2 weeks. Offline mode used by 34% of sessions. Average trip planned: 7.2 days of detailed itinerary.",
-    tech: ["React Native", "Expo", "TypeScript", "SQLite", "Reanimated 3", "OpenAI API", "MapLibre", "Supabase"],
+      "A production website that reflects the quality of our work — fast, animated, and fully managed through a visual CMS. Lighthouse performance score above 90. Serves as the primary client-facing presence for Xpersive Labs.",
+    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Markdoc", "Vercel"],
+    /* TODO: set liveUrl when xpersivelabs.com domain is purchased */
   },
   {
-    slug: "nova-brand",
-    title: "Nova Brand Identity",
-    category: "Design",
-    tags: ["Branding", "UI/UX", "Figma", "Product Design"],
-    year: "2023",
-    gradient: "from-rose-500 via-pink-500 to-[#6D71F9]",
+    slug: "alibaba-scraper",
+    title: "Alibaba Product Scraper",
+    category: "Automation",
+    tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
+    year: "2024",
+    gradient: "from-[#272848] to-[#6D71F9]",
+    status: "Completed",
+    highlight: "Handles bulk extraction with structured multi-format output.",
+    privateBadge: true,
     summary:
-      "End-to-end brand identity and product design for a B2B fintech startup — logo, brand guidelines, and a complete product design system delivered over 6 weeks.",
+      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence — outputs clean, structured data in both CSV and JSON formats.",
     challenge:
-      "Nova was preparing for their Series A raise and needed to look the part. They had a product but no brand. Their target buyers — CFOs at mid-market companies — needed to trust them instantly. The design had to be sophisticated without being cold, modern without being trendy.",
+      "Manual product research on Alibaba is slow, inconsistent, and impossible to scale. Hundreds of listings across dozens of categories needed to be collected, structured, and compared — without spending days doing it by hand.",
     solution:
-      "We started with positioning workshops to align the team on brand personality. The visual identity — wordmark, icon, colour system, and type scale — was developed over 3 rounds of refinement with stakeholder input at each gate. We then extended the brand into a full product UI, designing the core flows in Figma with a component library ready for engineering handoff.",
+      "Built a Python scraper using Selenium for JavaScript-rendered pages and BeautifulSoup for HTML parsing. Handles pagination, category traversal, and rate limiting automatically. Data is cleaned, deduplicated, and exported to both CSV (for spreadsheet analysis) and JSON (for programmatic use). Designed to run on a schedule or on-demand.",
     result:
-      "Pitch deck featuring the new brand received strong investor feedback during the Series A round. Engineering team built the product UI in 40% less time than estimated, citing the quality of the Figma handoff. Brand recognised at a regional fintech showcase.",
-    tech: ["Figma", "Adobe Illustrator", "Framer", "Notion", "Zeplin", "Maze", "Lottie"],
+      "Reduced product research time from days to minutes. Outputs structured, analysis-ready data across thousands of listings per run. Private repository under the Xpersive Labs GitHub organisation.",
+    tech: ["Python", "Selenium", "BeautifulSoup", "Pandas", "CSV", "JSON"],
   },
 ];
 
@@ -132,14 +72,10 @@ function getProject(slug: string): ProjectDetail | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
-function getAllSlugs(): string[] {
-  return projects.map((p) => p.slug);
-}
-
 /* ─── Static params (SSG) ────────────────────────────────────────────── */
 
 export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 /* ─── Page ──────────────────────────────────────────────────────────── */
@@ -154,7 +90,7 @@ export default async function ProjectPage({
 
   if (!project) notFound();
 
-  const allSlugs = getAllSlugs();
+  const allSlugs = projects.map((p) => p.slug);
   const currentIndex = allSlugs.indexOf(slug);
   const nextSlug = allSlugs[currentIndex + 1] ?? null;
   const prevSlug = allSlugs[currentIndex - 1] ?? null;
@@ -167,7 +103,6 @@ export default async function ProjectPage({
         <div
           className={`w-full h-[55vh] min-h-[380px] max-h-[600px] bg-gradient-to-br ${project.gradient} relative overflow-hidden`}
         >
-          {/* Texture */}
           <div
             className="absolute inset-0 opacity-10"
             style={{
@@ -183,7 +118,6 @@ export default async function ProjectPage({
                 "radial-gradient(circle at 30% 70%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.2) 0%, transparent 45%)",
             }}
           />
-          {/* Gradient fade to dark at bottom */}
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-dark to-transparent" />
         </div>
       </section>
@@ -191,7 +125,6 @@ export default async function ProjectPage({
       {/* ── Content ──────────────────────────────────────────────── */}
       <section className="relative z-10 -mt-16 pb-24">
         <div className="max-w-4xl mx-auto px-6">
-          {/* Back link */}
           <Link
             href="/portfolio"
             className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition-colors mb-10"
@@ -210,18 +143,29 @@ export default async function ProjectPage({
                 <Calendar size={12} />
                 {project.year}
               </span>
+              <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/40 text-xs font-medium">
+                {project.status}
+              </span>
+              {project.privateBadge && (
+                <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/40 text-xs font-medium">
+                  Private Repository
+                </span>
+              )}
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5">
               {project.title}
             </h1>
+
+            <p className="text-accent text-sm font-semibold mb-5 italic">
+              {project.highlight}
+            </p>
 
             <p className="text-white/60 text-lg leading-relaxed mb-7">
               {project.summary}
             </p>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-7">
+            <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
@@ -232,21 +176,8 @@ export default async function ProjectPage({
                 </span>
               ))}
             </div>
-
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-              >
-                <ExternalLink size={14} />
-                View Live Site
-              </a>
-            )}
           </div>
 
-          {/* Divider */}
           <div className="border-t border-white/[0.07] mb-12" />
 
           {/* Challenge / Solution / Result */}
@@ -274,7 +205,6 @@ export default async function ProjectPage({
             />
           </div>
 
-          {/* Divider */}
           <div className="border-t border-white/[0.07] my-12" />
 
           {/* Tech stack */}
@@ -300,28 +230,21 @@ export default async function ProjectPage({
       <section className="border-t border-white/[0.07] py-16">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
-            {/* Prev */}
             <div>
               {prevSlug && getProject(prevSlug) && (
                 <Link
                   href={`/portfolio/${prevSlug}`}
                   className="group inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors"
                 >
-                  <ArrowLeft
-                    size={15}
-                    className="group-hover:-translate-x-1 transition-transform duration-200"
-                  />
+                  <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform duration-200" />
                   <span>
-                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">
-                      Previous
-                    </span>
+                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">Previous</span>
                     {getProject(prevSlug)!.title}
                   </span>
                 </Link>
               )}
             </div>
 
-            {/* CTA */}
             <Link
               href="/contact"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-white text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
@@ -331,7 +254,6 @@ export default async function ProjectPage({
               <ArrowRight size={15} />
             </Link>
 
-            {/* Next */}
             <div className="text-right">
               {nextProject && (
                 <Link
@@ -339,15 +261,10 @@ export default async function ProjectPage({
                   className="group inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors"
                 >
                   <span>
-                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">
-                      Next
-                    </span>
+                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">Next</span>
                     {nextProject.title}
                   </span>
-                  <ArrowRight
-                    size={15}
-                    className="group-hover:translate-x-1 transition-transform duration-200"
-                  />
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
                 </Link>
               )}
             </div>
@@ -376,16 +293,12 @@ function CaseBlock({
   return (
     <div className="flex gap-6">
       <div className="flex-shrink-0">
-        <div
-          className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center`}
-        >
+        <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center`}>
           <span className={`font-display text-xs font-bold ${color}`}>{number}</span>
         </div>
       </div>
       <div className="flex-1 pt-1.5">
-        <p className={`text-xs font-bold uppercase tracking-[0.2em] ${color} mb-3`}>
-          {label}
-        </p>
+        <p className={`text-xs font-bold uppercase tracking-[0.2em] ${color} mb-3`}>{label}</p>
         <p className="text-white/60 leading-[1.85] text-base">{body}</p>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
-type Category = "All" | "Web" | "Mobile" | "Design";
+type Category = "All" | "Web" | "Automation";
 
 interface Project {
   slug: string;
@@ -17,75 +17,33 @@ interface Project {
   category: Exclude<Category, "All">;
   tags: string[];
   gradient: string;
-  accentLight: string;
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
 const projects: Project[] = [
   {
-    slug: "healthsync",
-    title: "HealthSync Platform",
+    slug: "xpersive-labs-website",
+    title: "Xpersive Labs Website",
     shortDesc:
-      "A comprehensive healthcare management platform with real-time data sync, AI-powered diagnostics, and patient portal.",
+      "Our own company website built from the ground up — a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
     category: "Web",
-    tags: ["Web App", "React", "Next.js", "PostgreSQL"],
-    gradient: "from-[#6D71F9] via-violet-500 to-[#54C1FB]",
-    accentLight: "rgba(109,113,249,0.6)",
+    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
+    gradient: "from-[#6D71F9] to-[#54C1FB]",
+    /* TODO: set liveUrl to "https://xpersivelabs.com" when domain is purchased */
   },
   {
-    slug: "tradeflow",
-    title: "TradeFlow Mobile",
+    slug: "alibaba-scraper",
+    title: "Alibaba Product Scraper",
     shortDesc:
-      "Cross-platform trading app with live market feeds, portfolio analytics, and real-time push alerts.",
-    category: "Mobile",
-    tags: ["Mobile", "React Native", "TypeScript"],
-    gradient: "from-[#54C1FB] via-sky-400 to-cyan-300",
-    accentLight: "rgba(84,193,251,0.6)",
-  },
-  {
-    slug: "lumina-ds",
-    title: "Lumina Design System",
-    shortDesc:
-      "A cohesive, accessible design language powering 5+ enterprise products with a shared component library.",
-    category: "Design",
-    tags: ["Design System", "Figma", "UI/UX"],
-    gradient: "from-purple-600 via-[#6D71F9] to-pink-500",
-    accentLight: "rgba(168,85,247,0.6)",
-  },
-  {
-    slug: "edunest",
-    title: "EduNest LMS",
-    shortDesc:
-      "Full-featured learning management system with video streaming, quizzes, certificates, and instructor dashboards.",
-    category: "Web",
-    tags: ["Web App", "Next.js", "Prisma", "AWS"],
-    gradient: "from-emerald-500 via-teal-500 to-[#54C1FB]",
-    accentLight: "rgba(16,185,129,0.6)",
-  },
-  {
-    slug: "wanderly",
-    title: "Wanderly Travel App",
-    shortDesc:
-      "AI-assisted travel planner app with offline maps, itinerary builder, and local recommendations.",
-    category: "Mobile",
-    tags: ["Mobile", "React Native", "Expo", "AI"],
-    gradient: "from-orange-500 via-amber-400 to-yellow-300",
-    accentLight: "rgba(249,115,22,0.6)",
-  },
-  {
-    slug: "nova-brand",
-    title: "Nova Brand Identity",
-    shortDesc:
-      "End-to-end brand and product design for a fintech startup — from logo to a complete design system.",
-    category: "Design",
-    tags: ["Branding", "UI/UX", "Figma"],
-    gradient: "from-rose-500 via-pink-500 to-[#6D71F9]",
-    accentLight: "rgba(244,63,94,0.6)",
+      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence — outputs clean, structured data in both CSV and JSON formats.",
+    category: "Automation",
+    tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
+    gradient: "from-[#272848] to-[#6D71F9]",
   },
 ];
 
-const categories: Category[] = ["All", "Web", "Mobile", "Design"];
+const categories: Category[] = ["All", "Web", "Automation"];
 
 /* ─── Component ─────────────────────────────────────────────────────── */
 
@@ -99,7 +57,6 @@ export default function PortfolioPage() {
     <div className="bg-dark text-white min-h-screen">
       {/* ── Hero ───────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-16 overflow-hidden">
-        {/* Orbs */}
         <motion.div
           className="absolute -top-32 -right-24 w-[480px] h-[480px] rounded-full blur-[130px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.32) 0%, transparent 70%)" }}
@@ -139,8 +96,8 @@ export default function PortfolioPage() {
               variants={fadeUp}
               className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl"
             >
-              A curated selection of projects spanning web applications, mobile
-              apps, and design systems — each built to solve real problems.
+              Real projects, built with care. Every line of code and design
+              decision made with purpose.
             </motion.p>
           </motion.div>
         </div>
@@ -189,7 +146,7 @@ export default function PortfolioPage() {
           <AnimatePresence mode="popLayout">
             <motion.div
               key={active}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
@@ -201,15 +158,16 @@ export default function PortfolioPage() {
             </motion.div>
           </AnimatePresence>
 
-          {filtered.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-24 text-white/30"
-            >
-              <p className="text-lg font-medium">No projects in this category yet.</p>
-            </motion.div>
-          )}
+          {/* More projects coming soon */}
+          <motion.p
+            className="text-center text-white/25 text-sm mt-14 font-medium"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            More projects coming soon.
+          </motion.p>
         </div>
       </section>
 
@@ -263,7 +221,6 @@ function ProjectCard({ project }: { project: Project }) {
     >
       {/* Gradient thumbnail */}
       <div className={`relative h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-        {/* Texture overlays */}
         <div
           className="absolute inset-0 opacity-15"
           style={{
