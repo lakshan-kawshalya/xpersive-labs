@@ -3,6 +3,7 @@
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -16,7 +17,7 @@ interface Project {
   shortDesc: string;
   category: Exclude<Category, "All">;
   tags: string[];
-  gradient: string;
+  coverImage: string;
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
@@ -29,7 +30,7 @@ const projects: Project[] = [
       "Our own company website built from the ground up - a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
     category: "Web",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
-    gradient: "from-[#6D71F9] to-[#54C1FB]",
+    coverImage: "/project-covers/xpersive-labs-project-cover.jpeg",
     /* TODO: set liveUrl to "https://xpersivelabs.com" when domain is purchased */
   },
   {
@@ -39,7 +40,7 @@ const projects: Project[] = [
       "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence - outputs clean, structured data in both CSV and JSON formats.",
     category: "Automation",
     tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
-    gradient: "from-[#272848] to-[#6D71F9]",
+    coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
   },
 ];
 
@@ -219,33 +220,24 @@ function ProjectCard({ project }: { project: Project }) {
       layout
       className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
     >
-      {/* Gradient thumbnail */}
-      <div className={`relative h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-        <div
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 25% 60%, rgba(255,255,255,0.25) 0%, transparent 45%), radial-gradient(circle at 75% 30%, rgba(255,255,255,0.15) 0%, transparent 40%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.08]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.4) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
+      {/* Cover image */}
+      <div className="relative h-56 overflow-hidden">
+        <Image
+          src={project.coverImage}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Category badge */}
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+        <div className="absolute top-4 left-4 z-10">
+          <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
             {project.category}
           </span>
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-dark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-4 px-6 text-center">
+        <div className="absolute inset-0 bg-dark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-4 px-6 text-center z-10">
           <p className="text-white/85 text-sm leading-relaxed">{project.shortDesc}</p>
           <Link
             href={`/portfolio/${project.slug}`}

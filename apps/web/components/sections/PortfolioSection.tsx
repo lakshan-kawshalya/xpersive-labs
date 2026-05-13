@@ -3,6 +3,7 @@
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const projects = [
@@ -13,7 +14,7 @@ const projects = [
     description:
       "Our own company website - a fully animated multi-page Next.js 14 site with scroll-reveal effects, Keystatic CMS blog, contact form, and Vercel deployment.",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    gradient: "from-[#6D71F9] to-[#54C1FB]",
+    coverImage: "/project-covers/xpersive-labs-project-cover.jpeg",
     accentColor: "#6D71F9",
     /* TODO: add liveUrl when xpersivelabs.com domain is live */
   },
@@ -24,7 +25,7 @@ const projects = [
     description:
       "Automated scraper that extracts product listings, pricing, and supplier data from Alibaba at scale. Exports structured data to both CSV and JSON formats for market research and analysis.",
     tags: ["Python", "Web Scraping", "CSV", "JSON", "Automation"],
-    gradient: "from-[#272848] to-[#6D71F9]",
+    coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
     accentColor: "#6D71F9",
   },
 ];
@@ -87,31 +88,20 @@ export default function PortfolioSection() {
               transition={{ type: "spring", stiffness: 280, damping: 20 }}
               className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
             >
-              {/* Gradient thumbnail */}
-              <div
-                className={`relative h-52 bg-gradient-to-br ${project.gradient} overflow-hidden`}
-              >
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 40%)",
-                  }}
+              {/* Cover image */}
+              <div className="relative h-52 overflow-hidden">
+                <Image
+                  src={project.coverImage}
+                  alt={project.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.3) 1px, transparent 1px)",
-                    backgroundSize: "32px 32px",
-                  }}
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
                     {project.category}
                   </span>
                 </div>
-                <div className="absolute inset-0 bg-dark/75 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                <div className="absolute inset-0 bg-dark/75 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center z-10">
                   <Link
                     href={`/portfolio/${project.slug}`}
                     className="flex items-center gap-2.5 text-white font-semibold text-sm border border-white/20 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm"
