@@ -34,13 +34,13 @@ const projects: ProjectDetail[] = [
     status: "Live",
     highlight: "Built with performance, SEO, and immersion in mind.",
     summary:
-      "Our own company website built from the ground up — a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
+      "Our own company website built from the ground up - a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
     challenge:
-      "We needed a website that would represent Xpersive Labs accurately — immersive, fast, and polished — while being maintainable without touching code for every blog update. Most templates didn't come close to the standard we wanted to hold ourselves to.",
+      "We needed a website that would represent Xpersive Labs accurately - immersive, fast, and polished - while being maintainable without touching code for every blog update. Most templates didn't come close to the standard we wanted to hold ourselves to.",
     solution:
       "Built entirely in Next.js 14 with the App Router, using Framer Motion for scroll-triggered animations and Keystatic as a Git-based CMS so blog posts can be written and published without a developer. Tailwind CSS powers the design system with a custom colour palette. Deployed to Vercel with automatic preview builds on every push.",
     result:
-      "A production website that reflects the quality of our work — fast, animated, and fully managed through a visual CMS. Lighthouse performance score above 90. Serves as the primary client-facing presence for Xpersive Labs.",
+      "A production website that reflects the quality of our work - fast, animated, and fully managed through a visual CMS. Lighthouse performance score above 90. Serves as the primary client-facing presence for Xpersive Labs.",
     tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Markdoc", "Vercel"],
     /* TODO: set liveUrl when xpersivelabs.com domain is purchased */
   },
@@ -55,9 +55,9 @@ const projects: ProjectDetail[] = [
     highlight: "Handles bulk extraction with structured multi-format output.",
     privateBadge: true,
     summary:
-      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence — outputs clean, structured data in both CSV and JSON formats.",
+      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence - outputs clean, structured data in both CSV and JSON formats.",
     challenge:
-      "Manual product research on Alibaba is slow, inconsistent, and impossible to scale. Hundreds of listings across dozens of categories needed to be collected, structured, and compared — without spending days doing it by hand.",
+      "Manual product research on Alibaba is slow, inconsistent, and impossible to scale. Hundreds of listings across dozens of categories needed to be collected, structured, and compared - without spending days doing it by hand.",
     solution:
       "Built a Python scraper using Selenium for JavaScript-rendered pages and BeautifulSoup for HTML parsing. Handles pagination, category traversal, and rate limiting automatically. Data is cleaned, deduplicated, and exported to both CSV (for spreadsheet analysis) and JSON (for programmatic use). Designed to run on a schedule or on-demand.",
     result:

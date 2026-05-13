@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About — Xpersive Labs",
+  title: "About - Xpersive Labs",
   description:
-    "Learn about Xpersive Labs — our mission to revolutionize human-technology interaction, our brand values, and the milestones that shaped us.",
+    "Learn about Xpersive Labs - our mission to revolutionize human-technology interaction, our brand values, and the milestones that shaped us.",
   keywords: ["about", "Xpersive Labs", "Sri Lanka", "software startup", "immersive tech"],
 };
 

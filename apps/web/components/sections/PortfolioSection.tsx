@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import Link from "next/link";
 
 const projects = [
   {
@@ -11,7 +11,7 @@ const projects = [
     title: "Xpersive Labs Website",
     category: "Web",
     description:
-      "Our own company website — a fully animated multi-page Next.js 14 site with scroll-reveal effects, Keystatic CMS blog, contact form, and Vercel deployment.",
+      "Our own company website - a fully animated multi-page Next.js 14 site with scroll-reveal effects, Keystatic CMS blog, contact form, and Vercel deployment.",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
     gradient: "from-[#6D71F9] to-[#54C1FB]",
     accentColor: "#6D71F9",
@@ -71,7 +71,7 @@ export default function PortfolioSection() {
           </motion.div>
         </motion.div>
 
-        {/* Project cards — 2 col */}
+        {/* Project cards - 2 col */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           variants={staggerContainer}

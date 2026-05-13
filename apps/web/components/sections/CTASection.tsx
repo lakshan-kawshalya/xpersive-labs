@@ -62,7 +62,7 @@ export default function CTASection() {
             className="text-white/75 text-lg leading-relaxed mb-11 max-w-xl mx-auto"
           >
             Tell us about your project. We&apos;ll craft a solution that exceeds your
-            expectations — on time, on budget, with zero compromises.
+            expectations - on time, on budget, with zero compromises.
           </motion.p>
 
           {/* CTA */}

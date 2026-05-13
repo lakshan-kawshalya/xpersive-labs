@@ -3,7 +3,7 @@ import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Xpersive Labs — Innovation for a Better Tomorrow",
+    default: "Xpersive Labs - Innovation for a Better Tomorrow",
     template: "%s | Xpersive Labs",
   },
   description:
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Xpersive Labs",
-    title: "Xpersive Labs — Innovation for a Better Tomorrow",
+    title: "Xpersive Labs - Innovation for a Better Tomorrow",
     description:
       "We build cutting-edge web, mobile, and design solutions that drive progress and enhance human experience.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Xpersive Labs" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xpersive Labs — Innovation for a Better Tomorrow",
+    title: "Xpersive Labs - Innovation for a Better Tomorrow",
     description: "Sri Lanka's immersive tech studio. We build cutting-edge digital experiences.",
     images: ["/og-image.png"],
   },

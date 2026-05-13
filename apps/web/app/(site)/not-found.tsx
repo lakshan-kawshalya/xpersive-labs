@@ -1,8 +1,8 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "404 — Page Not Found | Xpersive Labs",
+  title: "404 - Page Not Found | Xpersive Labs",
 };
 
 export default function NotFound() {

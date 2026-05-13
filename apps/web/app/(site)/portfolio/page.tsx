@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -26,7 +26,7 @@ const projects: Project[] = [
     slug: "xpersive-labs-website",
     title: "Xpersive Labs Website",
     shortDesc:
-      "Our own company website built from the ground up — a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
+      "Our own company website built from the ground up - a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
     category: "Web",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
     gradient: "from-[#6D71F9] to-[#54C1FB]",
@@ -36,7 +36,7 @@ const projects: Project[] = [
     slug: "alibaba-scraper",
     title: "Alibaba Product Scraper",
     shortDesc:
-      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence — outputs clean, structured data in both CSV and JSON formats.",
+      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence - outputs clean, structured data in both CSV and JSON formats.",
     category: "Automation",
     tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
     gradient: "from-[#272848] to-[#6D71F9]",
