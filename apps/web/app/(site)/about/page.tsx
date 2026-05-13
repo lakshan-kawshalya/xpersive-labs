@@ -1,21 +1,21 @@
 "use client";
 
-import Link from "next/link";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import {
-  Lightbulb,
-  ShieldCheck,
-  Heart,
-  Rocket,
   ArrowRight,
-  MapPin,
   Calendar,
-  Flag,
-  TrendingUp,
-  Target,
   Compass,
+  Flag,
+  Heart,
+  Lightbulb,
+  MapPin,
+  Rocket,
+  ShieldCheck,
+  Target,
+  TrendingUp,
 } from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import Link from "next/link";
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 
@@ -54,7 +54,7 @@ const values = [
     icon: Rocket,
     title: "Cutting-Edge",
     description:
-      "We don't follow trends — we help set them. From automation tools to immersive UI patterns, we push boundaries to give our clients a competitive edge.",
+      "We don't follow trends - we help set them. From automation tools to immersive UI patterns, we push boundaries to give our clients a competitive edge.",
     color: "text-purple-400",
     bg: "bg-purple-500/10",
     border: "hover:border-purple-500/30",
@@ -78,7 +78,7 @@ const milestones = [
     icon: Target,
     title: "First Project Shipped",
     description:
-      "Shipped the Alibaba Product Scraper — a Python automation tool for bulk product data extraction and market research at scale.",
+      "Shipped the Alibaba Product Scraper - a Python automation tool for bulk product data extraction and market research at scale.",
     color: "text-accent",
     bg: "bg-accent/10",
     line: "from-accent/40",
@@ -88,7 +88,7 @@ const milestones = [
     icon: TrendingUp,
     title: "Website Launched",
     description:
-      "Launched xpersivelabs.com — our own production website, built with Next.js 14, Framer Motion, and Keystatic CMS.",
+      "Launched xpersivelabs.com - our own production website, built with Next.js 14, Framer Motion, and Keystatic CMS.",
     color: "text-purple-400",
     bg: "bg-purple-500/10",
     line: "from-purple-500/40",
@@ -98,7 +98,7 @@ const milestones = [
     icon: Compass,
     title: "Open for Client Projects",
     description:
-      "Opened for client work across web development, UI/UX design, and automation — serving businesses locally and globally.",
+      "Opened for client work across web development, UI/UX design, and automation - serving businesses locally and globally.",
     color: "text-pink-400",
     bg: "bg-pink-500/10",
     line: "from-pink-500/40",
@@ -196,12 +196,12 @@ export default function AboutPage() {
                 <p>
                   Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal:
                   to build software that actually feels good to use. We believe the best
-                  technology becomes invisible — it fits seamlessly into the experience
+                  technology becomes invisible - it fits seamlessly into the experience
                   rather than getting in the way.
                 </p>
                 <p>
                   We specialise in immersive web development, UI/UX design, and data
-                  automation — helping businesses and individuals go from idea to a
+                  automation - helping businesses and individuals go from idea to a
                   polished digital product. Every project gets our full attention,
                   our honest opinion, and our best work.
                 </p>
@@ -298,7 +298,7 @@ export default function AboutPage() {
                 </h3>
                 <p className="text-white/55 leading-relaxed">
                   Develop cutting-edge technologies that drive progress and enhance
-                  human experience across diverse industries — making powerful
+                  human experience across diverse industries - making powerful
                   digital tools accessible and impactful for everyone.
                 </p>
               </div>
@@ -322,7 +322,7 @@ export default function AboutPage() {
                 </h3>
                 <p className="text-white/55 leading-relaxed">
                   Revolutionise how people interact with technology by fully
-                  immersing them in a new world of possibilities — where digital
+                  immersing them in a new world of possibilities - where digital
                   experiences feel as natural and engaging as the world itself.
                 </p>
               </div>

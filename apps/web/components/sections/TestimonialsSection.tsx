@@ -1,14 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Shield, Clock, Star } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { Clock, Shield, Star } from "lucide-react";
 
 const principles = [
   {
     icon: Shield,
     title: "Transparent Communication",
-    body: "We keep you in the loop at every stage — no surprises, no black boxes. You always know what's being built and why.",
+    body: "We keep you in the loop at every stage - no surprises, no black boxes. You always know what's being built and why.",
     color: "text-primary",
     bg: "bg-primary/10",
     border: "hover:border-primary/25",

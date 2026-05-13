@@ -23,7 +23,7 @@ export async function generateMetadata({
   const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
-    title: `${post.title} — Xpersive Labs Blog`,
+    title: `${post.title} - Xpersive Labs Blog`,
     description: post.description,
   };
 }

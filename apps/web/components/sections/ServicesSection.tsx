@@ -1,16 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Globe, Palette, Terminal, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
+import Link from "next/link";
 
 const services = [
   {
     icon: Globe,
     title: "Web Development",
     description:
-      "We design and build fast, modern, immersive web experiences — from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
+      "We design and build fast, modern, immersive web experiences - from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
     href: "/services#web",
     iconBg: "bg-primary/10",
     iconColor: "text-primary",
@@ -21,7 +21,7 @@ const services = [
     icon: Palette,
     title: "UI/UX Design",
     description:
-      "Great software starts with great design. We create clean, intuitive interfaces that put the user first — from wireframes and prototypes to polished design systems ready for development.",
+      "Great software starts with great design. We create clean, intuitive interfaces that put the user first - from wireframes and prototypes to polished design systems ready for development.",
     href: "/services#design",
     iconBg: "bg-purple-500/10",
     iconColor: "text-purple-400",
@@ -32,7 +32,7 @@ const services = [
     icon: Terminal,
     title: "Automation & Web Scraping",
     description:
-      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation — automated, reliable, and scalable.",
+      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation - automated, reliable, and scalable.",
     href: "/services#automation",
     iconBg: "bg-accent/10",
     iconColor: "text-accent",

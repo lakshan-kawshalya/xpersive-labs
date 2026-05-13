@@ -2,7 +2,7 @@ import { getAllPosts } from "@/lib/blog";
 import BlogList from "@/components/blog/BlogList";
 
 export const metadata = {
-  title: "Blog — Xpersive Labs",
+  title: "Blog - Xpersive Labs",
   description:
     "Insights on web development, mobile engineering, UI/UX design, and building software that lasts.",
 };

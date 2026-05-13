@@ -1,23 +1,23 @@
 "use client";
 
+import { fadeUp, staggerContainer } from "@/lib/animations";
+import emailjs from "@emailjs/browser";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  AlertCircle,
+  Briefcase,
+  CheckCircle2,
+  ChevronDown,
+  Clock,
+  Code2,
+  Loader2,
+  Mail,
+  MapPin,
+  Send,
+  Share2,
+} from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import emailjs from "@emailjs/browser";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  MapPin,
-  Mail,
-  Clock,
-  Send,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  Code2,
-  Briefcase,
-  Share2,
-  ChevronDown,
-} from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/animations";
 
 const EMAILJS_SERVICE_ID = "service_cq58rg3";
 const EMAILJS_TEMPLATE_ID = "template_ttq7fzc";
@@ -105,7 +105,7 @@ export default function ContactPage() {
         {
           from_name: data.name,
           from_email: data.email,
-          company: data.company || "—",
+          company: data.company || "-",
           service: data.service || "Not specified",
           message: data.message,
         },
@@ -162,7 +162,7 @@ export default function ContactPage() {
               className="text-white/55 text-lg leading-relaxed max-w-xl"
             >
               Tell us about your project. We read every message and reply within
-              48 hours — no automated responses, just real conversation.
+              48 hours - no automated responses, just real conversation.
             </motion.p>
           </motion.div>
         </div>
@@ -279,7 +279,7 @@ export default function ContactPage() {
                       <Field label="Message" required error={errors.message?.message}>
                         <textarea
                           rows={6}
-                          placeholder="Tell us about your project — what you're building, your timeline, and any specific requirements…"
+                          placeholder="Tell us about your project - what you're building, your timeline, and any specific requirements…"
                           className={`${inputClass(!!errors.message)} resize-none`}
                           {...register("message", {
                             required: "Message is required",

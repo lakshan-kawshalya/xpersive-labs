@@ -1,22 +1,22 @@
 "use client";
 
-import Link from "next/link";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import {
-  Globe,
-  Palette,
-  Terminal,
   ArrowRight,
-  Search,
-  PenTool,
-  Code2,
-  Rocket,
   CheckCircle,
-  Settings,
-  Play,
+  Code2,
+  Globe,
   Monitor,
+  Palette,
+  PenTool,
+  Play,
+  Rocket,
+  Search,
+  Settings,
+  Terminal,
 } from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import Link from "next/link";
 
 /* ─── Shared types ──────────────────────────────────────────────────── */
 
@@ -60,7 +60,7 @@ const webSteps: Step[] = [
     icon: Code2,
     title: "Development",
     description:
-      "Clean architecture, thorough testing, and continuous delivery so you see progress — and can steer it — every step of the way.",
+      "Clean architecture, thorough testing, and continuous delivery so you see progress - and can steer it - every step of the way.",
   },
   {
     icon: Rocket,
@@ -81,7 +81,7 @@ const designSteps: Step[] = [
     icon: PenTool,
     title: "Wireframing",
     description:
-      "Low-fidelity layouts that map out information architecture and user flows — fast to iterate, easy to validate with stakeholders.",
+      "Low-fidelity layouts that map out information architecture and user flows - fast to iterate, easy to validate with stakeholders.",
   },
   {
     icon: CheckCircle,
@@ -102,13 +102,13 @@ const automationSteps: Step[] = [
     icon: Settings,
     title: "Requirements",
     description:
-      "We map your data sources, target structure, and delivery format — then spec the scraper or automation tool before writing a line of code.",
+      "We map your data sources, target structure, and delivery format - then spec the scraper or automation tool before writing a line of code.",
   },
   {
     icon: Code2,
     title: "Build",
     description:
-      "Custom scraper or automation script built with the right tools for the job — from lightweight requests to full browser automation.",
+      "Custom scraper or automation script built with the right tools for the job - from lightweight requests to full browser automation.",
   },
   {
     icon: Play,
@@ -120,7 +120,7 @@ const automationSteps: Step[] = [
     icon: Monitor,
     title: "Deploy & Monitor",
     description:
-      "Scheduled runs, error alerting, and output delivery to your preferred destination — CSV, JSON, database, or API.",
+      "Scheduled runs, error alerting, and output delivery to your preferred destination - CSV, JSON, database, or API.",
   },
 ];
 
@@ -131,8 +131,8 @@ const services: Service[] = [
     label: "Web Development",
     headline: "Full-Stack Web Applications",
     body: [
-      "We design and build fast, modern, immersive web experiences — from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
-      "From database schema to deployment pipeline, every decision is made intentionally. We don't just ship features — we ship products that are fast, maintainable, and built to scale.",
+      "We design and build fast, modern, immersive web experiences - from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
+      "From database schema to deployment pipeline, every decision is made intentionally. We don't just ship features - we ship products that are fast, maintainable, and built to scale.",
     ],
     steps: webSteps,
     tools: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Prisma", "Vercel"],
@@ -148,8 +148,8 @@ const services: Service[] = [
     label: "UI/UX Design",
     headline: "Research-Driven Design",
     body: [
-      "Great software starts with great design. We create clean, intuitive interfaces that put the user first — from wireframes and prototypes to polished design systems ready for development.",
-      "Whether you need a full product design from scratch, a design system to scale an existing product, or a usability audit — we bring structured process and aesthetic rigour to every engagement.",
+      "Great software starts with great design. We create clean, intuitive interfaces that put the user first - from wireframes and prototypes to polished design systems ready for development.",
+      "Whether you need a full product design from scratch, a design system to scale an existing product, or a usability audit - we bring structured process and aesthetic rigour to every engagement.",
     ],
     steps: designSteps,
     tools: ["Figma", "Design Systems", "Prototyping", "User Research", "Accessibility", "Component Libraries"],
@@ -165,7 +165,7 @@ const services: Service[] = [
     label: "Automation & Web Scraping",
     headline: "Data Extraction at Scale",
     body: [
-      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation — automated, reliable, and scalable.",
+      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation - automated, reliable, and scalable.",
       "Every scraper is built for the real web: dynamic pages, pagination, anti-bot measures, and structured multi-format output. You get clean data, not raw HTML.",
     ],
     steps: automationSteps,
@@ -345,7 +345,7 @@ export default function ServicesPage() {
               variants={fadeUp}
               className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10"
             >
-              Web development, UI/UX design, and automation — end-to-end
+              Web development, UI/UX design, and automation - end-to-end
               digital solutions built to solve real problems.
             </motion.p>
 
@@ -410,7 +410,7 @@ export default function ServicesPage() {
                 className="text-white/75 text-lg mb-10 max-w-xl mx-auto"
               >
                 Tell us about your project and we&apos;ll scope the right solution
-                together — no commitment required.
+                together - no commitment required.
               </motion.p>
               <motion.div variants={fadeUp}>
                 <Link

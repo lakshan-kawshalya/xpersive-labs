@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import Link from "next/link";
 
 export default function HeroSection() {
   const reduced = useReducedMotion();
@@ -19,7 +19,7 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Floating gradient orbs — static when reduced motion requested */}
+      {/* Floating gradient orbs - static when reduced motion requested */}
       <motion.div
         className="absolute -top-20 -left-40 w-[500px] h-[500px] rounded-full blur-[120px]"
         style={{ background: "radial-gradient(circle, rgba(109,113,249,0.4) 0%, transparent 70%)" }}
@@ -70,7 +70,7 @@ export default function HeroSection() {
           variants={fadeUp}
           className="max-w-2xl mx-auto text-lg sm:text-xl text-white/55 leading-relaxed mb-11"
         >
-          Innovation for a Better Tomorrow — we develop cutting-edge technologies
+          Innovation for a Better Tomorrow - we develop cutting-edge technologies
           that drive progress and enhance human experience across diverse industries.
         </motion.p>
 

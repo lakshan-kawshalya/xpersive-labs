@@ -89,7 +89,7 @@ export default function TeamPage() {
               variants={fadeUp}
               className="text-white/55 text-lg sm:text-xl leading-relaxed"
             >
-              A focused, solo-founder studio based in Colombo, Sri Lanka —
+              A focused, solo-founder studio based in Colombo, Sri Lanka -
               with a global mindset and an uncompromising commitment to craft.
             </motion.p>
           </motion.div>
@@ -123,7 +123,7 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* HIRING — uncomment when actively recruiting
+      {/* HIRING - uncomment when actively recruiting
       <section className="py-24 border-t border-white/[0.07]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
@@ -162,7 +162,7 @@ export default function TeamPage() {
                 >
                   We&apos;re always looking for talented designers, engineers, and
                   strategists who want to build meaningful products. If you care
-                  about craft, ship with pride, and thrive in a tight-knit team —
+                  about craft, ship with pride, and thrive in a tight-knit team -
                   we&apos;d love to hear from you.
                 </motion.p>
               </div>
