@@ -2,33 +2,30 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 
 const projects = [
   {
-    title: "HealthSync Platform",
+    slug: "xpersive-labs-website",
+    title: "Xpersive Labs Website",
+    category: "Web",
     description:
-      "A comprehensive healthcare management platform with real-time data sync and AI-powered diagnostics.",
-    tags: ["Web App", "React", "Next.js"],
-    gradient: "from-[#6D71F9] via-purple-500 to-[#54C1FB]",
+      "Our own company website — a fully animated multi-page Next.js 14 site with scroll-reveal effects, Keystatic CMS blog, contact form, and Vercel deployment.",
+    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    gradient: "from-[#6D71F9] to-[#54C1FB]",
     accentColor: "#6D71F9",
+    /* TODO: add liveUrl when xpersivelabs.com domain is live */
   },
   {
-    title: "TradeFlow Mobile",
+    slug: "alibaba-scraper",
+    title: "Alibaba Product Scraper",
+    category: "Automation",
     description:
-      "Cross-platform trading app with live market feeds, portfolio analytics, and push alerts.",
-    tags: ["Mobile", "React Native", "TypeScript"],
-    gradient: "from-[#54C1FB] via-blue-400 to-cyan-300",
-    accentColor: "#54C1FB",
-  },
-  {
-    title: "Lumina Design System",
-    description:
-      "A cohesive, accessible design language powering 5+ enterprise products with a shared component library.",
-    tags: ["UI/UX", "Design System", "Figma"],
-    gradient: "from-purple-600 via-[#6D71F9] to-pink-500",
-    accentColor: "#a855f7",
+      "Automated scraper that extracts product listings, pricing, and supplier data from Alibaba at scale. Exports structured data to both CSV and JSON formats for market research and analysis.",
+    tags: ["Python", "Web Scraping", "CSV", "JSON", "Automation"],
+    gradient: "from-[#272848] to-[#6D71F9]",
+    accentColor: "#6D71F9",
   },
 ];
 
@@ -37,7 +34,6 @@ export default function PortfolioSection() {
     <section className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-dark" />
 
-      {/* Separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -75,9 +71,9 @@ export default function PortfolioSection() {
           </motion.div>
         </motion.div>
 
-        {/* Project cards */}
+        {/* Project cards — 2 col */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -85,17 +81,16 @@ export default function PortfolioSection() {
         >
           {projects.map((project) => (
             <motion.div
-              key={project.title}
+              key={project.slug}
               variants={fadeUp}
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 280, damping: 20 }}
               className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
             >
-              {/* Gradient image placeholder */}
+              {/* Gradient thumbnail */}
               <div
                 className={`relative h-52 bg-gradient-to-br ${project.gradient} overflow-hidden`}
               >
-                {/* Subtle pattern overlay */}
                 <div
                   className="absolute inset-0 opacity-20"
                   style={{
@@ -103,7 +98,6 @@ export default function PortfolioSection() {
                       "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 40%)",
                   }}
                 />
-                {/* Grid lines */}
                 <div
                   className="absolute inset-0 opacity-10"
                   style={{
@@ -112,13 +106,18 @@ export default function PortfolioSection() {
                     backgroundSize: "32px 32px",
                   }}
                 />
-
-                {/* Hover overlay */}
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+                    {project.category}
+                  </span>
+                </div>
                 <div className="absolute inset-0 bg-dark/75 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                  <div className="flex items-center gap-2.5 text-white font-semibold text-sm border border-white/20 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm">
-                    <ExternalLink size={15} />
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    className="flex items-center gap-2.5 text-white font-semibold text-sm border border-white/20 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm"
+                  >
                     View Project
-                  </div>
+                  </Link>
                 </div>
               </div>
 
