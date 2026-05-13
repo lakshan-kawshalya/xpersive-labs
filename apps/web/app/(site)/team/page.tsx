@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Code2, Briefcase, Globe, Mail, ArrowRight, Sparkles } from "lucide-react";
+import { Code2, Briefcase, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
@@ -27,48 +27,13 @@ interface TeamMember {
 const team: TeamMember[] = [
   {
     name: "Lakshan Kawshalya",
-    role: "Founder & Full-Stack Engineer",
-    bio: "Architect of the core platform and technical vision. Lakshan leads engineering with a focus on performance, scalability, and developer experience.",
+    role: "Founder & Full-Stack Developer",
+    bio: "Building immersive web experiences and scalable software from Colombo, Sri Lanka. Passionate about clean code, great design, and technology that makes a real difference.",
     gradient: "from-[#6D71F9] to-[#54C1FB]",
     initials: "LK",
     social: [
-      { icon: Code2, href: "https://github.com", label: "GitHub" },
-      { icon: Briefcase, href: "https://linkedin.com", label: "LinkedIn" },
-      { icon: Globe, href: "#", label: "Website" },
-    ],
-  },
-  {
-    name: "Sithara Perera",
-    role: "Lead UI/UX Designer",
-    bio: "Sithara turns complex problems into elegant, intuitive interfaces. She brings a research-first mindset and a meticulous eye for craft to every project.",
-    gradient: "from-purple-500 to-[#6D71F9]",
-    initials: "SP",
-    social: [
-      { icon: Briefcase, href: "https://linkedin.com", label: "LinkedIn" },
-      { icon: Globe, href: "#", label: "Portfolio" },
-    ],
-  },
-  {
-    name: "Ashan Wijeratne",
-    role: "Mobile & Backend Engineer",
-    bio: "Specialist in React Native and Node.js, Ashan owns the mobile division and core API infrastructure — obsessively focused on latency and reliability.",
-    gradient: "from-[#54C1FB] to-cyan-400",
-    initials: "AW",
-    social: [
-      { icon: Code2, href: "https://github.com", label: "GitHub" },
-      { icon: Briefcase, href: "https://linkedin.com", label: "LinkedIn" },
-    ],
-  },
-  {
-    name: "Nimasha Fernando",
-    role: "Frontend Engineer",
-    bio: "Nimasha builds the pixel-perfect, accessible interfaces that bring our designs to life — with a deep command of React, animation, and web performance.",
-    gradient: "from-pink-500 to-[#6D71F9]",
-    initials: "NF",
-    social: [
-      { icon: Code2, href: "https://github.com", label: "GitHub" },
-      { icon: Briefcase, href: "https://linkedin.com", label: "LinkedIn" },
-      { icon: Globe, href: "#", label: "Website" },
+      { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
+      { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
     ],
   },
 ];
@@ -80,7 +45,6 @@ export default function TeamPage() {
     <div className="bg-dark text-white">
       {/* ── Hero ────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-24 overflow-hidden">
-        {/* Orbs */}
         <motion.div
           className="absolute -top-24 left-1/4 w-[440px] h-[440px] rounded-full blur-[120px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
@@ -125,9 +89,8 @@ export default function TeamPage() {
               variants={fadeUp}
               className="text-white/55 text-lg sm:text-xl leading-relaxed"
             >
-              We&apos;re a small, focused group of builders who care deeply about
-              craft — designers who code, engineers with taste, and strategists
-              who ship. Based in Colombo, working for the world.
+              A focused, solo-founder studio based in Colombo, Sri Lanka —
+              with a global mindset and an uncompromising commitment to craft.
             </motion.p>
           </motion.div>
         </div>
@@ -137,7 +100,7 @@ export default function TeamPage() {
       <section className="py-10 pb-28 border-t border-white/[0.07]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="flex justify-center"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -148,7 +111,6 @@ export default function TeamPage() {
             ))}
           </motion.div>
 
-          {/* Culture note */}
           <motion.p
             className="text-center text-white/30 text-sm mt-14 max-w-lg mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 16 }}
@@ -156,40 +118,12 @@ export default function TeamPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            We work async-first, ship fast, and believe the best ideas come from
-            diverse perspectives. Remote-friendly, curiosity-required.
+            Building thoughtfully, shipping with care, and growing one project at a time.
           </motion.p>
         </div>
       </section>
 
-      {/* ── Values strip ────────────────────────────────────────── */}
-      <section className="py-16 border-t border-white/[0.07]">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-          >
-            {[
-              { stat: "4", label: "Core Team" },
-              { stat: "20+", label: "Projects Shipped" },
-              { stat: "3", label: "Countries Served" },
-              { stat: "100%", label: "Remote-Friendly" },
-            ].map(({ stat, label }) => (
-              <motion.div key={label} variants={fadeUp} className="py-4">
-                <p className="font-display text-4xl font-bold text-gradient mb-1">
-                  {stat}
-                </p>
-                <p className="text-white/40 text-sm font-medium">{label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Join the team ────────────────────────────────────────── */}
+      {/* HIRING — uncomment when actively recruiting
       <section className="py-24 border-t border-white/[0.07]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
@@ -199,7 +133,6 @@ export default function TeamPage() {
             viewport={{ once: true, margin: "-80px" }}
             variants={staggerContainer}
           >
-            {/* Gradient bg */}
             <div
               className="absolute inset-0"
               style={{
@@ -208,7 +141,6 @@ export default function TeamPage() {
               }}
             />
             <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-            {/* Glow */}
             <motion.div
               className="absolute top-0 right-0 w-72 h-72 rounded-full blur-[100px] pointer-events-none"
               style={{ background: "radial-gradient(circle, rgba(109,113,249,0.2) 0%, transparent 70%)" }}
@@ -218,12 +150,6 @@ export default function TeamPage() {
 
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
               <div className="max-w-xl">
-                <motion.div variants={fadeUp} className="flex items-center gap-2 mb-5">
-                  <Sparkles size={16} className="text-primary" />
-                  <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
-                    We&apos;re Hiring
-                  </span>
-                </motion.div>
                 <motion.h2
                   variants={fadeUp}
                   className="font-display text-3xl sm:text-4xl font-bold mb-4 leading-tight"
@@ -243,11 +169,10 @@ export default function TeamPage() {
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
                 <a
-                  href="mailto:careers@xpersivelabs.com"
+                  href="mailto:hello@xpersivelabs.com"
                   className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
                   style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
                 >
-                  <Mail size={16} />
                   Send Us Your Work
                 </a>
                 <Link
@@ -262,6 +187,7 @@ export default function TeamPage() {
           </motion.div>
         </div>
       </section>
+      */}
     </div>
   );
 }
@@ -274,14 +200,12 @@ function MemberCard({ member }: { member: TeamMember }) {
       variants={fadeUp}
       whileHover={{ y: -8 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative p-7 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-primary/25 transition-colors duration-300 flex flex-col items-center text-center"
+      className="group relative p-7 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-primary/25 transition-colors duration-300 flex flex-col items-center text-center w-full max-w-sm"
     >
-      {/* Hover glow */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)",
         }}
       />
 
@@ -295,11 +219,9 @@ function MemberCard({ member }: { member: TeamMember }) {
         >
           {member.initials}
         </div>
-        {/* Online dot */}
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
       </div>
 
-      {/* Info */}
       <h3 className="relative font-display text-lg font-bold mb-1 leading-tight">
         {member.name}
       </h3>
@@ -310,7 +232,6 @@ function MemberCard({ member }: { member: TeamMember }) {
         {member.bio}
       </p>
 
-      {/* Social links */}
       <div className="relative flex items-center gap-2">
         {member.social.map(({ icon: Icon, href, label }) => (
           <a
