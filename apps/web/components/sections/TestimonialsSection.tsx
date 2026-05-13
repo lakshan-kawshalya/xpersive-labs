@@ -1,40 +1,42 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Shield, Clock, Star } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 
-const testimonials = [
+const principles = [
   {
-    quote:
-      "Xpersive Labs transformed our vision into a stunning, high-performance platform. Their attention to detail and technical expertise are unmatched.",
-    name: "Amal Perera",
-    title: "CTO, HealthSync",
-    initials: "AP",
-    gradient: "from-primary to-accent",
+    icon: Shield,
+    title: "Transparent Communication",
+    body: "We keep you in the loop at every stage — no surprises, no black boxes. You always know what's being built and why.",
+    color: "text-primary",
+    bg: "bg-primary/10",
+    border: "hover:border-primary/25",
+    glow: "rgba(109, 113, 249, 0.08)",
   },
   {
-    quote:
-      "The team delivered our mobile app ahead of schedule with exceptional quality. They truly understand both design and engineering at the highest level.",
-    name: "Priya Wijesinghe",
-    title: "Founder, TradeFlow",
-    initials: "PW",
-    gradient: "from-accent to-cyan-400",
+    icon: Clock,
+    title: "On-Time Delivery",
+    body: "We scope carefully and commit seriously. Your deadlines are our deadlines, not a suggestion.",
+    color: "text-accent",
+    bg: "bg-accent/10",
+    border: "hover:border-accent/25",
+    glow: "rgba(84, 193, 251, 0.08)",
   },
   {
-    quote:
-      "Working with Xpersive Labs felt like having a world-class product team in-house. Passionate, professional, and they always deliver results.",
-    name: "Kamal Jayawardena",
-    title: "CEO, Lumina Co.",
-    initials: "KJ",
-    gradient: "from-purple-500 to-primary",
+    icon: Star,
+    title: "Quality Over Quantity",
+    body: "We'd rather do two things exceptionally well than ten things poorly. Every project gets our full attention.",
+    color: "text-purple-400",
+    bg: "bg-purple-500/10",
+    border: "hover:border-purple-500/25",
+    glow: "rgba(168, 85, 247, 0.08)",
   },
 ];
 
 export default function TestimonialsSection() {
   return (
     <section className="py-28 bg-dark relative overflow-hidden">
-      {/* Subtle grid background */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -44,11 +46,9 @@ export default function TestimonialsSection() {
         }}
       />
 
-      {/* Separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Heading */}
         <motion.div
           className="text-center mb-16"
           variants={staggerContainer}
@@ -60,17 +60,22 @@ export default function TestimonialsSection() {
             variants={fadeUp}
             className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4"
           >
-            Testimonials
+            Our Principles
           </motion.span>
           <motion.h2
             variants={fadeUp}
-            className="font-display text-4xl sm:text-5xl font-bold"
+            className="font-display text-4xl sm:text-5xl font-bold mb-4"
           >
-            What Clients Say
+            How We Work
           </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className="text-white/45 text-lg max-w-md mx-auto"
+          >
+            What you can expect from every project we take on.
+          </motion.p>
         </motion.div>
 
-        {/* Cards */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
           variants={staggerContainer}
@@ -78,39 +83,29 @@ export default function TestimonialsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {testimonials.map((t) => (
+          {principles.map((p) => (
             <motion.div
-              key={t.name}
+              key={p.title}
               variants={fadeUp}
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-primary/20 transition-colors duration-300 flex flex-col"
+              className={`relative p-8 rounded-2xl bg-white/[0.03] border border-white/10 ${p.border} transition-colors duration-300 flex flex-col`}
             >
-              {/* Quote icon */}
-              <Quote
-                size={28}
-                className="text-primary/25 mb-6 flex-shrink-0"
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse at 50% 0%, ${p.glow} 0%, transparent 70%)` }}
               />
 
-              {/* Quote text */}
-              <p className="text-white/60 text-sm leading-[1.8] mb-8 flex-1 italic">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-6 border-t border-white/[0.07]">
-                <div
-                  className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}
-                >
-                  {t.initials}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-white leading-tight">
-                    {t.name}
-                  </p>
-                  <p className="text-xs text-white/35 mt-0.5">{t.title}</p>
-                </div>
+              <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-xl ${p.bg} mb-6 flex-shrink-0`}>
+                <p.icon size={22} className={p.color} />
               </div>
+
+              <h3 className="relative font-display text-xl font-bold mb-3">
+                {p.title}
+              </h3>
+              <p className="relative text-white/55 text-sm leading-[1.8] flex-1">
+                {p.body}
+              </p>
             </motion.div>
           ))}
         </motion.div>
