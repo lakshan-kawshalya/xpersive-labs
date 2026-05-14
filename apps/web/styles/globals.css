@@ -184,6 +184,41 @@ html {
   margin: 1.75rem 0;
 }
 
+/* Noise grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSczMDAnIGhlaWdodD0nMzAwJz48ZmlsdGVyIGlkPSdub2lzZSc+PGZlVHVyYnVsZW5jZSB0eXBlPSdmcmFjdGFsTm9pc2UnIGJhc2VGcmVxdWVuY3k9JzAuNjUnIG51bU9jdGF2ZXM9JzMnIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMzAwJyBoZWlnaHQ9JzMwMCcgZmlsdGVyPSd1cmwoI25vaXNlKScgb3BhY2l0eT0nMScvPjwvc3ZnPg==");
+  opacity: 0.025;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #272848; }
+::-webkit-scrollbar-thumb { background: #6D71F9; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #54C1FB; }
+
+/* Animated underline for inline body links */
+.link-underline {
+  background: linear-gradient(#6D71F9, #6D71F9) no-repeat right bottom;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease, background-position 0s 0.3s;
+}
+.link-underline:hover {
+  background-position: left bottom;
+  background-size: 100% 1px;
+  transition: background-size 0.3s ease;
+}
+
+/* Founder card avatar ring rotation */
+@keyframes ring-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 /* CTA section animated gradient border */
 @keyframes gradient-slide {
   0%   { background-position: 0% 0%;   }
