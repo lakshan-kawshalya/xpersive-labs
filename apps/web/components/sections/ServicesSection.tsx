@@ -105,7 +105,7 @@ export default function ServicesSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           <motion.span
             variants={fadeUp}
@@ -133,7 +133,7 @@ export default function ServicesSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           {services.map((service) => (
             <SpotlightCard key={service.title} service={service} />

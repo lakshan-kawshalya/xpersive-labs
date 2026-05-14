@@ -119,7 +119,7 @@ export default function TestimonialsSection() {
           className="text-center mb-16"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
         >
           <motion.span
@@ -145,7 +145,7 @@ export default function TestimonialsSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
         >
           {principles.map((p) => (

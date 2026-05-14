@@ -174,7 +174,7 @@ export default function AboutPage() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-80px" }}
             >
               <motion.span
                 variants={fadeUp}
@@ -212,7 +212,7 @@ export default function AboutPage() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-80px" }}
               variants={fadeUp}
               className="relative"
             >
@@ -257,7 +257,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             <motion.span
               variants={fadeUp}
@@ -278,7 +278,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             <motion.div
               variants={fadeUp}
@@ -339,7 +339,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             <motion.span
               variants={fadeUp}
@@ -360,7 +360,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             {values.map((v) => (
               <motion.div
@@ -393,7 +393,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             <motion.span
               variants={fadeUp}
@@ -414,7 +414,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
           >
             <div className="absolute left-[27px] top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
 
