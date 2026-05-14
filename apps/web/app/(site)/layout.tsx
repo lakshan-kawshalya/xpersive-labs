@@ -1,6 +1,8 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/layout/CustomCursor";
+import Footer from "@/components/layout/Footer";
+import LoadingScreen from "@/components/layout/LoadingScreen";
+import Navbar from "@/components/layout/Navbar";
+import PageTransitionProvider from "@/components/layout/PageTransitionProvider";
 
 export default function SiteLayout({
   children,
@@ -9,9 +11,10 @@ export default function SiteLayout({
 }) {
   return (
     <>
+      <LoadingScreen />
       <CustomCursor />
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <PageTransitionProvider>{children}</PageTransitionProvider>
       <Footer />
     </>
   );
