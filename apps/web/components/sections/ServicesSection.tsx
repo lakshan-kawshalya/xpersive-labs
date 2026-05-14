@@ -4,6 +4,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
 import Link from "next/link";
+import { useRef, useState } from "react";
 
 const services = [
   {
@@ -12,10 +13,6 @@ const services = [
     description:
       "We design and build fast, modern, immersive web experiences - from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
     href: "/services#web",
-    iconBg: "bg-primary/10",
-    iconColor: "text-primary",
-    borderHover: "hover:border-primary/30",
-    glowColor: "rgba(109, 113, 249, 0.08)",
   },
   {
     icon: Palette,
@@ -23,10 +20,6 @@ const services = [
     description:
       "Great software starts with great design. We create clean, intuitive interfaces that put the user first - from wireframes and prototypes to polished design systems ready for development.",
     href: "/services#design",
-    iconBg: "bg-purple-500/10",
-    iconColor: "text-purple-400",
-    borderHover: "hover:border-purple-500/30",
-    glowColor: "rgba(168, 85, 247, 0.08)",
   },
   {
     icon: Terminal,
@@ -34,12 +27,72 @@ const services = [
     description:
       "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation - automated, reliable, and scalable.",
     href: "/services#automation",
-    iconBg: "bg-accent/10",
-    iconColor: "text-accent",
-    borderHover: "hover:border-accent/30",
-    glowColor: "rgba(84, 193, 251, 0.08)",
   },
 ];
+
+function SpotlightCard({ service }: { service: typeof services[number] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
+
+  return (
+    <motion.div
+      ref={cardRef}
+      variants={fadeUp}
+      onMouseMove={(e) => {
+        const r = cardRef.current?.getBoundingClientRect();
+        if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
+      }}
+      onMouseLeave={() => setSpot((s) => ({ ...s, on: false }))}
+      whileHover={{ y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" }}
+      transition={{ type: "spring", stiffness: 200, damping: 22 }}
+      className="group relative flex flex-col rounded-3xl border border-white/[0.06] hover:border-primary/30 overflow-hidden transition-colors duration-[350ms]"
+      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
+    >
+      {/* Hover background tint */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "rgba(109,113,249,0.04)" }}
+      />
+      {/* Spotlight radial */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          opacity: spot.on ? 1 : 0,
+          transition: "opacity 0.2s ease",
+          background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)`,
+        }}
+      />
+
+      {/* Icon container */}
+      <div
+        className="relative inline-flex items-center justify-center w-12 h-12 mb-7 transition-all duration-300 group-hover:rotate-[5deg]"
+        style={{
+          borderRadius: 14,
+          background: "linear-gradient(135deg, rgba(109,113,249,0.2), rgba(84,193,251,0.2))",
+          border: "1px solid rgba(109,113,249,0.3)",
+        }}
+      >
+        <service.icon size={24} className="text-primary" />
+      </div>
+
+      <h3 className="relative font-display text-xl font-bold mb-3 text-white">
+        {service.title}
+      </h3>
+      <p className="relative text-white/50 text-sm leading-relaxed mb-7 flex-1">
+        {service.description}
+      </p>
+
+      {/* Learn More — visible on hover */}
+      <Link
+        href={service.href}
+        className="relative inline-flex items-center gap-1.5 text-sm font-semibold text-primary opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+      >
+        Learn More
+        <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+      </Link>
+    </motion.div>
+  );
+}
 
 export default function ServicesSection() {
   return (
@@ -83,40 +136,7 @@ export default function ServicesSection() {
           viewport={{ once: true, margin: "-100px" }}
         >
           {services.map((service) => (
-            <motion.div
-              key={service.title}
-              variants={fadeUp}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 280, damping: 20 }}
-              className={`group relative p-8 rounded-2xl bg-white/[0.03] border border-white/10 ${service.borderHover} transition-colors duration-300`}
-              style={{ boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05)` }}
-            >
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ background: `radial-gradient(ellipse at 50% 0%, ${service.glowColor} 0%, transparent 70%)` }}
-              />
-
-              <div
-                className={`relative inline-flex items-center justify-center w-14 h-14 rounded-xl ${service.iconBg} mb-7`}
-              >
-                <service.icon size={24} className={service.iconColor} />
-              </div>
-
-              <h3 className="relative font-display text-xl font-bold mb-3">
-                {service.title}
-              </h3>
-              <p className="relative text-white/50 text-sm leading-relaxed mb-7">
-                {service.description}
-              </p>
-
-              <Link
-                href={service.href}
-                className={`relative inline-flex items-center gap-1.5 text-sm font-semibold ${service.iconColor} transition-all group-hover:gap-3`}
-              >
-                Learn More
-                <ArrowRight size={14} />
-              </Link>
-            </motion.div>
+            <SpotlightCard key={service.title} service={service} />
           ))}
         </motion.div>
       </div>

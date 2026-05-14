@@ -178,7 +178,115 @@ const services: Service[] = [
   },
 ];
 
-/* ─── Sub-components ────────────────────────────────────────────────── */
+/* ─── Process timeline ──────────────────────────────────────────────── */
+
+function ProcessTimeline({ steps }: { steps: Step[] }) {
+  return (
+    <div>
+      {/* Desktop: horizontal */}
+      <div className="hidden lg:flex items-start">
+        {steps.map((step, i) => (
+          <div key={step.title} className="flex items-start flex-1">
+            <div className="flex flex-col items-center text-center flex-1 px-3">
+              {/* Dot */}
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center mb-5 relative z-10 flex-shrink-0"
+                style={{
+                  background: "rgba(109,113,249,0.12)",
+                  border: "1px solid rgba(109,113,249,0.3)",
+                }}
+              >
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              </div>
+
+              {/* Watermark number */}
+              <motion.span
+                className="font-display font-extrabold leading-none select-none mb-3 block"
+                style={{ fontSize: 64, color: "rgba(109,113,249,0.15)" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </motion.span>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 + 0.1 }}
+              >
+                <h4 className="font-semibold text-white mb-2" style={{ fontSize: 20 }}>
+                  {step.title}
+                </h4>
+                <p className="text-white/55 leading-relaxed" style={{ fontSize: 15 }}>
+                  {step.description}
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Connector */}
+            {i < steps.length - 1 && (
+              <div className="pt-3 flex-shrink-0 w-4">
+                <motion.div
+                  style={{
+                    height: 1,
+                    borderTop: "1px dashed rgba(109,113,249,0.2)",
+                    transformOrigin: "left center",
+                    width: "100%",
+                  }}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 + 0.3, duration: 0.5, ease: "easeOut" }}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile: vertical */}
+      <div className="lg:hidden space-y-0">
+        {steps.map((step, i) => (
+          <motion.div
+            key={step.title}
+            className="flex gap-4"
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <div className="flex flex-col items-center flex-shrink-0">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(109,113,249,0.12)", border: "1px solid rgba(109,113,249,0.3)" }}
+              >
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              </div>
+              {i < steps.length - 1 && (
+                <div className="w-px flex-1 mt-2 mb-2" style={{ borderLeft: "1px dashed rgba(109,113,249,0.2)" }} />
+              )}
+            </div>
+            <div className="pb-8">
+              <span
+                className="font-display font-extrabold leading-none select-none block mb-2"
+                style={{ fontSize: 40, color: "rgba(109,113,249,0.2)" }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h4 className="font-semibold text-white mb-1" style={{ fontSize: 18 }}>{step.title}</h4>
+              <p className="text-white/55 leading-relaxed" style={{ fontSize: 14 }}>{step.description}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── ServiceRow ────────────────────────────────────────────────────── */
 
 function ServiceRow({ service, index }: { service: Service; index: number }) {
   const reversed = index % 2 !== 0;
@@ -217,18 +325,33 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               ))}
             </div>
 
+            {/* Tech stack badges — stagger entrance, mono font, hover effect */}
             <div>
               <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-3">
                 Tools &amp; Technologies
               </p>
               <div className="flex flex-wrap gap-2">
-                {service.tools.map((tool) => (
-                  <span
+                {service.tools.map((tool, idx) => (
+                  <motion.span
                     key={tool}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold ${service.accentBg} ${service.accentColor} border border-white/10`}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.04, duration: 0.3 }}
+                    className="px-3 py-1.5 rounded-full font-mono text-[13px] cursor-default transition-all duration-200 hover:text-white"
+                    style={{
+                      background: "rgba(109,113,249,0.08)",
+                      border: "1px solid rgba(109,113,249,0.2)",
+                      color: "rgba(255,255,255,0.7)",
+                    }}
+                    whileHover={{
+                      backgroundColor: "rgba(109,113,249,0.15)",
+                      borderColor: "rgba(109,113,249,0.4)",
+                      color: "#ffffff",
+                    }}
                   >
                     {tool}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </div>
@@ -259,39 +382,18 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           </motion.div>
         </motion.div>
 
-        {/* Process steps */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        {/* Process timeline */}
+        <div>
           <motion.p
-            variants={fadeUp}
-            className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-8"
+            className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
             Our Process
           </motion.p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {service.steps.map((step, i) => (
-              <motion.div
-                key={step.title}
-                variants={fadeUp}
-                className="relative p-6 rounded-xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
-              >
-                <span className={`absolute top-5 right-5 font-display text-3xl font-bold opacity-10 ${service.accentColor}`}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${service.accentBg} mb-4`}>
-                  <step.icon size={18} className={service.accentColor} />
-                </div>
-                <h4 className="font-semibold text-white mb-2">{step.title}</h4>
-                <p className="text-white/45 text-sm leading-relaxed">{step.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          <ProcessTimeline steps={service.steps} />
+        </div>
       </div>
     </section>
   );
