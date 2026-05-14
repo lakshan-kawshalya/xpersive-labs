@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const projects = [
   {
@@ -32,8 +32,14 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -60,7 +66,7 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
           ? "transform 0.1s ease"
           : "transform 0.5s cubic-bezier(0.23,1,0.32,1)",
       }}
-      className="group relative rounded-[20px] overflow-hidden border border-white/[0.06] bg-white/[0.02]"
+      className="group relative rounded-[20px] overflow-hidden border border-white/6 bg-white/2"
     >
       {/* Sheen highlight that shifts with tilt */}
       <div
