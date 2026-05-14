@@ -1,264 +1,150 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Code2, Briefcase, ArrowRight } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { Briefcase, Code2, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
-/* ─── Types ─────────────────────────────────────────────────────────── */
-
-interface SocialLink {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  href: string;
-  label: string;
-}
-
-interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  gradient: string;
-  initials: string;
-  avatar?: string;
-  social: SocialLink[];
-}
-
-/* ─── Data ──────────────────────────────────────────────────────────── */
-
-const team: TeamMember[] = [
-  {
-    name: "Lakshan Kawshalya",
-    role: "Founder & Full-Stack Developer",
-    bio: "Building immersive web experiences and scalable software from Colombo, Sri Lanka. Passionate about clean code, great design, and technology that makes a real difference.",
-    gradient: "from-[#6D71F9] to-[#54C1FB]",
-    initials: "LK",
-    avatar: "/team/lakshan-kawshalya.png",
-    social: [
-      { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
-      { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
-    ],
-  },
-];
-
-/* ─── Page ──────────────────────────────────────────────────────────── */
+const founder = {
+  name: "Lakshan Kawshalya",
+  role: "Founder & Full-Stack Developer",
+  bio: "Building immersive web experiences and scalable software from Colombo, Sri Lanka. Passionate about clean code, great design, and technology that makes a real difference.",
+  initials: "LK",
+  avatar: "/team/lakshan-kawshalya.png",
+  social: [
+    { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
+    { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
+  ],
+};
 
 export default function TeamPage() {
   return (
     <div className="bg-dark text-white">
-      {/* ── Hero ────────────────────────────────────────────────── */}
+      {/* Hero */}
       <section className="relative pt-40 pb-24 overflow-hidden">
         <motion.div
-          className="absolute -top-24 left-1/4 w-[440px] h-[440px] rounded-full blur-[120px] pointer-events-none"
+          className="absolute -top-24 left-1/4 w-110 h-110 rounded-full blur-[120px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
           animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
-          className="absolute top-20 right-0 w-[360px] h-[360px] rounded-full blur-[110px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.14, 1] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
-
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="max-w-3xl"
-          >
-            <motion.span
-              variants={fadeUp}
-              className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
-            >
+          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="max-w-3xl">
+            <motion.span variants={fadeUp} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
               The People
             </motion.span>
-            <motion.h1
-              variants={fadeUp}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7"
-            >
-              Meet the{" "}
-              <span className="text-gradient">Team</span>
+            <motion.h1 variants={fadeUp} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
+              Meet the <span className="text-gradient">Team</span>
             </motion.h1>
-            <motion.p
-              variants={fadeUp}
-              className="text-white/55 text-lg sm:text-xl leading-relaxed"
-            >
-              A focused, solo-founder studio based in Colombo, Sri Lanka -
-              with a global mindset and an uncompromising commitment to craft.
-            </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* ── Team grid ───────────────────────────────────────────── */}
-      <section className="py-10 pb-28 border-t border-white/[0.07]">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* Studio quote */}
+      <section className="pb-10 border-t border-white/[0.07]">
+        <div className="max-w-3xl mx-auto px-6 pt-16">
+          <motion.blockquote
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] as const }}
+            className="italic leading-relaxed pl-5"
+            style={{
+              borderLeft: "2px solid #6D71F9",
+              fontSize: 18,
+              color: "rgba(255,255,255,0.7)",
+            }}
+          >
+            A focused, solo-founder studio based in Colombo, Sri Lanka — with a global mindset
+            and an uncompromising commitment to craft.
+          </motion.blockquote>
+        </div>
+      </section>
+
+      {/* Featured founder card */}
+      <section className="py-16 pb-28 border-t border-white/[0.07]">
+        <div className="max-w-7xl mx-auto px-6 flex justify-center">
           <motion.div
-            className="flex justify-center"
-            variants={staggerContainer}
+            variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
+            className="w-full max-w-120"
           >
-            {team.map((member) => (
-              <MemberCard key={member.name} member={member} />
-            ))}
-          </motion.div>
-
-          <motion.p
-            className="text-center text-white/30 text-sm mt-14 max-w-lg mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Building thoughtfully, shipping with care, and growing one project at a time.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* HIRING - uncomment when actively recruiting
-      <section className="py-24 border-t border-white/[0.07]">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            className="relative rounded-2xl overflow-hidden p-12 sm:p-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(109,113,249,0.15) 0%, rgba(84,193,251,0.08) 50%, rgba(109,113,249,0.05) 100%)",
-              }}
-            />
-            <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-            <motion.div
-              className="absolute top-0 right-0 w-72 h-72 rounded-full blur-[100px] pointer-events-none"
-              style={{ background: "radial-gradient(circle, rgba(109,113,249,0.2) 0%, transparent 70%)" }}
-              animate={{ scale: [1, 1.15, 1] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
-              <div className="max-w-xl">
-                <motion.h2
-                  variants={fadeUp}
-                  className="font-display text-3xl sm:text-4xl font-bold mb-4 leading-tight"
-                >
-                  Join Our Team
-                </motion.h2>
-                <motion.p
-                  variants={fadeUp}
-                  className="text-white/55 leading-relaxed"
-                >
-                  We&apos;re always looking for talented designers, engineers, and
-                  strategists who want to build meaningful products. If you care
-                  about craft, ship with pride, and thrive in a tight-knit team -
-                  we&apos;d love to hear from you.
-                </motion.p>
-              </div>
-
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
-                <a
-                  href="mailto:hello@xpersivelabs.com"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
-                  style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
-                >
-                  Send Us Your Work
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/20 text-white/70 font-semibold text-sm transition-all duration-300 hover:border-primary/40 hover:text-white hover:bg-white/5"
-                >
-                  Get in Touch
-                  <ArrowRight size={15} />
-                </Link>
-              </motion.div>
-            </div>
+            <FounderCard />
           </motion.div>
         </div>
+
+        <motion.p
+          className="text-center text-white/30 text-sm mt-14 max-w-lg mx-auto leading-relaxed px-6"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          Building thoughtfully, shipping with care, and growing one project at a time.
+        </motion.p>
       </section>
-      */}
     </div>
   );
 }
 
-/* ─── MemberCard ─────────────────────────────────────────────────────── */
-
-function MemberCard({ member }: { member: TeamMember }) {
+function FounderCard() {
   return (
     <motion.div
-      variants={fadeUp}
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative p-7 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-primary/25 transition-colors duration-300 flex flex-col items-center text-center w-full max-w-sm"
+      whileHover={{ y: -8, boxShadow: "0 32px 80px rgba(109,113,249,0.18)" }}
+      transition={{ type: "spring", stiffness: 200, damping: 22 }}
+      className="group relative p-10 rounded-3xl border border-white/6 hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center"
+      style={{ background: "rgba(255,255,255,0.02)" }}
     >
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)",
-        }}
-      />
+      {/* Hover glow */}
+      <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)" }} />
 
-      {/* Avatar */}
-      <div className="relative mb-6">
-        {member.avatar ? (
-          <div
-            className="w-24 h-24 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105"
-            style={{ boxShadow: "0 0 0 4px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)" }}
-          >
-            <Image
-              src={member.avatar}
-              alt={member.name}
-              width={96}
-              height={96}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ) : (
-          <div
-            className={`w-24 h-24 rounded-full bg-linear-to-br ${member.gradient} flex items-center justify-center text-white text-2xl font-bold font-display shadow-lg transition-transform duration-300 group-hover:scale-105`}
-            style={{ boxShadow: "0 0 0 4px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)" }}
-          >
-            {member.initials}
-          </div>
-        )}
+      {/* Avatar with hover ring */}
+      <div className="relative mb-8">
+        {/* Rotating dashed ring on hover */}
+        <div
+          className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{
+            border: "1.5px dashed rgba(109,113,249,0.5)",
+            animation: "ring-rotate 8s linear infinite",
+          }}
+        />
+        <div
+          className="w-24 h-24 rounded-full overflow-hidden transition-transform duration-300 group-hover:scale-105"
+          style={{ boxShadow: "0 0 0 3px rgba(109,113,249,0.25), 0 8px 32px rgba(0,0,0,0.4)" }}
+        >
+          {founder.avatar ? (
+            <Image src={founder.avatar} alt={founder.name} width={96} height={96} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-linear-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold font-display">
+              {founder.initials}
+            </div>
+          )}
+        </div>
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
       </div>
 
-      <h3 className="relative font-display text-lg font-bold mb-1 leading-tight">
-        {member.name}
-      </h3>
-      <p className="relative text-xs font-semibold text-primary uppercase tracking-wider mb-4">
-        {member.role}
-      </p>
-      <p className="relative text-white/50 text-sm leading-relaxed mb-6 flex-1">
-        {member.bio}
+      <h3 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{founder.name}</h3>
+      <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{founder.role}</p>
+      <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>
+        {founder.bio}
       </p>
 
-      <div className="relative flex items-center gap-2">
-        {member.social.map(({ icon: Icon, href, label }) => (
+      {/* Social links — text + icon style */}
+      <div className="relative flex items-center gap-4">
+        {founder.social.map(({ icon: Icon, href, label }) => (
           <a
             key={label}
             href={href}
-            aria-label={label}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-white/[0.05] border border-white/10 text-white/40 transition-all duration-200 hover:bg-primary/15 hover:border-primary/30 hover:text-primary"
+            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-white/50 hover:text-primary"
           >
             <Icon size={14} />
+            <span>{label}</span>
+            <ExternalLink size={11} className="opacity-0 group-hover/link:opacity-100 transition-opacity duration-200" />
           </a>
         ))}
       </div>
