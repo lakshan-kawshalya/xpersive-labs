@@ -184,6 +184,12 @@ html {
   margin: 1.75rem 0;
 }
 
+/* CTA section animated gradient border */
+@keyframes gradient-slide {
+  0%   { background-position: 0% 0%;   }
+  100% { background-position: 200% 0%; }
+}
+
 /* Availability badge dot pulse */
 @keyframes badge-pulse {
   0%, 100% { transform: scale(1);   opacity: 1;   }
