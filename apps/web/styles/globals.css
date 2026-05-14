@@ -13,10 +13,14 @@
   --background-image-gradient-brand: linear-gradient(135deg, #6D71F9, #54C1FB);
 }
 
-/* Hide default cursor — only on non-touch pointer devices */
-@media (pointer: fine) {
+/* Hide default cursor site-wide; restore on touch/stylus devices */
+* {
+  cursor: none !important;
+}
+
+@media (hover: none) {
   * {
-    cursor: none;
+    cursor: auto !important;
   }
 }
 
