@@ -2,10 +2,10 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -156,19 +156,28 @@ export default function PortfolioPage() {
               {filtered.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}
+
+              {/* Placeholder card */}
+              <motion.div
+                key="placeholder"
+                variants={fadeUp}
+                layout
+                className="rounded-[20px] border border-dashed flex flex-col items-center justify-center text-center min-h-[300px] p-8"
+                style={{
+                  background: "rgba(255,255,255,0.01)",
+                  borderColor: "rgba(255,255,255,0.08)",
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-full border border-dashed flex items-center justify-center mb-4"
+                  style={{ borderColor: "rgba(255,255,255,0.15)" }}
+                >
+                  <span className="text-white/20 text-xl leading-none">+</span>
+                </div>
+                <p className="text-[14px] text-white/30">More work on the way</p>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
-
-          {/* More projects coming soon */}
-          <motion.p
-            className="text-center text-white/25 text-sm mt-14 font-medium"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            More projects coming soon.
-          </motion.p>
         </div>
       </section>
 
@@ -214,12 +223,49 @@ export default function PortfolioPage() {
 /* ─── ProjectCard ────────────────────────────────────────────────────── */
 
 function ProjectCard({ project }: { project: Project }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [hovered, setHovered] = useState(false);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: ny * 6, y: nx * 4 });
+  };
+
+  const onMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setHovered(false);
+  };
+
   return (
     <motion.div
+      ref={ref}
       variants={fadeUp}
       layout
-      className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
+      onMouseMove={onMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={onMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${-tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: hovered
+          ? "transform 0.1s ease"
+          : "transform 0.5s cubic-bezier(0.23,1,0.32,1)",
+      }}
+      className="relative rounded-[20px] overflow-hidden border border-white/6 bg-white/2"
     >
+      {/* Sheen */}
+      <div
+        className="absolute inset-0 pointer-events-none z-20 rounded-[20px]"
+        style={{
+          background: `linear-gradient(${105 + tilt.y * 5}deg, rgba(255,255,255,${hovered ? 0.04 : 0}) 0%, transparent 60%)`,
+          transition: "background 0.1s ease",
+        }}
+      />
+
       {/* Cover image */}
       <div className="relative h-56 overflow-hidden">
         <Image
@@ -228,40 +274,61 @@ function ProjectCard({ project }: { project: Project }) {
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
         />
 
         {/* Category badge */}
         <div className="absolute top-4 left-4 z-10">
-          <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+          <span
+            className="px-3 py-1 rounded-full text-white text-xs font-semibold"
+            style={{
+              background: "rgba(15,15,30,0.8)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
             {project.category}
           </span>
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-dark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-4 px-6 text-center z-10">
-          <p className="text-white/85 text-sm leading-relaxed">{project.shortDesc}</p>
-          <Link
-            href={`/portfolio/${project.slug}`}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-white text-sm font-semibold hover:bg-white/20 transition-colors"
+        <div
+          className="absolute inset-0 z-10 flex items-center justify-center"
+          style={{ background: "rgba(15,15,30,0.7)", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }}
+        >
+          <motion.div
+            animate={{ y: hovered ? 0 : 10, opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <ExternalLink size={14} />
-            View Project
-          </Link>
+            <Link
+              href={`/portfolio/${project.slug}`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold"
+              style={{ background: "rgba(109,113,249,0.9)" }}
+            >
+              View Project
+              <ArrowRight size={14} />
+            </Link>
+          </motion.div>
         </div>
       </div>
 
-      {/* Card body */}
-      <div className="p-6">
-        <Link href={`/portfolio/${project.slug}`} className="group/title">
-          <h3 className="font-display text-lg font-bold mb-3 group-hover/title:text-primary transition-colors duration-200">
-            {project.title}
-          </h3>
-        </Link>
+      {/* Info area */}
+      <div className="p-6" style={{ background: "rgba(255,255,255,0.02)" }}>
+        <h3
+          className="font-display text-[18px] font-bold mb-3 transition-colors duration-200"
+          style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
+        >
+          {project.title}
+        </h3>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs text-white/50 font-medium"
+              className="px-3 py-1 rounded-full font-mono text-xs text-white/50 transition-all duration-200 hover:text-white"
+              style={{
+                background: "rgba(109,113,249,0.08)",
+                border: "1px solid rgba(109,113,249,0.2)",
+              }}
             >
               {tag}
             </span>
