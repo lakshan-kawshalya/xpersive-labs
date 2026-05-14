@@ -5,16 +5,12 @@ import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
-  Briefcase,
   CheckCircle2,
   ChevronDown,
   Clock,
-  Code2,
   Loader2,
-  Mail,
   MapPin,
   Send,
-  Share2,
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,8 +18,6 @@ import { useForm } from "react-hook-form";
 const EMAILJS_SERVICE_ID = "service_cq58rg3";
 const EMAILJS_TEMPLATE_ID = "template_ttq7fzc";
 const EMAILJS_PUBLIC_KEY = "k-RM945un6WuOh_AP";
-
-/* ─── Types ─────────────────────────────────────────────────────────── */
 
 type ServiceOption =
   | "Web Development"
@@ -41,8 +35,6 @@ interface FormValues {
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
-/* ─── Static data ────────────────────────────────────────────────────── */
-
 const serviceOptions: ServiceOption[] = [
   "Web Development",
   "UI/UX Design",
@@ -50,51 +42,54 @@ const serviceOptions: ServiceOption[] = [
   "Other / General Inquiry",
 ];
 
-const infoCards = [
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Colombo, Sri Lanka",
-    sub: "Available for remote projects worldwide",
-    color: "text-primary",
-    bg: "bg-primary/10",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "hello@xpersivelabs.com",
-    sub: "Drop us a line any time",
-    color: "text-accent",
-    bg: "bg-accent/10",
-    href: "mailto:hello@xpersivelabs.com",
-  },
-  {
-    icon: Clock,
-    label: "Response Time",
-    value: "Within 48 hours",
-    sub: "We take every enquiry seriously",
-    color: "text-purple-400",
-    bg: "bg-purple-500/10",
-  },
+const nextSteps = [
+  { num: "01", text: "We review your message" },
+  { num: "02", text: "We schedule a discovery call" },
+  { num: "03", text: "We send you a project proposal" },
 ];
 
-const socialLinks = [
-  { icon: Code2, href: "https://github.com/Xpersive-Labs", label: "GitHub" },
-  { icon: Briefcase, href: "https://www.linkedin.com/in/xpersive-labs/", label: "LinkedIn" },
-  { icon: Share2, href: "#", label: "Twitter / X" /* TODO: add when Twitter/X account is created */ },
-];
+/* ─── Floating label input ──────────────────────────────────────────── */
+function FloatingField({
+  id,
+  label,
+  required,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  required?: boolean;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.4)" }}>
+        {label}{required && <span className="text-primary ml-0.5">*</span>}
+      </label>
+      {children}
+      {error && (
+        <p className="text-xs text-rose-400 flex items-center gap-1 mt-0.5">
+          <AlertCircle size={11} />{error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+const underlineInput = (hasError: boolean) =>
+  [
+    "w-full bg-transparent pb-2.5 pt-1 text-sm text-white outline-none",
+    "border-b transition-colors duration-200 placeholder-white/20",
+    hasError ? "border-rose-500/50 focus:border-rose-400" : "border-white/10 focus:border-primary",
+  ].join(" ");
 
 /* ─── Page ──────────────────────────────────────────────────────────── */
-
 export default function ContactPage() {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [copied, setCopied] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormValues>({ mode: "onTouched" });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ mode: "onTouched" });
 
   const onSubmit = async (data: FormValues) => {
     setSubmitState("loading");
@@ -102,13 +97,7 @@ export default function ContactPage() {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        {
-          from_name: data.name,
-          from_email: data.email,
-          company: data.company || "-",
-          service: data.service || "Not specified",
-          message: data.message,
-        },
+        { from_name: data.name, from_email: data.email, company: data.company || "-", service: data.service || "Not specified", message: data.message },
         EMAILJS_PUBLIC_KEY,
       );
       setSubmitState("success");
@@ -118,61 +107,50 @@ export default function ContactPage() {
     }
   };
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText("hello@xpersivelabs.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="bg-dark text-white min-h-screen">
-      {/* ── Hero ────────────────────────────────────────────────── */}
+      {/* Hero */}
       <section className="relative pt-40 pb-20 overflow-hidden">
         <motion.div
-          className="absolute -top-28 -right-20 w-[480px] h-[480px] rounded-full blur-[130px] pointer-events-none"
+          className="absolute -top-28 -right-20 w-120 h-120 rounded-full blur-[130px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -bottom-10 -left-20 w-[380px] h-[380px] rounded-full blur-[110px] pointer-events-none"
+          className="absolute -bottom-10 -left-20 w-95 h-95 rounded-full blur-[110px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
-        <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
-
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.span
-              variants={fadeUp}
-              className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
-            >
+            <motion.span variants={fadeUp} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
               Get in Touch
             </motion.span>
-            <motion.h1
-              variants={fadeUp}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 max-w-3xl"
-            >
-              Let&apos;s Build Something{" "}
-              <span className="text-gradient">Together</span>
+            <motion.h1 variants={fadeUp} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 max-w-3xl">
+              Let&apos;s Talk About{" "}
+              <span className="text-gradient">Your Project</span>
             </motion.h1>
-            <motion.p
-              variants={fadeUp}
-              className="text-white/55 text-lg leading-relaxed max-w-xl"
-            >
-              Tell us about your project. We read every message and reply within
-              48 hours - no automated responses, just real conversation.
+            <motion.p variants={fadeUp} className="max-w-xl leading-relaxed" style={{ fontSize: 17, color: "rgba(255,255,255,0.55)" }}>
+              No commitment. No sales pitch. Just an honest conversation about what you need and whether we&apos;re the right fit.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* ── Two-column body ─────────────────────────────────────── */}
+      {/* Two-column body */}
       <section className="pb-28">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 xl:gap-16 items-start">
-            {/* ── LEFT: Form ───────────────────────────────────── */}
+          <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20 items-start">
+
+            {/* LEFT — Form */}
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -187,7 +165,7 @@ export default function ContactPage() {
                     key="form"
                     onSubmit={handleSubmit(onSubmit)}
                     noValidate
-                    className="space-y-5"
+                    className="space-y-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -198,120 +176,67 @@ export default function ContactPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="flex items-start gap-3 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm"
                       >
-                        <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
+                        <AlertCircle size={16} className="shrink-0 mt-0.5" />
                         <span>
-                          Something went wrong. Please try again or email us directly at{" "}
-                          <a href="mailto:hello@xpersivelabs.com" className="underline">
-                            hello@xpersivelabs.com
-                          </a>
+                          Something went wrong. Email us directly at{" "}
+                          <a href="mailto:hello@xpersivelabs.com" className="underline">hello@xpersivelabs.com</a>
                         </span>
                       </motion.div>
                     )}
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                       <motion.div variants={fadeUp}>
-                        <Field label="Name" required error={errors.name?.message}>
-                          <input
-                            type="text"
-                            placeholder="Your name"
-                            className={inputClass(!!errors.name)}
-                            {...register("name", {
-                              required: "Name is required",
-                              minLength: { value: 2, message: "At least 2 characters" },
-                            })}
-                          />
-                        </Field>
+                        <FloatingField id="name" label="Your Name" required error={errors.name?.message}>
+                          <input id="name" type="text" placeholder="Jane Smith" className={underlineInput(!!errors.name)}
+                            {...register("name", { required: "Name is required", minLength: { value: 2, message: "At least 2 characters" } })} />
+                        </FloatingField>
                       </motion.div>
-
                       <motion.div variants={fadeUp}>
-                        <Field label="Email" required error={errors.email?.message}>
-                          <input
-                            type="email"
-                            placeholder="you@company.com"
-                            className={inputClass(!!errors.email)}
-                            {...register("email", {
-                              required: "Email is required",
-                              pattern: {
-                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "Enter a valid email address",
-                              },
-                            })}
-                          />
-                        </Field>
+                        <FloatingField id="email" label="Email Address" required error={errors.email?.message}>
+                          <input id="email" type="email" placeholder="you@company.com" className={underlineInput(!!errors.email)}
+                            {...register("email", { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email" } })} />
+                        </FloatingField>
                       </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                       <motion.div variants={fadeUp}>
-                        <Field label="Company" hint="optional">
-                          <input
-                            type="text"
-                            placeholder="Acme Inc."
-                            className={inputClass(false)}
-                            {...register("company")}
-                          />
-                        </Field>
+                        <FloatingField id="company" label="Company (optional)">
+                          <input id="company" type="text" placeholder="Acme Inc." className={underlineInput(false)} {...register("company")} />
+                        </FloatingField>
                       </motion.div>
-
                       <motion.div variants={fadeUp}>
-                        <Field label="Service Interest">
+                        <FloatingField id="service" label="Service Interest">
                           <div className="relative">
-                            <select
-                              className={`${inputClass(false)} appearance-none pr-10`}
-                              {...register("service")}
-                              defaultValue=""
-                            >
+                            <select id="service" className={`${underlineInput(false)} appearance-none pr-8`} {...register("service")} defaultValue="">
                               <option value="" disabled>Select a service…</option>
-                              {serviceOptions.map((s) => (
-                                <option key={s} value={s}>{s}</option>
-                              ))}
+                              {serviceOptions.map((s) => <option key={s} value={s}>{s}</option>)}
                             </select>
-                            <ChevronDown
-                              size={16}
-                              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
-                            />
+                            <ChevronDown size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
                           </div>
-                        </Field>
+                        </FloatingField>
                       </motion.div>
                     </div>
 
                     <motion.div variants={fadeUp}>
-                      <Field label="Message" required error={errors.message?.message}>
-                        <textarea
-                          rows={6}
-                          placeholder="Tell us about your project - what you're building, your timeline, and any specific requirements…"
-                          className={`${inputClass(!!errors.message)} resize-none`}
-                          {...register("message", {
-                            required: "Message is required",
-                            minLength: {
-                              value: 20,
-                              message: "Please give us a bit more detail (20+ characters)",
-                            },
-                          })}
-                        />
-                      </Field>
+                      <FloatingField id="message" label="Tell Us About Your Project" required error={errors.message?.message}>
+                        <textarea id="message" rows={5} placeholder="What are you building? Timeline, requirements, budget range…"
+                          className={`${underlineInput(!!errors.message)} resize-none`}
+                          {...register("message", { required: "Message is required", minLength: { value: 20, message: "Please add a bit more detail (20+ chars)" } })} />
+                      </FloatingField>
                     </motion.div>
 
                     <motion.div variants={fadeUp}>
                       <button
                         type="submit"
                         disabled={submitState === "loading"}
-                        className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-base transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="group w-full inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-base transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                         style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
                       >
                         {submitState === "loading" ? (
-                          <>
-                            <Loader2 size={18} className="animate-spin" />
-                            Sending…
-                          </>
+                          <><Loader2 size={18} className="animate-spin" />Sending…</>
                         ) : (
-                          <>
-                            Send Message
-                            <Send
-                              size={16}
-                              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
-                            />
-                          </>
+                          <><Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />Send Message</>
                         )}
                       </button>
                     </motion.div>
@@ -320,7 +245,7 @@ export default function ContactPage() {
               </AnimatePresence>
             </motion.div>
 
-            {/* ── RIGHT: Info cards + social ───────────────────── */}
+            {/* RIGHT — Trust signals */}
             <motion.div
               className="flex flex-col gap-4 lg:sticky lg:top-28"
               variants={staggerContainer}
@@ -328,64 +253,74 @@ export default function ContactPage() {
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
             >
-              {infoCards.map((card) => (
-                <motion.div
-                  key={card.label}
-                  variants={fadeUp}
-                  className="group p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl ${card.bg} flex items-center justify-center`}>
-                      <card.icon size={18} className={card.color} />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-1">
-                        {card.label}
-                      </p>
-                      {card.href ? (
-                        <a href={card.href} className={`font-semibold ${card.color} hover:underline`}>
-                          {card.value}
-                        </a>
-                      ) : (
-                        <p className="font-semibold text-white">{card.value}</p>
-                      )}
-                      <p className="text-xs text-white/35 mt-1">{card.sub}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+              {/* Availability */}
+              <motion.div variants={fadeUp} className="p-5 rounded-2xl" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
+                  <span className="text-sm font-semibold text-emerald-400">Currently available</span>
+                </div>
+                <p className="text-xs ml-4" style={{ color: "rgba(255,255,255,0.45)" }}>Taking on new projects for Q3 2025</p>
+              </motion.div>
 
-              <motion.div
-                variants={fadeUp}
-                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]"
-              >
-                <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-4">
-                  Follow Us
-                </p>
-                <div className="flex items-center gap-3">
-                  {socialLinks.map(({ icon: Icon, href, label }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      aria-label={label}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.05] border border-white/10 text-white/40 transition-all duration-200 hover:bg-primary/15 hover:border-primary/30 hover:text-primary"
-                    >
-                      <Icon size={16} />
-                    </a>
+              {/* Response time */}
+              <motion.div variants={fadeUp} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+                <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Clock size={16} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white mb-0.5">We respond within 48 hours</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Usually much faster.</p>
+                </div>
+              </motion.div>
+
+              {/* Location */}
+              <motion.div variants={fadeUp} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+                <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
+                  <MapPin size={16} className="text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white mb-0.5">Colombo, Sri Lanka</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Working with clients across US, UK, EU, and APAC</p>
+                </div>
+              </motion.div>
+
+              {/* What happens next */}
+              <motion.div variants={fadeUp} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+                <p className="text-xs font-bold uppercase mb-4" style={{ color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em" }}>What happens next</p>
+                <div className="space-y-3">
+                  {nextSteps.map(({ num, text }) => (
+                    <div key={num} className="flex items-center gap-3">
+                      <span className="shrink-0 font-display font-bold text-xs" style={{ color: "#6D71F9" }}>{num}</span>
+                      <div className="h-px flex-1" style={{ background: "rgba(109,113,249,0.15)" }} />
+                      <span className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>{text}</span>
+                    </div>
                   ))}
                 </div>
               </motion.div>
 
-              <motion.div
-                variants={fadeUp}
-                className="flex items-center gap-3 px-5 py-3.5 rounded-xl border border-emerald-500/20 bg-emerald-500/5"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-                <p className="text-sm text-emerald-400 font-medium">
-                  Currently accepting new projects
-                </p>
+              {/* Direct email */}
+              <motion.div variants={fadeUp} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+                <p className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.35)" }}>Prefer email?</p>
+                <button
+                  onClick={copyEmail}
+                  className="group flex items-center gap-2 text-sm font-medium transition-colors duration-200 hover:text-primary"
+                  style={{ color: "rgba(255,255,255,0.65)" }}
+                >
+                  <span>hello@xpersivelabs.com</span>
+                  <AnimatePresence mode="wait">
+                    {copied ? (
+                      <motion.span key="check" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                        className="text-xs text-emerald-400 font-semibold">
+                        Copied!
+                      </motion.span>
+                    ) : (
+                      <motion.span key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="text-xs opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "rgba(255,255,255,0.3)" }}>
+                        click to copy
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
               </motion.div>
             </motion.div>
           </div>
@@ -393,52 +328,6 @@ export default function ContactPage() {
       </section>
     </div>
   );
-}
-
-/* ─── Sub-components ─────────────────────────────────────────────────── */
-
-function Field({
-  label,
-  required,
-  hint,
-  error,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  hint?: string;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex items-center gap-2">
-        <label className="text-sm font-semibold text-white/80">
-          {label}
-          {required && <span className="text-primary ml-0.5">*</span>}
-        </label>
-        {hint && <span className="text-xs text-white/25 font-medium">{hint}</span>}
-      </div>
-      {children}
-      {error && (
-        <p className="text-xs text-rose-400 flex items-center gap-1.5 mt-0.5">
-          <AlertCircle size={11} />
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
-
-function inputClass(hasError: boolean): string {
-  return [
-    "w-full px-4 py-3 rounded-xl text-sm text-white placeholder-white/25",
-    "bg-white/[0.04] border transition-all duration-200 outline-none",
-    "focus:bg-white/[0.06] focus:border-primary/50 focus:ring-2 focus:ring-primary/15",
-    hasError
-      ? "border-rose-500/40 bg-rose-500/5"
-      : "border-white/10 hover:border-white/20",
-  ].join(" ");
 }
 
 function SuccessBanner({ onReset }: { onReset: () => void }) {
@@ -454,15 +343,11 @@ function SuccessBanner({ onReset }: { onReset: () => void }) {
       </div>
       <div>
         <h3 className="font-display text-2xl font-bold mb-2">Message sent!</h3>
-        <p className="text-white/50 text-sm leading-relaxed max-w-sm">
-          Thanks for reaching out. We&apos;ll review your message and get back
-          to you within 48 hours.
+        <p className="text-sm leading-relaxed max-w-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
+          We&apos;ll review your message and get back to you within 48 hours.
         </p>
       </div>
-      <button
-        onClick={onReset}
-        className="text-sm font-semibold text-primary hover:underline"
-      >
+      <button onClick={onReset} className="text-sm font-semibold text-primary hover:underline">
         Send another message
       </button>
     </motion.div>
