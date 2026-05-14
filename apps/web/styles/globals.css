@@ -184,6 +184,12 @@ html {
   margin: 1.75rem 0;
 }
 
+/* Availability badge dot pulse */
+@keyframes badge-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1;   }
+  50%       { transform: scale(1.5); opacity: 0.5; }
+}
+
 /* Reduced motion — disable animations */
 @media (prefers-reduced-motion: reduce) {
   *,
