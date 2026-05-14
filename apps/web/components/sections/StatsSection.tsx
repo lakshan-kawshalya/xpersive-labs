@@ -1,66 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion, useInView } from "framer-motion";
-import { Clock, Trophy, Cpu, Layers } from "lucide-react";
-import { staggerContainer, fadeUp } from "@/lib/animations";
+import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  {
-    icon: Clock,
-    value: 2,
-    suffix: "+",
-    label: "Years of Experience",
-    color: "text-primary",
-    bg: "bg-primary/10",
-    glow: "rgba(109, 113, 249, 0.15)",
-  },
-  {
-    icon: Trophy,
-    value: 2,
-    suffix: "",
-    label: "Projects Delivered",
-    color: "text-accent",
-    bg: "bg-accent/10",
-    glow: "rgba(84, 193, 251, 0.15)",
-  },
-  {
-    icon: Cpu,
-    value: 5,
-    suffix: "+",
-    label: "Technologies Used",
-    color: "text-purple-400",
-    bg: "bg-purple-500/10",
-    glow: "rgba(168, 85, 247, 0.15)",
-  },
-  {
-    icon: Layers,
-    value: 2,
-    suffix: "",
-    label: "Core Services",
-    color: "text-pink-400",
-    bg: "bg-pink-500/10",
-    glow: "rgba(236, 72, 153, 0.15)",
-  },
+  { value: 2, suffix: "+", label: "YEARS ACTIVE" },
+  { value: 2, suffix: "",  label: "PROJECTS DELIVERED" },
+  { value: 5, suffix: "+", label: "TECHNOLOGIES" },
+  { value: 2, suffix: "",  label: "CORE SERVICES" },
 ];
 
-function AnimatedCounter({
-  target,
-  suffix,
-  color,
-}: {
-  target: number;
-  suffix: string;
-  color: string;
-}) {
+function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+  const inView = useInView(ref, { once: true, margin: "-50px" });
 
   useEffect(() => {
     if (!inView) return;
-    const duration = 1400;
-    const steps = 45;
+    const duration = 2000;
+    const steps = 60;
     const stepTime = duration / steps;
     let step = 0;
     const timer = setInterval(() => {
@@ -74,18 +33,22 @@ function AnimatedCounter({
   }, [inView, target]);
 
   return (
-    <span ref={ref} className={`font-display text-5xl sm:text-6xl font-bold ${color}`}>
-      {count}
-      {suffix}
+    <span ref={ref} className="font-display font-extrabold text-gradient" style={{ fontSize: "clamp(40px, 5vw, 56px)" }}>
+      {count}{suffix}
     </span>
   );
 }
 
 export default function StatsSection() {
   return (
-    <section className="py-24 relative overflow-hidden border-y border-white/[0.07]">
-      <div className="absolute inset-0 bg-dark" />
-
+    <section
+      className="py-20 relative overflow-hidden"
+      style={{
+        background: "rgba(255,255,255,0.02)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-primary/10 pointer-events-none" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-accent/10 pointer-events-none" />
 
@@ -97,38 +60,41 @@ export default function StatsSection() {
           viewport={{ once: true, margin: "-80px" }}
           variants={fadeUp}
         >
-          <span className="inline-block text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
+          <span className="text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
             By the Numbers
           </span>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-10"
+          className="grid grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               variants={fadeUp}
-              className="flex flex-col items-center text-center group"
+              transition={{ delay: i * 0.1 }}
+              className="relative flex flex-col items-center text-center px-6 py-4"
             >
-              <div
-                className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${stat.bg} mb-5 transition-transform duration-300 group-hover:scale-110`}
-                style={{ boxShadow: `0 0 20px ${stat.glow}` }}
+              {/* Vertical divider (hidden on mobile, hidden after last item) */}
+              {i < stats.length - 1 && (
+                <div
+                  className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-12 w-px"
+                  style={{ background: "rgba(255,255,255,0.06)" }}
+                />
+              )}
+
+              <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+
+              <p
+                className="mt-2 font-medium tracking-[0.05em] uppercase"
+                style={{ fontSize: 14, color: "rgba(255,255,255,0.45)" }}
               >
-                <stat.icon size={20} className={stat.color} />
-              </div>
-
-              <AnimatedCounter
-                target={stat.value}
-                suffix={stat.suffix}
-                color={stat.color}
-              />
-
-              <p className="mt-2 text-white/45 text-sm font-medium">{stat.label}</p>
+                {stat.label}
+              </p>
             </motion.div>
           ))}
         </motion.div>
