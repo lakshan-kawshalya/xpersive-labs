@@ -12,9 +12,9 @@ export default function CustomCursor() {
     if (window.matchMedia("(hover: none)").matches) return;
     if (reduced) return;
 
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    if (!dotRef.current || !ringRef.current) return;
+    const dot: HTMLDivElement = dotRef.current;
+    const ring: HTMLDivElement = ringRef.current;
 
     let mouseX = -100;
     let mouseY = -100;
