@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefcase, Code2, Share2, Mail } from "lucide-react";
+import { Briefcase, Code2, Mail } from "lucide-react";
 
 const footerSections = {
   Company: [
@@ -22,33 +22,35 @@ const footerSections = {
 const socialLinks = [
   { href: "https://github.com/Xpersive-Labs", icon: Code2, label: "GitHub" },
   { href: "https://www.linkedin.com/in/xpersive-labs/", icon: Briefcase, label: "LinkedIn" },
-  { href: "#", icon: Share2, label: "Twitter" /* TODO: add when Twitter/X account is created */ },
   { href: "mailto:hello@xpersivelabs.com", icon: Mail, label: "Email" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-dark border-t border-white/10">
+    <footer style={{ background: "#1A1A2E", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
           {/* Brand column */}
           <div className="lg:col-span-1">
             <span className="font-display text-2xl font-bold text-gradient">
               Xpersive Labs
             </span>
-            <p className="mt-3 text-sm text-white/50 leading-relaxed max-w-xs">
-              Innovation for a Better Tomorrow. Building immersive digital
-              experiences from Colombo, Sri Lanka.
+            <p className="mt-3 text-sm leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
+              Innovation for a Better Tomorrow. Building immersive digital experiences.
+            </p>
+            <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
+              Built with passion in Colombo, Sri Lanka 🇱🇰
             </p>
 
-            {/* Social links */}
+            {/* Social icons */}
             <div className="flex items-center gap-3 mt-6">
               {socialLinks.map(({ href, icon: Icon, label }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-white/50 transition-all duration-200 hover:bg-primary/20 hover:border-primary/40 hover:text-primary"
+                  className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-200 hover:-translate-y-0.5 text-white/50 hover:text-primary bg-white/4 border-white/8 hover:bg-primary/15 hover:border-primary/30"
                 >
                   <Icon size={16} />
                 </a>
@@ -59,7 +61,10 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerSections).map(([title, links]) => (
             <div key={title}>
-              <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-5">
+              <h4
+                className="text-xs font-semibold uppercase tracking-widest mb-5"
+                style={{ color: "rgba(255,255,255,0.3)" }}
+              >
                 {title}
               </h4>
               <ul className="space-y-3">
@@ -67,9 +72,17 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-white/60 hover:text-primary transition-colors duration-200"
+                      className="group/link flex items-center gap-1 text-sm transition-colors duration-200"
+                      style={{ color: "rgba(255,255,255,0.45)" }}
                     >
-                      {link.label}
+                      <span className="group-hover/link:text-white transition-colors duration-200">
+                        {link.label}
+                      </span>
+                      <span
+                        className="text-primary opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200 text-xs"
+                      >
+                        →
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -79,12 +92,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/30">
+        <div
+          className="mt-14 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+        >
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)" }}>
             © {new Date().getFullYear()} Xpersive Labs. All rights reserved.
-          </p>
-          <p className="text-xs text-white/30">
-            Built with passion in Colombo, Sri Lanka 🇱🇰
           </p>
         </div>
       </div>
