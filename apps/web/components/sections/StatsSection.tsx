@@ -1,6 +1,6 @@
 "use client";
 
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,7 +14,7 @@ const stats = [
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   useEffect(() => {
     if (!inView) return;
@@ -75,7 +75,7 @@ export default function StatsSection() {
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              variants={fadeUp}
+              variants={scaleIn}
               transition={{ delay: i * 0.1 }}
               className="relative flex flex-col items-center text-center px-6 py-4"
             >

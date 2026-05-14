@@ -157,7 +157,7 @@ export default function PortfolioSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           <div>
             <motion.span variants={fadeUp} className="inline-block text-accent text-xs font-bold uppercase tracking-[0.2em] mb-4">
@@ -181,7 +181,7 @@ export default function PortfolioSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           {projects.map((project) => (
             <TiltCard key={project.slug} project={project} />
@@ -193,7 +193,7 @@ export default function PortfolioSection() {
           className="text-center mt-14"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={fadeUp}
         >
           <Link
