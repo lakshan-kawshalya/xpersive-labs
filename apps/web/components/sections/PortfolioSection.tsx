@@ -94,6 +94,7 @@ export default function PortfolioSection() {
                   src={project.coverImage}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 z-10">
