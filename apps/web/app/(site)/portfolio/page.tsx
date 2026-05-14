@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -59,13 +59,13 @@ export default function PortfolioPage() {
       {/* ── Hero ───────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-16 overflow-hidden">
         <motion.div
-          className="absolute -top-32 -right-24 w-[480px] h-[480px] rounded-full blur-[130px] pointer-events-none"
+          className="absolute -top-32 -right-24 w-120 h-120 rounded-full blur-[130px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.32) 0%, transparent 70%)" }}
           animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-0 -left-24 w-[380px] h-[380px] rounded-full blur-[110px] pointer-events-none"
+          className="absolute bottom-0 -left-24 w-95 h-95 rounded-full blur-[110px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
@@ -105,7 +105,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* ── Filter tabs ────────────────────────────────────────────── */}
-      <section className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/[0.07] py-4">
+      <section className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/7 py-4">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="flex items-center gap-2 flex-wrap"
@@ -182,7 +182,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* ── Bottom CTA ─────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.07]">
+      <section className="py-20 border-t border-white/7">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center"
@@ -226,8 +226,14 @@ function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
