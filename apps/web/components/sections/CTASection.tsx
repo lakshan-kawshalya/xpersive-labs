@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden py-30" style={{ background: "#272848" }}>
+    <section className="relative overflow-hidden py-30">
       {/* Animated gradient border - top */}
       <div
         className="absolute top-0 left-0 right-0 h-0.5 pointer-events-none"

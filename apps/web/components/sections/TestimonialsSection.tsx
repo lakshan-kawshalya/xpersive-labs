@@ -111,7 +111,7 @@ function PrincipleCard({ principle }: { principle: typeof principles[number] }) 
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-28 bg-dark relative overflow-hidden">
+    <section className="py-28 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
