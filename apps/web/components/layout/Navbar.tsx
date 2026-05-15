@@ -124,7 +124,22 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo + badge */}
         <div className="flex items-center gap-3">
-          <Link href="/">
+          <Link href="/" className="flex items-center gap-2.5">
+            <svg width="28" height="28" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="nav-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#6D71F9" />
+                  <stop offset="100%" stopColor="#54C1FB" />
+                </linearGradient>
+                <linearGradient id="nav-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#54C1FB" />
+                  <stop offset="100%" stopColor="#6D71F9" />
+                </linearGradient>
+              </defs>
+              <rect x="8" y="20" width="55" height="80" rx="14" fill="url(#nav-grad1)" transform="rotate(-45 35 60)" />
+              <rect x="65" y="15" width="38" height="38" rx="10" fill="url(#nav-grad2)" transform="rotate(-45 84 34)" />
+              <rect x="65" y="67" width="38" height="38" rx="10" fill="url(#nav-grad1)" transform="rotate(-45 84 86)" />
+            </svg>
             <span className="font-display text-xl font-bold text-gradient transition-all duration-300"
               style={isScrolled ? { textShadow: "0 0 20px rgba(109,113,249,0.5)" } : {}}>
               Xpersive Labs
