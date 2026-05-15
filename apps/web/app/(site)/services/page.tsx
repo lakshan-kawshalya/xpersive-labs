@@ -325,7 +325,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               ))}
             </div>
 
-            {/* Tech stack badges — stagger entrance, mono font, hover effect */}
+            {/* Tech stack badges - stagger entrance, mono font, hover effect */}
             <div>
               <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-3">
                 Tools &amp; Technologies

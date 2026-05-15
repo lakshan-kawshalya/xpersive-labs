@@ -129,7 +129,7 @@ export default function HeroSection() {
           </span>
         </motion.div>
 
-        {/* Headline — word-by-word reveal */}
+        {/* Headline - word-by-word reveal */}
         <h1
           className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-7"
           style={{ perspective: "800px" }}

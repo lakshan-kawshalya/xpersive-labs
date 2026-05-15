@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function CTASection() {
   return (
     <section className="relative overflow-hidden py-30" style={{ background: "#272848" }}>
-      {/* Animated gradient border — top */}
+      {/* Animated gradient border - top */}
       <div
         className="absolute top-0 left-0 right-0 h-0.5 pointer-events-none"
         style={{
@@ -68,7 +68,7 @@ export default function CTASection() {
             className="text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ color: "rgba(255,255,255,0.55)" }}
           >
-            Tell us what you&apos;re building. We&apos;ll scope it, plan it, and build it right — from
+            Tell us what you&apos;re building. We&apos;ll scope it, plan it, and build it right - from
             first call to final launch.
           </motion.p>
 
