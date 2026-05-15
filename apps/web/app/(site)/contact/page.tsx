@@ -150,7 +150,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20 items-start">
 
-            {/* LEFT — Form */}
+            {/* LEFT - Form */}
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -245,7 +245,7 @@ export default function ContactPage() {
               </AnimatePresence>
             </motion.div>
 
-            {/* RIGHT — Trust signals */}
+            {/* RIGHT - Trust signals */}
             <motion.div
               className="flex flex-col gap-4 lg:sticky lg:top-28"
               variants={staggerContainer}

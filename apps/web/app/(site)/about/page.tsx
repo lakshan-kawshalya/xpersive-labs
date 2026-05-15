@@ -47,7 +47,7 @@ const values = [
     number: "04",
     title: "Cutting-Edge",
     description:
-      "We don't follow trends — we help set them. From automation tools to immersive UI patterns, we push boundaries to give our clients a competitive edge.",
+      "We don't follow trends - we help set them. From automation tools to immersive UI patterns, we push boundaries to give our clients a competitive edge.",
   },
 ];
 
@@ -64,21 +64,21 @@ const milestones = [
     icon: Target,
     title: "First Project Shipped",
     description:
-      "Shipped the Alibaba Product Scraper — a Python automation tool for bulk product data extraction and market research at scale.",
+      "Shipped the Alibaba Product Scraper - a Python automation tool for bulk product data extraction and market research at scale.",
   },
   {
     year: "2025",
     icon: TrendingUp,
     title: "Website Launched",
     description:
-      "Launched xpersivelabs.com — our own production website, built with Next.js 14, Framer Motion, and Keystatic CMS.",
+      "Launched xpersivelabs.com - our own production website, built with Next.js 14, Framer Motion, and Keystatic CMS.",
   },
   {
     year: "2025",
     icon: Compass,
     title: "Open for Client Projects",
     description:
-      "Opened for client work across web development, UI/UX design, and automation — serving businesses locally and globally.",
+      "Opened for client work across web development, UI/UX design, and automation - serving businesses locally and globally.",
   },
 ];
 
@@ -164,8 +164,8 @@ export default function AboutPage() {
                 Born to Build the <span className="text-gradient">Future</span>
               </motion.h2>
               <motion.div variants={fadeUp} className="space-y-5 leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: to build software that actually feels good to use. We believe the best technology becomes invisible — it fits seamlessly into the experience rather than getting in the way.</p>
-                <p>We specialise in immersive web development, UI/UX design, and data automation — helping businesses go from idea to polished digital product. Every project gets our full attention, our honest opinion, and our best work.</p>
+                <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: to build software that actually feels good to use. We believe the best technology becomes invisible - it fits seamlessly into the experience rather than getting in the way.</p>
+                <p>We specialise in immersive web development, UI/UX design, and data automation - helping businesses go from idea to polished digital product. Every project gets our full attention, our honest opinion, and our best work.</p>
               </motion.div>
             </motion.div>
 
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-7"><Target size={22} className="text-primary" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#6D71F9" }}>Mission</p>
                 <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Drive progress through technology</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Develop cutting-edge technologies that drive progress and enhance human experience — making powerful digital tools accessible and impactful for everyone.</p>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Develop cutting-edge technologies that drive progress and enhance human experience - making powerful digital tools accessible and impactful for everyone.</p>
               </div>
             </motion.div>
             <motion.div variants={slideInRight} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
@@ -219,7 +219,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-7"><Compass size={22} className="text-accent" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#54C1FB" }}>Vision</p>
                 <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Revolutionise human–tech interaction</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Revolutionise how people interact with technology by fully immersing them in new possibilities — where digital experiences feel as natural as the world itself.</p>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Revolutionise how people interact with technology by fully immersing them in new possibilities - where digital experiences feel as natural as the world itself.</p>
               </div>
             </motion.div>
           </motion.div>
@@ -239,7 +239,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline — alternating desktop / stacked mobile */}
+      {/* Timeline - alternating desktop / stacked mobile */}
       <section className="py-24 border-t border-white/[0.07]">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div className="text-center mb-16" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>

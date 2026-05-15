@@ -174,7 +174,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileOpen && (
           <>
-            {/* Backdrop — click outside to close */}
+            {/* Backdrop - click outside to close */}
             <motion.div
               key="backdrop"
               className="fixed inset-0 z-40 md:hidden"

@@ -55,7 +55,7 @@ export default function TeamPage() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            A focused, solo-founder studio based in Colombo, Sri Lanka — with a global mindset
+            A focused, solo-founder studio based in Colombo, Sri Lanka - with a global mindset
             and an uncompromising commitment to craft.
           </motion.blockquote>
         </div>
@@ -132,7 +132,7 @@ function FounderCard() {
         {founder.bio}
       </p>
 
-      {/* Social links — text + icon style */}
+      {/* Social links - text + icon style */}
       <div className="relative flex items-center gap-4">
         {founder.social.map(({ icon: Icon, href, label }) => (
           <a

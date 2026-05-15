@@ -10,7 +10,7 @@ const principles = [
     icon: Shield,
     number: "01",
     title: "Transparent Communication",
-    body: "We keep you in the loop at every stage — no surprises, no black boxes. You always know what's being built and why.",
+    body: "We keep you in the loop at every stage - no surprises, no black boxes. You always know what's being built and why.",
   },
   {
     icon: Clock,
