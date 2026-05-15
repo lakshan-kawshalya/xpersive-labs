@@ -1,0 +1,106 @@
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  --mouse-x: 0px;
+  --mouse-y: 0px;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
+}
+
+.orb1 {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  left: -150px;
+  background: radial-gradient(circle, rgba(109, 113, 249, 0.12) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float1 18s ease-in-out infinite;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  top: 25%;
+  right: -120px;
+  background: radial-gradient(circle, rgba(84, 193, 251, 0.10) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float2 22s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.orb3 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: 25%;
+  background: radial-gradient(circle, rgba(109, 113, 249, 0.08) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float3 26s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+.orb4 {
+  width: 350px;
+  height: 350px;
+  top: 55%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(84, 193, 251, 0.07) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float1 20s ease-in-out infinite reverse;
+  animation-delay: -8s;
+}
+
+.orb5 {
+  width: 700px;
+  height: 700px;
+  top: 15%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(109, 113, 249, 0.05) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: float2 30s ease-in-out infinite;
+  animation-delay: -15s;
+}
+
+@keyframes float1 {
+  0%   { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+  25%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(60px, -40px); }
+  50%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(-20px, 30px); }
+  75%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(40px, 50px); }
+  100% { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+}
+
+@keyframes float2 {
+  0%   { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+  33%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(-50px, 60px); }
+  66%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(30px, -20px); }
+  100% { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+}
+
+@keyframes float3 {
+  0%   { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+  25%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(40px, -30px); }
+  50%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(-60px, 50px); }
+  75%  { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(20px, -50px); }
+  100% { transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px)) translate(0px, 0px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none !important; }
+}
+
+@media (max-width: 768px) {
+  .orb1 { width: 300px; height: 300px; }
+  .orb2 { width: 250px; height: 250px; }
+  .orb3 { width: 200px; height: 200px; }
+  .orb4, .orb5 { display: none; }
+}
