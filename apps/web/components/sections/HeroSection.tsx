@@ -29,7 +29,7 @@ export default function HeroSection() {
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   return (
-    <section className="relative min-h-screen grid place-items-center overflow-hidden bg-dark">
+    <section className="relative min-h-screen grid place-items-center overflow-hidden">
       {/* ── Noise texture overlay ─────────────────────────────── */}
       <svg
         aria-hidden="true"
