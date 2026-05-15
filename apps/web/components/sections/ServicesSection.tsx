@@ -96,7 +96,7 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
 
 export default function ServicesSection() {
   return (
-    <section className="py-28 bg-dark relative overflow-hidden">
+    <section className="py-28 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
