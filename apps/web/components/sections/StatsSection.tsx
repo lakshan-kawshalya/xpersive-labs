@@ -1,41 +1,54 @@
 "use client";
 
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useCountUp } from "@/hooks/useCountUp";
+import { motion } from "framer-motion";
 
 const stats = [
-  { value: 2, suffix: "+", label: "YEARS ACTIVE" },
-  { value: 2, suffix: "",  label: "PROJECTS DELIVERED" },
-  { value: 5, suffix: "+", label: "TECHNOLOGIES" },
-  { value: 2, suffix: "",  label: "CORE SERVICES" },
+  { target: 2, suffix: "+", label: "YEARS ACTIVE" },
+  { target: 2, suffix: "",  label: "PROJECTS DELIVERED" },
+  { target: 5, suffix: "+", label: "TECHNOLOGIES" },
+  { target: 2, suffix: "",  label: "CORE SERVICES" },
 ];
 
-function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+interface StatItemProps {
+  target: number;
+  suffix: string;
+  label: string;
+  delay: number;
+  isLast: boolean;
+}
 
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 2000;
-    const steps = 60;
-    const stepTime = duration / steps;
-    let step = 0;
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / steps;
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (step >= steps) clearInterval(timer);
-    }, stepTime);
-    return () => clearInterval(timer);
-  }, [inView, target]);
+function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
+  const { count, ref } = useCountUp(target, 2000, delay);
 
   return (
-    <span ref={ref} className="font-display font-extrabold text-gradient" style={{ fontSize: "clamp(40px, 5vw, 56px)" }}>
-      {count}{suffix}
-    </span>
+    <motion.div
+      variants={scaleIn}
+      className="relative flex flex-col items-center text-center px-6 py-4"
+    >
+      {!isLast && (
+        <div
+          className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-12 w-px"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        />
+      )}
+
+      <div
+        ref={ref}
+        className="font-display font-extrabold text-gradient"
+        style={{ fontSize: "clamp(40px, 5vw, 56px)" }}
+      >
+        {count}{suffix}
+      </div>
+
+      <p
+        className="mt-2 font-medium tracking-[0.05em] uppercase"
+        style={{ fontSize: 14, color: "rgba(255,255,255,0.45)" }}
+      >
+        {label}
+      </p>
+    </motion.div>
   );
 }
 
@@ -73,29 +86,14 @@ export default function StatsSection() {
           viewport={{ once: true, margin: "-80px" }}
         >
           {stats.map((stat, i) => (
-            <motion.div
+            <StatItem
               key={stat.label}
-              variants={scaleIn}
-              transition={{ delay: i * 0.1 }}
-              className="relative flex flex-col items-center text-center px-6 py-4"
-            >
-              {/* Vertical divider (hidden on mobile, hidden after last item) */}
-              {i < stats.length - 1 && (
-                <div
-                  className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-12 w-px"
-                  style={{ background: "rgba(255,255,255,0.06)" }}
-                />
-              )}
-
-              <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-
-              <p
-                className="mt-2 font-medium tracking-[0.05em] uppercase"
-                style={{ fontSize: 14, color: "rgba(255,255,255,0.45)" }}
-              >
-                {stat.label}
-              </p>
-            </motion.div>
+              target={stat.target}
+              suffix={stat.suffix}
+              label={stat.label}
+              delay={i * 150}
+              isLast={i === stats.length - 1}
+            />
           ))}
         </motion.div>
       </div>
