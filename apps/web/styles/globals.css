@@ -18,9 +18,13 @@
   cursor: none !important;
 }
 
-@media (hover: none) {
+@media (hover: none), (pointer: coarse) {
   * {
     cursor: auto !important;
+  }
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
   }
 }
 

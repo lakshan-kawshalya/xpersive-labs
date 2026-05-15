@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (isTouch) return;
     if (window.matchMedia("(hover: none)").matches) return;
     if (reduced) return;
 
@@ -90,13 +96,15 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", onUp);
       window.removeEventListener("mouseover", onOver);
     };
-  }, [reduced]);
+  }, [reduced, isTouch]);
+
+  if (isTouch) return null;
 
   return (
     <>
-      {/* Layer 1 — Dot: zero-delay direct tracking */}
       <div
         ref={dotRef}
+        className="custom-cursor-dot"
         aria-hidden="true"
         style={{
           position: "fixed",
@@ -111,9 +119,9 @@ export default function CustomCursor() {
           willChange: "transform",
         }}
       />
-      {/* Layer 2 — Ring: lerp lag + blend mode */}
       <div
         ref={ringRef}
+        className="custom-cursor-ring"
         aria-hidden="true"
         style={{
           position: "fixed",
