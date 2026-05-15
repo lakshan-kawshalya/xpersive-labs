@@ -13,13 +13,18 @@ export default function SiteLayout({
 }) {
   return (
     <>
+      {/* Fixed ambient background — z-index 0, behind everything */}
       <AmbientBackground />
-      <LoadingScreen />
-      <CustomCursor />
-      <ScrollProgress />
-      <div style={{ position: "relative", zIndex: 1 }}>
+
+      {/* Page content — z-index 1, above background */}
+      <div className="relative" style={{ zIndex: 1 }}>
+        <LoadingScreen />
+        <CustomCursor />
+        <ScrollProgress />
         <Navbar />
-        <PageTransitionProvider>{children}</PageTransitionProvider>
+        <PageTransitionProvider>
+          <main>{children}</main>
+        </PageTransitionProvider>
         <Footer />
       </div>
     </>

@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import styles from "./AmbientBackground.module.css";
 
 export default function AmbientBackground() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (window.matchMedia("(hover: none)").matches) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
       const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      document.documentElement.style.setProperty("--mouse-x", `${x}px`);
-      document.documentElement.style.setProperty("--mouse-y", `${y}px`);
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      containerRef.current.style.setProperty("--mouse-x", `${x}px`);
+      containerRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -18,19 +22,12 @@ export default function AmbientBackground() {
   }, []);
 
   return (
-    <div
-      aria-hidden="true"
-      className="fixed inset-0 overflow-hidden pointer-events-none"
-      style={{ zIndex: 0 }}
-    >
-      {/* Dot grid overlay */}
-      <div className="ambient-grid" />
-
-      {/* Floating gradient orbs */}
-      <div className="ambient-orb orb-a" />
-      <div className="ambient-orb orb-b" />
-      <div className="ambient-orb orb-c" />
-      <div className="ambient-orb orb-d" />
+    <div ref={containerRef} className={styles.container} aria-hidden="true">
+      <div className={`${styles.orb} ${styles.orb1}`} />
+      <div className={`${styles.orb} ${styles.orb2}`} />
+      <div className={`${styles.orb} ${styles.orb3}`} />
+      <div className={`${styles.orb} ${styles.orb4}`} />
+      <div className={`${styles.orb} ${styles.orb5}`} />
     </div>
   );
 }
