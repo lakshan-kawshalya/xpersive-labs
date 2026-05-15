@@ -245,3 +245,112 @@ body::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Ambient background ──────────────────────────────────────────── */
+
+/* Dot grid */
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(109, 113, 249, 0.8) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Base orb styles */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Orb A */
+.orb-a {
+  width: 500px;
+  height: 500px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(109, 113, 249, 0.18) 0%, transparent 70%);
+  filter: blur(120px);
+  translate: calc(var(--mouse-x, 0px) * 0.3) calc(var(--mouse-y, 0px) * 0.3);
+  animation: float-a 14s ease-in-out infinite alternate;
+}
+
+/* Orb B */
+.orb-b {
+  width: 400px;
+  height: 400px;
+  top: 20%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(84, 193, 251, 0.12) 0%, transparent 70%);
+  filter: blur(120px);
+  translate: calc(var(--mouse-x, 0px) * 0.2) calc(var(--mouse-y, 0px) * 0.2);
+  animation: float-b 18s ease-in-out infinite alternate;
+}
+
+/* Orb C */
+.orb-c {
+  width: 350px;
+  height: 350px;
+  bottom: 10%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(109, 113, 249, 0.1) 0%, transparent 70%);
+  filter: blur(120px);
+  translate: calc(var(--mouse-x, 0px) * -0.15) calc(var(--mouse-y, 0px) * -0.15);
+  animation: float-c 22s ease-in-out infinite alternate;
+}
+
+/* Orb D */
+.orb-d {
+  width: 300px;
+  height: 300px;
+  bottom: 30%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(84, 193, 251, 0.08) 0%, transparent 70%);
+  filter: blur(120px);
+  translate: calc(var(--mouse-x, 0px) * 0.25) calc(var(--mouse-y, 0px) * 0.25);
+  animation: float-d 16s ease-in-out infinite alternate;
+}
+
+@keyframes float-a {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(60px, 40px) scale(1.05); }
+  66%  { transform: translate(30px, 80px) scale(0.95); }
+  100% { transform: translate(80px, 20px) scale(1.02); }
+}
+
+@keyframes float-b {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  50%  { transform: translate(-50px, 60px) scale(1.08); }
+  100% { transform: translate(-20px, -40px) scale(0.94); }
+}
+
+@keyframes float-c {
+  0%   { transform: translate(0px, 0px); }
+  40%  { transform: translate(40px, -50px) scale(1.1); }
+  100% { transform: translate(-30px, 30px) scale(0.9); }
+}
+
+@keyframes float-d {
+  0%   { transform: translate(0px, 0px) scale(0.9); }
+  60%  { transform: translate(-40px, -30px) scale(1.1); }
+  100% { transform: translate(20px, 40px) scale(1.0); }
+}
+
+/* Mobile: smaller orbs, no mouse parallax */
+@media (max-width: 768px) {
+  .orb-a { width: 300px; height: 300px; }
+  .orb-b { width: 240px; height: 240px; }
+  .orb-c { width: 210px; height: 210px; }
+  .orb-d { display: none; }
+}
+
+/* Hero badge pulse (green box-shadow ripple) */
+@keyframes hero-badge-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
