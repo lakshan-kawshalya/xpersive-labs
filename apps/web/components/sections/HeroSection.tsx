@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
 const HEADLINE_WORDS = ["We", "Build", "Immersive", "Digital", "Experiences"];
@@ -23,60 +22,14 @@ const wordVariants = {
   }),
 };
 
-/* ─── Orb config ─────────────────────────────────────────────────── */
-const orbs = [
-  {
-    style: { top: "-10%", left: "-10%", width: 560, height: 560, background: "radial-gradient(circle, rgba(109,113,249,0.15) 0%, transparent 70%)" },
-    animate: { x: [0, 40, 0], y: [0, 30, 0] },
-    duration: 8,
-    parallax: { x: 0.02, y: 0.015 },
-  },
-  {
-    style: { top: "-5%", right: "-8%", width: 480, height: 480, background: "radial-gradient(circle, rgba(84,193,251,0.15) 0%, transparent 70%)" },
-    animate: { x: [0, -30, 0], y: [0, 50, 0] },
-    duration: 10,
-    parallax: { x: -0.02, y: 0.02 },
-  },
-  {
-    style: { bottom: "-5%", left: "30%", width: 520, height: 520, background: "radial-gradient(circle, rgba(109,113,249,0.13) 0%, transparent 70%)" },
-    animate: { x: [0, 50, 0], y: [0, -20, 0] },
-    duration: 12,
-    parallax: { x: 0.015, y: -0.01 },
-  },
-  {
-    style: { top: "30%", left: "35%", width: 460, height: 460, background: "radial-gradient(circle, rgba(84,193,251,0.08) 0%, transparent 70%)" },
-    animate: { scale: [0.8, 1.2, 0.8] },
-    duration: 6,
-    parallax: { x: 0.01, y: 0.01 },
-  },
-];
-
 /* ─── Component ──────────────────────────────────────────────────── */
 export default function HeroSection() {
   const reduced = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [mouseParallax, setMouseParallax] = useState({ x: 0, y: 0 });
-
   const { scrollY } = useScroll();
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
-  /* Mouse parallax for orbs */
-  useEffect(() => {
-    if (reduced) return;
-    const onMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMouseParallax({ x, y });
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [reduced]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen grid place-items-center overflow-hidden bg-dark"
-    >
+    <section className="relative min-h-screen grid place-items-center overflow-hidden bg-dark">
       {/* ── Noise texture overlay ─────────────────────────────── */}
       <svg
         aria-hidden="true"
@@ -99,21 +52,6 @@ export default function HeroSection() {
         }}
       />
 
-      {/* ── Mesh gradient orbs ───────────────────────────────── */}
-      {orbs.map((orb, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full blur-[120px] pointer-events-none"
-          style={{
-            ...orb.style,
-            x: mouseParallax.x * (orb.parallax.x * 200),
-            y: mouseParallax.y * (orb.parallax.y * 200),
-          }}
-          animate={reduced ? {} : orb.animate}
-          transition={{ duration: orb.duration, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-
       {/* ── Content ──────────────────────────────────────────── */}
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         {/* Badge */}
@@ -123,8 +61,21 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-sm font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium select-none"
+            style={{
+              background: "rgba(109,113,249,0.08)",
+              border: "1px solid rgba(109,113,249,0.25)",
+              color: "rgba(255,255,255,0.75)",
+            }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{
+                background: "#10B981",
+                animation: "hero-badge-pulse 2s ease-in-out infinite",
+              }}
+            />
             Sri Lanka&apos;s Immersive Tech Studio
           </span>
         </motion.div>
