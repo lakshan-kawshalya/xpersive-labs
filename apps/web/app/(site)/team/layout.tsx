@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Team - Xpersive Labs",
+  title: "Our Team",
   description:
-    "Meet the talented team behind Xpersive Labs - engineers, designers, and product thinkers building the future of immersive digital experiences.",
-  keywords: ["team", "Xpersive Labs", "engineers", "designers", "Sri Lanka"],
+    "Meet the team behind Xpersive Labs. Founded by Lakshan Kawshalya, a full-stack developer based in Colombo, Sri Lanka.",
+  alternates: { canonical: "https://www.xpersivelabs.com/team" },
+  openGraph: { url: "https://www.xpersivelabs.com/team" },
 };
 
 export default function TeamLayout({ children }: { children: React.ReactNode }) {

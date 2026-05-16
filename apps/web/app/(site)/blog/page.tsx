@@ -1,10 +1,14 @@
 import { getAllPosts } from "@/lib/blog";
 import BlogList from "@/components/blog/BlogList";
 
-export const metadata = {
-  title: "Blog - Xpersive Labs",
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog - Web Development & Design Insights",
   description:
-    "Insights on web development, mobile engineering, UI/UX design, and building software that lasts.",
+    "Insights on web development, UI/UX design, and technology from the Xpersive Labs team in Colombo, Sri Lanka.",
+  alternates: { canonical: "https://www.xpersivelabs.com/blog" },
+  openGraph: { url: "https://www.xpersivelabs.com/blog" },
 };
 
 export default async function BlogPage() {
