@@ -2,8 +2,9 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { Briefcase, Code2, ExternalLink } from "lucide-react";
+import { ArrowRight, Briefcase, Code2, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const founder = {
   name: "Lakshan Kawshalya",
@@ -84,6 +85,22 @@ export default function TeamPage() {
         >
           Building thoughtfully, shipping with care, and growing one project at a time.
         </motion.p>
+
+        <motion.div
+          className="flex justify-center mt-8"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+        >
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
+            style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+          >
+            Start a Project with Us <ArrowRight size={17} />
+          </Link>
+        </motion.div>
       </section>
     </div>
   );

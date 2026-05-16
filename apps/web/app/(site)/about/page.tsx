@@ -167,6 +167,15 @@ export default function AboutPage() {
                 <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: to build software that actually feels good to use. We believe the best technology becomes invisible - it fits seamlessly into the experience rather than getting in the way.</p>
                 <p>We specialise in immersive web development, UI/UX design, and data automation - helping businesses go from idea to polished digital product. Every project gets our full attention, our honest opinion, and our best work.</p>
               </motion.div>
+              <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mt-6">
+                <Link href="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline underline-offset-4">
+                  View Our Services <ArrowRight size={14} />
+                </Link>
+                <span className="text-white/20">·</span>
+                <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white transition-colors">
+                  See Our Work <ArrowRight size={14} />
+                </Link>
+              </motion.div>
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
