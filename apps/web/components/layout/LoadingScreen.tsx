@@ -44,66 +44,51 @@ export default function LoadingScreen() {
           transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
         >
           {/* Phase 1 - Logo icon */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div initial="hidden" animate="visible">
             <svg
               width="64"
-              height="64"
-              viewBox="0 0 120 120"
-              fill="none"
+              height="63"
+              viewBox="0 0 149.91 148.34"
               xmlns="http://www.w3.org/2000/svg"
               style={{ overflow: "visible" }}
             >
               <defs>
-                <linearGradient id="ls-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#6D71F9" />
-                  <stop offset="100%" stopColor="#54C1FB" />
+                <linearGradient id="ls-g1" x1="0" y1="74.3" x2="109.35" y2="74.3" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#6d71f9" />
+                  <stop offset="1" stopColor="#54c1fb" />
                 </linearGradient>
-                <linearGradient id="ls-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#54C1FB" />
-                  <stop offset="100%" stopColor="#6D71F9" />
+                <linearGradient id="ls-g2" x1="93.1" y1="97.7" x2="163.24" y2="97.7" gradientUnits="userSpaceOnUse" gradientTransform="translate(-44.88 134.72) rotate(-45)">
+                  <stop offset="0" stopColor="#6d71f9" />
+                  <stop offset="1" stopColor="#54c1fb" />
+                </linearGradient>
+                <linearGradient id="ls-g3" x1="97.74" y1="55.28" x2="167.89" y2="55.28" gradientUnits="userSpaceOnUse" gradientTransform="translate(-18.17 89.99) rotate(-45)">
+                  <stop offset="0" stopColor="#6d71f9" />
+                  <stop offset="1" stopColor="#54c1fb" />
+                </linearGradient>
+                <linearGradient id="ls-g4" x1="0" y1="37.08" x2="47.97" y2="37.08" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#54c1fb" />
+                  <stop offset="1" stopColor="#6d71f9" />
                 </linearGradient>
               </defs>
 
-              {/* Shape 1 - top-left large diagonal */}
-              <motion.g
-                custom={0}
-                variants={shapeVariants}
-                style={{ transformOrigin: "35px 60px" }}
-              >
-                <rect
-                  x="8" y="20" width="55" height="80" rx="14"
-                  fill="url(#ls-grad1)"
-                  transform="rotate(-45 35 60)"
-                />
+              {/* Main diagonal arm */}
+              <motion.g custom={0} variants={shapeVariants} style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}>
+                <path fill="url(#ls-g1)" d="M106.66,80.66l-26.06,26.04-38.93,38.93c-3.58,3.6-9.39,3.6-12.99,0L2.69,119.65c-3.58-3.58-3.58-9.41,0-12.99l19.57-19.57,12.81-12.79.11-.11-.02-.02C51.47,52.41,52.2,22.73,37.41.27c1.56.39,3.05,1.19,4.26,2.41l39,39,25.99,25.99c3.58,3.58,3.58,9.41,0,12.99Z" />
               </motion.g>
 
-              {/* Shape 2 - top-right small diamond */}
-              <motion.g
-                custom={1}
-                variants={shapeVariants}
-                style={{ transformOrigin: "84px 34px" }}
-              >
-                <rect
-                  x="65" y="15" width="38" height="38" rx="10"
-                  fill="url(#ls-grad2)"
-                  transform="rotate(-45 84 34)"
-                />
+              {/* Bottom-right rotated rect */}
+              <motion.g custom={1} variants={shapeVariants} style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}>
+                <rect fill="url(#ls-g2)" x="88.57" y="86.9" width="52.53" height="52.53" rx="5" ry="5" transform="translate(276.05 111.99) rotate(135)" />
               </motion.g>
 
-              {/* Shape 3 - bottom-right small diamond */}
-              <motion.g
-                custom={2}
-                variants={shapeVariants}
-                style={{ transformOrigin: "84px 86px" }}
-              >
-                <rect
-                  x="65" y="67" width="38" height="38" rx="10"
-                  fill="url(#ls-grad1)"
-                  transform="rotate(-45 84 86)"
-                />
+              {/* Top-right rotated rect */}
+              <motion.g custom={2} variants={shapeVariants} style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}>
+                <rect fill="url(#ls-g3)" x="88.57" y="8.9" width="52.53" height="52.53" rx="5" ry="5" transform="translate(8.77 91.5) rotate(-45)" />
+              </motion.g>
+
+              {/* Left triangular piece */}
+              <motion.g custom={3} variants={shapeVariants} style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}>
+                <path fill="url(#ls-g4)" d="M35.16,74.16L2.69,41.68c-3.58-3.6-3.58-9.41,0-13.01L28.68,2.68C31.05.33,34.37-.48,37.41.27c14.8,22.46,14.06,52.14-2.24,73.88Z" />
               </motion.g>
             </svg>
           </motion.div>
