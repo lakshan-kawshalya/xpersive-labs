@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About - Xpersive Labs",
+  title: "About Us",
   description:
-    "Learn about Xpersive Labs - our mission to revolutionize human-technology interaction, our brand values, and the milestones that shaped us.",
-  keywords: ["about", "Xpersive Labs", "Sri Lanka", "software startup", "immersive tech"],
+    "Learn about Xpersive Labs — a Sri Lankan software studio founded in Colombo, dedicated to building immersive web experiences and innovative technology for global clients.",
+  alternates: { canonical: "https://www.xpersivelabs.com/about" },
+  openGraph: { url: "https://www.xpersivelabs.com/about" },
 };
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {

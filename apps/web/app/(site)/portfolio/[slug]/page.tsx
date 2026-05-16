@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar, Tag } from "lucide-react";
+import type { Metadata } from "next";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -76,6 +77,28 @@ function getProject(slug: string): ProjectDetail | undefined {
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
+}
+
+/* ─── Metadata ────────────────────────────────────────────────────────── */
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) return {};
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: { canonical: `https://www.xpersivelabs.com/portfolio/${slug}` },
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      url: `https://www.xpersivelabs.com/portfolio/${slug}`,
+    },
+  };
 }
 
 /* ─── Page ──────────────────────────────────────────────────────────── */

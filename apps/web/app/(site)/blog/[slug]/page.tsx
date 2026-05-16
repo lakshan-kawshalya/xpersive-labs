@@ -3,6 +3,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import { getPostBySlug, getAllSlugs, getAllPosts } from "@/lib/blog";
+import { JsonLd } from "@/components/seo/JsonLd";
 import type { Metadata } from "next";
 
 /* ─── Static params (SSG) ────────────────────────────────────────────── */
@@ -23,8 +24,16 @@ export async function generateMetadata({
   const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
-    title: `${post.title} - Xpersive Labs Blog`,
+    title: post.title,
     description: post.description,
+    alternates: { canonical: `https://www.xpersivelabs.com/blog/${slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://www.xpersivelabs.com/blog/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+    },
   };
 }
 
@@ -47,8 +56,30 @@ export default async function BlogPostPage({
   const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
   const nextPost = idx > 0 ? allPosts[idx - 1] : null;
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    author: {
+      "@type": "Person",
+      name: "Lakshan Kawshalya",
+      url: "https://www.linkedin.com/in/lakshan-kawshalya/",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Xpersive Labs",
+      url: "https://www.xpersivelabs.com",
+    },
+    datePublished: post.date,
+    dateModified: post.date,
+    url: `https://www.xpersivelabs.com/blog/${slug}`,
+    mainEntityOfPage: `https://www.xpersivelabs.com/blog/${slug}`,
+  };
+
   return (
     <div className="bg-dark text-white min-h-screen">
+      <JsonLd data={blogSchema} />
       {/* ── Header band ──────────────────────────────────────────── */}
       <section className="relative pt-36 pb-14 overflow-hidden border-b border-white/[0.07]">
         {/* Orb */}
