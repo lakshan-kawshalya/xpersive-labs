@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     description: "Sri Lanka's immersive tech studio. We build cutting-edge digital experiences.",
     images: ["/og-image.png"],
   },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
   robots: { index: true, follow: true },
 };
 
