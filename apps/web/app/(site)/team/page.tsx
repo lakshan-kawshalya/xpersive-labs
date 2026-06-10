@@ -61,7 +61,7 @@ export default function TeamPage() {
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.1, 1], x: [0, 20, 0] },
-            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
           } : {})}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">

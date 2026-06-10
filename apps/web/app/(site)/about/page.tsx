@@ -153,7 +153,7 @@ export default function AboutPage() {
 
   const ambientProps = shouldAnimate ? {
     animate: { scale: [1, 1.12, 1] },
-    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" as const },
   } : {};
 
   return (

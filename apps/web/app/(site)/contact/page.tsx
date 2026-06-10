@@ -132,7 +132,7 @@ export default function ContactPage() {
 
   const ambientProps = (delay = 0) => shouldAnimate ? {
     animate: { scale: [1, 1.1, 1] as number[] },
-    transition: { duration: 9, repeat: Infinity, ease: "easeInOut", delay },
+    transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const, delay },
   } : {};
 
   return (
@@ -149,7 +149,7 @@ export default function ContactPage() {
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.15, 1] as number[] },
-            transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 },
+            transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
           } : {})}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">

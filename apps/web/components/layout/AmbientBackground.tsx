@@ -108,7 +108,7 @@ export default function AmbientBackground() {
               transition: {
                 duration: orb.duration,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               },
             } : {})}
           />

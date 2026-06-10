@@ -440,7 +440,7 @@ export default function ServicesPage() {
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.1, 1] },
-            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
           } : {})}
         />
         <motion.div
@@ -448,7 +448,7 @@ export default function ServicesPage() {
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.2) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.15, 1] },
-            transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 },
+            transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
           } : {})}
         />
         <div
@@ -519,7 +519,7 @@ export default function ServicesPage() {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[80px] bg-white/10"
               {...(shouldAnimate ? {
                 animate: { scale: [1, 1.2, 1] },
-                transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
               } : {})}
             />
 
