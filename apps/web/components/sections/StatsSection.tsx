@@ -3,6 +3,7 @@
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { useCountUp } from "@/hooks/useCountUp";
 import { motion } from "framer-motion";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const stats = [
   { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
@@ -21,10 +22,11 @@ interface StatItemProps {
 
 function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
   const { count, ref } = useCountUp(target, 2000, delay);
+  const { shouldAnimate } = useMotionSafe();
 
   return (
     <motion.div
-      variants={scaleIn}
+      {...(shouldAnimate ? { variants: scaleIn } : { initial: false })}
       className="relative flex flex-col items-center text-center px-6 py-4"
     >
       {!isLast && (
@@ -53,6 +55,14 @@ function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
 }
 
 export default function StatsSection() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const containerScrollProps = shouldAnimate ? {
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
   return (
     <section
       className="py-20 relative overflow-hidden"
@@ -68,10 +78,8 @@ export default function StatsSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.div
           className="text-center mb-14"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeUp}
+          {...containerScrollProps}
+          variants={shouldAnimate ? fadeUp : undefined}
         >
           <span className="text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
             By the Numbers
@@ -80,10 +88,8 @@ export default function StatsSection() {
 
         <motion.div
           className="grid grid-cols-2 lg:grid-cols-4"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          {...containerScrollProps}
+          variants={shouldAnimate ? staggerContainer : undefined}
         >
           {stats.map((stat, i) => (
             <StatItem

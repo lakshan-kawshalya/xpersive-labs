@@ -4,6 +4,7 @@ import { fadeUp } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { Clock, Shield, Star } from "lucide-react";
 import { useRef, useState } from "react";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const principles = [
   {
@@ -30,22 +31,27 @@ function PrincipleCard({ principle }: { principle: typeof principles[number] }) 
   const cardRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
   const [hovered, setHovered] = useState(false);
+  const { shouldAnimate } = useMotionSafe();
+
+  const animProps = shouldAnimate ? {
+    variants: fadeUp,
+    whileHover: { y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" },
+    transition: { type: "spring" as const, stiffness: 200, damping: 22 },
+    onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => {
+      const r = cardRef.current?.getBoundingClientRect();
+      if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
+    },
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => {
+      setSpot((s) => ({ ...s, on: false }));
+      setHovered(false);
+    },
+  } : { initial: false };
 
   return (
     <motion.div
       ref={cardRef}
-      variants={fadeUp}
-      onMouseMove={(e) => {
-        const r = cardRef.current?.getBoundingClientRect();
-        if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => {
-        setSpot((s) => ({ ...s, on: false }));
-        setHovered(false);
-      }}
-      whileHover={{ y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" }}
-      transition={{ type: "spring", stiffness: 200, damping: 22 }}
+      {...animProps}
       className="group relative flex flex-col rounded-3xl border border-white/6 hover:border-primary/30 overflow-hidden transition-colors duration-350"
       style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
     >
@@ -55,14 +61,16 @@ function PrincipleCard({ principle }: { principle: typeof principles[number] }) 
         style={{ background: "rgba(109,113,249,0.04)" }}
       />
       {/* Spotlight */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: spot.on ? 1 : 0,
-          transition: "opacity 0.2s ease",
-          background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)`,
-        }}
-      />
+      {shouldAnimate && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            opacity: spot.on ? 1 : 0,
+            transition: "opacity 0.2s ease",
+            background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)`,
+          }}
+        />
+      )}
 
       {/* Number watermark */}
       <span
@@ -110,6 +118,16 @@ function PrincipleCard({ principle }: { principle: typeof principles[number] }) 
 }
 
 export default function TestimonialsSection() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const scrollProps = shouldAnimate ? {
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
   return (
     <section className="py-28 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
@@ -117,36 +135,24 @@ export default function TestimonialsSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.div
           className="text-center mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+          {...scrollProps}
+          variants={shouldAnimate ? { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } } : undefined}
         >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-xs font-bold uppercase mb-4"
-            style={{ color: "#6D71F9", letterSpacing: "0.12em" }}
-          >
+          <motion.span {...childProps} className="inline-block text-xs font-bold uppercase mb-4" style={{ color: "#6D71F9", letterSpacing: "0.12em" }}>
             Our Principles
           </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display font-bold mb-4"
-            style={{ fontSize: "clamp(36px, 5vw, 48px)" }}
-          >
+          <motion.h2 {...childProps} className="font-display font-bold mb-4" style={{ fontSize: "clamp(36px, 5vw, 48px)" }}>
             How We Work
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-white/45 text-lg max-w-md mx-auto">
+          <motion.p {...childProps} className="text-white/45 text-lg max-w-md mx-auto">
             What you can expect from every project we take on.
           </motion.p>
         </motion.div>
 
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
+          {...scrollProps}
+          variants={shouldAnimate ? { hidden: {}, visible: { transition: { staggerChildren: 0.15 } } } : undefined}
         >
           {principles.map((p) => (
             <PrincipleCard key={p.title} principle={p} />

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const { shouldAnimate } = useMotionSafe();
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function CustomCursor() {
   useEffect(() => {
     if (isTouch) return;
     if (window.matchMedia("(hover: none)").matches) return;
-    if (reduced) return;
+    if (!shouldAnimate) return;
 
     if (!dotRef.current || !ringRef.current) return;
     const dot: HTMLDivElement = dotRef.current;
@@ -96,7 +96,7 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", onUp);
       window.removeEventListener("mouseover", onOver);
     };
-  }, [reduced, isTouch]);
+  }, [shouldAnimate, isTouch]);
 
   if (isTouch) return null;
 

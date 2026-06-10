@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 export default function PageTransitionProvider({
   children,
@@ -9,6 +10,11 @@ export default function PageTransitionProvider({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { shouldAnimate } = useMotionSafe();
+
+  if (!shouldAnimate) {
+    return <main className="flex-1">{children}</main>;
+  }
 
   return (
     <AnimatePresence mode="wait">

@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
 const HEADLINE_WORDS = ["E-Commerce", "Data", "Tools", "That", "Perform"];
@@ -24,7 +25,7 @@ const wordVariants = {
 
 /* ─── Component ──────────────────────────────────────────────────── */
 export default function HeroSection() {
-  const reduced = useReducedMotion();
+  const { shouldAnimate } = useMotionSafe();
   const { scrollY } = useScroll();
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
@@ -57,9 +58,11 @@ export default function HeroSection() {
         {/* Badge */}
         <motion.div
           className="mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
+          {...(shouldAnimate ? {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.5, delay: 0.05 },
+          } : { initial: false })}
         >
           <span
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium select-none"
@@ -88,13 +91,13 @@ export default function HeroSection() {
           {HEADLINE_WORDS.map((word, i) => (
             <motion.span
               key={word}
-              custom={i}
-              variants={wordVariants}
-              initial="hidden"
-              animate="visible"
-              className={`inline-block mr-[0.25em] ${
-                GRADIENT_WORDS.has(word) ? "text-gradient" : ""
-              }`}
+              className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
+              {...(shouldAnimate ? {
+                custom: i,
+                variants: wordVariants,
+                initial: "hidden",
+                animate: "visible",
+              } : { initial: false })}
             >
               {word}
             </motion.span>
@@ -104,9 +107,11 @@ export default function HeroSection() {
         {/* Subtext */}
         <motion.p
           className="max-w-[520px] mx-auto text-[18px] text-white/60 leading-[1.7] mb-11"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+          {...(shouldAnimate ? {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
+          } : { initial: false })}
         >
           Alibaba supplier intelligence, FBA product research automation, and
           white-label development for agencies in AU, UK, and US.
@@ -115,16 +120,16 @@ export default function HeroSection() {
         {/* CTAs */}
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+          {...(shouldAnimate ? {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 1.0, ease: "easeOut" },
+          } : { initial: false })}
         >
           <Link
             href="/contact"
             className="group inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full font-semibold text-base text-white transition-all duration-300 hover:brightness-110 hover:scale-[1.03]"
-            style={{
-              background: "linear-gradient(135deg, #6D71F9, #54C1FB)",
-            }}
+            style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 30px rgba(109,113,249,0.4)";
             }}
@@ -158,18 +163,22 @@ export default function HeroSection() {
       {/* ── Scroll indicator (SVG mouse icon) ────────────────── */}
       <motion.div
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ opacity: scrollIndicatorOpacity }}
+        style={shouldAnimate ? { opacity: scrollIndicatorOpacity } : {}}
         aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
+        {...(shouldAnimate ? {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { delay: 1.8, duration: 0.6 },
+        } : { initial: false })}
       >
         <svg width="22" height="34" viewBox="0 0 22 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="1" width="20" height="32" rx="10" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
           <motion.rect
             x="10" y="7" width="2" height="6" rx="1" fill="rgba(255,255,255,0.5)"
-            animate={reduced ? {} : { y: [0, 10, 0], opacity: [1, 0, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            {...(shouldAnimate ? {
+              animate: { y: [0, 10, 0], opacity: [1, 0, 1] },
+              transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+            } : {})}
           />
         </svg>
       </motion.div>

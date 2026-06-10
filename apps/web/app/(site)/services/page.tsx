@@ -1,6 +1,7 @@
 "use client";
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -181,6 +182,8 @@ const services: Service[] = [
 /* ─── Process timeline ──────────────────────────────────────────────── */
 
 function ProcessTimeline({ steps }: { steps: Step[] }) {
+  const { shouldAnimate } = useMotionSafe();
+
   return (
     <div>
       {/* Desktop: horizontal */}
@@ -188,34 +191,33 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <div key={step.title} className="flex items-start flex-1">
             <div className="flex flex-col items-center text-center flex-1 px-3">
-              {/* Dot */}
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center mb-5 relative z-10 flex-shrink-0"
-                style={{
-                  background: "rgba(109,113,249,0.12)",
-                  border: "1px solid rgba(109,113,249,0.3)",
-                }}
+                style={{ background: "rgba(109,113,249,0.12)", border: "1px solid rgba(109,113,249,0.3)" }}
               >
                 <div className="w-2 h-2 rounded-full bg-primary" />
               </div>
 
-              {/* Watermark number */}
               <motion.span
                 className="font-display font-extrabold leading-none select-none mb-3 block"
                 style={{ fontSize: 64, color: "rgba(109,113,249,0.15)" }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
+                {...(shouldAnimate ? {
+                  initial: { opacity: 0 },
+                  whileInView: { opacity: 1 },
+                  viewport: { once: true },
+                  transition: { delay: i * 0.15 },
+                } : { initial: false })}
               >
                 {String(i + 1).padStart(2, "0")}
               </motion.span>
 
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 + 0.1 }}
+                {...(shouldAnimate ? {
+                  initial: { opacity: 0, y: 16 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true },
+                  transition: { delay: i * 0.15 + 0.1 },
+                } : { initial: false })}
               >
                 <h4 className="font-semibold text-white mb-2" style={{ fontSize: 20 }}>
                   {step.title}
@@ -226,7 +228,6 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
               </motion.div>
             </div>
 
-            {/* Connector */}
             {i < steps.length - 1 && (
               <div className="pt-3 flex-shrink-0 w-4">
                 <motion.div
@@ -236,10 +237,12 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                     transformOrigin: "left center",
                     width: "100%",
                   }}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 + 0.3, duration: 0.5, ease: "easeOut" }}
+                  {...(shouldAnimate ? {
+                    initial: { scaleX: 0 },
+                    whileInView: { scaleX: 1 },
+                    viewport: { once: true },
+                    transition: { delay: i * 0.15 + 0.3, duration: 0.5, ease: "easeOut" },
+                  } : { initial: false })}
                 />
               </div>
             )}
@@ -253,10 +256,12 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
           <motion.div
             key={step.title}
             className="flex gap-4"
-            initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0, x: -16 },
+              whileInView: { opacity: 1, x: 0 },
+              viewport: { once: true },
+              transition: { delay: i * 0.1 },
+            } : { initial: false })}
           >
             <div className="flex flex-col items-center flex-shrink-0">
               <div
@@ -290,22 +295,26 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
 
 function ServiceRow({ service, index }: { service: Service; index: number }) {
   const reversed = index % 2 !== 0;
+  const { shouldAnimate } = useMotionSafe();
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <section
-      id={service.id}
-      className="py-24 border-t border-white/[0.07] scroll-mt-20"
-    >
+    <section id={service.id} className="py-24 border-t border-white/[0.07] scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          {...scrollProps}
           className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20 ${reversed ? "lg:grid-flow-dense" : ""}`}
         >
           {/* Text block */}
-          <motion.div variants={fadeUp} className={reversed ? "lg:col-start-2" : ""}>
+          <motion.div {...childProps} className={reversed ? "lg:col-start-2" : ""}>
             <div className="flex items-center gap-3 mb-5">
               <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${service.accentBg}`}>
                 <service.icon size={22} className={service.accentColor} />
@@ -325,7 +334,6 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               ))}
             </div>
 
-            {/* Tech stack badges - stagger entrance, mono font, hover effect */}
             <div>
               <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-3">
                 Tools &amp; Technologies
@@ -334,21 +342,23 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
                 {service.tools.map((tool, idx) => (
                   <motion.span
                     key={tool}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.04, duration: 0.3 }}
                     className="px-3 py-1.5 rounded-full font-mono text-[13px] cursor-default transition-all duration-200 hover:text-white"
                     style={{
                       background: "rgba(109,113,249,0.08)",
                       border: "1px solid rgba(109,113,249,0.2)",
                       color: "rgba(255,255,255,0.7)",
                     }}
-                    whileHover={{
-                      backgroundColor: "rgba(109,113,249,0.15)",
-                      borderColor: "rgba(109,113,249,0.4)",
-                      color: "#ffffff",
-                    }}
+                    {...(shouldAnimate ? {
+                      initial: { opacity: 0, y: 8 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true },
+                      transition: { delay: idx * 0.04, duration: 0.3 },
+                      whileHover: {
+                        backgroundColor: "rgba(109,113,249,0.15)",
+                        borderColor: "rgba(109,113,249,0.4)",
+                        color: "#ffffff",
+                      },
+                    } : { initial: false })}
                   >
                     {tool}
                   </motion.span>
@@ -358,7 +368,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           </motion.div>
 
           {/* Visual accent card */}
-          <motion.div variants={fadeUp} className={reversed ? "lg:col-start-1 lg:row-start-1" : ""}>
+          <motion.div {...childProps} className={reversed ? "lg:col-start-1 lg:row-start-1" : ""}>
             <div
               className={`relative rounded-2xl p-10 border border-white/10 bg-gradient-to-br ${service.gradientFrom} ${service.gradientTo} overflow-hidden h-full min-h-[280px] flex items-center justify-center`}
             >
@@ -386,9 +396,11 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
         <div>
           <motion.p
             className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+            } : { initial: false })}
           >
             Our Process
           </motion.p>
@@ -402,6 +414,23 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
 /* ─── Page ──────────────────────────────────────────────────────────── */
 
 export default function ServicesPage() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const mountProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    animate: "visible",
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
   return (
     <div className="bg-dark text-white">
       {/* ── Hero ───────────────────────────────────────────────────── */}
@@ -409,14 +438,18 @@ export default function ServicesPage() {
         <motion.div
           className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          {...(shouldAnimate ? {
+            animate: { scale: [1, 1.1, 1] },
+            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+          } : {})}
         />
         <motion.div
           className="absolute bottom-0 -left-20 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.2) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          {...(shouldAnimate ? {
+            animate: { scale: [1, 1.15, 1] },
+            transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 },
+          } : {})}
         />
         <div
           className="absolute inset-0 opacity-[0.05] pointer-events-none"
@@ -427,32 +460,23 @@ export default function ServicesPage() {
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.span
-              variants={fadeUp}
-              className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
-            >
+          <motion.div {...mountProps}>
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
               What We Offer
             </motion.span>
 
-            <motion.h1
-              variants={fadeUp}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 max-w-3xl"
-            >
+            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 max-w-3xl">
               Our{" "}
               <span className="text-gradient">Services</span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10"
-            >
+            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10">
               Alibaba data automation, custom web applications, and UI/UX
               design for e-commerce businesses and digital agencies.
             </motion.p>
 
             {/* Service anchors */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+            <motion.div {...childProps} className="flex flex-wrap gap-3">
               {services.map((s) => (
                 <a
                   key={s.id}
@@ -478,10 +502,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="relative rounded-2xl overflow-hidden p-12 sm:p-16 text-center"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
+            {...scrollProps}
           >
             <div
               className="absolute inset-0"
@@ -496,25 +517,21 @@ export default function ServicesPage() {
             />
             <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[80px] bg-white/10"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              {...(shouldAnimate ? {
+                animate: { scale: [1, 1.2, 1] },
+                transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+              } : {})}
             />
 
             <div className="relative z-10">
-              <motion.h2
-                variants={fadeUp}
-                className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5"
-              >
+              <motion.h2 {...childProps} className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">
                 Not sure which service fits?
               </motion.h2>
-              <motion.p
-                variants={fadeUp}
-                className="text-white/75 text-lg mb-10 max-w-xl mx-auto"
-              >
+              <motion.p {...childProps} className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
                 Tell us about your project and we&apos;ll scope the right solution
                 together - no commitment required.
               </motion.p>
-              <motion.div variants={fadeUp}>
+              <motion.div {...childProps}>
                 <Link
                   href="/contact"
                   className="group inline-flex items-center gap-2.5 px-10 py-4 rounded-full bg-white text-primary font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/20"

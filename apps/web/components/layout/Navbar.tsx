@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -52,6 +53,21 @@ function useMagnetic(strength = 0.3) {
 /* ─── Magnetic nav link ─────────────────────────────────────────────── */
 function MagneticNavLink({ href, label, isActive }: { href: string; label: string; isActive: boolean }) {
   const { ref, offset } = useMagnetic(0.3);
+  const { shouldAnimate } = useMotionSafe();
+
+  const linkClass = `relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-primary" : "text-white/70"}`;
+
+  if (!shouldAnimate) {
+    return (
+      <li className="relative">
+        <Link href={href} className={linkClass}>
+          {label}
+          {isActive && <span className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-primary" />}
+        </Link>
+      </li>
+    );
+  }
+
   return (
     <motion.li
       ref={ref as React.RefObject<HTMLLIElement>}
@@ -59,10 +75,7 @@ function MagneticNavLink({ href, label, isActive }: { href: string; label: strin
       transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
       className="relative"
     >
-      <Link
-        href={href}
-        className={`relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-primary" : "text-white/70"}`}
-      >
+      <Link href={href} className={linkClass}>
         {label}
         {isActive && (
           <motion.span layoutId="nav-dot" className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-primary" />
@@ -76,6 +89,19 @@ function MagneticNavLink({ href, label, isActive }: { href: string; label: strin
 function MagneticCTA() {
   const { ref, offset } = useMagnetic(0.4);
   const [hovered, setHovered] = useState(false);
+  const { shouldAnimate } = useMotionSafe();
+
+  if (!shouldAnimate) {
+    return (
+      <Link
+        href="/contact"
+        className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-sm font-medium"
+      >
+        <span>Get in Touch</span>
+      </Link>
+    );
+  }
+
   return (
     <motion.div
       ref={ref as React.RefObject<HTMLDivElement>}
@@ -104,6 +130,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { shouldAnimate } = useMotionSafe();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
@@ -147,11 +174,19 @@ export default function Navbar() {
         </div>
 
         {/* Desktop nav */}
-        <motion.ul className="hidden md:flex items-center gap-8" layout>
-          {navLinks.map((link) => (
-            <MagneticNavLink key={link.href} href={link.href} label={link.label} isActive={pathname === link.href} />
-          ))}
-        </motion.ul>
+        {shouldAnimate ? (
+          <motion.ul className="hidden md:flex items-center gap-8" layout>
+            {navLinks.map((link) => (
+              <MagneticNavLink key={link.href} href={link.href} label={link.label} isActive={pathname === link.href} />
+            ))}
+          </motion.ul>
+        ) : (
+          <ul className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <MagneticNavLink key={link.href} href={link.href} label={link.label} isActive={pathname === link.href} />
+            ))}
+          </ul>
+        )}
 
         {/* CTA + hamburger */}
         <div className="flex items-center gap-3">
@@ -162,48 +197,108 @@ export default function Navbar() {
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileOpen}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {isMobileOpen ? (
-                <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <X size={20} />
-                </motion.span>
-              ) : (
-                <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <Menu size={20} />
-                </motion.span>
-              )}
-            </AnimatePresence>
+            {shouldAnimate ? (
+              <AnimatePresence mode="wait" initial={false}>
+                {isMobileOpen ? (
+                  <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                    <X size={20} />
+                  </motion.span>
+                ) : (
+                  <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                    <Menu size={20} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            ) : (
+              isMobileOpen ? <X size={20} /> : <Menu size={20} />
+            )}
           </button>
         </div>
       </nav>
 
       {/* Full-screen mobile overlay */}
-      <AnimatePresence>
-        {isMobileOpen && (
+      {shouldAnimate ? (
+        <AnimatePresence>
+          {isMobileOpen && (
+            <>
+              <motion.div
+                key="backdrop"
+                className="fixed inset-0 z-40 md:hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileOpen(false)}
+              />
+              <motion.div
+                key="menu"
+                className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
+                style={{ background: "#1A1A2E" }}
+                initial={{ opacity: 0, y: -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.28, ease: [0.215, 0.61, 0.355, 1.0] }}
+              >
+                <button
+                  className="absolute top-4 right-6 flex items-center justify-center w-9 h-9 text-white/50 hover:text-white transition-colors"
+                  onClick={() => setIsMobileOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <X size={22} />
+                </button>
+                <nav className="flex flex-col items-center gap-6">
+                  {navLinks.map((link, i) => (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 + i * 0.06, duration: 0.35, ease: [0.215, 0.61, 0.355, 1.0] }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsMobileOpen(false)}
+                        className={`font-display font-bold transition-colors duration-200 ${
+                          pathname === link.href ? "text-gradient" : "text-white/75 hover:text-white"
+                        }`}
+                        style={{ fontSize: 32 }}
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + navLinks.length * 0.06, duration: 0.35 }}
+                    className="mt-4"
+                  >
+                    <Link
+                      href="/contact"
+                      onClick={() => setIsMobileOpen(false)}
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-white"
+                      style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+                    >
+                      Get in Touch
+                      <ArrowRight size={16} />
+                    </Link>
+                  </motion.div>
+                </nav>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      ) : (
+        isMobileOpen && (
           <>
-            {/* Backdrop - click outside to close */}
-            <motion.div
-              key="backdrop"
+            <div
               className="fixed inset-0 z-40 md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               onClick={() => setIsMobileOpen(false)}
             />
-
-            {/* Menu panel */}
-            <motion.div
-              key="menu"
+            <div
               className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
               style={{ background: "#1A1A2E" }}
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.28, ease: [0.215, 0.61, 0.355, 1.0] }}
             >
-              {/* Close button */}
               <button
                 className="absolute top-4 right-6 flex items-center justify-center w-9 h-9 text-white/50 hover:text-white transition-colors"
                 onClick={() => setIsMobileOpen(false)}
@@ -211,34 +306,21 @@ export default function Navbar() {
               >
                 <X size={22} />
               </button>
-
               <nav className="flex flex-col items-center gap-6">
-                {navLinks.map((link, i) => (
-                  <motion.div
+                {navLinks.map((link) => (
+                  <Link
                     key={link.href}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 + i * 0.06, duration: 0.35, ease: [0.215, 0.61, 0.355, 1.0] }}
+                    href={link.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={`font-display font-bold transition-colors duration-200 ${
+                      pathname === link.href ? "text-gradient" : "text-white/75 hover:text-white"
+                    }`}
+                    style={{ fontSize: 32 }}
                   >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMobileOpen(false)}
-                      className={`font-display font-bold transition-colors duration-200 ${
-                        pathname === link.href ? "text-gradient" : "text-white/75 hover:text-white"
-                      }`}
-                      style={{ fontSize: 32 }}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
+                    {link.label}
+                  </Link>
                 ))}
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + navLinks.length * 0.06, duration: 0.35 }}
-                  className="mt-4"
-                >
+                <div className="mt-4">
                   <Link
                     href="/contact"
                     onClick={() => setIsMobileOpen(false)}
@@ -248,12 +330,12 @@ export default function Navbar() {
                     Get in Touch
                     <ArrowRight size={16} />
                   </Link>
-                </motion.div>
+                </div>
               </nav>
-            </motion.div>
+            </div>
           </>
-        )}
-      </AnimatePresence>
+        )
+      )}
     </header>
   );
 }

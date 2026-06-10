@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 interface OrbConfig {
   size: number;
@@ -50,7 +51,7 @@ const ORB_CONFIG: OrbConfig[] = [
 ];
 
 export default function AmbientBackground() {
-  const reduced = useReducedMotion();
+  const { shouldAnimate } = useMotionSafe();
   const wrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -102,12 +103,14 @@ export default function AmbientBackground() {
               background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
               filter: `blur(${orb.blur}px)`,
             }}
-            animate={reduced ? {} : orb.float}
-            transition={{
-              duration: orb.duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            {...(shouldAnimate ? {
+              animate: orb.float,
+              transition: {
+                duration: orb.duration,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            } : {})}
           />
         </div>
       ))}
