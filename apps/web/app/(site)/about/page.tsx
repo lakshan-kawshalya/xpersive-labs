@@ -1,7 +1,7 @@
 "use client";
 
 import { fadeUp, scaleIn, slideInLeft, slideInRight, staggerContainer } from "@/lib/animations";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   Calendar,
@@ -142,14 +142,14 @@ export default function AboutPage() {
     animate: "visible",
   } : { initial: false };
 
-  const scrollProps = (variants: object) => shouldAnimate ? {
+  const scrollProps = (variants: Variants) => shouldAnimate ? {
     variants,
     initial: "hidden",
     whileInView: "visible" as const,
     viewport: { once: true, margin: "-80px" },
   } : { initial: false };
 
-  const childProps = (variants: object) => shouldAnimate ? { variants } : { initial: false };
+  const childProps = (variants: Variants) => shouldAnimate ? { variants } : { initial: false };
 
   const ambientProps = shouldAnimate ? {
     animate: { scale: [1, 1.12, 1] },
