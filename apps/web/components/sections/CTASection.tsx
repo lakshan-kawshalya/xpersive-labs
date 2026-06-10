@@ -20,7 +20,7 @@ export default function CTASection() {
 
   const ambientProps = shouldAnimate ? {
     animate: { scale: [1, 1.15, 1] },
-    transition: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+    transition: { duration: 10, repeat: Infinity, ease: "easeInOut" as const },
   } : {};
 
   return (

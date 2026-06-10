@@ -70,7 +70,7 @@ export default function PortfolioPage() {
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.32) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.12, 1] },
-            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
           } : {})}
         />
         <motion.div
@@ -78,7 +78,7 @@ export default function PortfolioPage() {
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.15, 1] },
-            transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 },
+            transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
           } : {})}
         />
         <div
