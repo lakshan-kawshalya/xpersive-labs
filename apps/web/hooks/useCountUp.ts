@@ -7,15 +7,15 @@ export function useCountUp(target: number, duration = 2000, delay = 0) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || hasStarted) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasStarted) {
+        if (entry.isIntersecting) {
           setHasStarted(true);
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0 },
     );
 
     observer.observe(el);

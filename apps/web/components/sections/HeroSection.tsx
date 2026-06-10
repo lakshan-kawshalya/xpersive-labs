@@ -5,8 +5,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
-const HEADLINE_WORDS = ["We", "Build", "Immersive", "Digital", "Experiences"];
-const GRADIENT_WORDS = new Set(["Immersive", "Digital", "Experiences"]);
+const HEADLINE_WORDS = ["E-Commerce", "Data", "Tools", "That", "Perform"];
+const GRADIENT_WORDS = new Set(["Data", "Tools"]);
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -20 },
@@ -76,7 +76,7 @@ export default function HeroSection() {
                 animation: "hero-badge-pulse 2s ease-in-out infinite",
               }}
             />
-            Sri Lanka&apos;s Immersive Tech Studio
+            Built for FBA Sellers and Digital Agencies
           </span>
         </motion.div>
 
@@ -108,8 +108,8 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
         >
-          From Colombo to global clients - we design and build web experiences,
-          interfaces, and automation tools that feel premium and perform at scale.
+          Alibaba supplier intelligence, FBA product research automation, and
+          white-label development for agencies in AU, UK, and US.
         </motion.p>
 
         {/* CTAs */}

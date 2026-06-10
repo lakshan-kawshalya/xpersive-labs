@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about Xpersive Labs — a Sri Lankan software studio founded in Colombo, dedicated to building immersive web experiences and innovative technology for global clients.",
+    "Learn about Xpersive Labs, a Sri Lankan software studio building Alibaba supplier intelligence tools, FBA product research automation, and web applications for e-commerce businesses. Based in Colombo.",
   alternates: { canonical: "https://www.xpersivelabs.com/about" },
   openGraph: { url: "https://www.xpersivelabs.com/about" },
 };

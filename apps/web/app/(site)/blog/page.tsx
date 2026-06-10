@@ -4,9 +4,9 @@ import BlogList from "@/components/blog/BlogList";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog - Web Development & Design Insights",
+  title: "Blog - E-Commerce Automation and Web Development",
   description:
-    "Insights on web development, UI/UX design, and technology from the Xpersive Labs team in Colombo, Sri Lanka.",
+    "Insights on Alibaba data tools, FBA automation, web development, and UI/UX design from the Xpersive Labs team in Colombo, Sri Lanka.",
   alternates: { canonical: "https://www.xpersivelabs.com/blog" },
   openGraph: { url: "https://www.xpersivelabs.com/blog" },
 };

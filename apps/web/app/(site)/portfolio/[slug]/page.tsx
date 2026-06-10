@@ -26,44 +26,24 @@ interface ProjectDetail {
 
 const projects: ProjectDetail[] = [
   {
-    slug: "xpersive-labs-website",
-    title: "Xpersive Labs Website",
-    category: "Web",
-    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
-    year: "2025",
-    gradient: "from-[#6D71F9] to-[#54C1FB]",
-    status: "Live",
-    highlight: "Built with performance, SEO, and immersion in mind.",
-    summary:
-      "Our own company website built from the ground up - a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
-    challenge:
-      "We needed a website that would represent Xpersive Labs accurately - immersive, fast, and polished - while being maintainable without touching code for every blog update. Most templates didn't come close to the standard we wanted to hold ourselves to.",
-    solution:
-      "Built entirely in Next.js 14 with the App Router, using Framer Motion for scroll-triggered animations and Keystatic as a Git-based CMS so blog posts can be written and published without a developer. Tailwind CSS powers the design system with a custom colour palette. Deployed to Vercel with automatic preview builds on every push.",
-    result:
-      "A production website that reflects the quality of our work - fast, animated, and fully managed through a visual CMS. Lighthouse performance score above 90. Serves as the primary client-facing presence for Xpersive Labs.",
-    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Markdoc", "Vercel"],
-    /* TODO: set liveUrl when xpersivelabs.com domain is purchased */
-  },
-  {
     slug: "alibaba-scraper",
-    title: "Alibaba Product Scraper",
+    title: "Alibaba Supplier Intelligence Tool",
     category: "Automation",
-    tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
-    year: "2024",
+    tags: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse Residential Proxies", "CapSolver"],
+    year: "May 2026",
     gradient: "from-[#272848] to-[#6D71F9]",
-    status: "Completed",
-    highlight: "Handles bulk extraction with structured multi-format output.",
+    status: "Live",
+    highlight: "Production-ready since May 2026. Replaces 8-10 hours of manual research per week.",
     privateBadge: true,
     summary:
-      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence - outputs clean, structured data in both CSV and JSON formats.",
+      "A production-ready Alibaba supplier intelligence tool with 4 core modes: store monitoring, new launch detection, keyword search, and product deep-dives. Built with Playwright, curl_cffi, Parsel, BeautifulSoup, DataImpulse Residential Proxies, and CapSolver. Extracts 20+ structured data fields per product and processes 60+ products per monitoring session.",
     challenge:
-      "Manual product research on Alibaba is slow, inconsistent, and impossible to scale. Hundreds of listings across dozens of categories needed to be collected, structured, and compared - without spending days doing it by hand.",
+      "FBA sellers and importers were spending 8-10 hours per week manually researching Alibaba: checking supplier stores for new launches, monitoring competitor pricing, and building product shortlists by hand. There was no single tool that combined all these workflows into a production-reliable system.",
     solution:
-      "Built a Python scraper using Selenium for JavaScript-rendered pages and BeautifulSoup for HTML parsing. Handles pagination, category traversal, and rate limiting automatically. Data is cleaned, deduplicated, and exported to both CSV (for spreadsheet analysis) and JSON (for programmatic use). Designed to run on a schedule or on-demand.",
+      "Built a Python-based Alibaba intelligence tool with four distinct operating modes: store monitoring (tracks a supplier store for new products), new launch detection (finds newly listed products by keyword), keyword search (structured extraction across search results), and product deep-dive (pulls all available data for a specific listing). The anti-detection layer uses curl_cffi for TLS fingerprint evasion, DataImpulse residential proxies for IP rotation, and CapSolver for CAPTCHA handling. Parsel and BeautifulSoup handle HTML extraction. Output covers 20+ structured fields per product including pricing, MOQ, supplier details, ratings, and shipping data. Version 1.3.0 went live in May 2026.",
     result:
-      "Reduced product research time from days to minutes. Outputs structured, analysis-ready data across thousands of listings per run. Private repository under the Xpersive Labs GitHub organisation.",
-    tech: ["Python", "Selenium", "BeautifulSoup", "Pandas", "CSV", "JSON"],
+      "Replaced 8-10 hours of manual weekly research with a single scheduled run. Each session processes 60+ products and outputs clean, analysis-ready data in CSV and JSON. Running in production since May 2026 under the Xpersive Labs GitHub organisation.",
+    tech: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse Residential Proxies", "CapSolver", "CSV", "JSON"],
   },
 ];
 

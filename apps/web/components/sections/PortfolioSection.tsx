@@ -9,21 +9,12 @@ import { useEffect, useRef, useState } from "react";
 
 const projects = [
   {
-    slug: "xpersive-labs-website",
-    title: "Xpersive Labs Website",
-    category: "Web",
-    description:
-      "Our own company website - a fully animated multi-page Next.js 14 site with scroll-reveal effects, Keystatic CMS blog, contact form, and Vercel deployment.",
-    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    coverImage: "/project-covers/xpersive-labs-project-cover.jpeg",
-  },
-  {
     slug: "alibaba-scraper",
-    title: "Alibaba Product Scraper",
+    title: "Alibaba Supplier Intelligence Tool",
     category: "Automation",
     description:
-      "Automated scraper that extracts product listings, pricing, and supplier data from Alibaba at scale. Exports structured data to both CSV and JSON formats for market research and analysis.",
-    tags: ["Python", "Web Scraping", "CSV", "JSON", "Automation"],
+      "Production-ready Alibaba data tool with 4 core modes: store monitoring, new launch detection, keyword search, and product deep-dives. Extracts 20+ structured data fields per product with a full anti-detection layer.",
+    tags: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "Residential Proxies"],
     coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
   },
 ];

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
-type Category = "All" | "Web" | "Automation";
+type Category = "All" | "Automation";
 
 interface Project {
   slug: string;
@@ -24,27 +24,17 @@ interface Project {
 
 const projects: Project[] = [
   {
-    slug: "xpersive-labs-website",
-    title: "Xpersive Labs Website",
-    shortDesc:
-      "Our own company website built from the ground up - a fully animated, multi-page Next.js 14 site with immersive scroll effects, a visual CMS for blog management, and production deployment on Vercel.",
-    category: "Web",
-    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Keystatic", "Vercel"],
-    coverImage: "/project-covers/xpersive-labs-project-cover.jpeg",
-    /* TODO: set liveUrl to "https://xpersivelabs.com" when domain is purchased */
-  },
-  {
     slug: "alibaba-scraper",
-    title: "Alibaba Product Scraper",
+    title: "Alibaba Supplier Intelligence Tool",
     shortDesc:
-      "An automated web scraping tool that extracts product listings, pricing data, and supplier contact information from Alibaba at scale. Designed for market research and competitive intelligence - outputs clean, structured data in both CSV and JSON formats.",
+      "Production-ready Alibaba data tool with 4 core modes: store monitoring, new launch detection, keyword search, and product deep-dives. Extracts 20+ structured data fields per product with a full anti-detection layer. Live since May 2026.",
     category: "Automation",
-    tags: ["Python", "Web Scraping", "BeautifulSoup", "Selenium", "CSV", "JSON", "Data Extraction"],
+    tags: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse", "CapSolver"],
     coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
   },
 ];
 
-const categories: Category[] = ["All", "Web", "Automation"];
+const categories: Category[] = ["All", "Automation"];
 
 /* ─── Component ─────────────────────────────────────────────────────── */
 

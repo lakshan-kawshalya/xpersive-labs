@@ -46,9 +46,9 @@ interface Service {
 const webSteps: Step[] = [
   {
     icon: Search,
-    title: "Discovery & Planning",
+    title: "Discovery and Planning",
     description:
-      "We dive deep into your goals, users, and constraints to define exactly what success looks like before we write a single line of code.",
+      "We dive deep into your e-commerce workflow, data sources, and constraints to define exactly what success looks like before writing a single line of code.",
   },
   {
     icon: PenTool,
@@ -102,25 +102,25 @@ const automationSteps: Step[] = [
     icon: Settings,
     title: "Requirements",
     description:
-      "We map your data sources, target structure, and delivery format - then spec the scraper or automation tool before writing a line of code.",
+      "We map your target suppliers, search terms, and data fields, then spec the tool before writing a line of code.",
   },
   {
     icon: Code2,
     title: "Build",
     description:
-      "Custom scraper or automation script built with the right tools for the job - from lightweight requests to full browser automation.",
+      "Custom Playwright-based scraper built with curl_cffi for TLS fingerprint evasion, Parsel for HTML parsing, and DataImpulse residential proxies for anti-detection.",
   },
   {
     icon: Play,
     title: "Test",
     description:
-      "End-to-end validation against real targets: edge cases, pagination, anti-bot measures, and output schema verification.",
+      "End-to-end validation against live Alibaba: edge cases, pagination, CAPTCHA flow, proxy rotation, and output schema verification.",
   },
   {
     icon: Monitor,
-    title: "Deploy & Monitor",
+    title: "Deploy and Monitor",
     description:
-      "Scheduled runs, error alerting, and output delivery to your preferred destination - CSV, JSON, database, or API.",
+      "Scheduled runs, error alerting, and output delivery to CSV, JSON, or your preferred destination.",
   },
 ];
 
@@ -129,10 +129,10 @@ const services: Service[] = [
     id: "web",
     icon: Globe,
     label: "Web Development",
-    headline: "Full-Stack Web Applications",
+    headline: "Custom Web Applications for E-Commerce",
     body: [
-      "We design and build fast, modern, immersive web experiences - from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
-      "From database schema to deployment pipeline, every decision is made intentionally. We don't just ship features - we ship products that are fast, maintainable, and built to scale.",
+      "We build fast, modern web applications for FBA sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
+      "From database schema to deployment pipeline, every decision is intentional. We don't just ship features. We ship products that are fast, maintainable, and built to scale.",
     ],
     steps: webSteps,
     tools: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Prisma", "Vercel"],
@@ -146,10 +146,10 @@ const services: Service[] = [
     id: "design",
     icon: Palette,
     label: "UI/UX Design",
-    headline: "Research-Driven Design",
+    headline: "Research-Driven Design for E-Commerce Tools",
     body: [
-      "Great software starts with great design. We create clean, intuitive interfaces that put the user first - from wireframes and prototypes to polished design systems ready for development.",
-      "Whether you need a full product design from scratch, a design system to scale an existing product, or a usability audit - we bring structured process and aesthetic rigour to every engagement.",
+      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms.",
+      "Whether you need a full product design from scratch, a design system to scale an existing product, or a usability audit, we bring structured process and rigour to every engagement.",
     ],
     steps: designSteps,
     tools: ["Figma", "Design Systems", "Prototyping", "User Research", "Accessibility", "Component Libraries"],
@@ -163,13 +163,13 @@ const services: Service[] = [
     id: "automation",
     icon: Terminal,
     label: "Automation & Web Scraping",
-    headline: "Data Extraction at Scale",
+    headline: "Alibaba Data Extraction at Scale",
     body: [
-      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation - automated, reliable, and scalable.",
-      "Every scraper is built for the real web: dynamic pages, pagination, anti-bot measures, and structured multi-format output. You get clean data, not raw HTML.",
+      "We build custom Alibaba supplier intelligence tools that track stores, detect new product launches, run keyword searches, and pull 20+ structured data fields per product. Our tools run an anti-detection layer using residential proxies and CAPTCHA solvers to stay live in production.",
+      "Every tool is purpose-built for the real Alibaba: dynamic pages, pagination, anti-bot measures, and structured multi-format output. You get clean, analysis-ready data, not raw HTML.",
     ],
     steps: automationSteps,
-    tools: ["Python", "Selenium", "BeautifulSoup", "CSV", "JSON", "Scheduling", "Cloud Deployment"],
+    tools: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse", "CapSolver", "CSV", "JSON", "Scheduling"],
     accentColor: "text-accent",
     accentBg: "bg-accent/10",
     gradientFrom: "from-accent/20",
@@ -447,8 +447,8 @@ export default function ServicesPage() {
               variants={fadeUp}
               className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10"
             >
-              Web development, UI/UX design, and automation - end-to-end
-              digital solutions built to solve real problems.
+              Alibaba data automation, custom web applications, and UI/UX
+              design for e-commerce businesses and digital agencies.
             </motion.p>
 
             {/* Service anchors */}

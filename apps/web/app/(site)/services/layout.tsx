@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Services - Web Development, UI/UX Design & Automation",
+  title: "Services: Alibaba Data Tools, Web Development, and UI/UX Design",
   description:
-    "Xpersive Labs offers professional web development with Next.js, UI/UX design with Figma, and custom automation & web scraping solutions for businesses worldwide.",
+    "Custom Alibaba supplier intelligence tools, FBA product research automation, white-label web development, and UI/UX design for e-commerce businesses and digital agencies.",
   alternates: { canonical: "https://www.xpersivelabs.com/services" },
   openGraph: { url: "https://www.xpersivelabs.com/services" },
 };
@@ -21,7 +21,7 @@ const servicesSchema = {
         "@type": "Service",
         name: "Web Development",
         description:
-          "Full-stack web application development with Next.js, TypeScript, and React.",
+          "Custom web applications and dashboards for e-commerce sellers, importers, and digital agencies using Next.js and TypeScript.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -33,7 +33,7 @@ const servicesSchema = {
         "@type": "Service",
         name: "UI/UX Design",
         description:
-          "User interface and user experience design using Figma and design systems.",
+          "User interface and experience design for e-commerce dashboards, supplier tools, and white-label platforms using Figma and design systems.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -43,9 +43,9 @@ const servicesSchema = {
       position: 3,
       item: {
         "@type": "Service",
-        name: "Automation & Web Scraping",
+        name: "Automation and Web Scraping",
         description:
-          "Custom automation tools and data extraction solutions using Python.",
+          "Custom Alibaba supplier intelligence tools, FBA product research automation, and data extraction solutions using Python and Playwright.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
