@@ -6,17 +6,39 @@ import { ArrowRight, Briefcase, Code2, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const founder = {
-  name: "Lakshan Kawshalya",
-  role: "Founder & Full-Stack Developer",
-  bio: "Building Alibaba supplier intelligence tools and custom web applications for Amazon FBA sellers, importers, and digital agencies. Based in Colombo, Sri Lanka.",
-  initials: "LK",
-  avatar: "/team/lakshan-kawshalya.png",
-  social: [
-    { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
-    { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
-  ],
-};
+interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  initials: string;
+  avatar: string;
+  social: { icon: React.ElementType; href: string; label: string }[];
+}
+
+const teamMembers: TeamMember[] = [
+  {
+    name: "Lakshan Kawshalya",
+    role: "Founder & Full-Stack Developer",
+    bio: "Building Alibaba supplier intelligence tools and custom web applications for Amazon FBA sellers, importers, and digital agencies. Based in Colombo, Sri Lanka.",
+    initials: "LK",
+    avatar: "/team/lakshan-kawshalya.png",
+    social: [
+      { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
+      { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
+    ],
+  },
+  {
+    name: "Kavindu Nalinda",
+    role: "Content & Growth",
+    bio: "Kavindu leads content and growth at Xpersive Labs. He turns complex technical builds into compelling stories and connects them with the right audience across Australia, the UK, and the US.",
+    initials: "KN",
+    avatar: "/team/kavindu-nalinda.png",
+    social: [
+      { icon: Code2, href: "https://github.com/kavindunalinda", label: "GitHub" },
+      { icon: Briefcase, href: "https://www.linkedin.com/in/kavindu-nalinda/", label: "LinkedIn" },
+    ],
+  },
+];
 
 export default function TeamPage() {
   return (
@@ -56,23 +78,26 @@ export default function TeamPage() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            A focused, solo-founder studio in Colombo, Sri Lanka. Building e-commerce data tools and custom web applications for FBA sellers and digital agencies worldwide.
+            A focused two-person studio in Colombo, Sri Lanka. Building e-commerce data tools and custom web applications for FBA sellers and digital agencies worldwide.
           </motion.blockquote>
         </div>
       </section>
 
-      {/* Featured founder card */}
+      {/* Team cards */}
       <section className="py-16 pb-28 border-t border-white/[0.07]">
-        <div className="max-w-7xl mx-auto px-6 flex justify-center">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="w-full max-w-120"
-          >
-            <FounderCard />
-          </motion.div>
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {teamMembers.map((member, i) => (
+            <motion.div
+              key={member.name}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <MemberCard member={member} />
+            </motion.div>
+          ))}
         </div>
 
         <motion.p
@@ -105,12 +130,12 @@ export default function TeamPage() {
   );
 }
 
-function FounderCard() {
+function MemberCard({ member }: { member: TeamMember }) {
   return (
     <motion.div
       whileHover={{ y: -8, boxShadow: "0 32px 80px rgba(109,113,249,0.18)" }}
       transition={{ type: "spring", stiffness: 200, damping: 22 }}
-      className="group relative p-10 rounded-3xl border border-white/6 hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center"
+      className="group relative p-10 rounded-3xl border border-white/6 hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
       style={{ background: "rgba(255,255,255,0.02)" }}
     >
       {/* Hover glow */}
@@ -119,7 +144,6 @@ function FounderCard() {
 
       {/* Avatar with hover ring */}
       <div className="relative mb-8">
-        {/* Rotating dashed ring on hover */}
         <div
           className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{
@@ -131,26 +155,26 @@ function FounderCard() {
           className="w-24 h-24 rounded-full overflow-hidden transition-transform duration-300 group-hover:scale-105"
           style={{ boxShadow: "0 0 0 3px rgba(109,113,249,0.25), 0 8px 32px rgba(0,0,0,0.4)" }}
         >
-          {founder.avatar ? (
-            <Image src={founder.avatar} alt={founder.name} width={96} height={96} className="w-full h-full object-cover" />
+          {member.avatar ? (
+            <Image src={member.avatar} alt={member.name} width={96} height={96} className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full bg-linear-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold font-display">
-              {founder.initials}
+              {member.initials}
             </div>
           )}
         </div>
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
       </div>
 
-      <h3 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{founder.name}</h3>
-      <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{founder.role}</p>
+      <h3 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{member.name}</h3>
+      <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{member.role}</p>
       <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>
-        {founder.bio}
+        {member.bio}
       </p>
 
-      {/* Social links - text + icon style */}
-      <div className="relative flex items-center gap-4">
-        {founder.social.map(({ icon: Icon, href, label }) => (
+      {/* Social links */}
+      <div className="relative flex items-center gap-4 mt-auto">
+        {member.social.map(({ icon: Icon, href, label }) => (
           <a
             key={label}
             href={href}
