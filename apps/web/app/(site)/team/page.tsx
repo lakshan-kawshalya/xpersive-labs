@@ -1,6 +1,7 @@
 "use client";
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
 import { ArrowRight, Briefcase, Code2, ExternalLink } from "lucide-react";
 import Image from "next/image";
@@ -41,6 +42,16 @@ const teamMembers: TeamMember[] = [
 ];
 
 export default function TeamPage() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const mountProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    animate: "visible",
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
   return (
     <div className="bg-dark text-white">
       {/* Hero */}
@@ -48,15 +59,17 @@ export default function TeamPage() {
         <motion.div
           className="absolute -top-24 left-1/4 w-110 h-110 rounded-full blur-[120px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          {...(shouldAnimate ? {
+            animate: { scale: [1, 1.1, 1], x: [0, 20, 0] },
+            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+          } : {})}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="max-w-3xl">
-            <motion.span variants={fadeUp} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
+          <motion.div {...mountProps} className="max-w-3xl">
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
               The People
             </motion.span>
-            <motion.h1 variants={fadeUp} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
+            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
               Meet the <span className="text-gradient">Team</span>
             </motion.h1>
           </motion.div>
@@ -67,10 +80,12 @@ export default function TeamPage() {
       <section className="pb-10 border-t border-white/[0.07]">
         <div className="max-w-3xl mx-auto px-6 pt-16">
           <motion.blockquote
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] as const }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0, x: -20 },
+              whileInView: { opacity: 1, x: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] as const },
+            } : { initial: false })}
             className="italic leading-relaxed pl-5"
             style={{
               borderLeft: "2px solid #6D71F9",
@@ -89,11 +104,13 @@ export default function TeamPage() {
           {teamMembers.map((member, i) => (
             <motion.div
               key={member.name}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.1 }}
+              {...(shouldAnimate ? {
+                variants: fadeUp,
+                initial: "hidden",
+                whileInView: "visible" as const,
+                viewport: { once: true, margin: "-80px" },
+                transition: { delay: i * 0.1 },
+              } : { initial: false })}
             >
               <MemberCard member={member} />
             </motion.div>
@@ -102,20 +119,24 @@ export default function TeamPage() {
 
         <motion.p
           className="text-center text-white/30 text-sm mt-14 max-w-lg mx-auto leading-relaxed px-6"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          {...(shouldAnimate ? {
+            initial: { opacity: 0, y: 16 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6, delay: 0.3 },
+          } : { initial: false })}
         >
           Building thoughtfully, shipping with care, and growing one project at a time.
         </motion.p>
 
         <motion.div
           className="flex justify-center mt-8"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.45 }}
+          {...(shouldAnimate ? {
+            initial: { opacity: 0, y: 16 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6, delay: 0.45 },
+          } : { initial: false })}
         >
           <Link
             href="/contact"
@@ -131,10 +152,16 @@ export default function TeamPage() {
 }
 
 function MemberCard({ member }: { member: TeamMember }) {
+  const { shouldAnimate } = useMotionSafe();
+
+  const hoverProps = shouldAnimate ? {
+    whileHover: { y: -8, boxShadow: "0 32px 80px rgba(109,113,249,0.18)" },
+    transition: { type: "spring" as const, stiffness: 200, damping: 22 },
+  } : {};
+
   return (
     <motion.div
-      whileHover={{ y: -8, boxShadow: "0 32px 80px rgba(109,113,249,0.18)" }}
-      transition={{ type: "spring", stiffness: 200, damping: 22 }}
+      {...hoverProps}
       className="group relative p-10 rounded-3xl border border-white/6 hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
       style={{ background: "rgba(255,255,255,0.02)" }}
     >

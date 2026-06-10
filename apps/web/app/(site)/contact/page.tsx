@@ -1,6 +1,7 @@
 "use client";
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -88,6 +89,7 @@ const underlineInput = (hasError: boolean) =>
 export default function ContactPage() {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [copied, setCopied] = useState(false);
+  const { shouldAnimate } = useMotionSafe();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ mode: "onTouched" });
 
@@ -113,6 +115,26 @@ export default function ContactPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const mountProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    animate: "visible",
+  } : { initial: false };
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
+  const ambientProps = (delay = 0) => shouldAnimate ? {
+    animate: { scale: [1, 1.1, 1] as number[] },
+    transition: { duration: 9, repeat: Infinity, ease: "easeInOut", delay },
+  } : {};
+
   return (
     <div className="bg-dark text-white min-h-screen">
       {/* Hero */}
@@ -120,25 +142,26 @@ export default function ContactPage() {
         <motion.div
           className="absolute -top-28 -right-20 w-120 h-120 rounded-full blur-[130px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          {...ambientProps(0)}
         />
         <motion.div
           className="absolute -bottom-10 -left-20 w-95 h-95 rounded-full blur-[110px] pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          {...(shouldAnimate ? {
+            animate: { scale: [1, 1.15, 1] as number[] },
+            transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 },
+          } : {})}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.span variants={fadeUp} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
+          <motion.div {...mountProps}>
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
               Get in Touch
             </motion.span>
-            <motion.h1 variants={fadeUp} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 max-w-3xl">
+            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 max-w-3xl">
               Let&apos;s Talk About{" "}
               <span className="text-gradient">Your Project</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="max-w-xl leading-relaxed" style={{ fontSize: 17, color: "rgba(255,255,255,0.55)" }}>
+            <motion.p {...childProps} className="max-w-xl leading-relaxed" style={{ fontSize: 17, color: "rgba(255,255,255,0.55)" }}>
               No commitment. No sales pitch. Just an honest conversation about what you need and whether we&apos;re the right fit.
             </motion.p>
           </motion.div>
@@ -151,12 +174,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20 items-start">
 
             {/* LEFT - Form */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-            >
+            <motion.div {...scrollProps}>
               <AnimatePresence mode="wait">
                 {submitState === "success" ? (
                   <SuccessBanner key="success" onReset={() => setSubmitState("idle")} />
@@ -166,14 +184,18 @@ export default function ContactPage() {
                     onSubmit={handleSubmit(onSubmit)}
                     noValidate
                     className="space-y-8"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    {...(shouldAnimate ? {
+                      initial: { opacity: 0 },
+                      animate: { opacity: 1 },
+                      exit: { opacity: 0 },
+                    } : { initial: false })}
                   >
                     {submitState === "error" && (
                       <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(shouldAnimate ? {
+                          initial: { opacity: 0, y: -8 },
+                          animate: { opacity: 1, y: 0 },
+                        } : { initial: false })}
                         className="flex items-start gap-3 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm"
                       >
                         <AlertCircle size={16} className="shrink-0 mt-0.5" />
@@ -185,13 +207,13 @@ export default function ContactPage() {
                     )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                      <motion.div variants={fadeUp}>
+                      <motion.div {...childProps}>
                         <FloatingField id="name" label="Your Name" required error={errors.name?.message}>
                           <input id="name" type="text" placeholder="Jane Smith" className={underlineInput(!!errors.name)}
                             {...register("name", { required: "Name is required", minLength: { value: 2, message: "At least 2 characters" } })} />
                         </FloatingField>
                       </motion.div>
-                      <motion.div variants={fadeUp}>
+                      <motion.div {...childProps}>
                         <FloatingField id="email" label="Email Address" required error={errors.email?.message}>
                           <input id="email" type="email" placeholder="you@company.com" className={underlineInput(!!errors.email)}
                             {...register("email", { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email" } })} />
@@ -200,12 +222,12 @@ export default function ContactPage() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                      <motion.div variants={fadeUp}>
+                      <motion.div {...childProps}>
                         <FloatingField id="company" label="Company (optional)">
                           <input id="company" type="text" placeholder="Acme Inc." className={underlineInput(false)} {...register("company")} />
                         </FloatingField>
                       </motion.div>
-                      <motion.div variants={fadeUp}>
+                      <motion.div {...childProps}>
                         <FloatingField id="service" label="Service Interest">
                           <div className="relative">
                             <select id="service" className={`${underlineInput(false)} appearance-none pr-8`} {...register("service")} defaultValue="">
@@ -218,7 +240,7 @@ export default function ContactPage() {
                       </motion.div>
                     </div>
 
-                    <motion.div variants={fadeUp}>
+                    <motion.div {...childProps}>
                       <FloatingField id="message" label="Tell Us About Your Project" required error={errors.message?.message}>
                         <textarea id="message" rows={5} placeholder="What are you building? Timeline, requirements, budget range…"
                           className={`${underlineInput(!!errors.message)} resize-none`}
@@ -226,7 +248,7 @@ export default function ContactPage() {
                       </FloatingField>
                     </motion.div>
 
-                    <motion.div variants={fadeUp}>
+                    <motion.div {...childProps}>
                       <button
                         type="submit"
                         disabled={submitState === "loading"}
@@ -248,13 +270,10 @@ export default function ContactPage() {
             {/* RIGHT - Trust signals */}
             <motion.div
               className="flex flex-col gap-4 lg:sticky lg:top-28"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
+              {...scrollProps}
             >
               {/* Availability */}
-              <motion.div variants={fadeUp} className="p-5 rounded-2xl" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
+              <motion.div {...childProps} className="p-5 rounded-2xl" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
                   <span className="text-sm font-semibold text-emerald-400">Currently available</span>
@@ -263,7 +282,7 @@ export default function ContactPage() {
               </motion.div>
 
               {/* Response time */}
-              <motion.div variants={fadeUp} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+              <motion.div {...childProps} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Clock size={16} className="text-primary" />
                 </div>
@@ -274,7 +293,7 @@ export default function ContactPage() {
               </motion.div>
 
               {/* Location */}
-              <motion.div variants={fadeUp} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+              <motion.div {...childProps} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
                   <MapPin size={16} className="text-accent" />
                 </div>
@@ -285,7 +304,7 @@ export default function ContactPage() {
               </motion.div>
 
               {/* What happens next */}
-              <motion.div variants={fadeUp} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+              <motion.div {...childProps} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
                 <p className="text-xs font-bold uppercase mb-4" style={{ color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em" }}>What happens next</p>
                 <div className="space-y-3">
                   {nextSteps.map(({ num, text }) => (
@@ -299,7 +318,7 @@ export default function ContactPage() {
               </motion.div>
 
               {/* Direct email */}
-              <motion.div variants={fadeUp} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+              <motion.div {...childProps} className="p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
                 <p className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.35)" }}>Prefer email?</p>
                 <button
                   onClick={copyEmail}
@@ -309,13 +328,20 @@ export default function ContactPage() {
                   <span>hello@xpersivelabs.com</span>
                   <AnimatePresence mode="wait">
                     {copied ? (
-                      <motion.span key="check" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-                        className="text-xs text-emerald-400 font-semibold">
+                      <motion.span
+                        key="check"
+                        {...(shouldAnimate ? { initial: { opacity: 0, scale: 0.8 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 } } : { initial: false })}
+                        className="text-xs text-emerald-400 font-semibold"
+                      >
                         Copied!
                       </motion.span>
                     ) : (
-                      <motion.span key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="text-xs opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "rgba(255,255,255,0.3)" }}>
+                      <motion.span
+                        key="copy"
+                        {...(shouldAnimate ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } } : { initial: false })}
+                        className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      >
                         click to copy
                       </motion.span>
                     )}
@@ -331,11 +357,14 @@ export default function ContactPage() {
 }
 
 function SuccessBanner({ onReset }: { onReset: () => void }) {
+  const { shouldAnimate } = useMotionSafe();
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
+      {...(shouldAnimate ? {
+        initial: { opacity: 0, scale: 0.95 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.95 },
+      } : { initial: false })}
       className="flex flex-col items-center justify-center text-center py-20 px-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 gap-5"
     >
       <div className="w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center">

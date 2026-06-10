@@ -4,8 +4,25 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 export default function CTASection() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
+  const ambientProps = shouldAnimate ? {
+    animate: { scale: [1, 1.15, 1] },
+    transition: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+  } : {};
+
   return (
     <section className="relative overflow-hidden py-30">
       {/* Animated gradient border - top */}
@@ -33,20 +50,14 @@ export default function CTASection() {
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 rounded-full blur-[120px] pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(109,113,249,0.18) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        {...ambientProps}
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <motion.div {...scrollProps}>
           {/* Eyebrow */}
           <motion.span
-            variants={fadeUp}
+            {...childProps}
             className="inline-block text-xs font-bold uppercase mb-6"
             style={{ color: "#6D71F9", letterSpacing: "0.14em" }}
           >
@@ -55,7 +66,7 @@ export default function CTASection() {
 
           {/* Headline */}
           <motion.h2
-            variants={fadeUp}
+            {...childProps}
             className="font-display font-extrabold leading-[1.05] mb-6"
             style={{ fontSize: "clamp(40px, 6vw, 64px)" }}
           >
@@ -64,7 +75,7 @@ export default function CTASection() {
 
           {/* Subtext */}
           <motion.p
-            variants={fadeUp}
+            {...childProps}
             className="text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ color: "rgba(255,255,255,0.55)" }}
           >
@@ -73,7 +84,7 @@ export default function CTASection() {
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <motion.div {...childProps} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
               className="group inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"

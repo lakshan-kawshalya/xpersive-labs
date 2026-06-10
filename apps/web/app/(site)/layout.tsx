@@ -5,6 +5,7 @@ import LoadingScreen from "@/components/layout/LoadingScreen";
 import Navbar from "@/components/layout/Navbar";
 import PageTransitionProvider from "@/components/layout/PageTransitionProvider";
 import ScrollProgress from "@/components/layout/ScrollProgress";
+import SiteProviders from "@/components/layout/SiteProviders";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const organizationSchema = {
@@ -69,20 +70,22 @@ export default function SiteLayout({
       <JsonLd data={organizationSchema} />
       <JsonLd data={websiteSchema} />
 
-      {/* Fixed ambient background — z-index 0, behind everything */}
-      <AmbientBackground />
+      <SiteProviders>
+        {/* Fixed ambient background — z-index 0, behind everything */}
+        <AmbientBackground />
 
-      {/* Page content — z-index 1, above background */}
-      <div className="relative" style={{ zIndex: 1 }}>
-        <LoadingScreen />
-        <CustomCursor />
-        <ScrollProgress />
-        <Navbar />
-        <PageTransitionProvider>
-          <main>{children}</main>
-        </PageTransitionProvider>
-        <Footer />
-      </div>
+        {/* Page content — z-index 1, above background */}
+        <div className="relative" style={{ zIndex: 1 }}>
+          <LoadingScreen />
+          <CustomCursor />
+          <ScrollProgress />
+          <Navbar />
+          <PageTransitionProvider>
+            <main>{children}</main>
+          </PageTransitionProvider>
+          <Footer />
+        </div>
+      </SiteProviders>
     </>
   );
 }

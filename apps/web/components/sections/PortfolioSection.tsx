@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const projects = [
   {
@@ -24,13 +25,14 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
+  const { shouldAnimate } = useMotionSafe();
 
   useEffect(() => {
     setIsTouch(window.matchMedia("(hover: none)").matches);
   }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouch) return;
+    if (isTouch || !shouldAnimate) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -47,12 +49,14 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
   return (
     <motion.div
       ref={ref}
-      variants={fadeUp}
+      {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
       onMouseMove={onMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={onMouseLeave}
       style={{
-        transform: `perspective(1000px) rotateX(${-tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transform: shouldAnimate
+          ? `perspective(1000px) rotateX(${-tilt.x}deg) rotateY(${tilt.y}deg)`
+          : undefined,
         transition: hovered
           ? "transform 0.1s ease"
           : "transform 0.5s cubic-bezier(0.23,1,0.32,1)",
@@ -60,13 +64,15 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
       className="group relative rounded-[20px] overflow-hidden border border-white/6 bg-white/2"
     >
       {/* Sheen highlight that shifts with tilt */}
-      <div
-        className="absolute inset-0 pointer-events-none z-20 rounded-[20px]"
-        style={{
-          background: `linear-gradient(${105 + tilt.y * 5}deg, rgba(255,255,255,${hovered ? 0.04 : 0}) 0%, transparent 60%)`,
-          transition: "background 0.1s ease",
-        }}
-      />
+      {shouldAnimate && (
+        <div
+          className="absolute inset-0 pointer-events-none z-20 rounded-[20px]"
+          style={{
+            background: `linear-gradient(${105 + tilt.y * 5}deg, rgba(255,255,255,${hovered ? 0.04 : 0}) 0%, transparent 60%)`,
+            transition: "background 0.1s ease",
+          }}
+        />
+      )}
 
       {/* Image area */}
       <div className="relative h-52 overflow-hidden">
@@ -96,8 +102,10 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
         <div className="absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-300"
           style={{ background: "rgba(15,15,30,0.7)", opacity: hovered ? 1 : 0 }}>
           <motion.div
-            animate={{ y: hovered ? 0 : 10, opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            {...(shouldAnimate ? {
+              animate: { y: hovered ? 0 : 10, opacity: hovered ? 1 : 0 },
+              transition: { duration: 0.2, ease: "easeOut" },
+            } : {})}
           >
             <Link
               href={`/portfolio/${project.slug}`}
@@ -142,6 +150,17 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
 }
 
 export default function PortfolioSection() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
   return (
     <section className="py-28 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
@@ -150,20 +169,17 @@ export default function PortfolioSection() {
         {/* Header */}
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          {...scrollProps}
         >
           <div>
-            <motion.span variants={fadeUp} className="inline-block text-accent text-xs font-bold uppercase tracking-[0.2em] mb-4">
+            <motion.span {...childProps} className="inline-block text-accent text-xs font-bold uppercase tracking-[0.2em] mb-4">
               Selected Work
             </motion.span>
-            <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-5xl font-bold">
+            <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold">
               Our Work
             </motion.h2>
           </div>
-          <motion.div variants={fadeUp}>
+          <motion.div {...childProps}>
             <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-white/50 hover:text-primary transition-colors duration-200">
               View All Projects
               <ArrowRight size={15} />
@@ -172,13 +188,7 @@ export default function PortfolioSection() {
         </motion.div>
 
         {/* Cards grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" {...scrollProps}>
           {projects.map((project) => (
             <TiltCard key={project.slug} project={project} />
           ))}
@@ -187,10 +197,12 @@ export default function PortfolioSection() {
         {/* CTA */}
         <motion.div
           className="text-center mt-14"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeUp}
+          {...(shouldAnimate ? {
+            initial: "hidden",
+            whileInView: "visible" as const,
+            viewport: { once: true, margin: "-80px" },
+            variants: fadeUp,
+          } : { initial: false })}
         >
           <Link
             href="/portfolio"

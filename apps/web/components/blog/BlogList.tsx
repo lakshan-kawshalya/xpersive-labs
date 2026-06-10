@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { format } from "date-fns";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 import type { PostMeta } from "@/lib/blog";
 
 const ALL = "All";
@@ -17,6 +18,7 @@ interface BlogListProps {
 
 export default function BlogList({ posts, allTags }: BlogListProps) {
   const [activeTag, setActiveTag] = useState<string>(ALL);
+  const { shouldAnimate } = useMotionSafe();
 
   const filtered = useMemo(
     () =>
@@ -43,11 +45,15 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
                 }`}
               >
                 {activeTag === tag && (
-                  <motion.span
-                    layoutId="blog-pill"
-                    className="absolute inset-0 rounded-full bg-primary"
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  />
+                  shouldAnimate ? (
+                    <motion.span
+                      layoutId="blog-pill"
+                      className="absolute inset-0 rounded-full bg-primary"
+                      transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    />
+                  ) : (
+                    <span className="absolute inset-0 rounded-full bg-primary" />
+                  )
                 )}
                 <span className="relative z-10">{tag}</span>
               </button>
@@ -66,10 +72,12 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
           <motion.div
             key={activeTag}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            exit={{ opacity: 0, transition: { duration: 0.12 } }}
+            {...(shouldAnimate ? {
+              variants: staggerContainer,
+              initial: "hidden",
+              animate: "visible",
+              exit: { opacity: 0, transition: { duration: 0.12 } },
+            } : { initial: false, animate: false })}
           >
             {filtered.map((post) => (
               <PostCard key={post.slug} post={post} />
@@ -79,8 +87,10 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
 
         {filtered.length === 0 && (
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
+            } : { initial: false })}
             className="text-center py-24 text-white/30 text-lg font-medium"
           >
             No posts with this tag yet.
@@ -95,11 +105,11 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
 
 function PostCard({ post }: { post: PostMeta }) {
   const formattedDate = format(new Date(post.date), "MMM d, yyyy");
+  const { shouldAnimate } = useMotionSafe();
 
   return (
     <motion.article
-      variants={fadeUp}
-      layout
+      {...(shouldAnimate ? { variants: fadeUp, layout: true } : { initial: false })}
       className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] hover:border-primary/25 overflow-hidden transition-colors duration-300"
     >
       {/* Top accent line */}

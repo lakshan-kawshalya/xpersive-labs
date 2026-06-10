@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const services = [
   {
@@ -33,18 +34,23 @@ const services = [
 function SpotlightCard({ service }: { service: typeof services[number] }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
+  const { shouldAnimate } = useMotionSafe();
+
+  const animProps = shouldAnimate ? {
+    variants: fadeUp,
+    whileHover: { y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" },
+    transition: { type: "spring" as const, stiffness: 200, damping: 22 },
+    onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => {
+      const r = cardRef.current?.getBoundingClientRect();
+      if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
+    },
+    onMouseLeave: () => setSpot((s) => ({ ...s, on: false })),
+  } : { initial: false };
 
   return (
     <motion.div
       ref={cardRef}
-      variants={fadeUp}
-      onMouseMove={(e) => {
-        const r = cardRef.current?.getBoundingClientRect();
-        if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
-      }}
-      onMouseLeave={() => setSpot((s) => ({ ...s, on: false }))}
-      whileHover={{ y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" }}
-      transition={{ type: "spring", stiffness: 200, damping: 22 }}
+      {...animProps}
       className="group relative flex flex-col rounded-3xl border border-white/[0.06] hover:border-primary/30 overflow-hidden transition-colors duration-[350ms]"
       style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
     >
@@ -54,14 +60,16 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
         style={{ background: "rgba(109,113,249,0.04)" }}
       />
       {/* Spotlight radial */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: spot.on ? 1 : 0,
-          transition: "opacity 0.2s ease",
-          background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)`,
-        }}
-      />
+      {shouldAnimate && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            opacity: spot.on ? 1 : 0,
+            transition: "opacity 0.2s ease",
+            background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)`,
+          }}
+        />
+      )}
 
       {/* Icon container */}
       <div
@@ -95,47 +103,37 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
 }
 
 export default function ServicesSection() {
+  const { shouldAnimate } = useMotionSafe();
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
   return (
     <section className="py-28 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          className="text-center mb-16"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4"
-          >
+        <motion.div className="text-center mb-16" {...scrollProps}>
+          <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
             Our Expertise
           </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl sm:text-5xl font-bold mb-5"
-          >
+          <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold mb-5">
             What We Do
           </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed"
-          >
+          <motion.p {...childProps} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
             From Alibaba data automation to custom web apps, we deliver
             end-to-end solutions that make a measurable difference for
             e-commerce businesses.
           </motion.p>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" {...scrollProps}>
           {services.map((service) => (
             <SpotlightCard key={service.title} service={service} />
           ))}
