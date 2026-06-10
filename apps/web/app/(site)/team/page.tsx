@@ -9,7 +9,7 @@ import Link from "next/link";
 const founder = {
   name: "Lakshan Kawshalya",
   role: "Founder & Full-Stack Developer",
-  bio: "Building immersive web experiences and scalable software from Colombo, Sri Lanka. Passionate about clean code, great design, and technology that makes a real difference.",
+  bio: "Building Alibaba supplier intelligence tools and custom web applications for Amazon FBA sellers, importers, and digital agencies. Based in Colombo, Sri Lanka.",
   initials: "LK",
   avatar: "/team/lakshan-kawshalya.png",
   social: [
@@ -56,8 +56,7 @@ export default function TeamPage() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            A focused, solo-founder studio based in Colombo, Sri Lanka - with a global mindset
-            and an uncompromising commitment to craft.
+            A focused, solo-founder studio in Colombo, Sri Lanka. Building e-commerce data tools and custom web applications for FBA sellers and digital agencies worldwide.
           </motion.blockquote>
         </div>
       </section>

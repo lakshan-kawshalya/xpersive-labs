@@ -11,21 +11,21 @@ const services = [
     icon: Globe,
     title: "Web Development",
     description:
-      "We design and build fast, modern, immersive web experiences - from marketing sites to full-stack web applications. Every project is crafted with Next.js, TypeScript, and a relentless focus on performance, SEO, and beautiful UI.",
+      "We build fast, modern web applications for e-commerce sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
     href: "/services#web",
   },
   {
     icon: Palette,
     title: "UI/UX Design",
     description:
-      "Great software starts with great design. We create clean, intuitive interfaces that put the user first - from wireframes and prototypes to polished design systems ready for development.",
+      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
     href: "/services#design",
   },
   {
     icon: Terminal,
-    title: "Automation & Web Scraping",
+    title: "Automation and Web Scraping",
     description:
-      "We build custom automation tools and web scrapers that collect, structure, and deliver data where you need it. From product intelligence to lead generation - automated, reliable, and scalable.",
+      "We build custom Alibaba data tools that track supplier stores, detect new product launches, run keyword searches, and extract 20+ structured data fields per product. Anti-detection hardened and production-ready.",
     href: "/services#automation",
   },
 ];
@@ -123,8 +123,9 @@ export default function ServicesSection() {
             variants={fadeUp}
             className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed"
           >
-            From concept to launch, we deliver end-to-end digital solutions that
-            make a measurable impact.
+            From Alibaba data automation to custom web apps, we deliver
+            end-to-end solutions that make a measurable difference for
+            e-commerce businesses.
           </motion.p>
         </motion.div>
 

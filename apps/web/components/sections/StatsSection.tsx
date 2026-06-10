@@ -5,10 +5,10 @@ import { useCountUp } from "@/hooks/useCountUp";
 import { motion } from "framer-motion";
 
 const stats = [
-  { target: 2, suffix: "+", label: "YEARS ACTIVE" },
-  { target: 2, suffix: "",  label: "PROJECTS DELIVERED" },
-  { target: 5, suffix: "+", label: "TECHNOLOGIES" },
-  { target: 2, suffix: "",  label: "CORE SERVICES" },
+  { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
+  { target: 20, suffix: "+", label: "DATA FIELDS" },
+  { target: 8,  suffix: "+", label: "HRS SAVED / WEEK" },
+  { target: 3,  suffix: "",  label: "CORE SERVICES" },
 ];
 
 interface StatItemProps {

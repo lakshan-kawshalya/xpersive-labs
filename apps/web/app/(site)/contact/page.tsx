@@ -259,7 +259,7 @@ export default function ContactPage() {
                   <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
                   <span className="text-sm font-semibold text-emerald-400">Currently available</span>
                 </div>
-                <p className="text-xs ml-4" style={{ color: "rgba(255,255,255,0.45)" }}>Taking on new projects for Q3 2025</p>
+                <p className="text-xs ml-4" style={{ color: "rgba(255,255,255,0.45)" }}>Taking on new projects now</p>
               </motion.div>
 
               {/* Response time */}
@@ -280,7 +280,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white mb-0.5">Colombo, Sri Lanka</p>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Working with clients across US, UK, EU, and APAC</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Working with FBA sellers and agencies in AU, UK, and US</p>
                 </div>
               </motion.div>
 

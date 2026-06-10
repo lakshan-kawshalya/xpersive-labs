@@ -59,7 +59,7 @@ export default function CTASection() {
             className="font-display font-extrabold leading-[1.05] mb-6"
             style={{ fontSize: "clamp(40px, 6vw, 64px)" }}
           >
-            Ready to Start Your Project?
+            Ready to Automate Your Research?
           </motion.h2>
 
           {/* Subtext */}
@@ -68,8 +68,8 @@ export default function CTASection() {
             className="text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ color: "rgba(255,255,255,0.55)" }}
           >
-            Tell us what you&apos;re building. We&apos;ll scope it, plan it, and build it right - from
-            first call to final launch.
+            Tell us what you&apos;re building. We&apos;ll scope it, plan it, and
+            deliver a production-ready tool.
           </motion.p>
 
           {/* CTAs */}

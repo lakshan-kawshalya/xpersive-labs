@@ -14,7 +14,7 @@ const organizationSchema = {
   url: "https://www.xpersivelabs.com",
   logo: "https://www.xpersivelabs.com/logo/brandmark.svg",
   description:
-    "Sri Lankan software studio building immersive web experiences, UI/UX design systems, and automation tools for global clients.",
+    "Custom e-commerce data tools, Alibaba supplier intelligence, FBA product research automation, and white-label web development for Amazon sellers and digital agencies.",
   foundingDate: "2024",
   founder: {
     "@type": "Person",
@@ -51,7 +51,7 @@ const websiteSchema = {
   "@type": "WebSite",
   name: "Xpersive Labs",
   url: "https://www.xpersivelabs.com",
-  description: "Innovation for a Better Tomorrow",
+  description: "E-commerce data automation and custom web development for FBA sellers and digital agencies.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://www.xpersivelabs.com/blog?q={search_term_string}",
