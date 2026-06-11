@@ -19,6 +19,8 @@ interface Project {
   category: Exclude<Category, "All">;
   tags: string[];
   coverImage: string;
+  stats?: string[];
+  privateBadge?: boolean;
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
@@ -26,12 +28,14 @@ interface Project {
 const projects: Project[] = [
   {
     slug: "alibaba-scraper",
-    title: "Alibaba Supplier Intelligence Tool",
+    title: "Alibaba Supplier Intelligence",
     shortDesc:
-      "Production-ready Alibaba data tool with 4 core modes: store monitoring, new launch detection, keyword search, and product deep-dives. Extracts 20+ structured data fields per product with a full anti-detection layer. Live since May 2026.",
+      "Fully automated supplier intelligence platform for an Australian importer - monitoring stores, detecting new launches, and running visual search. Replaces 8-10 hours of manual research per week.",
     category: "Automation",
-    tags: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse", "CapSolver"],
+    tags: ["Python", "Playwright", "Anti-Detection", "CSV", "Data Extraction"],
     coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
+    stats: ["8-10 hrs/wk automated", "47 data fields", "Live v1.3.0"],
+    privateBadge: true,
   },
 ];
 
@@ -314,7 +318,7 @@ function ProjectCard({ project }: { project: Project }) {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold"
               style={{ background: "rgba(109,113,249,0.9)" }}
             >
-              View Project
+              Read Case Study
               <ArrowRight size={14} />
             </Link>
           </motion.div>
@@ -323,12 +327,48 @@ function ProjectCard({ project }: { project: Project }) {
 
       {/* Info area */}
       <div className="p-6" style={{ background: "rgba(255,255,255,0.02)" }}>
-        <h3
-          className="font-display text-[18px] font-bold mb-3 transition-colors duration-200"
-          style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
-        >
-          {project.title}
-        </h3>
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          <h3
+            className="font-display text-[18px] font-bold transition-colors duration-200"
+            style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
+          >
+            {project.title}
+          </h3>
+          {project.privateBadge && (
+            <span
+              className="px-2.5 py-0.5 rounded-full text-[11px] font-medium"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "rgba(255,255,255,0.4)",
+              }}
+            >
+              Private Repo
+            </span>
+          )}
+        </div>
+        <p className="text-white/50 text-sm leading-relaxed mb-3">
+          {project.shortDesc}
+        </p>
+        {project.stats && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {project.stats.map((stat) => (
+              <span
+                key={stat}
+                style={{
+                  fontSize: 11,
+                  background: "rgba(109,113,249,0.08)",
+                  border: "1px solid rgba(109,113,249,0.15)",
+                  borderRadius: 20,
+                  padding: "3px 10px",
+                  color: "rgba(255,255,255,0.6)",
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
