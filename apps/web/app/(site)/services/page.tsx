@@ -166,11 +166,11 @@ const services: Service[] = [
     label: "Automation & Web Scraping",
     headline: "Alibaba Data Extraction at Scale",
     body: [
-      "We build custom Alibaba supplier intelligence tools that track stores, detect new product launches, run keyword searches, and pull 20+ structured data fields per product. Our tools run an anti-detection layer using residential proxies and CAPTCHA solvers to stay live in production.",
+      "We build custom Alibaba supplier intelligence tools that track stores, detect new product launches, run keyword searches, and extract 47 structured data fields per product. Our tools run an anti-detection layer using residential proxies and CAPTCHA solvers to stay live in production.",
       "Every tool is purpose-built for the real Alibaba: dynamic pages, pagination, anti-bot measures, and structured multi-format output. You get clean, analysis-ready data, not raw HTML.",
     ],
     steps: automationSteps,
-    tools: ["Python", "Playwright", "curl_cffi", "Parsel", "BeautifulSoup", "DataImpulse", "CapSolver", "CSV", "JSON", "Scheduling"],
+    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON"],
     accentColor: "text-accent",
     accentBg: "bg-accent/10",
     gradientFrom: "from-accent/20",
@@ -406,6 +406,48 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           </motion.p>
           <ProcessTimeline steps={service.steps} />
         </div>
+
+        {/* Case study callout — automation service only */}
+        {service.id === "automation" && (
+          <motion.div
+            className="mt-14 flex gap-4 rounded-2xl p-6"
+            style={{
+              background: "rgba(109,113,249,0.05)",
+              border: "1px solid rgba(109,113,249,0.12)",
+            }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0, y: 16 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.5 },
+            } : { initial: false })}
+          >
+            <div>
+              <span
+                className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] mb-2"
+                style={{ color: "rgba(255,255,255,0.35)" }}
+              >
+                Case Study
+              </span>
+              <p className="font-display font-bold text-white text-base mb-2">
+                Alibaba Supplier Intelligence Platform
+              </p>
+              <p className="text-white/50 text-sm leading-relaxed mb-3">
+                Automated supplier monitoring for an Australian importer -
+                replacing 8-10 hours of weekly research. 47 data fields
+                extracted daily across 5 automated functions.
+              </p>
+              <Link
+                href="/portfolio/alibaba-scraper"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity duration-200 hover:opacity-75"
+                style={{ color: "#6D71F9" }}
+              >
+                Read the full case study
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );

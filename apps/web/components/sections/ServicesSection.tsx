@@ -14,6 +14,7 @@ const services = [
     description:
       "We build fast, modern web applications for e-commerce sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
     href: "/services#web",
+    caseStudy: null,
   },
   {
     icon: Palette,
@@ -21,13 +22,19 @@ const services = [
     description:
       "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
     href: "/services#design",
+    caseStudy: null,
   },
   {
     icon: Terminal,
     title: "Automation and Web Scraping",
     description:
-      "We build custom Alibaba data tools that track supplier stores, detect new product launches, run keyword searches, and extract 20+ structured data fields per product. Anti-detection hardened and production-ready.",
+      "We build custom Alibaba supplier intelligence tools that track stores, detect new launches, and run visual search — extracting 47 structured data fields per product. Anti-detection hardened and production-ready.",
     href: "/services#automation",
+    caseStudy: {
+      title: "Alibaba Supplier Intelligence Platform",
+      text: "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly research. 47 data fields extracted daily across 5 automated functions.",
+      href: "/portfolio/alibaba-scraper",
+    },
   },
 ];
 
@@ -86,9 +93,43 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
       <h3 className="relative font-display text-xl font-bold mb-3 text-white">
         {service.title}
       </h3>
-      <p className="relative text-white/50 text-sm leading-relaxed mb-7 flex-1">
+      <p className="relative text-white/50 text-sm leading-relaxed mb-5 flex-1">
         {service.description}
       </p>
+
+      {/* Case study callout */}
+      {service.caseStudy && (
+        <div
+          className="relative flex gap-4 rounded-2xl mb-5 p-5"
+          style={{
+            background: "rgba(109,113,249,0.05)",
+            border: "1px solid rgba(109,113,249,0.12)",
+          }}
+        >
+          <div>
+            <span
+              className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] mb-1"
+              style={{ color: "rgba(255,255,255,0.35)" }}
+            >
+              Case Study
+            </span>
+            <p className="text-white text-xs font-semibold mb-1">
+              {service.caseStudy.title}
+            </p>
+            <p className="text-white/45 text-xs leading-relaxed mb-2">
+              {service.caseStudy.text}
+            </p>
+            <Link
+              href={service.caseStudy.href}
+              className="inline-flex items-center gap-1 text-xs font-semibold transition-opacity duration-200 hover:opacity-75"
+              style={{ color: "#6D71F9" }}
+            >
+              Read the full case study
+              <ArrowRight size={11} />
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Learn More - visible on hover */}
       <Link
