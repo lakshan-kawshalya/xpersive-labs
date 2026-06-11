@@ -423,7 +423,7 @@ export default function AlibabaCaseStudy() {
               {...childProps}
               className="grid grid-cols-2 md:grid-cols-4 gap-4"
             >
-              <StatCard value="8–10 hrs/wk" label="Manual research replaced" />
+              <StatCard value="4+ hrs/wk" label="Manual research replaced" />
               <StatCard value="60+" label="Products captured per run" />
               <StatCard value="47" label="Unique data fields" />
               <StatCard value="5" label="Automated functions" />
@@ -866,9 +866,10 @@ export default function AlibabaCaseStudy() {
                 "Python",
                 "Playwright",
                 "curl_cffi",
-                "Residential Proxies",
+                "Parsel",
+                "BeautifulSoup",
+                "DataImpulse Residential Proxies",
                 "CapSolver",
-                "CSV Export",
               ].map((t) => (
                 <TechBadge key={t} name={t} />
               ))}
@@ -880,7 +881,7 @@ export default function AlibabaCaseStudy() {
             >
               Functions 1-4: Playwright for JS-rendered pages.
               <br />
-              Function 5: curl_cffi only — no browser dependency.
+              Function 5: curl_cffi only, no browser dependency.
             </motion.p>
           </motion.div>
         </div>
@@ -937,7 +938,7 @@ export default function AlibabaCaseStudy() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
             >
               {[
-                "8–10 hrs/wk replaced by automation",
+                "4+ hrs of manual research per week replaced",
                 "60+ products detected per category run",
                 "v1.3.0 live since May 2026",
               ].map((r) => (
@@ -960,12 +961,13 @@ export default function AlibabaCaseStudy() {
               className="space-y-4 text-white/60 leading-[1.8]"
             >
               <p>
-                Since deployment in May 2026, the platform replaced
-                approximately 8-10 hours of manual research per week. The
-                client now receives a daily automated feed covering 4 monitored
-                supplier stores, 60+ new product launches per category run, and
-                hundreds of structured product records - delivered automatically
-                before the work day begins.
+                Since deployment in May 2026, the platform replaced 4+ hours of
+                manual weekly research. The client now receives a daily
+                automated feed covering monitored supplier stores, 60+ new
+                product launches per category run, and hundreds of structured
+                product records. What used to be a weekly research block is now
+                15 minutes of daily review, delivered before the work day
+                begins.
               </p>
               <p>
                 The relationship did not end at delivery. Since going live, the
