@@ -20,15 +20,6 @@ const services = [
     featured: false,
   },
   {
-    icon: Palette,
-    title: "UI/UX Design",
-    description:
-      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
-    href: "/services#design",
-    caseStudy: null,
-    featured: false,
-  },
-  {
     icon: Terminal,
     title: "Automation and Web Scraping",
     description:
@@ -40,6 +31,15 @@ const services = [
       href: "/portfolio/alibaba-scraper",
     },
     featured: true,
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description:
+      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
+    href: "/services#design",
+    caseStudy: null,
+    featured: false,
   },
 ];
 
