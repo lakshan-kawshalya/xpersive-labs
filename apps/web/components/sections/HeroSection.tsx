@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import HeroDataPanel from "@/components/sections/HeroDataPanel";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
 const HEADLINE_WORDS = ["E-Commerce", "Data", "Tools", "That", "Perform"];
@@ -54,104 +55,109 @@ export default function HeroSection() {
       />
 
       {/* ── Content ──────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-        {/* Badge */}
-        <motion.div
-          className="mb-8"
-          {...(shouldAnimate ? {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.5, delay: 0.05 },
-          } : { initial: false })}
-        >
-          <span
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium select-none"
-            style={{
-              background: "rgba(109,113,249,0.08)",
-              border: "1px solid rgba(109,113,249,0.25)",
-              color: "rgba(255,255,255,0.75)",
-            }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full shrink-0"
-              style={{
-                background: "#10B981",
-                animation: "hero-badge-pulse 2s ease-in-out infinite",
-              }}
-            />
-            Built for FBA Sellers and Digital Agencies
-          </span>
-        </motion.div>
-
-        {/* Headline - word-by-word reveal */}
-        <h1
-          className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-7"
-          style={{ perspective: "800px" }}
-        >
-          {HEADLINE_WORDS.map((word, i) => (
-            <motion.span
-              key={word}
-              className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-16">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-20 items-center">
+          <div className="text-center lg:text-left">
+            {/* Badge */}
+            <motion.div
+              className="mb-8"
               {...(shouldAnimate ? {
-                custom: i,
-                variants: wordVariants,
-                initial: "hidden",
-                animate: "visible",
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.5, delay: 0.05 },
               } : { initial: false })}
             >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
+              <span
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium select-none"
+                style={{
+                  background: "rgba(109,113,249,0.08)",
+                  border: "1px solid rgba(109,113,249,0.25)",
+                  color: "rgba(255,255,255,0.75)",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{
+                    background: "#10B981",
+                    animation: "hero-badge-pulse 2s ease-in-out infinite",
+                  }}
+                />
+                Built for FBA Sellers and Digital Agencies
+              </span>
+            </motion.div>
 
-        {/* Subtext */}
-        <motion.p
-          className="max-w-[520px] mx-auto text-[18px] text-white/60 leading-[1.7] mb-11"
-          {...(shouldAnimate ? {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
-          } : { initial: false })}
-        >
-          Alibaba supplier intelligence, FBA product research automation, and
-          white-label development for agencies in AU, UK, and US.
-        </motion.p>
+            {/* Headline - word-by-word reveal */}
+            <h1
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-7"
+              style={{ perspective: "800px" }}
+            >
+              {HEADLINE_WORDS.map((word, i) => (
+                <motion.span
+                  key={word}
+                  className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
+                  {...(shouldAnimate ? {
+                    custom: i,
+                    variants: wordVariants,
+                    initial: "hidden",
+                    animate: "visible",
+                  } : { initial: false })}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
 
-        {/* CTAs */}
-        <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          {...(shouldAnimate ? {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.0, ease: "easeOut" },
-          } : { initial: false })}
-        >
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full font-semibold text-base text-white transition-all duration-300 hover:brightness-110 hover:scale-[1.03]"
-            style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 30px rgba(109,113,249,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
-            }}
-          >
-            Start a Project
-            <ArrowRight
-              size={17}
-              className="transition-transform duration-200 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
+            {/* Subtext */}
+            <motion.p
+              className="max-w-[520px] mx-auto lg:mx-0 text-[18px] text-white/60 leading-[1.7] mb-11"
+              {...(shouldAnimate ? {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
+              } : { initial: false })}
+            >
+              Alibaba supplier intelligence, FBA product research automation, and
+              white-label development for agencies in AU, UK, and US.
+            </motion.p>
 
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full border border-white/15 text-white font-semibold text-base transition-all duration-300 hover:border-white/30 hover:bg-white/5 hover:scale-[1.02]"
-          >
-            See Our Work
-          </Link>
-        </motion.div>
+            {/* CTAs */}
+            <motion.div
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+              {...(shouldAnimate ? {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: 1.0, ease: "easeOut" },
+              } : { initial: false })}
+            >
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full font-semibold text-base text-white transition-all duration-300 hover:brightness-110 hover:scale-[1.03]"
+                style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 30px rgba(109,113,249,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
+                }}
+              >
+                Start a Project
+                <ArrowRight
+                  size={17}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full border border-white/15 text-white font-semibold text-base transition-all duration-300 hover:border-white/30 hover:bg-white/5 hover:scale-[1.02]"
+              >
+                See Our Work
+              </Link>
+            </motion.div>
+          </div>
+          <HeroDataPanel />
+        </div>
       </div>
 
       {/* ── Divider line ─────────────────────────────────────── */}
