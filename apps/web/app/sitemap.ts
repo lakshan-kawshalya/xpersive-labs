@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPages = [
     "sri-lanka-business-website-2025",
     "bad-ux-cost-business",
+    "how-we-automated-alibaba-research",
   ].map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
     lastModified: new Date(),

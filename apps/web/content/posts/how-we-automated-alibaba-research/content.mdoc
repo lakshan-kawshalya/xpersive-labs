@@ -1,0 +1,38 @@
+Manual Alibaba research is slow, error-prone, and doesn't scale. Most importers are still visiting supplier pages one by one, copying data into spreadsheets by hand, and checking new listings whenever they find the time. For a growing business, this approach has a ceiling — and they hit it. We built a five-function automation module that replaced 8-10 hours of weekly manual research with a single daily automated run. Here's how we did it.
+
+## The Manual Research Problem
+
+The typical importer workflow looks like this: open a supplier's Alibaba storefront, scroll through their catalogue, note down product names, prices, and minimum order quantities, then move to the next supplier and repeat. New product launches are only discovered on the next visit. Price changes go unnoticed until someone checks. As a supplier list grows from five stores to fifteen, the time required scales linearly — and the coverage gets worse, not better.
+
+This is the fundamental problem with manual product research: it rewards consistency over intelligence. A person can only check so many pages in a day. A system can check all of them, every day, in minutes. The Australian importer we worked with had reached the point where the manual process was consuming a meaningful slice of the working week — time that wasn't being spent on decisions, only on data collection.
+
+## What We Built
+
+The solution is a five-function Python module, each function targeting a distinct part of the sourcing workflow. The first function monitors the client's key supplier stores daily, detecting new product additions and capturing full product data. The second monitors Alibaba's new listings by category, surfacing 60+ new products per run. The third runs keyword-based searches and returns the richest dataset in the module — 27 fields per product. The fourth pulls complete product detail pages for individual listings of interest.
+
+The fifth function, added after the initial release, is the most technically interesting: visual search. Instead of a keyword query, it accepts an image URL and returns visually similar products from across Alibaba. All five functions run on a scheduled basis and deliver structured output to CSV, ready to use without any post-processing.
+
+## The Anti-Detection Challenge
+
+Alibaba is not a passive target. The platform uses bot detection, CAPTCHA challenges, and IP-based blocking to filter out automated traffic. Most off-the-shelf scraping libraries fail outright — they don't handle JavaScript-rendered pages, their TLS fingerprints are trivially recognisable, and a single IP will be blocked after a handful of requests.
+
+Our anti-detection layer addresses each of these failure modes directly. We use Playwright for browser automation, configured to mimic real browser signatures: headers, viewport dimensions, user agent strings, and timing patterns that reflect genuine human behaviour. Residential proxies handle IP rotation, ensuring that each request originates from a real residential address distributed across geographies. When Alibaba presents a CAPTCHA challenge — which it does — CapSolver handles it automatically, keeping the daily schedule uninterrupted. Exponential backoff retry logic and per-run deduplication ensure that temporary failures don't produce duplicate or incomplete data. The result is a platform that runs reliably every day in conditions where generic solutions fail within minutes.
+
+## Visual Search: The Most Interesting Function
+
+The visual search function solves a problem that keyword search cannot: finding products when you don't know what words to search for. If a client sees a product they want to source but doesn't know the supplier terminology for it, a keyword search is a guessing game. An image search isn't.
+
+The function accepts any Alibaba CDN image URL and returns the products Alibaba considers visually similar — up to 1,584 results per query, across 33 pages. The implementation required reverse-engineering two undocumented internal Alibaba endpoints that power their own visual search feature. These endpoints are not public, not documented, and change without notice, which makes them a maintenance challenge but also the reason most competitors can't replicate the functionality.
+
+Critically, this function uses curl_cffi rather than Playwright. Because the endpoints are pure API calls rather than JavaScript-rendered pages, there is no browser dependency. This makes it the fastest and most lightweight function in the module — a query that would take seconds in a browser completes in milliseconds via curl_cffi. For a sourcing workflow, the practical implication is straightforward: show the system a product you want to find more of, and it returns every near-match Alibaba has indexed, regardless of how the supplier named the listing.
+
+## The Result
+
+> "The system runs every morning and the sourcing research is just there. We don't touch it."
+> — Australian Importer
+
+Since deployment in May 2026, the platform replaced approximately 8-10 hours of manual research per week. The client receives a daily automated feed covering 4 monitored supplier stores, 60+ new product launches per category run, and hundreds of structured product records — delivered before the work day begins. Version 1.3.0 is live. Since going live, the client has commissioned additional features, including the visual search function — a clear signal of the value the platform continues to deliver.
+
+---
+
+If you source from Alibaba and still do this manually, we can build the same for your operation. Every business has different suppliers, categories, and requirements — we scope it around yours. [Get in touch →](https://www.xpersivelabs.com/contact)
