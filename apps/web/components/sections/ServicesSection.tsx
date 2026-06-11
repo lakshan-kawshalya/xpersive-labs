@@ -6,6 +6,8 @@ import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { useSectionReveal } from "@/hooks/useSectionReveal";
+import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const services = [
   {
@@ -15,14 +17,7 @@ const services = [
       "We build fast, modern web applications for e-commerce sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
     href: "/services#web",
     caseStudy: null,
-  },
-  {
-    icon: Palette,
-    title: "UI/UX Design",
-    description:
-      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
-    href: "/services#design",
-    caseStudy: null,
+    featured: false,
   },
   {
     icon: Terminal,
@@ -35,6 +30,16 @@ const services = [
       text: "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly research. 47 data fields extracted daily across 5 automated functions.",
       href: "/portfolio/alibaba-scraper",
     },
+    featured: true,
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description:
+      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
+    href: "/services#design",
+    caseStudy: null,
+    featured: false,
   },
 ];
 
@@ -58,14 +63,26 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
     <motion.div
       ref={cardRef}
       {...animProps}
-      className="group relative flex flex-col rounded-3xl border border-white/[0.06] hover:border-primary/30 overflow-hidden transition-colors duration-[350ms]"
-      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
+      className={`group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-[350ms] ${service.featured ? "border-primary/20 hover:border-primary/50" : "border-white/[0.06] hover:border-primary/30"}`}
+      style={{ padding: 32, background: service.featured ? "rgba(109,113,249,0.07)" : "rgba(255,255,255,0.02)" }}
     >
       {/* Hover background tint */}
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: "rgba(109,113,249,0.04)" }}
       />
+      {service.featured && (
+        <div
+          className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[11px] font-semibold z-10"
+          style={{
+            background: "linear-gradient(135deg, rgba(109,113,249,0.25), rgba(84,193,251,0.25))",
+            border: "1px solid rgba(109,113,249,0.35)",
+            color: "rgba(255,255,255,0.8)",
+          }}
+        >
+          Core Service
+        </div>
+      )}
       {/* Spotlight radial */}
       {shouldAnimate && (
         <div
@@ -145,6 +162,7 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
 
 export default function ServicesSection() {
   const { shouldAnimate } = useMotionSafe();
+  const { ref, inView } = useSectionReveal();
 
   const scrollProps = shouldAnimate ? {
     variants: staggerContainer,
@@ -153,21 +171,28 @@ export default function ServicesSection() {
     viewport: { once: true, margin: "-80px" },
   } : { initial: false };
 
-  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
-
   return (
-    <section className="py-28 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section ref={ref} className="py-28 relative overflow-hidden">
+      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <motion.div
+        className="max-w-7xl mx-auto px-6"
+        {...(shouldAnimate
+          ? {
+              initial: { opacity: 0, y: 10 },
+              animate: inView ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 0.5, delay: 0.1, ease: [0.215, 0.61, 0.355, 1.0] },
+            }
+          : { initial: false })}
+      >
         <motion.div className="text-center mb-16" {...scrollProps}>
-          <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
+          <motion.span {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
             Our Expertise
           </motion.span>
-          <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold mb-5">
+          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold mb-5">
             What We Do
           </motion.h2>
-          <motion.p {...childProps} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
+          <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
             From Alibaba data automation to custom web apps, we deliver
             end-to-end solutions that make a measurable difference for
             e-commerce businesses.
@@ -179,7 +204,7 @@ export default function ServicesSection() {
             <SpotlightCard key={service.title} service={service} />
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
