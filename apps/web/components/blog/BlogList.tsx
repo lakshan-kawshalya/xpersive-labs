@@ -28,10 +28,12 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
     [activeTag, posts]
   );
 
+  const showFilter = posts.length >= 6;
+
   return (
     <>
       {/* ── Tag filter ──────────────────────────────────────────── */}
-      <div className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/[0.07] py-4">
+      {showFilter && <div className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/[0.07] py-4">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-2 flex-wrap">
             {[ALL, ...allTags].map((tag) => (
@@ -64,7 +66,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
             </span>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* ── Post grid ───────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-6 py-14">
