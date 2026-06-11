@@ -10,6 +10,9 @@ const SUPPLIERS = [
   { name: "Guangzhou Beauty Wholesale", price: "$1.15", status: "ACTIVE" },
   { name: "Shenzhen ElecParts Factory", price: "$8.60", status: "UPDATE" },
   { name: "Hangzhou Fabric & Textiles", price: "$3.25", status: "ACTIVE" },
+  { name: "Dongguan Plastics Hub", price: "$0.85", status: "NEW" },
+  { name: "Foshan Metal Works Ltd.", price: "$22.50", status: "ACTIVE" },
+  { name: "Qingdao Marine Exports", price: "$6.80", status: "UPDATE" },
 ];
 
 const STATUS_COLORS: Record<string, string> = {
@@ -18,14 +21,10 @@ const STATUS_COLORS: Record<string, string> = {
   UPDATE: "#6D71F9",
 };
 
-const rowVariants = {
-  hidden: { opacity: 0, x: 10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: 0.35 + i * 0.12, duration: 0.4, ease: "easeOut" as const },
-  }),
-};
+const ROW_H = 38;
+const VISIBLE_H = Math.round(ROW_H * 3.5); // ~133px — shows 3.5 rows
+const BATCH_H = SUPPLIERS.length * ROW_H;   // 304px — one full pass
+const LOOP_ROWS = [...SUPPLIERS, ...SUPPLIERS]; // doubled for seamless loop
 
 export default function HeroDataPanel() {
   const { shouldAnimate } = useMotionSafe();
@@ -34,10 +33,9 @@ export default function HeroDataPanel() {
   useEffect(() => {
     if (!shouldAnimate) return;
     const id = setInterval(() => {
-      const next = Math.floor(Math.random() * SUPPLIERS.length);
-      setTick(next);
-      setTimeout(() => setTick(null), 420);
-    }, 2800);
+      setTick(Math.floor(Math.random() * SUPPLIERS.length));
+      setTimeout(() => setTick(null), 500);
+    }, 3600);
     return () => clearInterval(id);
   }, [shouldAnimate]);
 
@@ -89,51 +87,70 @@ export default function HeroDataPanel() {
         <span className="text-right">Status</span>
       </div>
 
-      {/* Supplier rows */}
-      <div>
-        {SUPPLIERS.map((s, i) => (
-          <motion.div
-            key={s.name}
-            custom={i}
-            variants={shouldAnimate ? rowVariants : undefined}
-            initial={shouldAnimate ? "hidden" : false}
-            animate={shouldAnimate ? "visible" : false}
-            className="grid grid-cols-[1fr_80px_70px] gap-3 px-4 py-2.5 items-center"
-            style={{
-              background: tick === i ? "rgba(109,113,249,0.06)" : "transparent",
-              borderBottom: "1px solid rgba(255,255,255,0.03)",
-              transition: "background 0.2s ease",
-            }}
-          >
-            <span
-              className="text-[12px] truncate"
-              style={{ color: "rgba(255,255,255,0.65)" }}
-            >
-              {s.name}
-            </span>
-            <span
-              className="text-right text-[12px] font-semibold tabular-nums"
-              style={{
-                color: tick === i ? "#54C1FB" : "rgba(255,255,255,0.8)",
-                transition: "color 0.2s ease",
-              }}
-            >
-              {s.price}
-            </span>
-            <div className="flex justify-end">
-              <span
-                className="text-[10px] font-bold px-2 py-0.5 rounded"
+      {/* Infinite-scroll rows */}
+      <div
+        style={{
+          height: VISIBLE_H,
+          overflow: "hidden",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+        }}
+      >
+        <motion.div
+          animate={shouldAnimate ? { y: ["0px", `-${BATCH_H}px`] } : {}}
+          transition={
+            shouldAnimate
+              ? { duration: 20, ease: "linear", repeat: Infinity, repeatType: "loop" }
+              : {}
+          }
+        >
+          {LOOP_ROWS.map((s, i) => {
+            const base = i % SUPPLIERS.length;
+            return (
+              <div
+                key={i}
+                className="grid grid-cols-[1fr_80px_70px] gap-3 px-4 items-center"
                 style={{
-                  color: STATUS_COLORS[s.status],
-                  background: `${STATUS_COLORS[s.status]}18`,
-                  border: `1px solid ${STATUS_COLORS[s.status]}35`,
+                  height: ROW_H,
+                  background:
+                    tick === base ? "rgba(109,113,249,0.06)" : "transparent",
+                  borderBottom: "1px solid rgba(255,255,255,0.03)",
+                  transition: "background 0.2s ease",
                 }}
               >
-                {s.status}
-              </span>
-            </div>
-          </motion.div>
-        ))}
+                <span
+                  className="text-[12px] truncate"
+                  style={{ color: "rgba(255,255,255,0.65)" }}
+                >
+                  {s.name}
+                </span>
+                <span
+                  className="text-right text-[12px] font-semibold tabular-nums"
+                  style={{
+                    color: tick === base ? "#54C1FB" : "rgba(255,255,255,0.8)",
+                    transition: "color 0.2s ease",
+                  }}
+                >
+                  {s.price}
+                </span>
+                <div className="flex justify-end">
+                  <span
+                    className="text-[10px] font-bold px-2 py-0.5 rounded"
+                    style={{
+                      color: STATUS_COLORS[s.status],
+                      background: `${STATUS_COLORS[s.status]}18`,
+                      border: `1px solid ${STATUS_COLORS[s.status]}35`,
+                    }}
+                  >
+                    {s.status}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
       </div>
 
       {/* Progress sweep bar */}
