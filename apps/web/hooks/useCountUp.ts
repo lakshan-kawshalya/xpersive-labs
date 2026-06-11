@@ -1,10 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useCountUp(target: number, duration = 2000, delay = 0, started = false) {
+export function useCountUp(target: number, duration = 2000, delay = 0) {
   const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!started) return;
+    const el = ref.current;
+    if (!el || hasStarted) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+        }
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
 
     let animFrame: number;
     let startTime: number | null = null;
@@ -30,7 +49,7 @@ export function useCountUp(target: number, duration = 2000, delay = 0, started =
 
     animFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animFrame);
-  }, [started, target, duration, delay]);
+  }, [hasStarted, target, duration, delay]);
 
-  return count;
+  return { count, ref };
 }

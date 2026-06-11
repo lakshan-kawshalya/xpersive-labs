@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
-const HEADLINE_WORDS = ["Your", "Supplier", "Research,", "Running", "on", "Autopilot."];
-const GRADIENT_WORDS = new Set(["Autopilot."]);
+const HEADLINE_WORDS = ["E-Commerce", "Data", "Tools", "That", "Perform"];
+const GRADIENT_WORDS = new Set(["Data", "Tools"]);
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -20 },
@@ -113,9 +113,8 @@ export default function HeroSection() {
             transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
           } : { initial: false })}
         >
-          We build custom Python automation tools for Amazon FBA sellers and
-          importers — so your supplier monitoring, product tracking, and market
-          research runs daily without you lifting a finger.
+          Alibaba supplier intelligence, FBA product research automation, and
+          white-label development for agencies in AU, UK, and US.
         </motion.p>
 
         {/* CTAs */}

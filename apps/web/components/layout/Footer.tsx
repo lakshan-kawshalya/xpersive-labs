@@ -37,7 +37,7 @@ export default function Footer() {
               Xpersive Labs
             </span>
             <p className="mt-3 text-sm leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Custom automation tools for FBA sellers and Alibaba importers.
+              E-commerce data tools and custom web development for FBA sellers and digital agencies.
             </p>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
               Built with passion in Colombo, Sri Lanka 🇱🇰
