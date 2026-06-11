@@ -2,8 +2,11 @@
 
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { useCountUp } from "@/hooks/useCountUp";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { useSectionReveal } from "@/hooks/useSectionReveal";
+import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const stats = [
   { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
@@ -21,11 +24,15 @@ interface StatItemProps {
 }
 
 function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
-  const { count, ref } = useCountUp(target, 2000, delay);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.1 });
   const { shouldAnimate } = useMotionSafe();
+  const count = useCountUp(target, target <= 5 ? 1200 : 2000, delay, shouldAnimate ? inView : false);
+  const displayValue = shouldAnimate ? count : target;
 
   return (
     <motion.div
+      ref={ref}
       {...(shouldAnimate ? { variants: scaleIn } : { initial: false })}
       className="relative flex flex-col items-center text-center px-6 py-4"
     >
@@ -37,11 +44,10 @@ function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
       )}
 
       <div
-        ref={ref}
         className="font-display font-extrabold text-gradient"
         style={{ fontSize: "clamp(40px, 5vw, 56px)" }}
       >
-        {count}{suffix}
+        {displayValue}{suffix}
       </div>
 
       <p
@@ -56,6 +62,7 @@ function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
 
 export default function StatsSection() {
   const { shouldAnimate } = useMotionSafe();
+  const { ref, inView } = useSectionReveal();
 
   const containerScrollProps = shouldAnimate ? {
     initial: "hidden",
@@ -65,6 +72,7 @@ export default function StatsSection() {
 
   return (
     <section
+      ref={ref}
       className="py-20 relative overflow-hidden"
       style={{
         background: "rgba(255,255,255,0.02)",
@@ -72,10 +80,21 @@ export default function StatsSection() {
         borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}
     >
+      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
+
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-primary/10 pointer-events-none" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] bg-accent/10 pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-6"
+        {...(shouldAnimate
+          ? {
+              initial: { opacity: 0, y: 10 },
+              animate: inView ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 0.5, delay: 0.1, ease: [0.215, 0.61, 0.355, 1.0] },
+            }
+          : { initial: false })}
+      >
         <motion.div
           className="text-center mb-14"
           {...containerScrollProps}
@@ -102,7 +121,7 @@ export default function StatsSection() {
             />
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

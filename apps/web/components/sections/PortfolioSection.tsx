@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { useSectionReveal } from "@/hooks/useSectionReveal";
+import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const projects = [
   {
@@ -187,6 +189,7 @@ function TiltCard({ project }: { project: typeof projects[number] }) {
 
 export default function PortfolioSection() {
   const { shouldAnimate } = useMotionSafe();
+  const { ref, inView } = useSectionReveal();
 
   const scrollProps = shouldAnimate ? {
     variants: staggerContainer,
@@ -198,10 +201,19 @@ export default function PortfolioSection() {
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <section className="py-28 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
+    <section ref={ref} className="py-28 relative overflow-hidden">
+      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-6"
+        {...(shouldAnimate
+          ? {
+              initial: { opacity: 0, y: 10 },
+              animate: inView ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 0.5, delay: 0.1, ease: [0.215, 0.61, 0.355, 1.0] },
+            }
+          : { initial: false })}
+      >
         {/* Header */}
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16"
@@ -248,7 +260,7 @@ export default function PortfolioSection() {
             <ArrowRight size={17} />
           </Link>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
