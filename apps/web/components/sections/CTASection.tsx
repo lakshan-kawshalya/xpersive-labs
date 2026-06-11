@@ -24,10 +24,7 @@ export default function CTASection() {
   } : {};
 
   return (
-    <section
-      className="relative overflow-hidden py-30"
-      style={{ background: "#272848" }}
-    >
+    <section className="relative overflow-hidden py-30">
       {/* Animated gradient border - top */}
       <div
         className="absolute top-0 left-0 right-0 h-0.5 pointer-events-none"
@@ -58,13 +55,22 @@ export default function CTASection() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <motion.div {...scrollProps}>
+          {/* Eyebrow */}
+          <motion.span
+            {...childProps}
+            className="inline-block text-xs font-bold uppercase mb-6"
+            style={{ color: "#6D71F9", letterSpacing: "0.14em" }}
+          >
+            Let&apos;s build together
+          </motion.span>
+
           {/* Headline */}
           <motion.h2
             {...childProps}
-            className="font-display font-extrabold leading-[1.05] mb-6 text-white"
+            className="font-display font-extrabold leading-[1.05] mb-6"
             style={{ fontSize: "clamp(40px, 6vw, 64px)" }}
           >
-            Ready to Automate Your Sourcing?
+            Ready to Automate Your Research?
           </motion.h2>
 
           {/* Subtext */}
@@ -73,22 +79,31 @@ export default function CTASection() {
             className="text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ color: "rgba(255,255,255,0.55)" }}
           >
-            Tell us what you&apos;re researching. We&apos;ll scope it and build it.
+            Tell us what you&apos;re building. We&apos;ll scope it, plan it, and
+            deliver a production-ready tool.
           </motion.p>
 
-          {/* Single CTA */}
-          <motion.div {...childProps} className="flex items-center justify-center">
+          {/* CTAs */}
+          <motion.div {...childProps} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
               className="group inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
               style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
             >
-              Get in Touch
+              Start a Project
               <ArrowRight
                 size={17}
                 className="group-hover:translate-x-0.5 transition-transform duration-200"
               />
             </Link>
+
+            <a
+              href="mailto:hello@xpersivelabs.com"
+              className="text-sm transition-colors duration-200 hover:underline underline-offset-4"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              Or email us directly: hello@xpersivelabs.com
+            </a>
           </motion.div>
         </motion.div>
       </div>

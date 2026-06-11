@@ -2,15 +2,14 @@
 
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { useCountUp } from "@/hooks/useCountUp";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 
 const stats = [
-  { target: 2,  suffix: "+", label: "YEARS ACTIVE",       duration: 1200 },
-  { target: 8,  suffix: "",  label: "PROJECTS DELIVERED",  duration: 1400 },
-  { target: 15, suffix: "+", label: "TECHNOLOGIES",        duration: 2000 },
-  { target: 3,  suffix: "",  label: "CORE SERVICES",       duration: 1200 },
+  { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
+  { target: 20, suffix: "+", label: "DATA FIELDS" },
+  { target: 8,  suffix: "+", label: "HRS SAVED / WEEK" },
+  { target: 3,  suffix: "",  label: "CORE SERVICES" },
 ];
 
 interface StatItemProps {
@@ -18,19 +17,15 @@ interface StatItemProps {
   suffix: string;
   label: string;
   delay: number;
-  duration: number;
   isLast: boolean;
 }
 
-function StatItem({ target, suffix, label, delay, duration, isLast }: StatItemProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.1 });
-  const count = useCountUp(target, duration, delay, inView);
+function StatItem({ target, suffix, label, delay, isLast }: StatItemProps) {
+  const { count, ref } = useCountUp(target, 2000, delay);
   const { shouldAnimate } = useMotionSafe();
 
   return (
     <motion.div
-      ref={ref}
       {...(shouldAnimate ? { variants: scaleIn } : { initial: false })}
       className="relative flex flex-col items-center text-center px-6 py-4"
     >
@@ -42,6 +37,7 @@ function StatItem({ target, suffix, label, delay, duration, isLast }: StatItemPr
       )}
 
       <div
+        ref={ref}
         className="font-display font-extrabold text-gradient"
         style={{ fontSize: "clamp(40px, 5vw, 56px)" }}
       >
@@ -102,7 +98,6 @@ export default function StatsSection() {
               suffix={stat.suffix}
               label={stat.label}
               delay={i * 150}
-              duration={stat.duration}
               isLast={i === stats.length - 1}
             />
           ))}

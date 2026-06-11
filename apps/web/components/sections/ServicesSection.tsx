@@ -2,58 +2,43 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { ArrowRight, Search, Terminal, TrendingUp } from "lucide-react";
+import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
-import type { LucideIcon } from "lucide-react";
 
-interface ServiceItem {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  href: string;
-  featured: boolean;
-}
-
-const services: ServiceItem[] = [
+const services = [
+  {
+    icon: Globe,
+    title: "Web Development",
+    description:
+      "We build fast, modern web applications for e-commerce sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
+    href: "/services#web",
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description:
+      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
+    href: "/services#design",
+  },
   {
     icon: Terminal,
-    title: "Supplier Intelligence Tools",
+    title: "Automation and Web Scraping",
     description:
-      "Custom-built Python scrapers that monitor your Alibaba suppliers daily — tracking new launches, price changes, and stock movements. Delivered as structured CSV data, ready to action.",
+      "We build custom Alibaba data tools that track supplier stores, detect new product launches, run keyword searches, and extract 20+ structured data fields per product. Anti-detection hardened and production-ready.",
     href: "/services#automation",
-    featured: true,
-  },
-  {
-    icon: Search,
-    title: "Product Research Automation",
-    description:
-      "Automated keyword searches and product deep-dives across Alibaba at scale. Stop doing this manually — get structured data on demand.",
-    href: "/services#automation",
-    featured: false,
-  },
-  {
-    icon: TrendingUp,
-    title: "Competitor Price Monitoring",
-    description:
-      "Track competitor listings and pricing movements automatically. Know when the market shifts before your competitors do.",
-    href: "/services#automation",
-    featured: false,
   },
 ];
 
-function SpotlightCard({ service }: { service: ServiceItem }) {
+function SpotlightCard({ service }: { service: typeof services[number] }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
   const { shouldAnimate } = useMotionSafe();
 
   const animProps = shouldAnimate ? {
     variants: fadeUp,
-    whileHover: { y: -8, boxShadow: service.featured
-      ? "0 20px 60px rgba(109,113,249,0.25)"
-      : "0 20px 60px rgba(109,113,249,0.15)"
-    },
+    whileHover: { y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" },
     transition: { type: "spring" as const, stiffness: 200, damping: 22 },
     onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => {
       const r = cardRef.current?.getBoundingClientRect();
@@ -66,35 +51,9 @@ function SpotlightCard({ service }: { service: ServiceItem }) {
     <motion.div
       ref={cardRef}
       {...animProps}
-      className={[
-        "group relative flex flex-col rounded-3xl overflow-hidden transition-colors duration-[350ms]",
-        service.featured
-          ? "border border-primary/25 hover:border-primary/50"
-          : "border border-white/[0.06] hover:border-primary/30",
-      ].join(" ")}
-      style={{
-        padding: 32,
-        background: service.featured
-          ? "rgba(109,113,249,0.06)"
-          : "rgba(255,255,255,0.02)",
-      }}
+      className="group relative flex flex-col rounded-3xl border border-white/[0.06] hover:border-primary/30 overflow-hidden transition-colors duration-[350ms]"
+      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
     >
-      {/* Featured badge */}
-      {service.featured && (
-        <div className="absolute top-4 right-4">
-          <span
-            className="px-3 py-1 rounded-full text-xs font-semibold"
-            style={{
-              background: "rgba(109,113,249,0.15)",
-              border: "1px solid rgba(109,113,249,0.4)",
-              color: "#6D71F9",
-            }}
-          >
-            Core Service
-          </span>
-        </div>
-      )}
-
       {/* Hover background tint */}
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
