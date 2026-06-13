@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – Ridiq</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1923;
+      color: #c8d6df;
+      line-height: 1.75;
+      padding: 48px 24px 80px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    .logo { color: #00c896; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 48px; }
+    h1 { font-size: 2rem; font-weight: 700; color: #e8f0f5; margin-bottom: 8px; }
+    .meta { font-size: 0.875rem; color: #5a7080; margin-bottom: 48px; }
+    h2 { font-size: 1.1rem; font-weight: 600; color: #00c896; margin: 36px 0 12px; }
+    p { margin-bottom: 16px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    a { color: #00c896; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .highlight {
+      border-left: 3px solid #00c896;
+      padding: 16px 20px;
+      background: rgba(0, 200, 150, 0.06);
+      border-radius: 4px;
+      margin: 24px 0;
+    }
+    footer { margin-top: 64px; font-size: 0.8rem; color: #3a5060; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">XPERSIVE LABS</div>
+
+    <h1>Privacy Policy</h1>
+    <p class="meta">Ridiq &nbsp;·&nbsp; Last updated: June 2026 &nbsp;·&nbsp; Effective: June 2026</p>
+
+    <div class="highlight">
+      <strong style="color:#e8f0f5;">Short version:</strong> Ridiq reads on-screen text from ride-hailing driver apps solely to calculate your ride profit. No data ever leaves your device.
+    </div>
+
+    <h2>1. Who We Are</h2>
+    <p>Ridiq is developed and maintained by Xpersive Labs, a software company registered in Sri Lanka. You can reach us at <a href="mailto:privacy@xpersivelabs.com">privacy@xpersivelabs.com</a>.</p>
+
+    <h2>2. What Ridiq Does</h2>
+    <p>Ridiq is a profit-calculation assistant for ride-hailing drivers on PickMe, Uber, and HelaGo. When a ride request appears on your screen, Ridiq reads the fare and distance information shown by the driver app and instantly displays your estimated net profit — before you decide to accept or decline.</p>
+
+    <h2>3. Accessibility Service</h2>
+    <p>Ridiq uses Android's Accessibility API to read on-screen content from supported driver apps (PickMe Driver: <code>com.pickme.driver.byod</code>, Uber Driver, HelaGo Driver). This is the only technical mechanism that allows Ridiq to detect ride request details without modifying those apps.</p>
+    <p>The Accessibility Service:</p>
+    <ul>
+      <li>Only activates when a supported driver app is in the foreground</li>
+      <li>Only reads text that is already visible on your screen</li>
+      <li>Never reads content from any other app</li>
+      <li>Never records, stores, or transmits any screen content</li>
+    </ul>
+
+    <h2>4. Data We Collect</h2>
+    <p>Ridiq does <strong style="color:#e8f0f5;">not</strong> collect, store, or transmit any personal data. Specifically:</p>
+    <ul>
+      <li>No ride data (fares, distances, destinations) is saved beyond the current screen</li>
+      <li>No location data is collected</li>
+      <li>No device identifiers are collected</li>
+      <li>No usage analytics or crash reports are sent to any server</li>
+      <li>No account or login is required</li>
+    </ul>
+    <p>The only data Ridiq stores is your own app preferences (vehicle type, fuel cost, theme) saved locally on your device using Android SharedPreferences. This data never leaves your device.</p>
+
+    <h2>5. Data Sharing</h2>
+    <p>We do not share any data with third parties because we do not collect any data in the first place.</p>
+
+    <h2>6. Permissions</h2>
+    <p>Ridiq requests the following Android permissions:</p>
+    <ul>
+      <li><strong style="color:#e8f0f5;">Accessibility Service</strong> — to read ride request details from supported driver app screens</li>
+      <li><strong style="color:#e8f0f5;">Display over other apps (SYSTEM_ALERT_WINDOW)</strong> — to show the profit overlay on top of the driver app</li>
+      <li><strong style="color:#e8f0f5;">Foreground Service</strong> — to keep the overlay active while you are driving</li>
+      <li><strong style="color:#e8f0f5;">Receive Boot Completed</strong> — to automatically resume monitoring after a device restart, if you had it enabled</li>
+    </ul>
+    <p>None of these permissions are used to collect or transmit data.</p>
+
+    <h2>7. Children's Privacy</h2>
+    <p>Ridiq is intended for adult ride-hailing drivers and is not directed at children under 13. We do not knowingly collect information from children.</p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this policy as Ridiq evolves — for example, if we introduce optional analytics or cloud features. When we do, we will update the "Last updated" date at the top of this page. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>9. Contact</h2>
+    <p>If you have any questions about this privacy policy or how Ridiq handles data, contact us at:<br/>
+    <a href="mailto:privacy@xpersivelabs.com">privacy@xpersivelabs.com</a><br/>
+    Xpersive Labs, Sri Lanka</p>
+
+    <footer>
+      &copy; 2026 Xpersive Labs &nbsp;·&nbsp; <a href="https://xpersivelabs.com">xpersivelabs.com</a>
+    </footer>
+  </div>
+</body>
+</html>
