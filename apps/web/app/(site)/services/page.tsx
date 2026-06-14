@@ -164,10 +164,10 @@ const services: Service[] = [
     id: "automation",
     icon: Terminal,
     label: "Automation & Web Scraping",
-    headline: "Alibaba Data Extraction at Scale",
+    headline: "E-Commerce Data Automation at Scale",
     body: [
-      "We build custom Alibaba supplier intelligence tools that track stores, detect new product launches, run keyword searches, and extract 47 structured data fields per product. Our tools run an anti-detection layer using residential proxies and CAPTCHA solvers to stay live in production.",
-      "Every tool is purpose-built for the real Alibaba: dynamic pages, pagination, anti-bot measures, and structured multi-format output. You get clean, analysis-ready data, not raw HTML.",
+      "We build custom automation tools for e-commerce sellers on Amazon, Shopify, and Alibaba: extracting structured product data, monitoring suppliers, running keyword searches, and tracking competitor launches. Our tools use residential proxies and CAPTCHA solvers to stay live in production.",
+      "Every tool is purpose-built for the real platform: dynamic pages, pagination, anti-bot measures, and structured multi-format output. The Alibaba Supplier Intelligence Platform is our proof of concept: 47 data fields, 5 automated functions, daily runs.",
     ],
     steps: automationSteps,
     tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON"],
@@ -512,9 +512,14 @@ export default function ServicesPage() {
               <span className="text-gradient">Services</span>
             </motion.h1>
 
-            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10">
-              Alibaba data automation, custom web applications, and UI/UX
-              design for e-commerce businesses and digital agencies.
+            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
+              E-commerce automation, custom web applications, and UI/UX design for sellers, importers, and digital agencies.
+            </motion.p>
+            <motion.p {...childProps} className="text-white/45 text-sm leading-relaxed max-w-2xl mb-10">
+              Running a digital agency? We take on white-label projects: your brand, our build.{" "}
+              <Link href="/contact" className="text-primary font-semibold hover:opacity-75 transition-opacity duration-200">
+                Let&apos;s talk.
+              </Link>
             </motion.p>
 
             {/* Service anchors */}

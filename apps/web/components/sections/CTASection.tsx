@@ -70,7 +70,7 @@ export default function CTASection() {
             className="font-display font-extrabold leading-[1.05] mb-6"
             style={{ fontSize: "clamp(40px, 6vw, 64px)" }}
           >
-            Ready to Automate Your Research?
+            Ready to Build Smarter E-Commerce Tools?
           </motion.h2>
 
           {/* Subtext */}

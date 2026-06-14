@@ -23,7 +23,7 @@ const services = [
     icon: Terminal,
     title: "Automation and Web Scraping",
     description:
-      "We build custom Alibaba supplier intelligence tools that track stores, detect new launches, and run visual search — extracting 47 structured data fields per product. Anti-detection hardened and production-ready.",
+      "We build custom e-commerce automation tools for Amazon, Shopify, and Alibaba sellers: product monitoring, supplier tracking, keyword search, and structured data extraction. Anti-detection hardened and production-ready. Our Alibaba platform proved the model: 47 data fields extracted per product, daily.",
     href: "/services#automation",
     caseStudy: {
       title: "Alibaba Supplier Intelligence Platform",
@@ -193,9 +193,9 @@ export default function ServicesSection() {
             What We Do
           </motion.h2>
           <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
-            From Alibaba data automation to custom web apps, we deliver
+            From e-commerce automation to custom web apps, we deliver
             end-to-end solutions that make a measurable difference for
-            e-commerce businesses.
+            e-commerce businesses and digital agencies.
           </motion.p>
         </motion.div>
 

@@ -10,9 +10,9 @@ import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverla
 
 const stats = [
   { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
-  { target: 20, suffix: "+", label: "DATA FIELDS" },
-  { target: 8,  suffix: "+", label: "HRS SAVED / WEEK" },
-  { target: 3,  suffix: "",  label: "CORE SERVICES" },
+  { target: 47,  suffix: "+", label: "DATA FIELDS" },
+  { target: 8,   suffix: "+", label: "HRS SAVED / WEEK" },
+  { target: 100, suffix: "%", label: "ON-TIME DELIVERY" },
 ];
 
 interface StatItemProps {
