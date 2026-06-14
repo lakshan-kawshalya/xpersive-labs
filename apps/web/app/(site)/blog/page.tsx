@@ -4,11 +4,11 @@ import BlogList from "@/components/blog/BlogList";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog - E-Commerce Automation and Web Development",
+  title: "E-Commerce and Automation Insights",
   description:
     "Insights on Alibaba data tools, FBA automation, web development, and UI/UX design from the Xpersive Labs team in Colombo, Sri Lanka.",
   alternates: { canonical: "https://www.xpersivelabs.com/blog" },
-  openGraph: { url: "https://www.xpersivelabs.com/blog" },
+  openGraph: { type: "website", url: "https://www.xpersivelabs.com/blog" },
 };
 
 export default async function BlogPage() {

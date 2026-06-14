@@ -1,5 +1,6 @@
 import { createReader } from "@keystatic/core/reader";
 import Markdoc from "@markdoc/markdoc";
+import sanitizeHtml from "sanitize-html";
 import keystaticConfig from "../keystatic.config";
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -42,7 +43,16 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
   const { node } = await entry.content();
   const transformed = Markdoc.transform(node, {});
-  const contentHtml = Markdoc.renderers.html(transformed);
+  const rawHtml = Markdoc.renderers.html(transformed);
+  const contentHtml = sanitizeHtml(rawHtml, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "figure", "figcaption", "details", "summary"]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      img: ["src", "alt", "width", "height", "loading"],
+      a: ["href", "name", "target", "rel"],
+      "*": ["class", "id"],
+    },
+  });
 
   return {
     slug,
@@ -50,7 +60,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     date: entry.publishedDate ?? "",
     description: entry.description ?? "",
     tags: (entry.tags as string[]) ?? [],
-    readingTime: Math.max(1, Math.ceil(wordCount(contentHtml) / 200)),
+    readingTime: Math.max(1, Math.ceil(wordCount(rawHtml) / 200)),
     contentHtml,
   };
 }

@@ -61,18 +61,18 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerSections).map(([title, links]) => (
             <div key={title}>
-              <h4
+              <p
                 className="text-xs font-semibold uppercase tracking-widest mb-5"
-                style={{ color: "rgba(255,255,255,0.3)" }}
+                style={{ color: "#9d9daa" }}
               >
                 {title}
-              </h4>
+              </p>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="group/link flex items-center gap-1 text-sm transition-colors duration-200"
+                      className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
                       style={{ color: "rgba(255,255,255,0.45)" }}
                     >
                       <span className="group-hover/link:text-white transition-colors duration-200">

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -227,12 +227,10 @@ function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
+  const [isTouch] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
+  );
   const { shouldAnimate } = useMotionSafe();
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none)").matches);
-  }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isTouch || !shouldAnimate) return;
@@ -328,12 +326,12 @@ function ProjectCard({ project }: { project: Project }) {
       {/* Info area */}
       <div className="p-6" style={{ background: "rgba(255,255,255,0.02)" }}>
         <div className="flex flex-wrap items-center gap-2 mb-2">
-          <h3
+          <h2
             className="font-display text-[18px] font-bold transition-colors duration-200"
             style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
           >
             {project.title}
-          </h3>
+          </h2>
           {project.privateBadge && (
             <span
               className="px-2.5 py-0.5 rounded-full text-[11px] font-medium"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
@@ -153,6 +154,7 @@ export default function TeamPage() {
 
 function MemberCard({ member }: { member: TeamMember }) {
   const { shouldAnimate } = useMotionSafe();
+  const [imgError, setImgError] = useState(false);
 
   const hoverProps = shouldAnimate ? {
     whileHover: { y: -8, boxShadow: "0 32px 80px rgba(109,113,249,0.18)" },
@@ -182,8 +184,8 @@ function MemberCard({ member }: { member: TeamMember }) {
           className="w-24 h-24 rounded-full overflow-hidden transition-transform duration-300 group-hover:scale-105"
           style={{ boxShadow: "0 0 0 3px rgba(109,113,249,0.25), 0 8px 32px rgba(0,0,0,0.4)" }}
         >
-          {member.avatar ? (
-            <Image src={member.avatar} alt={member.name} width={96} height={96} className="w-full h-full object-cover" />
+          {member.avatar && !imgError ? (
+            <Image src={member.avatar} alt={member.name} width={96} height={96} className="w-full h-full object-cover" onError={() => setImgError(true)} />
           ) : (
             <div className="w-full h-full bg-linear-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold font-display">
               {member.initials}
@@ -193,7 +195,7 @@ function MemberCard({ member }: { member: TeamMember }) {
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
       </div>
 
-      <h3 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{member.name}</h3>
+      <h2 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{member.name}</h2>
       <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{member.role}</p>
       <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>
         {member.bio}

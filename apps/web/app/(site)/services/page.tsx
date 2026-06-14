@@ -219,9 +219,9 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                   transition: { delay: i * 0.15 + 0.1 },
                 } : { initial: false })}
               >
-                <h4 className="font-semibold text-white mb-2" style={{ fontSize: 20 }}>
+                <h3 className="font-semibold text-white mb-2" style={{ fontSize: 20 }}>
                   {step.title}
-                </h4>
+                </h3>
                 <p className="text-white/55 leading-relaxed" style={{ fontSize: 15 }}>
                   {step.description}
                 </p>
@@ -281,7 +281,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h4 className="font-semibold text-white mb-1" style={{ fontSize: 18 }}>{step.title}</h4>
+              <h3 className="font-semibold text-white mb-1" style={{ fontSize: 18 }}>{step.title}</h3>
               <p className="text-white/55 leading-relaxed" style={{ fontSize: 14 }}>{step.description}</p>
             </div>
           </motion.div>
@@ -311,7 +311,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           {...scrollProps}
-          className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20 ${reversed ? "lg:grid-flow-dense" : ""}`}
+          className={`grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-20 ${reversed ? "md:grid-flow-dense" : ""}`}
         >
           {/* Text block */}
           <motion.div {...childProps} className={reversed ? "lg:col-start-2" : ""}>

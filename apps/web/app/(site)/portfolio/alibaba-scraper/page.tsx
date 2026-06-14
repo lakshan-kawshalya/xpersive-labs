@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AlibabaCaseStudy from "./AlibabaCaseStudy";
 
 export const metadata: Metadata = {
-  title: "Alibaba Supplier Intelligence Platform - Case Study",
+  title: "Alibaba Supplier Intelligence Platform | Case Study",
   description:
     "How Xpersive Labs built a fully automated Alibaba supplier intelligence platform for an Australian importer, replacing 4+ hours of manual weekly research with a 5-function automation module extracting 47 unique data fields daily.",
   alternates: {

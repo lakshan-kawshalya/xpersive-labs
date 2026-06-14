@@ -16,9 +16,9 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const EMAILJS_SERVICE_ID = "***REMOVED***";
-const EMAILJS_TEMPLATE_ID = "***REMOVED***";
-const EMAILJS_PUBLIC_KEY = "***REMOVED***";
+const EMAILJS_SERVICE_ID = "service_cq58rg3";
+const EMAILJS_TEMPLATE_ID = "template_ttq7fzc";
+const EMAILJS_PUBLIC_KEY = "k-RM945un6WuOh_AP";
 
 type ServiceOption =
   | "Web Development"
@@ -35,6 +35,10 @@ interface FormValues {
 }
 
 type SubmitState = "idle" | "loading" | "success" | "error";
+
+function stripHtml(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
 
 const serviceOptions: ServiceOption[] = [
   "Web Development",
@@ -99,7 +103,13 @@ export default function ContactPage() {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        { from_name: data.name, from_email: data.email, company: data.company || "-", service: data.service || "Not specified", message: data.message },
+        {
+          from_name: stripHtml(data.name),
+          from_email: data.email,
+          company: stripHtml(data.company) || "-",
+          service: data.service || "Not specified",
+          message: stripHtml(data.message),
+        },
         EMAILJS_PUBLIC_KEY,
       );
       setSubmitState("success");
@@ -210,7 +220,7 @@ export default function ContactPage() {
                       <motion.div {...childProps}>
                         <FloatingField id="name" label="Your Name" required error={errors.name?.message}>
                           <input id="name" type="text" placeholder="Jane Smith" className={underlineInput(!!errors.name)}
-                            {...register("name", { required: "Name is required", minLength: { value: 2, message: "At least 2 characters" } })} />
+                            {...register("name", { required: "Name is required", minLength: { value: 2, message: "At least 2 characters" }, validate: (v) => v.trim().length >= 2 || "Name cannot be blank" })} />
                         </FloatingField>
                       </motion.div>
                       <motion.div {...childProps}>
@@ -228,9 +238,9 @@ export default function ContactPage() {
                         </FloatingField>
                       </motion.div>
                       <motion.div {...childProps}>
-                        <FloatingField id="service" label="Service Interest">
+                        <FloatingField id="service" label="Service Interest" required error={errors.service?.message}>
                           <div className="relative">
-                            <select id="service" className={`${underlineInput(false)} appearance-none pr-8`} {...register("service")} defaultValue="">
+                            <select id="service" className={`${underlineInput(!!errors.service)} appearance-none pr-8`} {...register("service", { required: "Please select a service" })} defaultValue="">
                               <option value="" disabled>Select a service…</option>
                               {serviceOptions.map((s) => <option key={s} value={s}>{s}</option>)}
                             </select>

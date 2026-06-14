@@ -157,7 +157,7 @@ export default function AboutPage() {
   } : {};
 
   return (
-    <div className="bg-dark text-white">
+    <div className="bg-dark text-white overflow-x-hidden">
       {/* Hero */}
       <section className="relative pt-40 pb-28 overflow-hidden">
         <motion.div

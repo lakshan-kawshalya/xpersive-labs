@@ -81,7 +81,7 @@ export default function SiteLayout({
           <ScrollProgress />
           <Navbar />
           <PageTransitionProvider>
-            <main>{children}</main>
+            <div id="main-content">{children}</div>
           </PageTransitionProvider>
           <Footer />
         </div>

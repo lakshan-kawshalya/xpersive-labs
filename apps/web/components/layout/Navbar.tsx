@@ -55,7 +55,7 @@ function MagneticNavLink({ href, label, isActive }: { href: string; label: strin
   const { ref, offset } = useMagnetic(0.3);
   const { shouldAnimate } = useMotionSafe();
 
-  const linkClass = `relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-primary" : "text-white/70"}`;
+  const linkClass = `relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-[#8285fb]" : "text-white/70"}`;
 
   if (!shouldAnimate) {
     return (
@@ -138,6 +138,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setIsMobileOpen(false); }, [pathname]);
 
   useEffect(() => {
@@ -192,10 +193,12 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <MagneticCTA />
           <button
+            type="button"
             className="md:hidden flex items-center justify-center w-9 h-9 text-white rounded-lg hover:bg-white/10 transition-colors"
             onClick={() => setIsMobileOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileOpen}
+            aria-controls="mobile-nav"
           >
             {shouldAnimate ? (
               <AnimatePresence mode="wait" initial={false}>
@@ -233,6 +236,7 @@ export default function Navbar() {
               />
               <motion.div
                 key="menu"
+                id="mobile-nav"
                 className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
                 style={{ background: "#1A1A2E" }}
                 initial={{ opacity: 0, y: -16 }}
@@ -296,6 +300,7 @@ export default function Navbar() {
               onClick={() => setIsMobileOpen(false)}
             />
             <div
+              id="mobile-nav"
               className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
               style={{ background: "#1A1A2E" }}
             >

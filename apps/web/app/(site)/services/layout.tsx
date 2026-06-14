@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Services: Alibaba Data Tools, Web Development, and UI/UX Design",
+  title: "E-Commerce Tools, Web Development and UI Design",
   description:
     "Custom Alibaba supplier intelligence tools, FBA product research automation, white-label web development, and UI/UX design for e-commerce businesses and digital agencies.",
   alternates: { canonical: "https://www.xpersivelabs.com/services" },
-  openGraph: { url: "https://www.xpersivelabs.com/services" },
+  openGraph: { type: "website", url: "https://www.xpersivelabs.com/services" },
 };
 
 const servicesSchema = {
