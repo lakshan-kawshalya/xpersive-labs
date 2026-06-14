@@ -10,9 +10,8 @@ import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverla
 
 const stats = [
   { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
-  { target: 47,  suffix: "+", label: "DATA FIELDS" },
-  { target: 8,   suffix: "+", label: "HRS SAVED / WEEK" },
-  { target: 100, suffix: "%", label: "ON-TIME DELIVERY" },
+  { target: 47, suffix: "+", label: "DATA FIELDS" },
+  { target: 8,  suffix: "+", label: "HRS SAVED / WEEK" },
 ];
 
 interface StatItemProps {
@@ -106,7 +105,7 @@ export default function StatsSection() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-2 lg:grid-cols-3"
           {...containerScrollProps}
           variants={shouldAnimate ? staggerContainer : undefined}
         >
