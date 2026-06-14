@@ -9,9 +9,10 @@ import { useSectionReveal } from "@/hooks/useSectionReveal";
 import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const stats = [
-  { target: 2,  suffix: "+", label: "YEARS ACTIVE" },
-  { target: 47, suffix: "+", label: "DATA FIELDS" },
-  { target: 8,  suffix: "+", label: "HRS SAVED / WEEK" },
+  { target: 2,  suffix: "+",     label: "YEARS ACTIVE" },
+  { target: 47, suffix: "+",     label: "DATA FIELDS" },
+  { target: 8,  suffix: "+",     label: "HRS SAVED / WEEK" },
+  { target: 1,  suffix: "-to-1", label: "COMMUNICATION" },
 ];
 
 interface StatItemProps {
@@ -105,7 +106,7 @@ export default function StatsSection() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-2 lg:grid-cols-4"
           {...containerScrollProps}
           variants={shouldAnimate ? staggerContainer : undefined}
         >
