@@ -195,8 +195,9 @@ export default function ContactPage() {
                     noValidate
                     className="space-y-8"
                     {...(shouldAnimate ? {
-                      initial: { opacity: 0 },
-                      animate: { opacity: 1 },
+                      variants: staggerContainer,
+                      initial: "hidden",
+                      animate: "visible",
                       exit: { opacity: 0 },
                     } : { initial: false })}
                   >
