@@ -1,18 +1,18 @@
 "use client";
 
-import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 import { useCountUp } from "@/hooks/useCountUp";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
-import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
+import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const stats = [
   { target: 2,  suffix: "+",     label: "YEARS ACTIVE" },
   { target: 47, suffix: "+",     label: "DATA FIELDS" },
   { target: 8,  suffix: "+",     label: "HRS SAVED / WEEK" },
-  { target: 1,  suffix: "-to-1", label: "COMMUNICATION" },
+  { target: 1,  suffix: " to 1", label: "COMMUNICATION" },
 ];
 
 interface StatItemProps {
