@@ -1,7 +1,7 @@
 "use client";
 
-import { fadeUp, staggerContainer } from "@/lib/animations";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -16,9 +16,9 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const EMAILJS_SERVICE_ID = "service_cq58rg3";
-const EMAILJS_TEMPLATE_ID = "template_ttq7fzc";
-const EMAILJS_PUBLIC_KEY = "k-RM945un6WuOh_AP";
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 type ServiceOption =
   | "Web Development"
