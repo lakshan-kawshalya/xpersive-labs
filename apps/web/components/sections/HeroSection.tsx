@@ -134,8 +134,7 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              White-label data pipelines for SEO and digital marketing agencies.
-              48-hour fix guarantee. Your clients never know we exist.
+              White-label scraping pipelines and managed data delivery for SEO and digital marketing agencies in AU, UK, and US. Your clients never know we exist.
             </motion.p>
 
             {/* CTAs */}

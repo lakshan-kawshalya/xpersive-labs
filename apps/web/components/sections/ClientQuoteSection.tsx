@@ -79,7 +79,7 @@ export default function ClientQuoteSection() {
             className="text-sm font-medium tracking-wide"
             style={{ color: "rgba(255,255,255,0.35)" }}
           >
-            — E-commerce importer, Australia (anonymised)
+            - Agency client, Australia (anonymised)
           </footer>
         </motion.blockquote>
       </div>

@@ -15,7 +15,7 @@ const organizationSchema = {
   url: "https://www.xpersivelabs.com",
   logo: "https://www.xpersivelabs.com/logo/brandmark.svg",
   description:
-    "Custom e-commerce data tools, Alibaba supplier intelligence, FBA product research automation, and white-label web development for Amazon sellers and digital agencies.",
+    "White-label scraping pipelines and managed data delivery for digital marketing and SEO agencies. 48-hour fix guarantee. Serving agencies in AU, UK, and US.",
   foundingDate: "2024",
   founder: {
     "@type": "Person",
@@ -52,7 +52,7 @@ const websiteSchema = {
   "@type": "WebSite",
   name: "Xpersive Labs",
   url: "https://www.xpersivelabs.com",
-  description: "E-commerce data automation and custom web development for FBA sellers and digital agencies.",
+  description: "White-label scraping pipelines and web development for digital agencies in AU, UK, and US.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://www.xpersivelabs.com/blog?q={search_term_string}",
