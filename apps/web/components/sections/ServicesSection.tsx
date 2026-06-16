@@ -2,7 +2,7 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, Palette, Terminal } from "lucide-react";
+import { Activity, ArrowRight, Globe, Terminal } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
@@ -33,11 +33,11 @@ const services = [
     featured: true,
   },
   {
-    icon: Palette,
-    title: "UI/UX Design",
+    icon: Activity,
+    title: "Managed Data Pipelines",
     description:
-      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms ready for development.",
-    href: "/services#design",
+      "We don't just build scrapers, we run them. Scheduled weekly runs, 6-hour accuracy checks, failure alerts, and weekly client reports. You get reliable data. We handle everything that breaks.",
+    href: "/services#automation",
     caseStudy: null,
     featured: false,
   },
@@ -193,9 +193,8 @@ export default function ServicesSection() {
             What We Do
           </motion.h2>
           <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
-            From e-commerce automation to custom web apps, we deliver
-            end-to-end solutions that make a measurable difference for
-            e-commerce businesses and digital agencies.
+            Custom scraping pipelines and automation tools, built for agencies
+            that need reliable data for their clients. White-label ready. 48-hour fix guarantee.
           </motion.p>
         </motion.div>
 
