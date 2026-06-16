@@ -7,8 +7,8 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 import HeroDataPanel from "@/components/sections/HeroDataPanel";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
-const HEADLINE_WORDS = ["White-label", "web", "scraping", "and", "automation", "for", "digital", "marketing", "and", "SEO", "agencies"];
-const GRADIENT_WORDS = new Set(["scraping", "agencies"]);
+const HEADLINE_WORDS = ["We", "Scrape.", "You", "Deliver."];
+const GRADIENT_WORDS = new Set(["Scrape.", "Deliver."]);
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -20 },
@@ -116,8 +116,8 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              Custom scraping pipelines and automation tools for SEO and digital
-              marketing agencies. White-label delivery, maintenance included.
+              White-label data pipelines for SEO and digital marketing agencies.
+              48-hour fix guarantee. Your clients never know we exist.
             </motion.p>
 
             {/* CTAs */}
@@ -155,19 +155,6 @@ export default function HeroSection() {
                 See Our Work
               </Link>
             </motion.div>
-
-            {/* Guarantee */}
-            <motion.p
-              className="mt-5 text-sm text-center lg:text-left"
-              style={{ color: "rgba(255,255,255,0.35)" }}
-              {...(shouldAnimate ? {
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                transition: { duration: 0.5, delay: 1.4, ease: "easeOut" },
-              } : { initial: false })}
-            >
-              If your scraper breaks, we fix it within 48 hours. Guaranteed.
-            </motion.p>
           </div>
           <HeroDataPanel />
         </div>
