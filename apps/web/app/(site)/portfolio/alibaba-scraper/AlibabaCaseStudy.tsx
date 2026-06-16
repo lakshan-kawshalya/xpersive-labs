@@ -1022,8 +1022,19 @@ export default function AlibabaCaseStudy() {
               {...childProps}
               className="text-white/70 text-lg leading-relaxed mb-8 max-w-xl mx-auto"
             >
-              If you&apos;re sourcing from Alibaba and still doing this manually,
-              we&apos;d like to show you what this looks like for your operation.
+              For agencies, this is the model. Your client gets daily automated
+              data. You get the credit. We stay invisible. Whether you need one
+              scraper or ten, the same pipeline approach applies — scheduled
+              runs, accuracy checks, and a fix within 48 hours if anything
+              breaks.
+            </motion.p>
+            <motion.p
+              {...childProps}
+              className="text-white/70 text-lg leading-relaxed mb-8 max-w-xl mx-auto"
+            >
+              If you work with clients who need structured product or competitor
+              data and you are still doing it manually, we would like to show
+              you what this looks like for your agency.
             </motion.p>
             <motion.div {...childProps} className="mb-4">
               <Link
