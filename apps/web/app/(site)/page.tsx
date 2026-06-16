@@ -5,6 +5,7 @@ import PortfolioSection from "@/components/sections/PortfolioSection";
 import StatsSection from "@/components/sections/StatsSection";
 import BuildTimelineSection from "@/components/sections/BuildTimelineSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import HomePricingSection from "@/components/sections/HomePricingSection";
 import CTASection from "@/components/sections/CTASection";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <StatsSection />
       <BuildTimelineSection />
       <TestimonialsSection />
+      <HomePricingSection />
       <CTASection />
     </>
   );

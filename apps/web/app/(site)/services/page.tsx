@@ -558,6 +558,7 @@ export default function ServicesPage() {
             {[
               {
                 name: "Starter",
+                plan: "starter",
                 price: "$650",
                 features: [
                   "1 active scraper",
@@ -569,6 +570,7 @@ export default function ServicesPage() {
               },
               {
                 name: "Growth",
+                plan: "growth",
                 price: "$1,800",
                 features: [
                   "Up to 3 active scrapers",
@@ -579,7 +581,8 @@ export default function ServicesPage() {
                 highlighted: true,
               },
               {
-                name: "Scale",
+                name: "Agency Partner",
+                plan: "agency",
                 price: "$4,200",
                 features: [
                   "Unlimited scrapers",
@@ -643,7 +646,7 @@ export default function ServicesPage() {
                 </ul>
 
                 <Link
-                  href="/contact"
+                  href={`/contact?plan=${tier.plan}`}
                   className="group inline-flex items-center justify-center gap-2 w-full py-3 rounded-full font-semibold text-sm transition-all duration-300"
                   style={tier.highlighted ? {
                     background: "linear-gradient(135deg, #6D71F9, #54C1FB)",
