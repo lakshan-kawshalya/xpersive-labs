@@ -91,20 +91,38 @@ export default function HeroSection() {
               className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-7"
               style={{ perspective: "800px" }}
             >
-              {HEADLINE_WORDS.map((word, i) => (
-                <motion.span
-                  key={i}
-                  className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
-                  {...(shouldAnimate ? {
-                    custom: i,
-                    variants: wordVariants,
-                    initial: "hidden",
-                    animate: "visible",
-                  } : { initial: false })}
-                >
-                  {word}
-                </motion.span>
-              ))}
+              <span className="block">
+                {HEADLINE_WORDS.slice(0, 2).map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
+                    {...(shouldAnimate ? {
+                      custom: i,
+                      variants: wordVariants,
+                      initial: "hidden",
+                      animate: "visible",
+                    } : { initial: false })}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+              <span className="block">
+                {HEADLINE_WORDS.slice(2).map((word, i) => (
+                  <motion.span
+                    key={i + 2}
+                    className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
+                    {...(shouldAnimate ? {
+                      custom: i + 2,
+                      variants: wordVariants,
+                      initial: "hidden",
+                      animate: "visible",
+                    } : { initial: false })}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
             </h1>
 
             {/* Subtext */}

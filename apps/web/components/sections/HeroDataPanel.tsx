@@ -62,7 +62,7 @@ export default function HeroDataPanel() {
         <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#F59E0B" }} />
         <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#10B981" }} />
         <span className="ml-3 text-[11px]" style={{ color: "rgba(255,255,255,0.35)" }}>
-          alibaba_scanner · live
+          data_pipeline · live
         </span>
         <span
           className="ml-auto w-1.5 h-1.5 rounded-full"
