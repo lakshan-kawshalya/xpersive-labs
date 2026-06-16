@@ -7,8 +7,8 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 import HeroDataPanel from "@/components/sections/HeroDataPanel";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
-const HEADLINE_WORDS = ["E-Commerce", "Data", "Tools", "That", "Perform"];
-const GRADIENT_WORDS = new Set(["Data", "Tools"]);
+const HEADLINE_WORDS = ["White-label", "web", "scraping", "and", "automation", "for", "digital", "marketing", "and", "SEO", "agencies"];
+const GRADIENT_WORDS = new Set(["scraping", "agencies"]);
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -20 },
@@ -17,7 +17,7 @@ const wordVariants = {
     y: 0,
     rotateX: 0,
     transition: {
-      delay: 0.1 + i * 0.08,
+      delay: 0.1 + i * 0.05,
       duration: 0.6,
       ease: [0.215, 0.61, 0.355, 1.0] as const,
     },
@@ -82,7 +82,7 @@ export default function HeroSection() {
                     animation: "hero-badge-pulse 2s ease-in-out infinite",
                   }}
                 />
-                Built for FBA Sellers and Digital Agencies
+                Built for Digital Marketing and SEO Agencies
               </span>
             </motion.div>
 
@@ -93,7 +93,7 @@ export default function HeroSection() {
             >
               {HEADLINE_WORDS.map((word, i) => (
                 <motion.span
-                  key={word}
+                  key={i}
                   className={`inline-block mr-[0.25em] ${GRADIENT_WORDS.has(word) ? "text-gradient" : ""}`}
                   {...(shouldAnimate ? {
                     custom: i,
@@ -116,8 +116,8 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              Alibaba supplier intelligence, FBA product research automation, and
-              white-label development for agencies in AU, UK, and US.
+              Custom scraping pipelines and automation tools for SEO and digital
+              marketing agencies. White-label delivery, maintenance included.
             </motion.p>
 
             {/* CTAs */}
@@ -155,6 +155,19 @@ export default function HeroSection() {
                 See Our Work
               </Link>
             </motion.div>
+
+            {/* Guarantee */}
+            <motion.p
+              className="mt-5 text-sm text-center lg:text-left"
+              style={{ color: "rgba(255,255,255,0.35)" }}
+              {...(shouldAnimate ? {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                transition: { duration: 0.5, delay: 1.4, ease: "easeOut" },
+              } : { initial: false })}
+            >
+              If your scraper breaks, we fix it within 48 hours. Guaranteed.
+            </motion.p>
           </div>
           <HeroDataPanel />
         </div>

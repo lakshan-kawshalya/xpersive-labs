@@ -22,7 +22,6 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 type ServiceOption =
   | "Web Development"
-  | "UI/UX Design"
   | "Automation & Web Scraping"
   | "Other / General Inquiry";
 
@@ -42,7 +41,6 @@ function stripHtml(value: string): string {
 
 const serviceOptions: ServiceOption[] = [
   "Web Development",
-  "UI/UX Design",
   "Automation & Web Scraping",
   "Other / General Inquiry",
 ];
@@ -303,6 +301,17 @@ export default function ContactPage() {
                 </div>
               </motion.div>
 
+              {/* Fix guarantee */}
+              <motion.div {...childProps} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
+                <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
+                  <Clock size={16} className="text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white mb-0.5">48-hour fix guarantee</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>If your scraper breaks, we fix it within 48 hours. Guaranteed.</p>
+                </div>
+              </motion.div>
+
               {/* Location */}
               <motion.div {...childProps} className="flex items-start gap-4 p-5 rounded-2xl border border-white/6" style={{ background: "rgba(255,255,255,0.02)" }}>
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
@@ -310,7 +319,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white mb-0.5">Colombo, Sri Lanka</p>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Working with FBA sellers and agencies in AU, UK, and US</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Working with digital marketing and SEO agencies in AU, UK, and US</p>
                 </div>
               </motion.div>
 

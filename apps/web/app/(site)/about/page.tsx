@@ -27,7 +27,7 @@ const values = [
     number: "01",
     title: "Innovation",
     description:
-      "We solve real problems in e-commerce data collection: anti-detection, structured extraction, and production reliability. We explore new approaches so our clients can stay ahead.",
+      "We solve real problems in data automation: anti-detection, structured extraction, and production reliability. We explore new approaches so our clients can stay ahead.",
   },
   {
     icon: ShieldCheck,
@@ -41,14 +41,14 @@ const values = [
     number: "03",
     title: "User-Centric",
     description:
-      "Every tool and interface is built with the end user in mind: an FBA seller who needs data fast, or an agency that needs a product they can sell to their own clients.",
+      "Every tool and interface is built with the end user in mind: a marketing agency that needs data their clients are paying for.",
   },
   {
     icon: Rocket,
     number: "04",
     title: "Cutting-Edge",
     description:
-      "We don't follow trends. From anti-detection scraping layers to custom dashboards, we push what is possible to give our clients a competitive edge in e-commerce.",
+      "We don't follow trends. From anti-detection scraping layers to custom dashboards, we push what is possible to give our clients a competitive edge.",
   },
 ];
 
@@ -58,7 +58,7 @@ const milestones = [
     icon: Flag,
     title: "Founded",
     description:
-      "Xpersive Labs was founded in Colombo, Sri Lanka. First focus: building tools for Amazon FBA sellers who were doing their supplier research manually.",
+      "Xpersive Labs was founded in Colombo, Sri Lanka. First focus: building data automation tools for e-commerce importers doing their supplier research manually.",
   },
   {
     year: "2024",
@@ -175,7 +175,7 @@ export default function AboutPage() {
               About <span className="text-gradient">Xpersive Labs</span>
             </motion.h1>
             <motion.p {...childProps(fadeUp)} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
-              A Sri Lankan software studio building data tools and web applications for Amazon FBA sellers, importers, and digital agencies.
+              A Sri Lankan software studio building data automation pipelines, scraping tools, and web applications for digital marketing and SEO agencies.
             </motion.p>
           </motion.div>
         </div>
@@ -193,8 +193,8 @@ export default function AboutPage() {
                 Built to Solve a <span className="text-gradient">Real Problem</span>
               </motion.h2>
               <motion.div {...childProps(fadeUp)} className="space-y-5 leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: build software that solves real problems and actually works in production. Our first product was an Alibaba supplier intelligence tool, built for FBA sellers who were spending 8-10 hours a week doing this research by hand.</p>
-                <p>We now build across three areas: Alibaba data automation for Amazon sellers and importers, custom web applications and dashboards, and white-label development for digital agencies in AU, UK, and US. Every project gets our full attention and our best work.</p>
+                <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: build software that solves real problems and actually works in production. Our first product was an Alibaba supplier intelligence tool, built for an importer spending 8-10 hours a week doing this research by hand.</p>
+                <p>We now specialise in two areas: custom data automation and web scraping pipelines, and web applications for digital marketing and SEO agencies in AU, UK, and US. Every project gets our full attention and our best work.</p>
               </motion.div>
               <motion.div {...childProps(fadeUp)} className="flex flex-wrap gap-3 mt-6">
                 <Link href="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline underline-offset-4">
@@ -215,7 +215,7 @@ export default function AboutPage() {
                     { label: "Founded", value: "2024", icon: Calendar },
                     { label: "Location", value: "Colombo, Sri Lanka", icon: MapPin },
                     { label: "Markets Served", value: "AU, UK, US", icon: Flag },
-                    { label: "Focus", value: "FBA Tools, Automation, Web Dev", icon: TrendingUp },
+                    { label: "Focus", value: "Automation, Web Scraping, Web Dev", icon: TrendingUp },
                   ].map(({ label, value, icon: Icon }) => (
                     <div key={label} className="flex items-center gap-5">
                       <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -248,7 +248,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-7"><Target size={22} className="text-primary" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#6D71F9" }}>Mission</p>
                 <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Build tools that replace manual work</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build production-ready e-commerce intelligence tools that replace hours of manual research. Make powerful data automation accessible to FBA sellers, importers, and the agencies that serve them.</p>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build production-ready automation pipelines and web applications that replace hours of manual work. Make powerful data automation accessible to digital agencies and the businesses they serve.</p>
               </div>
             </motion.div>
             <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
@@ -256,8 +256,8 @@ export default function AboutPage() {
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-7"><Compass size={22} className="text-accent" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#54C1FB" }}>Vision</p>
-                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Be the go-to partner for Amazon sellers and agencies</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Become the go-to development partner for Amazon sellers and digital agencies who need custom Alibaba data tools and web applications that actually perform in production.</p>
+                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Be the go-to partner for digital marketing and SEO agencies</h3>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Become the go-to development partner for digital marketing and SEO agencies that need automation pipelines and web applications built to perform in production.</p>
               </div>
             </motion.div>
           </motion.div>

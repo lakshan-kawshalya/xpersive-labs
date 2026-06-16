@@ -5,11 +5,9 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  CheckCircle,
   Code2,
   Globe,
   Monitor,
-  Palette,
   PenTool,
   Play,
   Rocket,
@@ -71,51 +69,24 @@ const webSteps: Step[] = [
   },
 ];
 
-const designSteps: Step[] = [
-  {
-    icon: Search,
-    title: "Research",
-    description:
-      "User interviews, competitive audits, and heuristic evaluations to uncover real needs and opportunities before any pixel is placed.",
-  },
-  {
-    icon: PenTool,
-    title: "Wireframing",
-    description:
-      "Low-fidelity layouts that map out information architecture and user flows - fast to iterate, easy to validate with stakeholders.",
-  },
-  {
-    icon: CheckCircle,
-    title: "Prototyping",
-    description:
-      "Interactive prototypes that simulate the real product so you can test with users before committing to full development.",
-  },
-  {
-    icon: Rocket,
-    title: "Handoff",
-    description:
-      "A living component library, design tokens, and developer-ready specs that keep teams moving fast and brand consistent.",
-  },
-];
-
 const automationSteps: Step[] = [
   {
     icon: Settings,
     title: "Requirements",
     description:
-      "We map your target suppliers, search terms, and data fields, then spec the tool before writing a line of code.",
+      "We map your target URLs, data fields, and delivery format, then spec the pipeline before writing a line of code.",
   },
   {
     icon: Code2,
     title: "Build",
     description:
-      "Custom Playwright-based scraper built with curl_cffi for TLS fingerprint evasion, Parsel for HTML parsing, and DataImpulse residential proxies for anti-detection.",
+      "Custom Playwright-based scraper built with curl_cffi for TLS fingerprint evasion, Parsel for HTML parsing, and residential proxies for anti-detection.",
   },
   {
     icon: Play,
     title: "Test",
     description:
-      "End-to-end validation against live Alibaba: edge cases, pagination, CAPTCHA flow, proxy rotation, and output schema verification.",
+      "End-to-end validation against live target sources: edge cases, pagination, CAPTCHA flows, proxy rotation, and output schema verification.",
   },
   {
     icon: Monitor,
@@ -130,9 +101,9 @@ const services: Service[] = [
     id: "web",
     icon: Globe,
     label: "Web Development",
-    headline: "Custom Web Applications for E-Commerce",
+    headline: "Custom Web Applications for Agencies",
     body: [
-      "We build fast, modern web applications for FBA sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
+      "We build fast, modern web applications for digital marketing and SEO agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
       "From database schema to deployment pipeline, every decision is intentional. We don't just ship features. We ship products that are fast, maintainable, and built to scale.",
     ],
     steps: webSteps,
@@ -144,30 +115,13 @@ const services: Service[] = [
     glowColor: "rgba(109,113,249,0.25)",
   },
   {
-    id: "design",
-    icon: Palette,
-    label: "UI/UX Design",
-    headline: "Research-Driven Design for E-Commerce Tools",
-    body: [
-      "Great tools start with great design. We create clean, intuitive interfaces built for e-commerce workflows: supplier dashboards, product research tools, and white-label platforms.",
-      "Whether you need a full product design from scratch, a design system to scale an existing product, or a usability audit, we bring structured process and rigour to every engagement.",
-    ],
-    steps: designSteps,
-    tools: ["Figma", "Design Systems", "Prototyping", "User Research", "Accessibility", "Component Libraries"],
-    accentColor: "text-purple-400",
-    accentBg: "bg-purple-500/10",
-    gradientFrom: "from-purple-500/20",
-    gradientTo: "to-pink-500/5",
-    glowColor: "rgba(168,85,247,0.25)",
-  },
-  {
     id: "automation",
     icon: Terminal,
     label: "Automation & Web Scraping",
-    headline: "E-Commerce Data Automation at Scale",
+    headline: "Data Automation and Web Scraping at Scale",
     body: [
-      "We build custom automation tools for e-commerce sellers on Amazon, Shopify, and Alibaba: extracting structured product data, monitoring suppliers, running keyword searches, and tracking competitor launches. Our tools use residential proxies and CAPTCHA solvers to stay live in production.",
-      "Every tool is purpose-built for the real platform: dynamic pages, pagination, anti-bot measures, and structured multi-format output. The Alibaba Supplier Intelligence Platform is our proof of concept: 47 data fields, 5 automated functions, daily runs.",
+      "We build custom scraping pipelines and automation tools for digital marketing and SEO agencies: extracting search data, monitoring competitors, tracking rankings, and delivering structured data your clients pay for. Our pipelines use residential proxies and anti-detection layers to stay live in production.",
+      "Every tool is purpose-built for the target source: dynamic pages, pagination, anti-bot measures, and structured multi-format output. The Alibaba Supplier Intelligence Platform is our proof of concept: 47 data fields, 5 automated functions, daily runs.",
     ],
     steps: automationSteps,
     tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON"],
@@ -513,10 +467,10 @@ export default function ServicesPage() {
             </motion.h1>
 
             <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
-              E-commerce automation, custom web applications, and UI/UX design for sellers, importers, and digital agencies.
+              Custom scraping pipelines, automation tools, and web applications for digital marketing and SEO agencies.
             </motion.p>
             <motion.p {...childProps} className="text-white/45 text-sm leading-relaxed max-w-2xl mb-10">
-              Running a digital agency? We take on white-label projects: your brand, our build.{" "}
+              White-label delivery as standard: your brand, our build.{" "}
               <Link href="/contact" className="text-primary font-semibold hover:opacity-75 transition-opacity duration-200">
                 Let&apos;s talk.
               </Link>
@@ -543,6 +497,171 @@ export default function ServicesPage() {
       {services.map((service, index) => (
         <ServiceRow key={service.id} service={service} index={index} />
       ))}
+
+      {/* ── White-label callout ──────────────────────────────────── */}
+      <section className="py-20 border-t border-white/[0.07]">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            className="rounded-2xl p-12 sm:p-16 text-center"
+            style={{
+              background: "rgba(109,113,249,0.04)",
+              border: "1px solid rgba(109,113,249,0.15)",
+            }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0, y: 24 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.5 },
+            } : { initial: false })}
+          >
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-primary mb-5">
+              White-Label
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">
+              Your clients never know we exist.
+            </h2>
+            <p className="text-white/60 text-lg max-w-lg mx-auto">
+              You resell, we build.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Pricing ──────────────────────────────────────────────── */}
+      <section className="py-20 border-t border-white/[0.07]">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            className="text-center mb-14"
+            {...(shouldAnimate ? {
+              variants: staggerContainer,
+              initial: "hidden",
+              whileInView: "visible" as const,
+              viewport: { once: true, margin: "-80px" },
+            } : { initial: false })}
+          >
+            <motion.span
+              {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
+              className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5"
+            >
+              Pricing
+            </motion.span>
+            <motion.h2
+              {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
+              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
+            >
+              Simple, transparent{" "}
+              <span className="text-gradient">pricing</span>
+            </motion.h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: "Starter",
+                price: "$650",
+                features: [
+                  "1 active scraper",
+                  "Maintenance included",
+                  "48-hour fix guarantee",
+                  "Monthly delivery",
+                ],
+                highlighted: false,
+              },
+              {
+                name: "Growth",
+                price: "$1,800",
+                features: [
+                  "Up to 3 active scrapers",
+                  "Priority support",
+                  "48-hour fix guarantee",
+                  "Monthly delivery",
+                ],
+                highlighted: true,
+              },
+              {
+                name: "Scale",
+                price: "$4,200",
+                features: [
+                  "Unlimited scrapers",
+                  "Dedicated pipeline",
+                  "48-hour fix guarantee",
+                  "Weekly reporting",
+                ],
+                highlighted: false,
+              },
+            ].map((tier, i) => (
+              <motion.div
+                key={tier.name}
+                className="relative flex flex-col rounded-2xl p-8"
+                style={tier.highlighted ? {
+                  background: "linear-gradient(135deg, rgba(109,113,249,0.12), rgba(84,193,251,0.06))",
+                  border: "1px solid rgba(109,113,249,0.35)",
+                } : {
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+                {...(shouldAnimate ? {
+                  initial: { opacity: 0, y: 24 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true, margin: "-80px" },
+                  transition: { duration: 0.4, delay: i * 0.1 },
+                } : { initial: false })}
+              >
+                {tier.highlighted && (
+                  <span
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white"
+                    style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+                  >
+                    Most Popular
+                  </span>
+                )}
+
+                <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4"
+                  style={{ color: tier.highlighted ? "#6D71F9" : "rgba(255,255,255,0.4)" }}>
+                  {tier.name}
+                </p>
+
+                <div className="flex items-end gap-1 mb-8">
+                  <span className="font-display text-4xl font-extrabold text-white">{tier.price}</span>
+                  <span className="text-white/40 text-sm mb-1.5">/month</span>
+                </div>
+
+                <ul className="space-y-3 mb-10 flex-1">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm text-white/70">
+                      <svg
+                        className="shrink-0 mt-0.5"
+                        width="14" height="14" viewBox="0 0 14 14" fill="none"
+                        aria-hidden="true"
+                      >
+                        <circle cx="7" cy="7" r="6.5" stroke="rgba(109,113,249,0.4)" />
+                        <path d="M4.5 7L6.5 9L9.5 5.5" stroke="#6D71F9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center justify-center gap-2 w-full py-3 rounded-full font-semibold text-sm transition-all duration-300"
+                  style={tier.highlighted ? {
+                    background: "linear-gradient(135deg, #6D71F9, #54C1FB)",
+                    color: "#ffffff",
+                  } : {
+                    background: "rgba(109,113,249,0.1)",
+                    border: "1px solid rgba(109,113,249,0.25)",
+                    color: "rgba(255,255,255,0.8)",
+                  }}
+                >
+                  Get Started
+                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
       <section className="py-20 border-t border-white/[0.07]">

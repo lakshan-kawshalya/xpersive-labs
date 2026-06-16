@@ -395,8 +395,8 @@ export default function AlibabaCaseStudy() {
               className="font-display font-extrabold leading-[1.2] mb-7 text-white"
               style={{ fontSize: "clamp(28px, 5vw, 40px)" }}
             >
-              How We Replaced Hours of Manual Alibaba Research With a Fully
-              Automated Supplier Intelligence System
+              Automated 8 to 10 hours of weekly research for an e-commerce
+              importer
             </motion.h1>
 
             <motion.div
@@ -421,12 +421,39 @@ export default function AlibabaCaseStudy() {
 
             <motion.div
               {...childProps}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
             >
-              <StatCard value="4+ hrs/wk" label="Manual research replaced" />
+              <StatCard value="8-10 hrs/wk" label="Manual research replaced" />
               <StatCard value="60+" label="Products captured per run" />
               <StatCard value="47" label="Unique data fields" />
               <StatCard value="5" label="Automated functions" />
+            </motion.div>
+
+            <motion.div
+              {...childProps}
+              className="flex items-start gap-4 p-6 rounded-2xl"
+              style={{
+                background: "rgba(109,113,249,0.05)",
+                border: "1px solid rgba(109,113,249,0.15)",
+              }}
+            >
+              <span
+                className="font-display font-bold shrink-0 leading-none"
+                style={{ fontSize: 40, color: "#6D71F9", lineHeight: 1 }}
+              >
+                &ldquo;
+              </span>
+              <div>
+                <p
+                  className="italic mb-2"
+                  style={{ color: "rgba(255,255,255,0.85)", fontSize: 16, lineHeight: 1.6 }}
+                >
+                  The system runs every morning and the sourcing research is just there. We don&apos;t touch it.
+                </p>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  — Australian Importer, Alibaba Intelligence Platform
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -938,7 +965,7 @@ export default function AlibabaCaseStudy() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
             >
               {[
-                "4+ hrs of manual research per week replaced",
+                "8-10 hrs of manual research per week replaced",
                 "60+ products detected per category run",
                 "v1.3.0 live since May 2026",
               ].map((r) => (
@@ -961,7 +988,7 @@ export default function AlibabaCaseStudy() {
               className="space-y-4 text-white/60 leading-[1.8]"
             >
               <p>
-                Since deployment in May 2026, the platform replaced 4+ hours of
+                Since deployment in May 2026, the platform replaced 8-10 hours of
                 manual weekly research. The client now receives a daily
                 automated feed covering monitored supplier stores, 60+ new
                 product launches per category run, and hundreds of structured
