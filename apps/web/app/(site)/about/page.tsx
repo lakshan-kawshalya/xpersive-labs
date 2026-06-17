@@ -301,7 +301,7 @@ export default function AboutPage() {
                       viewport: { once: true, margin: "-80px" },
                     } : { initial: false })}
                   >
-                    <div className={isLeft ? "lg:pr-8 lg:text-right" : "hidden lg:block"}>
+                    <div className={isLeft ? "hidden lg:block lg:pr-8 lg:text-right" : "hidden lg:block"}>
                       {isLeft && <MilestoneCard milestone={m} />}
                     </div>
                     <div className="flex flex-col items-center relative z-10 py-3 lg:py-0">
@@ -314,7 +314,7 @@ export default function AboutPage() {
                         {m.year}
                       </span>
                     </div>
-                    <div className={!isLeft ? "lg:pl-8" : "hidden lg:block"}>
+                    <div className={!isLeft ? "hidden lg:block lg:pl-8" : "hidden lg:block"}>
                       {!isLeft && <MilestoneCard milestone={m} />}
                     </div>
                     <div className="lg:hidden -mt-1 col-span-3">

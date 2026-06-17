@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "E-Commerce Tools, Web Development and UI Design",
+  title: "Services — White-Label Scraping Pipelines for Agencies",
   description:
-    "Custom Alibaba supplier intelligence tools, FBA product research automation, white-label web development, and UI/UX design for e-commerce businesses and digital agencies.",
+    "Xpersive Labs builds white-label scraping pipelines, custom data tools, and web applications for SEO and digital marketing agencies in AU, UK, and US.",
   alternates: { canonical: "https://www.xpersivelabs.com/services" },
-  openGraph: { type: "website", url: "https://www.xpersivelabs.com/services" },
+  openGraph: {
+    type: "website",
+    url: "https://www.xpersivelabs.com/services",
+    title: "Services — White-Label Scraping Pipelines for Agencies",
+    description:
+      "White-label scraping pipelines, custom data tools, and web applications for SEO and digital marketing agencies.",
+  },
 };
 
 const servicesSchema = {
@@ -21,7 +27,7 @@ const servicesSchema = {
         "@type": "Service",
         name: "Web Development",
         description:
-          "Custom web applications and dashboards for e-commerce sellers, importers, and digital agencies using Next.js and TypeScript.",
+          "Custom web applications and dashboards for SEO and digital marketing agencies using Next.js and TypeScript.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -31,9 +37,9 @@ const servicesSchema = {
       position: 2,
       item: {
         "@type": "Service",
-        name: "UI/UX Design",
+        name: "Managed Data Pipelines",
         description:
-          "User interface and experience design for e-commerce dashboards, supplier tools, and white-label platforms using Figma and design systems.",
+          "White-label scraping pipeline retainer for SEO and digital marketing agencies. Recurring data delivery with a 48-hour fix guarantee.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -45,7 +51,7 @@ const servicesSchema = {
         "@type": "Service",
         name: "Automation and Web Scraping",
         description:
-          "Custom Alibaba supplier intelligence tools, FBA product research automation, and data extraction solutions using Python and Playwright.",
+          "Custom scraping tools and data automation for SEO and digital marketing agencies. Built with Python, Playwright, and residential proxies.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Xpersive Labs - Innovation for a Better Tomorrow";
+export const alt = "Xpersive Labs - White-Label Data Pipelines for Agencies";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -74,7 +74,7 @@ export default function Image() {
               color: "#8b8ffa",
             }}
           >
-            Innovation for a Better Tomorrow
+            We Scrape. You Deliver.
           </div>
 
           <div
@@ -95,7 +95,7 @@ export default function Image() {
               letterSpacing: "0.05em",
             }}
           >
-            Web Development · UI/UX Design · Automation
+            Web Dev · Data Pipelines · Automation
           </div>
 
           <div

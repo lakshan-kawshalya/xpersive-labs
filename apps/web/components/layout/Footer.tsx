@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Briefcase, Code2, Mail } from "lucide-react";
+import Link from "next/link";
 
 const footerSections = {
   Company: [
@@ -10,7 +10,7 @@ const footerSections = {
   ],
   Services: [
     { href: "/services#web", label: "Web Development" },
-    { href: "/services#pipelines", label: "Managed Data Pipelines" },
+    { href: "/services#automation", label: "Managed Data Pipelines" },
     { href: "/services#automation", label: "Automation & Scraping" },
   ],
   Connect: [

@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   Code2,
-  Database,
   Globe,
   Monitor,
   PenTool,
@@ -48,11 +47,11 @@ const webSteps: Step[] = [
     icon: Search,
     title: "Discovery and Planning",
     description:
-      "We dive deep into your e-commerce workflow, data sources, and constraints to define exactly what success looks like before writing a single line of code.",
+      "We dive deep into your agency workflow, data sources, and constraints to define exactly what success looks like before writing a single line of code.",
   },
   {
     icon: PenTool,
-    title: "UI/UX Design",
+    title: "Design",
     description:
       "Wireframes, prototypes, and high-fidelity mockups that align stakeholders and de-risk development before build begins.",
   },
@@ -97,33 +96,6 @@ const automationSteps: Step[] = [
   },
 ];
 
-const pipelineSteps: Step[] = [
-  {
-    icon: Search,
-    title: "Scope",
-    description:
-      "We define your target data sources, required fields, delivery format, and run frequency before writing a line of code.",
-  },
-  {
-    icon: Code2,
-    title: "Build",
-    description:
-      "Custom pipeline built for your target sources with anti-detection layers, proxy rotation, and output schema validation.",
-  },
-  {
-    icon: Settings,
-    title: "Schedule and Monitor",
-    description:
-      "Automated runs on your cadence with error alerting, proxy health checks, and output verification so nothing slips.",
-  },
-  {
-    icon: Monitor,
-    title: "Deliver",
-    description:
-      "Structured data delivered to CSV, JSON, Google Sheets, or your preferred destination on schedule. White-label ready.",
-  },
-];
-
 const services: Service[] = [
   {
     id: "web",
@@ -143,33 +115,16 @@ const services: Service[] = [
     glowColor: "rgba(109,113,249,0.25)",
   },
   {
-    id: "pipelines",
-    icon: Database,
-    label: "Managed Data Pipelines",
-    headline: "Recurring Data Delivery, Managed End to End",
-    body: [
-      "We build and run scheduled scraping pipelines for digital marketing and SEO agencies on a white-label retainer. You set the data requirements, we handle the build, monitoring, and delivery on your cadence.",
-      "Every pipeline ships with a 48-hour fix guarantee. If a target site breaks your scraper, we fix it. Structured output delivered to CSV, JSON, Google Sheets, or webhook. Your clients see the data, not us.",
-    ],
-    steps: pipelineSteps,
-    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "Cron Scheduling", "CSV", "JSON", "Google Sheets"],
-    accentColor: "text-primary",
-    accentBg: "bg-primary/10",
-    gradientFrom: "from-primary/15",
-    gradientTo: "to-accent/10",
-    glowColor: "rgba(109,113,249,0.2)",
-  },
-  {
     id: "automation",
     icon: Terminal,
-    label: "Automation & Web Scraping",
-    headline: "Data Automation and Web Scraping at Scale",
+    label: "Automation & Data Pipelines",
+    headline: "Scraping Pipelines and Data Automation for Agencies",
     body: [
-      "We build custom scraping pipelines and automation tools for digital marketing and SEO agencies: extracting search data, monitoring competitors, tracking rankings, and delivering structured data your clients pay for. Our pipelines use residential proxies and anti-detection layers to stay live in production.",
-      "Every tool is purpose-built for the target source: dynamic pages, pagination, anti-bot measures, and structured multi-format output. The Alibaba Supplier Intelligence Platform is our proof of concept: 47 data fields, 5 automated functions, daily runs.",
+      "We build and run custom scraping pipelines and automation tools for SEO and digital marketing agencies. From one-off data extractions to ongoing white-label retainer pipelines, every build uses residential proxies and anti-detection layers to stay live in production.",
+      "Our pipelines ship with a 48-hour fix guarantee. If a target site breaks your scraper, we fix it. Structured output delivered to CSV, JSON, Google Sheets, or webhook on your cadence. Your clients see the data, not us.",
     ],
     steps: automationSteps,
-    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON"],
+    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON", "Google Sheets"],
     accentColor: "text-accent",
     accentBg: "bg-accent/10",
     gradientFrom: "from-accent/20",

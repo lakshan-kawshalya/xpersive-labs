@@ -21,7 +21,7 @@ const teamMembers: TeamMember[] = [
   {
     name: "Lakshan Kawshalya",
     role: "Founder & Full-Stack Developer",
-    bio: "Building Alibaba supplier intelligence tools and custom web applications for Amazon FBA sellers, importers, and digital agencies. Based in Colombo, Sri Lanka.",
+    bio: "Building white-label scraping pipelines and custom web applications for SEO and digital marketing agencies in AU, UK, and US. Based in Colombo, Sri Lanka.",
     initials: "LK",
     avatar: "/team/lakshan-kawshalya.png",
     social: [
@@ -94,7 +94,7 @@ export default function TeamPage() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            A focused two-person studio in Colombo, Sri Lanka. Building e-commerce data tools and custom web applications for FBA sellers and digital agencies worldwide.
+            A focused two-person studio in Colombo, Sri Lanka. Building white-label data pipelines and web applications for SEO and digital marketing agencies in AU, UK, and US.
           </motion.blockquote>
         </div>
       </section>

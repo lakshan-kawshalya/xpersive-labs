@@ -23,6 +23,7 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 type ServiceOption =
   | "Web Development"
+  | "Managed Data Pipelines"
   | "Automation & Web Scraping"
   | "Other / General Inquiry";
 
@@ -43,6 +44,7 @@ function stripHtml(value: string): string {
 
 const serviceOptions: ServiceOption[] = [
   "Web Development",
+  "Managed Data Pipelines",
   "Automation & Web Scraping",
   "Other / General Inquiry",
 ];
@@ -548,7 +550,7 @@ function ContactPageContent() {
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
                     Working with digital marketing and SEO agencies in AU, UK,
-                    and US
+                    and US.
                   </p>
                 </div>
               </motion.div>
