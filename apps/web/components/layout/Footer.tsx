@@ -10,7 +10,7 @@ const footerSections = {
   ],
   Services: [
     { href: "/services#web", label: "Web Development" },
-    { href: "/services#design", label: "UI/UX Design" },
+    { href: "/services#pipelines", label: "Managed Data Pipelines" },
     { href: "/services#automation", label: "Automation & Scraping" },
   ],
   Connect: [
