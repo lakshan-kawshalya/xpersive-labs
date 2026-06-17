@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   Code2,
+  Database,
   Globe,
   Monitor,
   PenTool,
@@ -96,6 +97,33 @@ const automationSteps: Step[] = [
   },
 ];
 
+const pipelineSteps: Step[] = [
+  {
+    icon: Search,
+    title: "Scope",
+    description:
+      "We define your target data sources, required fields, delivery format, and run frequency before writing a line of code.",
+  },
+  {
+    icon: Code2,
+    title: "Build",
+    description:
+      "Custom pipeline built for your target sources with anti-detection layers, proxy rotation, and output schema validation.",
+  },
+  {
+    icon: Settings,
+    title: "Schedule and Monitor",
+    description:
+      "Automated runs on your cadence with error alerting, proxy health checks, and output verification so nothing slips.",
+  },
+  {
+    icon: Monitor,
+    title: "Deliver",
+    description:
+      "Structured data delivered to CSV, JSON, Google Sheets, or your preferred destination on schedule. White-label ready.",
+  },
+];
+
 const services: Service[] = [
   {
     id: "web",
@@ -113,6 +141,23 @@ const services: Service[] = [
     gradientFrom: "from-primary/20",
     gradientTo: "to-accent/5",
     glowColor: "rgba(109,113,249,0.25)",
+  },
+  {
+    id: "pipelines",
+    icon: Database,
+    label: "Managed Data Pipelines",
+    headline: "Recurring Data Delivery, Managed End to End",
+    body: [
+      "We build and run scheduled scraping pipelines for digital marketing and SEO agencies on a white-label retainer. You set the data requirements, we handle the build, monitoring, and delivery on your cadence.",
+      "Every pipeline ships with a 48-hour fix guarantee. If a target site breaks your scraper, we fix it. Structured output delivered to CSV, JSON, Google Sheets, or webhook. Your clients see the data, not us.",
+    ],
+    steps: pipelineSteps,
+    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "Cron Scheduling", "CSV", "JSON", "Google Sheets"],
+    accentColor: "text-primary",
+    accentBg: "bg-primary/10",
+    gradientFrom: "from-primary/15",
+    gradientTo: "to-accent/10",
+    glowColor: "rgba(109,113,249,0.2)",
   },
   {
     id: "automation",
