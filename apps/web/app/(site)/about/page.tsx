@@ -25,30 +25,30 @@ const values = [
   {
     icon: Lightbulb,
     number: "01",
-    title: "Innovation",
+    title: "Craft",
     description:
-      "We solve real problems in data automation: anti-detection, structured extraction, and production reliability. We explore new approaches so our clients can stay ahead.",
+      "We care about the quality of what we ship - clean architecture, readable code, and UIs that don't embarrass the client. Good craft isn't slower. It's what makes projects maintainable 18 months later.",
   },
   {
     icon: ShieldCheck,
     number: "02",
     title: "Reliability",
     description:
-      "Deadlines are commitments, not suggestions. We ship on time, communicate clearly, and stand behind everything we build long after launch.",
+      "Deadlines are commitments, not suggestions. We ship on time, communicate proactively when anything changes, and stand behind everything we build long after launch.",
   },
   {
     icon: Heart,
     number: "03",
-    title: "User-Centric",
+    title: "Clarity",
     description:
-      "Every tool and interface is built with the end user in mind: a marketing agency that needs data their clients are paying for.",
+      "No jargon, no mystery. The client always knows what's being built, what's next, and why decisions are being made. Clear communication is part of the deliverable.",
   },
   {
     icon: Rocket,
     number: "04",
-    title: "Cutting-Edge",
+    title: "Pragmatism",
     description:
-      "We don't follow trends. From anti-detection scraping layers to custom dashboards, we push what is possible to give our clients a competitive edge.",
+      "We pick the right tool for the job - not the trendiest one. Modern stack where it matters, simplicity where it serves the project better. Results over resume-driven development.",
   },
 ];
 
@@ -58,28 +58,28 @@ const milestones = [
     icon: Flag,
     title: "Founded",
     description:
-      "Xpersive Labs was founded in Colombo, Sri Lanka. First focus: building data automation tools for e-commerce importers doing their supplier research manually.",
+      "Xpersive Labs was founded in Colombo, Sri Lanka. Set out to build a software studio that delivers production-grade work without the agency overhead.",
   },
   {
     year: "2024",
     icon: Target,
-    title: "First Tool Shipped",
+    title: "First Product Shipped",
     description:
-      "Shipped the first version of the Alibaba Supplier Intelligence Tool. A Python-based data tool for bulk product and supplier extraction at scale.",
+      "Built and shipped a Python-based Alibaba supplier intelligence tool - automating 8-10 hours of weekly manual research for an Australian importer. First proof that automation saves real time.",
   },
   {
     year: "2025",
     icon: TrendingUp,
     title: "Website Launched",
     description:
-      "Launched xpersivelabs.com, our production website, built with Next.js 14, Framer Motion, and Keystatic CMS.",
+      "Launched xpersivelabs.com - built with Next.js 14, Framer Motion, and Keystatic CMS. Opened officially for client web development and automation projects.",
   },
   {
-    year: "2025",
+    year: "2026",
     icon: Compass,
-    title: "Open for Client Projects",
+    title: "Raj Ceylon Tours Delivered",
     description:
-      "Opened for client work across Alibaba data automation, web development, and white-label dev for agencies in AU, UK, and US.",
+      "Built a multilingual luxury tourism platform for Raj Ceylon Tours - custom itinerary UX, Framer Motion animations, and a tree-planting experience tied to each booking. First international web project live.",
   },
 ];
 
@@ -175,7 +175,7 @@ export default function AboutPage() {
               About <span className="text-gradient">Xpersive Labs</span>
             </motion.h1>
             <motion.p {...childProps(fadeUp)} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
-              A Sri Lankan software studio building data automation pipelines, scraping tools, and web applications for digital marketing and SEO agencies.
+              A boutique software studio from Colombo, Sri Lanka - building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US.
             </motion.p>
           </motion.div>
         </div>
@@ -190,11 +190,11 @@ export default function AboutPage() {
                 Our Story
               </motion.span>
               <motion.h2 {...childProps(fadeUp)} className="font-display font-bold mb-7 leading-tight" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
-                Built to Solve a <span className="text-gradient">Real Problem</span>
+                Built to <span className="text-gradient">Build Well</span>
               </motion.h2>
               <motion.div {...childProps(fadeUp)} className="space-y-5 leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                <p>Xpersive Labs was founded in Colombo, Sri Lanka with one clear goal: build software that solves real problems and actually works in production. Our first product was an Alibaba supplier intelligence tool, built for an importer spending 8-10 hours a week doing this research by hand.</p>
-                <p>We now specialise in two areas: custom data automation and web scraping pipelines, and web applications for digital marketing and SEO agencies in AU, UK, and US. Every project gets our full attention and our best work.</p>
+                <p>Xpersive Labs was founded in 2024 in Colombo, Sri Lanka. The goal was simple: build production-grade software that actually works - clean code, real deliverables, no bloat.</p>
+                <p>We specialise in web application development, automation pipelines, and AI workflow integration for businesses in AU, UK, and US. Every project gets direct senior-developer access from scoping to launch - no account managers, no dropped context.</p>
               </motion.div>
               <motion.div {...childProps(fadeUp)} className="flex flex-wrap gap-3 mt-6">
                 <Link href="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline underline-offset-4">
@@ -215,7 +215,7 @@ export default function AboutPage() {
                     { label: "Founded", value: "2024", icon: Calendar },
                     { label: "Location", value: "Colombo, Sri Lanka", icon: MapPin },
                     { label: "Markets Served", value: "AU, UK, US", icon: Flag },
-                    { label: "Focus", value: "Automation, Web Scraping, Web Dev", icon: TrendingUp },
+                    { label: "Focus", value: "Web Development, Automation, AI Workflows", icon: TrendingUp },
                   ].map(({ label, value, icon: Icon }) => (
                     <div key={label} className="flex items-center gap-5">
                       <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -247,8 +247,8 @@ export default function AboutPage() {
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-7"><Target size={22} className="text-primary" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#6D71F9" }}>Mission</p>
-                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Build tools that replace manual work</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build production-ready automation pipelines and web applications that replace hours of manual work. Make powerful data automation accessible to digital agencies and the businesses they serve.</p>
+                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Build software that performs in production</h3>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build clean, fast web applications and automation systems that do exactly what the client needs - shipped on time, maintained honestly, and built to last beyond the first deployment.</p>
               </div>
             </motion.div>
             <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
@@ -256,8 +256,8 @@ export default function AboutPage() {
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-7"><Compass size={22} className="text-accent" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#54C1FB" }}>Vision</p>
-                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Be the go-to partner for digital marketing and SEO agencies</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Become the go-to development partner for digital marketing and SEO agencies that need automation pipelines and web applications built to perform in production.</p>
+                <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Be the go-to software studio for growing businesses in AU, UK, and US</h3>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build a reputation for delivering software that works - consistently, on budget, and without the overhead of a large agency. One senior developer. Full accountability.</p>
               </div>
             </motion.div>
           </motion.div>
