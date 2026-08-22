@@ -4,7 +4,6 @@ import Link from "next/link";
 const footerSections = {
   Company: [
     { href: "/about", label: "About Us" },
-    { href: "/team", label: "Our Team" },
     { href: "/blog", label: "Blog" },
     { href: "/portfolio", label: "Portfolio" },
   ],

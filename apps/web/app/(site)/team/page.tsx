@@ -20,24 +20,13 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "Lakshan Kawshalya",
-    role: "Founder & Full-Stack Developer",
-    bio: "Building white-label scraping pipelines and custom web applications for SEO and digital marketing agencies in AU, UK, and US. Based in Colombo, Sri Lanka.",
+    role: "Founder & Lead Developer",
+    bio: "Building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US. Based in Colombo, Sri Lanka - shipping production-grade software since 2024.",
     initials: "LK",
     avatar: "/team/lakshan-kawshalya.png",
     social: [
       { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
       { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
-    ],
-  },
-  {
-    name: "Kavindu Nalinda",
-    role: "Content & Growth",
-    bio: "Kavindu leads content and growth at Xpersive Labs. He turns complex technical builds into compelling stories and connects them with the right audience across Australia, the UK, and the US.",
-    initials: "KN",
-    avatar: "/team/kavindu-nalinda.png",
-    social: [
-      { icon: Code2, href: "https://github.com/kavindunalinda", label: "GitHub" },
-      { icon: Briefcase, href: "https://www.linkedin.com/in/kavindu-nalinda/", label: "LinkedIn" },
     ],
   },
 ];
@@ -68,10 +57,10 @@ export default function TeamPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div {...mountProps} className="max-w-3xl">
             <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
-              The People
+              Who We Are
             </motion.span>
             <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
-              Meet the <span className="text-gradient">Team</span>
+              The <span className="text-gradient">Studio</span>
             </motion.h1>
           </motion.div>
         </div>
@@ -94,28 +83,24 @@ export default function TeamPage() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            A focused two-person studio in Colombo, Sri Lanka. Building white-label data pipelines and web applications for SEO and digital marketing agencies in AU, UK, and US.
+            A solo software studio in Colombo, Sri Lanka. Web development, automation, and AI workflows - built end-to-end by one senior developer, without the overhead of a large agency.
           </motion.blockquote>
         </div>
       </section>
 
       {/* Team cards */}
       <section className="py-16 pb-28 border-t border-white/[0.07]">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {teamMembers.map((member, i) => (
-            <motion.div
-              key={member.name}
-              {...(shouldAnimate ? {
-                variants: fadeUp,
-                initial: "hidden",
-                whileInView: "visible" as const,
-                viewport: { once: true, margin: "-80px" },
-                transition: { delay: i * 0.1 },
-              } : { initial: false })}
-            >
-              <MemberCard member={member} />
-            </motion.div>
-          ))}
+        <div className="max-w-xl mx-auto px-6">
+          <motion.div
+            {...(shouldAnimate ? {
+              variants: fadeUp,
+              initial: "hidden",
+              whileInView: "visible" as const,
+              viewport: { once: true, margin: "-80px" },
+            } : { initial: false })}
+          >
+            <MemberCard member={teamMembers[0]} />
+          </motion.div>
         </div>
 
         <motion.p
@@ -127,7 +112,7 @@ export default function TeamPage() {
             transition: { duration: 0.6, delay: 0.3 },
           } : { initial: false })}
         >
-          Building thoughtfully, shipping with care, and growing one project at a time.
+          Small on purpose. Every project gets full attention - not a junior dev and a Slack channel.
         </motion.p>
 
         <motion.div
@@ -144,7 +129,7 @@ export default function TeamPage() {
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
             style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
           >
-            Start a Project with Us <ArrowRight size={17} />
+            Start a Project <ArrowRight size={17} />
           </Link>
         </motion.div>
       </section>
