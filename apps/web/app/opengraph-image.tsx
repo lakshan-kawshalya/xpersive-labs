@@ -1,115 +1,93 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Xpersive Labs - White-Label Data Pipelines for Agencies";
+export const alt = "Xpersive Labs — Web Development Studio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
   return new ImageResponse(
     (
       <div
         style={{
-          width: "1200px",
-          height: "630px",
+          background: "#12122A",
+          width: "100%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
           justifyContent: "center",
-          background: "#272848",
+          padding: "80px",
           fontFamily: "sans-serif",
           position: "relative",
-          overflow: "hidden",
         }}
       >
-        {/* Background gradient orbs */}
+        {/* Background glow */}
         <div
           style={{
             position: "absolute",
-            width: "600px",
-            height: "600px",
+            top: -100,
+            right: -100,
+            width: 500,
+            height: 500,
+            borderRadius: "50%",
             background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)",
-            top: "-200px",
-            left: "-100px",
-            borderRadius: "50%",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            width: "400px",
-            height: "400px",
-            background: "radial-gradient(circle, rgba(84,193,251,0.2) 0%, transparent 70%)",
-            bottom: "-100px",
-            right: "-50px",
-            borderRadius: "50%",
           }}
         />
 
-        {/* Content */}
+        {/* Logo / brand */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40 }}>
+          <div
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: 12,
+              background: "linear-gradient(135deg, #6D71F9, #54C1FB)",
+            }}
+          />
+          <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 24, fontWeight: 600 }}>
+            Xpersive Labs
+          </span>
+        </div>
+
+        {/* Headline */}
+        <div
+          style={{
+            fontSize: 72,
+            fontWeight: 800,
+            color: "white",
+            lineHeight: 1.05,
+            marginBottom: 24,
+          }}
+        >
+          We Build.{" "}
+          <span style={{ color: "#6D71F9" }}>You Scale.</span>
+        </div>
+
+        {/* Subtext */}
+        <div style={{ fontSize: 28, color: "rgba(255,255,255,0.55)", marginBottom: 48 }}>
+          Web Development · Automation · AI Workflows
+        </div>
+
+        {/* Badge */}
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            gap: "16px",
-            position: "relative",
+            gap: 8,
+            padding: "10px 20px",
+            borderRadius: 999,
+            background: "rgba(109,113,249,0.15)",
+            border: "1px solid rgba(109,113,249,0.3)",
+            width: "fit-content",
           }}
         >
-          <div
-            style={{
-              fontSize: "72px",
-              fontWeight: "800",
-              color: "white",
-              letterSpacing: "-2px",
-            }}
-          >
-            Xpersive Labs
-          </div>
-
-          <div
-            style={{
-              fontSize: "28px",
-              fontWeight: "400",
-              color: "#8b8ffa",
-            }}
-          >
-            We Scrape. You Deliver.
-          </div>
-
-          <div
-            style={{
-              width: "80px",
-              height: "2px",
-              background: "linear-gradient(90deg, #6D71F9, #54C1FB)",
-              borderRadius: "1px",
-              marginTop: "8px",
-            }}
-          />
-
-          <div
-            style={{
-              fontSize: "20px",
-              color: "rgba(255,255,255,0.5)",
-              marginTop: "8px",
-              letterSpacing: "0.05em",
-            }}
-          >
-            Web Dev · Data Pipelines · Automation
-          </div>
-
-          <div
-            style={{
-              fontSize: "18px",
-              color: "rgba(109,113,249,0.8)",
-              marginTop: "4px",
-            }}
-          >
-            xpersivelabs.com
-          </div>
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10B981" }} />
+          <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 18 }}>
+            Available for projects · Colombo, Sri Lanka
+          </span>
         </div>
       </div>
     ),
-    { ...size },
+    { ...size }
   );
 }
