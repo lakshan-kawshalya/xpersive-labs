@@ -15,16 +15,16 @@ import {
 } from "lucide-react";
 import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 type ServiceOption =
-  | "Web Development"
-  | "Managed Data Pipelines"
-  | "Automation & Web Scraping"
+  | "Web Application Development"
+  | "Ecommerce Development"
+  | "Automation & Data Pipelines"
+  | "AI Workflow Integration"
   | "Other / General Inquiry";
 
 interface FormValues {
@@ -36,40 +36,18 @@ interface FormValues {
 }
 
 type SubmitState = "idle" | "loading" | "success" | "error";
-type PlanKey = "starter" | "growth" | "agency";
 
 function stripHtml(value: string): string {
   return value.replace(/<[^>]*>/g, "").trim();
 }
 
 const serviceOptions: ServiceOption[] = [
-  "Web Development",
-  "Managed Data Pipelines",
-  "Automation & Web Scraping",
+  "Web Application Development",
+  "Ecommerce Development",
+  "Automation & Data Pipelines",
+  "AI Workflow Integration",
   "Other / General Inquiry",
 ];
-
-const PLAN_DEFAULTS: Record<PlanKey, Pick<FormValues, "message" | "service">> = {
-  starter: {
-    message:
-      "I'm interested in the Starter plan ($650/month) — 1 scraper, maintenance included, 48-hour fix guarantee.",
-    service: "Automation & Web Scraping",
-  },
-  growth: {
-    message:
-      "I'm interested in the Growth plan ($1,800/month) — up to 3 scrapers, priority support.",
-    service: "Automation & Web Scraping",
-  },
-  agency: {
-    message:
-      "I'm interested in the Agency Partner plan ($4,200/month) — unlimited scrapers, dedicated pipeline, weekly reporting.",
-    service: "Automation & Web Scraping",
-  },
-};
-
-function isPlanKey(key: string | null): key is PlanKey {
-  return key === "starter" || key === "growth" || key === "agency";
-}
 
 const nextSteps = [
   { num: "01", text: "We review your message" },
@@ -123,11 +101,6 @@ const underlineInput = (hasError: boolean) =>
 
 /* ─── Inner page (reads search params) ─────────────────────────────── */
 function ContactPageContent() {
-  const searchParams = useSearchParams();
-  const rawPlan = searchParams.get("plan");
-  const plan = isPlanKey(rawPlan) ? rawPlan : null;
-  const planDefaults = plan ? PLAN_DEFAULTS[plan] : {};
-
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [copied, setCopied] = useState(false);
   const { shouldAnimate } = useMotionSafe();
@@ -137,7 +110,7 @@ function ContactPageContent() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ mode: "onTouched", defaultValues: planDefaults });
+  } = useForm<FormValues>({ mode: "onTouched" });
 
   const onSubmit = async (data: FormValues) => {
     setSubmitState("loading");
@@ -520,14 +493,14 @@ function ContactPageContent() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white mb-0.5">
-                    48-hour fix guarantee
+                    30-day post-launch support
                   </p>
                   <p
                     className="text-xs"
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
-                    If your scraper breaks, we fix it within 48 hours.
-                    Guaranteed.
+                    We stay on for 30 days after every launch to catch and
+                    fix anything that surfaces in production.
                   </p>
                 </div>
               </motion.div>
@@ -549,8 +522,7 @@ function ContactPageContent() {
                     className="text-xs"
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
-                    Working with digital marketing and SEO agencies in AU, UK,
-                    and US.
+                    Working remotely with businesses in AU, UK, and US.
                   </p>
                 </div>
               </motion.div>
