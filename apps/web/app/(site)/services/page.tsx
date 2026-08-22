@@ -56,27 +56,27 @@ interface Service {
 const webSteps: Step[] = [
   {
     icon: Search,
-    title: "Discovery and Planning",
+    title: "Discovery",
     description:
-      "We dive deep into your agency workflow, data sources, and constraints to define exactly what success looks like before writing a single line of code.",
+      "We talk through what you need, scope the project, and agree on deliverables - before a single line of code is written.",
   },
   {
     icon: PenTool,
     title: "Design",
     description:
-      "Wireframes, prototypes, and high-fidelity mockups that align stakeholders and de-risk development before build begins.",
+      "We map the architecture, user flows, and component structure. You approve the plan before we build.",
   },
   {
     icon: Code2,
     title: "Development",
     description:
-      "Clean architecture, thorough testing, and continuous delivery so you see progress - and can steer it - every step of the way.",
+      "We ship in stages with weekly check-ins. You see real progress throughout - not a demo at the finish line.",
   },
   {
     icon: Rocket,
-    title: "Testing & Launch",
+    title: "Launch & Support",
     description:
-      "Production deployment, performance audits, and post-launch support so your product lands without friction.",
+      "We handle deployment, run a full QA pass, and stay available for 30 days post-launch to catch anything that surfaces in production.",
   },
 ];
 
