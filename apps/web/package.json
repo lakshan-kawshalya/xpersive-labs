@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
     "@keystatic/core": "^0.5.50",
     "@keystatic/next": "^5.0.4",
     "@markdoc/markdoc": "^0.5.7",

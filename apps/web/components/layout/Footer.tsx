@@ -1,4 +1,6 @@
-import { Briefcase, Code2, Mail } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const footerSections = {
@@ -20,9 +22,9 @@ const footerSections = {
 };
 
 const socialLinks = [
-  { href: "https://github.com/Xpersive-Labs", icon: Code2, label: "GitHub" },
-  { href: "https://www.linkedin.com/in/xpersive-labs/", icon: Briefcase, label: "LinkedIn" },
-  { href: "mailto:hello@xpersivelabs.com", icon: Mail, label: "Email" },
+  { href: "https://github.com/Xpersive-Labs", icon: faGithub, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/xpersive-labs/", icon: faLinkedin, label: "LinkedIn" },
+  { href: "mailto:hello@xpersivelabs.com", icon: faEnvelope, label: "Email" },
 ];
 
 export default function Footer() {
@@ -45,14 +47,14 @@ export default function Footer() {
 
             {/* Social icons */}
             <div className="flex items-center gap-3 mt-6">
-              {socialLinks.map(({ href, icon: Icon, label }) => (
+              {socialLinks.map(({ href, icon, label }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
                   className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-200 hover:-translate-y-0.5 text-white/50 hover:text-primary bg-white/4 border-white/8 hover:bg-primary/15 hover:border-primary/30"
                 >
-                  <Icon size={16} />
+                  <FontAwesomeIcon icon={icon} width={16} height={16} />
                 </a>
               ))}
             </div>
