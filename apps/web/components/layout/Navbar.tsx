@@ -91,35 +91,41 @@ function MagneticCTA() {
   const [hovered, setHovered] = useState(false);
   const { shouldAnimate } = useMotionSafe();
 
-  if (!shouldAnimate) {
-    return (
-      <Link
-        href="/contact"
-        className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-sm font-medium"
-      >
-        <span>Get in Touch</span>
-      </Link>
-    );
-  }
-
   return (
     <motion.div
       ref={ref as React.RefObject<HTMLDivElement>}
-      animate={{ x: offset.x, y: offset.y }}
-      transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
+      style={{ x: 0, y: 0 }}
+      {...(shouldAnimate
+        ? {
+            animate: { x: offset.x, y: offset.y },
+            transition: { type: "spring" as const, stiffness: 200, damping: 20, mass: 0.5 },
+          }
+        : {})}
     >
       <Link
         href="/contact"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-sm font-medium overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/30"
+        className="relative hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-primary/30"
+        style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
       >
-        <motion.span className="absolute inset-0 bg-white/15 rounded-full" initial={{ x: "-100%" }}
-          animate={{ x: hovered ? "0%" : "-100%" }} transition={{ duration: 0.3, ease: "easeInOut" }} />
-        <motion.span animate={{ x: hovered ? 0 : -6, opacity: hovered ? 1 : 0 }} transition={{ duration: 0.2 }} className="relative">
+        <motion.span
+          className="absolute inset-0 bg-white/15 rounded-full"
+          style={{ x: "-100%" }}
+          {...(shouldAnimate
+            ? { animate: { x: hovered ? "0%" : "-100%" }, transition: { duration: 0.3, ease: "easeInOut" as const } }
+            : {})}
+        />
+        <span className="relative">Get in Touch</span>
+        <motion.span
+          className="relative flex items-center"
+          style={{ x: 0 }}
+          {...(shouldAnimate
+            ? { animate: { x: hovered ? 3 : 0 }, transition: { duration: 0.2 } }
+            : {})}
+        >
           <ArrowRight size={14} />
         </motion.span>
-        <span className="relative">Get in Touch</span>
       </Link>
     </motion.div>
   );

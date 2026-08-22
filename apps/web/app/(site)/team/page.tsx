@@ -62,6 +62,9 @@ export default function TeamPage() {
             <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
               The <span className="text-gradient">Studio</span>
             </motion.h1>
+            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+              One developer, end-to-end. From the first call to production deployment, you work directly with the person writing the code - not an account manager, not a rotating team, not a handoff.
+            </motion.p>
           </motion.div>
         </div>
       </section>

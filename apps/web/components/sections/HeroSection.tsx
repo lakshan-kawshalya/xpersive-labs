@@ -60,7 +60,7 @@ export default function HeroSection() {
           <div className="text-center lg:text-left">
             {/* Badge */}
             <motion.div
-              className="mb-8"
+              className="hidden sm:block mb-8"
               {...(shouldAnimate ? {
                 initial: { opacity: 0, y: 20 },
                 animate: { opacity: 1, y: 0 },
