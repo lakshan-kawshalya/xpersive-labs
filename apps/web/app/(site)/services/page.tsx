@@ -13,7 +13,13 @@ import {
   Rocket,
   Search,
   Settings,
+  ShoppingBag,
   Terminal,
+  Zap,
+  Database,
+  Cpu,
+  CheckCircle,
+  Layers,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -38,6 +44,11 @@ interface Service {
   gradientFrom: string;
   gradientTo: string;
   glowColor: string;
+  caseStudy?: {
+    title: string;
+    description: string;
+    href: string;
+  };
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
@@ -96,15 +107,69 @@ const automationSteps: Step[] = [
   },
 ];
 
+const ecommerceSteps: Step[] = [
+  {
+    icon: Search,
+    title: "Discovery",
+    description:
+      "We audit your current setup, product catalog, integrations, and revenue goals. Then we scope the storefront before any code is written.",
+  },
+  {
+    icon: PenTool,
+    title: "Design",
+    description:
+      "Custom product pages, collection layouts, and cart flows - conversion-focused and built around your brand, not a generic theme.",
+  },
+  {
+    icon: Code2,
+    title: "Build",
+    description:
+      "Custom Shopify storefront or headless build. Product filtering, inventory sync, payment integrations, and automation layers that save your team hours every week.",
+  },
+  {
+    icon: Rocket,
+    title: "Launch & Optimise",
+    description:
+      "Full QA pass, speed audit, and go-live support. Post-launch monitoring and fixes for anything that surfaces in production.",
+  },
+];
+
+const aiSteps: Step[] = [
+  {
+    icon: Search,
+    title: "Audit",
+    description:
+      "We map the manual processes eating your team's time and identify where an AI layer would replace real hours - not just impress in a demo.",
+  },
+  {
+    icon: Layers,
+    title: "Design",
+    description:
+      "We design the data flow: inputs, model selection, outputs, and guardrails. You see and approve the logic before we build anything.",
+  },
+  {
+    icon: Cpu,
+    title: "Build",
+    description:
+      "Implementation using the right tool: LLM APIs, vector search, custom prompt chains, or retrieval-augmented generation - whatever actually solves the problem.",
+  },
+  {
+    icon: CheckCircle,
+    title: "Deploy & Monitor",
+    description:
+      "Production deployment with error handling, monitoring, and human-in-the-loop where it matters. Fully documented so you can maintain it.",
+  },
+];
+
 const services: Service[] = [
   {
     id: "web",
     icon: Globe,
-    label: "Web Development",
-    headline: "Custom Web Applications for Agencies",
+    label: "Web Application Development",
+    headline: "Fast, Modern Web Applications Built to Last",
     body: [
-      "We build fast, modern web applications for digital marketing and SEO agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
-      "From database schema to deployment pipeline, every decision is intentional. We don't just ship features. We ship products that are fast, maintainable, and built to scale.",
+      "We build web applications using Next.js and TypeScript - from marketing sites and client portals to SaaS dashboards and content platforms. Every project is performance-first, SEO-ready, and architected to scale without a rebuild in 18 months.",
+      "From database schema to deployment pipeline, every decision is intentional. You get direct access to the developer building it - no account managers, no handoffs, no dropped context.",
     ],
     steps: webSteps,
     tools: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Prisma", "Vercel"],
@@ -113,23 +178,69 @@ const services: Service[] = [
     gradientFrom: "from-primary/20",
     gradientTo: "to-accent/5",
     glowColor: "rgba(109,113,249,0.25)",
+    caseStudy: {
+      title: "Raj Ceylon Tours",
+      description:
+        "Luxury Sri Lanka tourism website with multilingual support, custom itinerary UX, and a tree-planting experience tied to every booking. Built in Next.js 14 with Framer Motion.",
+      href: "/portfolio/raj-ceylon",
+    },
   },
   {
     id: "automation",
     icon: Terminal,
     label: "Automation & Data Pipelines",
-    headline: "Scraping Pipelines and Data Automation for Agencies",
+    headline: "Custom Scraping and Automation That Stays Live",
     body: [
-      "We build and run custom scraping pipelines and automation tools for SEO and digital marketing agencies. From one-off data extractions to ongoing white-label retainer pipelines, every build uses residential proxies and anti-detection layers to stay live in production.",
-      "Our pipelines ship with a 48-hour fix guarantee. If a target site breaks your scraper, we fix it. Structured output delivered to CSV, JSON, Google Sheets, or webhook on your cadence. Your clients see the data, not us.",
+      "We build custom scraping tools, API integrations, and data pipelines for businesses that need reliable, structured data at scale. Anti-detection hardened, scheduled, and monitored - with a 48-hour fix guarantee if a target site breaks.",
+      "Structured output delivered to CSV, JSON, Google Sheets, or webhook on your cadence. If it breaks in production, we fix it.",
     ],
     steps: automationSteps,
-    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "CSV", "JSON", "Google Sheets"],
+    tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "Celery", "CSV", "JSON"],
     accentColor: "text-accent",
     accentBg: "bg-accent/10",
     gradientFrom: "from-accent/20",
     gradientTo: "to-primary/5",
     glowColor: "rgba(84,193,251,0.25)",
+    caseStudy: {
+      title: "Alibaba Supplier Intelligence Platform",
+      description:
+        "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly manual research. 47 data fields extracted daily across 5 automated functions.",
+      href: "/portfolio/alibaba-scraper",
+    },
+  },
+  {
+    id: "ecommerce",
+    icon: ShoppingBag,
+    label: "Ecommerce Development",
+    headline: "Custom Storefronts Built for Conversion",
+    body: [
+      "We build custom Shopify storefronts and ecommerce integrations that go beyond themes - product filtering, inventory sync, custom checkout flows, and the automation layers that save your team hours every week.",
+      "Every storefront is designed for conversion first: fast load times, clean product UX, and integrations that actually work with your fulfilment and inventory stack.",
+    ],
+    steps: ecommerceSteps,
+    tools: ["Shopify", "Liquid", "Next.js", "TypeScript", "Shopify API", "Klaviyo", "Stripe", "Vercel"],
+    accentColor: "text-[#F59E0B]",
+    accentBg: "bg-[#F59E0B]/10",
+    gradientFrom: "from-[#F59E0B]/15",
+    gradientTo: "to-primary/5",
+    glowColor: "rgba(245,158,11,0.25)",
+  },
+  {
+    id: "ai",
+    icon: Zap,
+    label: "AI Workflow Integration",
+    headline: "AI That Reduces Hours, Not Just Impresses in Demos",
+    body: [
+      "We embed AI into your business processes - LLM-powered content tools, intelligent data extraction, customer response automation, and custom AI applications built for your specific workflow.",
+      "Practical over impressive. We identify where AI saves real time, build the integration, and deploy it with monitoring and human-in-the-loop where it matters. Every project is documented so you can maintain it.",
+    ],
+    steps: aiSteps,
+    tools: ["OpenAI API", "Anthropic API", "LangChain", "Python", "PostgreSQL + pgvector", "RAG", "Webhooks", "FastAPI"],
+    accentColor: "text-[#10B981]",
+    accentBg: "bg-[#10B981]/10",
+    gradientFrom: "from-[#10B981]/15",
+    gradientTo: "to-accent/5",
+    glowColor: "rgba(16,185,129,0.25)",
   },
 ];
 
@@ -361,8 +472,8 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           <ProcessTimeline steps={service.steps} />
         </div>
 
-        {/* Case study callout — automation service only */}
-        {service.id === "automation" && (
+        {/* Case study callout — data-driven */}
+        {service.caseStudy && (
           <motion.div
             className="mt-14 flex gap-4 rounded-2xl p-6"
             style={{
@@ -384,15 +495,13 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
                 Case Study
               </span>
               <p className="font-display font-bold text-white text-base mb-2">
-                Alibaba Supplier Intelligence Platform
+                {service.caseStudy.title}
               </p>
               <p className="text-white/50 text-sm leading-relaxed mb-3">
-                Automated supplier monitoring for an Australian importer -
-                replacing 8-10 hours of weekly research. 47 data fields
-                extracted daily across 5 automated functions.
+                {service.caseStudy.description}
               </p>
               <Link
-                href="/portfolio/alibaba-scraper"
+                href={service.caseStudy.href}
                 className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity duration-200 hover:opacity-75"
                 style={{ color: "#6D71F9" }}
               >
@@ -467,7 +576,7 @@ export default function ServicesPage() {
             </motion.h1>
 
             <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
-              Custom web applications, automation tools, and data pipelines for businesses in AU, UK, and US.
+              Four focused services - web apps, automation pipelines, ecommerce, and AI workflows - built end-to-end for businesses in AU, UK, and US.
             </motion.p>
             <motion.p {...childProps} className="text-white/45 text-sm leading-relaxed max-w-2xl mb-10">
               One team, end-to-end delivery, no handoffs.{" "}
