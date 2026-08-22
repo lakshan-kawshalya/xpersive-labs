@@ -7,8 +7,8 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 import HeroDataPanel from "@/components/sections/HeroDataPanel";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
-const HEADLINE_WORDS = ["We", "Scrape.", "You", "Deliver."];
-const GRADIENT_WORDS = new Set(["Scrape.", "Deliver."]);
+const HEADLINE_WORDS = ["We", "Build.", "You", "Scale."];
+const GRADIENT_WORDS = new Set(["Build.", "Scale."]);
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -20 },
@@ -82,7 +82,7 @@ export default function HeroSection() {
                     animation: "hero-badge-pulse 2s ease-in-out infinite",
                   }}
                 />
-                Built for Digital Marketing and SEO Agencies
+                Web Development · Automation · AI Workflows
               </span>
             </motion.div>
 
@@ -134,7 +134,7 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              White-label scraping pipelines and managed data delivery for SEO and digital marketing agencies in AU, UK, and US. Your clients never know we exist.
+              Custom web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US. One team. End-to-end delivery. No handoffs.
             </motion.p>
 
             {/* CTAs */}

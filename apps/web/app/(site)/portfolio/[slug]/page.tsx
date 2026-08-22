@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, ExternalLink, Tag } from "lucide-react";
 import type { Metadata } from "next";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
@@ -20,11 +20,32 @@ interface ProjectDetail {
   tech: string[];
   status: string;
   privateBadge?: boolean;
+  liveUrl?: string;
 }
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
 const projects: ProjectDetail[] = [
+  {
+    slug: "raj-ceylon",
+    title: "Raj Ceylon Tours",
+    category: "Web Development",
+    tags: ["Next.js", "TypeScript", "Framer Motion", "Multilingual", "Tourism"],
+    year: "2026",
+    gradient: "from-[#272848] to-[#54C1FB]",
+    status: "Live",
+    liveUrl: "https://raj-ceylon-tours-pearl.vercel.app/en",
+    highlight: "Live luxury tourism site built for an international, high-intent audience across three languages.",
+    summary:
+      "A luxury Sri Lanka tourism website for Raj Ceylon Tours, built with Next.js 14, TypeScript, and Framer Motion. Multi-language support, a custom itinerary browsing experience, a tree-planting feature tied to each booking, and a subscriber newsletter - all designed to convert international travelers.",
+    challenge:
+      "Raj Ceylon Tours needed a site that could compete for high-intent international travelers researching Sri Lanka trips - visitors comparing multiple boutique operators, reading in their own language, and deciding within a handful of page visits. A templated tour-operator site wasn't going to hold that attention: it needed custom itinerary browsing, real multi-language support (not machine-translated strings bolted onto English markup), and a distinct visual identity that reads as premium rather than generic travel-agency.",
+    solution:
+      "Built the site in Next.js 14 with the App Router and next-intl-based routing, so every page ships fully localized rather than client-side translated. Framer Motion drives the itinerary browsing UX - scroll-linked reveals and transitions that make each tour package feel like a curated experience rather than a listing. A tree-planting feature ties a real sustainability action to each completed booking, reinforced with dedicated UI so it reads as a genuine differentiator rather than a footer badge. A subscriber newsletter flow captures return interest from travelers who aren't ready to book on the first visit.",
+    result:
+      "Raj Ceylon Tours launched with a site that reads as a boutique international operator rather than a template. It's live in production, serving as the client-facing entry point for a tourism business competing directly against established Sri Lanka travel brands.",
+    tech: ["Next.js 14", "TypeScript", "Framer Motion", "Tailwind CSS"],
+  },
   {
     slug: "alibaba-scraper",
     title: "Alibaba Supplier Intelligence Tool",
@@ -167,6 +188,18 @@ export default async function ProjectPage({
             <p className="text-white/60 text-lg leading-relaxed mb-7">
               {project.summary}
             </p>
+
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mb-7 px-4 py-2 rounded-full bg-primary/15 border border-primary/25 text-primary text-sm font-semibold transition-colors duration-200 hover:bg-primary/25"
+              >
+                Visit Live Site
+                <ExternalLink size={13} />
+              </a>
+            )}
 
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (

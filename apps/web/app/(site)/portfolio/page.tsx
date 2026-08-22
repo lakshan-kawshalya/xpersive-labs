@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
-type Category = "All" | "Automation";
+type Category = "All" | "Web Development" | "Automation";
 
 interface Project {
   slug: string;
@@ -27,6 +27,17 @@ interface Project {
 
 const projects: Project[] = [
   {
+    slug: "raj-ceylon",
+    title: "Raj Ceylon Tours",
+    shortDesc:
+      "Luxury Sri Lanka tourism website with multi-language support, custom itinerary UX, and a unique tree-planting experience tied to each booking.",
+    category: "Web Development",
+    tags: ["Next.js", "TypeScript", "Framer Motion", "Multilingual", "Tourism"],
+    coverImage: "/project-covers/raj-ceylon-cover.jpeg",
+    stats: ["Multi-language", "Custom itinerary UX", "Live"],
+    privateBadge: false,
+  },
+  {
     slug: "alibaba-scraper",
     title: "Alibaba Supplier Intelligence",
     shortDesc:
@@ -39,7 +50,7 @@ const projects: Project[] = [
   },
 ];
 
-const categories: Category[] = ["All", "Automation"];
+const categories: Category[] = ["All", "Web Development", "Automation"];
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 

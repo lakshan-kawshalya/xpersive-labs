@@ -2,7 +2,7 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { Activity, ArrowRight, Globe, Terminal } from "lucide-react";
+import { ArrowRight, Globe, ShoppingBag, Terminal, Zap } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
@@ -12,32 +12,45 @@ import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverla
 const services = [
   {
     icon: Globe,
-    title: "Web Development",
+    title: "Web Application Development",
     description:
-      "We build fast, modern web applications for e-commerce sellers, importers, and digital agencies. From client portals to custom dashboards, every project uses Next.js, TypeScript, and a relentless focus on performance and SEO.",
+      "We build fast, modern web applications using Next.js and TypeScript - from marketing sites and client portals to SaaS dashboards and content platforms. Performance-first, SEO-ready, and built to scale without a rebuild in 18 months.",
     href: "/services#web",
-    caseStudy: null,
+    caseStudy: {
+      title: "Raj Ceylon Tours",
+      text: "Luxury Sri Lanka tourism website with multi-language support, custom itinerary UX, and a unique tree-planting experience. Built in Next.js 14 with Framer Motion.",
+      href: "/portfolio/raj-ceylon",
+    },
     featured: false,
   },
   {
     icon: Terminal,
-    title: "Automation and Web Scraping",
+    title: "Automation & Data Pipelines",
     description:
-      "We build custom e-commerce automation tools for Amazon, Shopify, and Alibaba sellers: product monitoring, supplier tracking, keyword search, and structured data extraction. Anti-detection hardened and production-ready. Our Alibaba platform proved the model: 47 data fields extracted per product, daily.",
+      "We build custom scraping tools, API integrations, and data pipelines for businesses that need reliable, structured data at scale. Anti-detection hardened, scheduled, and monitored. If it breaks, we fix it.",
     href: "/services#automation",
     caseStudy: {
       title: "Alibaba Supplier Intelligence Platform",
-      text: "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly research. 47 data fields extracted daily across 5 automated functions.",
+      text: "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly manual research. 47 data fields extracted daily across 5 automated functions.",
       href: "/portfolio/alibaba-scraper",
     },
     featured: true,
   },
   {
-    icon: Activity,
-    title: "Managed Data Pipelines",
+    icon: ShoppingBag,
+    title: "Ecommerce Development",
     description:
-      "We don't just build scrapers, we run them. Scheduled weekly runs, 6-hour accuracy checks, failure alerts, and weekly client reports. You get reliable data. We handle everything that breaks.",
-    href: "/services#automation",
+      "Custom Shopify storefronts and ecommerce integrations built for conversion. Product filtering, inventory sync, custom checkout flows, and the automation layers that save your team hours every week.",
+    href: "/services#ecommerce",
+    caseStudy: null,
+    featured: false,
+  },
+  {
+    icon: Zap,
+    title: "AI Workflow Integration",
+    description:
+      "We embed AI into your business processes - LLM-powered content tools, intelligent data extraction, customer response automation, and custom AI applications. Practical AI that reduces hours, not just impresses in demos.",
+    href: "/services#ai",
     caseStudy: null,
     featured: false,
   },
@@ -190,15 +203,14 @@ export default function ServicesSection() {
             Our Expertise
           </motion.span>
           <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold mb-5">
-            What We Do
+            What We Build
           </motion.h2>
           <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
-            Custom scraping pipelines and automation tools, built for agencies
-            that need reliable data for their clients. White-label ready. 48-hour fix guarantee.
+            Four services. Every project is scoped, built, and shipped by the same senior developer - direct access, no account managers, no dropped context.
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" {...scrollProps}>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" {...scrollProps}>
           {services.map((service) => (
             <SpotlightCard key={service.title} service={service} />
           ))}

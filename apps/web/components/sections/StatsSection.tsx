@@ -9,10 +9,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const stats = [
-  { target: 2,  suffix: "+",     label: "YEARS ACTIVE" },
-  { target: 47, suffix: "+",     label: "DATA FIELDS" },
-  { target: 8,  suffix: "+",     label: "HRS SAVED / WEEK" },
-  { target: 1,  suffix: " to 1", label: "COMMUNICATION" },
+  { target: 2,  suffix: "+",  label: "YEARS SHIPPING" },
+  { target: 47, suffix: "+",  label: "DATA FIELDS EXTRACTED DAILY" },
+  { target: 4,  suffix: "",   label: "CORE CAPABILITIES" },
+  { target: 1,  suffix: ":1", label: "DEVELOPER ACCESS" },
 ];
 
 interface StatItemProps {

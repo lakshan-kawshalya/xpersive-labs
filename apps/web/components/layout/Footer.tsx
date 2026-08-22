@@ -10,8 +10,7 @@ const footerSections = {
   ],
   Services: [
     { href: "/services#web", label: "Web Development" },
-    { href: "/services#automation", label: "Managed Data Pipelines" },
-    { href: "/services#automation", label: "Automation & Scraping" },
+    { href: "/services#automation", label: "Automation & Data Pipelines" },
   ],
   Connect: [
     { href: "/contact", label: "Contact Us" },
@@ -37,7 +36,7 @@ export default function Footer() {
               Xpersive Labs
             </span>
             <p className="mt-3 text-sm leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-              White-label scraping pipelines and web development for digital agencies in AU, UK, and US.
+              Custom software for businesses that are done compromising.
             </p>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
               Built with passion in Colombo, Sri Lanka 🇱🇰

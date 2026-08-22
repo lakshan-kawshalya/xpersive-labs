@@ -7,28 +7,23 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 const steps = [
   {
     num: "01",
-    title: "Discover",
-    desc: "Map your data sources, workflows, and the manual hours we're replacing.",
+    title: "Discovery",
+    desc: "We talk through what you need, scope the project, and agree on deliverables before a single line of code is written.",
   },
   {
     num: "02",
-    title: "Design",
-    desc: "Architect the data flow and confirm scope before writing a line of code.",
+    title: "Design & Architecture",
+    desc: "We map the data model, component structure, and user flows. You approve the plan before we build.",
   },
   {
     num: "03",
-    title: "Develop",
-    desc: "Build in focused sprints with working demos at each checkpoint.",
+    title: "Build",
+    desc: "We ship in stages. You see real progress weekly, not a demo at the finish line.",
   },
   {
     num: "04",
-    title: "Test",
-    desc: "Anti-detection hardening, edge-case coverage, and real-data validation.",
-  },
-  {
-    num: "05",
-    title: "Launch",
-    desc: "Monitored deployment, handover documentation, and post-launch support.",
+    title: "QA & Launch",
+    desc: "Full QA pass, performance audit, and deployment. We stay on for 30 days post-launch to catch anything.",
   },
 ];
 
@@ -178,14 +173,17 @@ export default function BuildTimelineSection() {
             className="inline-block text-xs font-bold uppercase mb-4"
             style={{ color: "#6D71F9", letterSpacing: "0.2em" }}
           >
-            Our Process
+            How We Work
           </span>
           <h2
-            className="font-display font-bold"
+            className="font-display font-bold mb-5"
             style={{ fontSize: "clamp(36px, 5vw, 48px)" }}
           >
-            How We Build
+            From brief to shipped in weeks, not months.
           </h2>
+          <p className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
+            We don&apos;t do waterfall proposals and six-month timelines. Here&apos;s how a typical engagement runs.
+          </p>
         </motion.div>
 
         {/* Timeline */}

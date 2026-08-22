@@ -12,6 +12,17 @@ import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverla
 
 const projects = [
   {
+    slug: "raj-ceylon",
+    title: "Raj Ceylon Tours",
+    category: "Web Development",
+    description:
+      "Luxury Sri Lanka tourism website with multi-language support, custom itinerary UX, and a unique tree-planting experience. Built with Next.js 14 and Framer Motion.",
+    tags: ["Next.js", "TypeScript", "Framer Motion", "Multilingual", "Tourism"],
+    coverImage: "/project-covers/raj-ceylon-cover.jpeg",
+    stats: ["Multi-language", "Custom itinerary UX", "Live"],
+    privateBadge: false,
+  },
+  {
     slug: "alibaba-scraper",
     title: "Alibaba Supplier Intelligence",
     category: "Automation",

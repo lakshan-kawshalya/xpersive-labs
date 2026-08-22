@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Portfolio — Our Work",
   description:
-    "View Xpersive Labs' portfolio. See the Alibaba Supplier Intelligence Platform: production-ready with 5 automated functions, 47 data fields, and a full anti-detection layer.",
+    "View Xpersive Labs' portfolio: the Raj Ceylon Tours luxury tourism website and the Alibaba Supplier Intelligence Platform, a production automation system with 47 data fields extracted daily.",
   alternates: { canonical: "https://www.xpersivelabs.com/portfolio" },
   openGraph: {
     type: "website",
     url: "https://www.xpersivelabs.com/portfolio",
     title: "Portfolio — Our Work",
     description:
-      "Alibaba Supplier Intelligence Platform: 5 automated functions, 47 data fields, full anti-detection layer. Proof of model for data pipeline agencies.",
+      "Raj Ceylon Tours: a luxury Sri Lanka tourism website. Alibaba Supplier Intelligence Platform: 5 automated functions, 47 data fields daily.",
   },
 };
 
