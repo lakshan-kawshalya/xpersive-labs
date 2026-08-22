@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Syne, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import "../styles/globals.css";
 
 const dmSans = DM_Sans({
@@ -90,6 +91,38 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Xpersive Labs",
+              "url": "https://www.xpersivelabs.com",
+              "logo": "https://www.xpersivelabs.com/logo/brandmark.svg",
+              "description":
+                "Boutique software studio building web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Colombo",
+                "addressCountry": "LK"
+              },
+              "email": "hello@xpersivelabs.com",
+              "areaServed": ["AU", "GB", "US"],
+              "serviceType": [
+                "Web Application Development",
+                "Ecommerce Development",
+                "Automation & Data Pipelines",
+                "AI Workflow Integration"
+              ],
+              "sameAs": [
+                "https://github.com/Xpersive-Labs",
+                "https://www.linkedin.com/in/xpersive-labs/"
+              ]
+            }),
+          }}
+        />
         {children}
         <Analytics />
         <SpeedInsights />
