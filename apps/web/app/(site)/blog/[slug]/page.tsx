@@ -15,6 +15,11 @@ export async function generateStaticParams() {
 
 /* ─── Metadata ───────────────────────────────────────────────────────── */
 
+const NOINDEX_SLUGS = [
+  "how-we-automated-alibaba-research",
+  "sri-lanka-business-website-2025",
+];
+
 export async function generateMetadata({
   params,
 }: {
@@ -34,6 +39,9 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
     },
+    ...(NOINDEX_SLUGS.includes(slug) && {
+      robots: { index: false, follow: false },
+    }),
   };
 }
 
