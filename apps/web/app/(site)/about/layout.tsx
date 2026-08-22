@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us — Xpersive Labs",
+  title: "About Xpersive Labs — Boutique Web Development Studio",
   description:
-    "Xpersive Labs is a software studio in Colombo, Sri Lanka. We build white-label scraping pipelines and custom web applications for SEO and digital marketing agencies in AU, UK, and US.",
+    "Xpersive Labs is a solo software studio founded in 2024 in Colombo, Sri Lanka. Web application development, automation, and AI workflows for businesses in AU, UK, and US.",
   alternates: { canonical: "https://www.xpersivelabs.com/about" },
   openGraph: {
     type: "website",
     url: "https://www.xpersivelabs.com/about",
-    title: "About Us — Xpersive Labs",
+    title: "About Xpersive Labs — Boutique Web Development Studio",
     description:
-      "Software studio in Colombo, Sri Lanka. White-label scraping pipelines and web applications for agencies.",
+      "Xpersive Labs is a solo software studio founded in 2024 in Colombo, Sri Lanka. Web application development, automation, and AI workflows for businesses in AU, UK, and US.",
   },
 };
 

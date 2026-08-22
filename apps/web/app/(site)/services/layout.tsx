@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Services — Web Development & Automation",
+  title: "Services — Web Development, Automation & AI Workflows",
   description:
-    "Xpersive Labs builds custom web applications, automation tools, and data pipelines for businesses in AU, UK, and US.",
+    "Four focused services: custom web applications, ecommerce development, automation pipelines, and AI workflow integration. Built end-to-end for businesses in AU, UK, and US.",
   alternates: { canonical: "https://www.xpersivelabs.com/services" },
   openGraph: {
     type: "website",
     url: "https://www.xpersivelabs.com/services",
-    title: "Services — Web Development & Automation",
+    title: "Services — Web Development, Automation & AI Workflows",
     description:
-      "Custom web applications, automation tools, and data pipelines for businesses in AU, UK, and US.",
+      "Four focused services: custom web applications, ecommerce development, automation pipelines, and AI workflow integration. Built end-to-end for businesses in AU, UK, and US.",
   },
 };
 
