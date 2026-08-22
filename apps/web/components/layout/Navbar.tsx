@@ -13,7 +13,6 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/team", label: "Team" },
   { href: "/blog", label: "Blog" },
 ];
 
@@ -178,6 +177,15 @@ export default function Navbar() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
             Available for projects
           </span>
+          <a
+            href="https://cal.com/lakshan-kawshalya/intro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white transition-all duration-200 hover:scale-105"
+            style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+          >
+            Book a Call
+          </a>
         </div>
 
         {/* Desktop nav */}
