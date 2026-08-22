@@ -27,17 +27,18 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpersivelabs.com"),
   title: {
-    default: "Xpersive Labs | White-Label Scraping Pipelines for Digital Agencies",
+    default: "Xpersive Labs | Web Development Studio — Next.js, Automation, AI",
     template: "%s | Xpersive Labs",
   },
   description:
-    "White-label scraping pipelines built for digital marketing and SEO agencies. Managed data delivery with a 48-hour fix guarantee. Serving agencies in AU, UK, and US.",
+    "Boutique software studio in Colombo, Sri Lanka. Custom web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US. Built by one senior developer - no handoffs.",
   keywords: [
-    "white-label web scraping",
-    "SEO agency automation",
-    "digital marketing agency scraping",
-    "custom scraping pipeline",
-    "agency white-label automation",
+    "Next.js development studio",
+    "custom web application development",
+    "web development agency AU UK US",
+    "boutique software studio",
+    "automation and AI workflow development",
+    "ecommerce development Next.js",
   ],
   authors: [{ name: "Lakshan Kawshalya", url: "https://www.xpersivelabs.com" }],
   creator: "Xpersive Labs",
@@ -58,15 +59,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.xpersivelabs.com",
     siteName: "Xpersive Labs",
-    title: "Xpersive Labs | White-Label Scraping Pipelines for Digital Agencies",
+    title: "Xpersive Labs | Web Development Studio",
     description:
-      "White-label scraping pipelines and managed data delivery for digital marketing and SEO agencies. 48-hour fix guarantee. Serving agencies in AU, UK, and US.",
+      "Custom web applications, automation pipelines, and AI workflows. One senior developer. Direct access from brief to launch. Serving AU, UK, and US.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xpersive Labs | White-Label Scraping Pipelines for Digital Agencies",
+    title: "Xpersive Labs | Web Development Studio",
     description:
-      "White-label scraping pipelines for digital agencies. Managed data delivery, 48-hour fix guarantee, serving AU, UK, and US.",
+      "Custom web applications, automation, and AI workflows for businesses in AU, UK, and US.",
   },
   alternates: {
     canonical: "https://www.xpersivelabs.com",
