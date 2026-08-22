@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
-import HeroDataPanel from "@/components/sections/HeroDataPanel";
+import HeroWebPreview from "@/components/sections/HeroWebPreview";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
 const HEADLINE_WORDS = ["We", "Build.", "You", "Scale."];
@@ -134,7 +134,7 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              Custom web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US. One team. End-to-end delivery. No handoffs.
+              We design and build custom web applications for businesses in AU, UK, and US — using Next.js, TypeScript, and a relentless focus on performance. Automation and AI built in where it adds value.
             </motion.p>
 
             {/* CTAs */}
@@ -173,7 +173,7 @@ export default function HeroSection() {
               </Link>
             </motion.div>
           </div>
-          <HeroDataPanel />
+          <HeroWebPreview />
         </div>
       </div>
 

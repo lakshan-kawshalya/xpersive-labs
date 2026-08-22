@@ -1,10 +1,7 @@
 import HeroSection from "@/components/sections/HeroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
-import ClientQuoteSection from "@/components/sections/ClientQuoteSection";
 import PortfolioSection from "@/components/sections/PortfolioSection";
-import StatsSection from "@/components/sections/StatsSection";
 import BuildTimelineSection from "@/components/sections/BuildTimelineSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
 
 export default function Home() {
@@ -12,11 +9,8 @@ export default function Home() {
     <>
       <HeroSection />
       <ServicesSection />
-      <ClientQuoteSection />
       <PortfolioSection />
-      <StatsSection />
       <BuildTimelineSection />
-      <TestimonialsSection />
       <CTASection />
     </>
   );

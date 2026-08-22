@@ -8,22 +8,22 @@ const steps = [
   {
     num: "01",
     title: "Discovery",
-    desc: "We talk through what you need, scope the project, and agree on deliverables before a single line of code is written.",
+    desc: "You tell us what you need. We scope it, ask the right questions, and align on deliverables - before any code is written.",
   },
   {
     num: "02",
-    title: "Design & Architecture",
-    desc: "We map the data model, component structure, and user flows. You approve the plan before we build.",
+    title: "Plan & Design",
+    desc: "We map the architecture, user flows, and component structure. You see the plan and approve it before we build anything.",
   },
   {
     num: "03",
     title: "Build",
-    desc: "We ship in stages. You see real progress weekly, not a demo at the finish line.",
+    desc: "We ship in stages with weekly check-ins. You see real progress throughout, not a surprise at the finish line.",
   },
   {
     num: "04",
-    title: "QA & Launch",
-    desc: "Full QA pass, performance audit, and deployment. We stay on for 30 days post-launch to catch anything.",
+    title: "Launch & Support",
+    desc: "We handle deployment, run a full QA pass, and stay available for 30 days post-launch to catch anything that surfaces in production.",
   },
 ];
 

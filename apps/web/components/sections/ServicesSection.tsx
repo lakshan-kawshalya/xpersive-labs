@@ -14,45 +14,29 @@ const services = [
     icon: Globe,
     title: "Web Application Development",
     description:
-      "We build fast, modern web applications using Next.js and TypeScript - from marketing sites and client portals to SaaS dashboards and content platforms. Performance-first, SEO-ready, and built to scale without a rebuild in 18 months.",
+      "We build custom web applications using Next.js and TypeScript - client portals, SaaS dashboards, marketing sites, and content platforms. Performance-first, SEO-ready, and built to last without a rebuild in 18 months.",
     href: "/services#web",
-    caseStudy: {
-      title: "Raj Ceylon Tours",
-      text: "Luxury Sri Lanka tourism website with multi-language support, custom itinerary UX, and a unique tree-planting experience. Built in Next.js 14 with Framer Motion.",
-      href: "/portfolio/raj-ceylon",
-    },
-    featured: false,
   },
   {
     icon: Terminal,
     title: "Automation & Data Pipelines",
     description:
-      "We build custom scraping tools, API integrations, and data pipelines for businesses that need reliable, structured data at scale. Anti-detection hardened, scheduled, and monitored. If it breaks, we fix it.",
+      "Where automation adds value to a project, we build it in - scrapers, API integrations, scheduled data jobs. Production-hardened and maintained as part of the wider product.",
     href: "/services#automation",
-    caseStudy: {
-      title: "Alibaba Supplier Intelligence Platform",
-      text: "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly manual research. 47 data fields extracted daily across 5 automated functions.",
-      href: "/portfolio/alibaba-scraper",
-    },
-    featured: true,
   },
   {
     icon: ShoppingBag,
     title: "Ecommerce Development",
     description:
-      "Custom Shopify storefronts and ecommerce integrations built for conversion. Product filtering, inventory sync, custom checkout flows, and the automation layers that save your team hours every week.",
+      "Custom Shopify storefronts and ecommerce integrations built around conversion. Product filtering, checkout flows, and the backend automation that keeps inventory accurate.",
     href: "/services#ecommerce",
-    caseStudy: null,
-    featured: false,
   },
   {
     icon: Zap,
     title: "AI Workflow Integration",
     description:
-      "We embed AI into your business processes - LLM-powered content tools, intelligent data extraction, customer response automation, and custom AI applications. Practical AI that reduces hours, not just impresses in demos.",
+      "We embed AI into web products where it earns its place - LLM-powered features, intelligent data processing, and automation that reduces manual work for your team.",
     href: "/services#ai",
-    caseStudy: null,
-    featured: false,
   },
 ];
 
@@ -76,26 +60,14 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
     <motion.div
       ref={cardRef}
       {...animProps}
-      className={`group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-[350ms] ${service.featured ? "border-primary/20 hover:border-primary/50" : "border-white/[0.06] hover:border-primary/30"}`}
-      style={{ padding: 32, background: service.featured ? "rgba(109,113,249,0.07)" : "rgba(255,255,255,0.02)" }}
+      className="group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-[350ms] border-white/[0.06] hover:border-primary/30"
+      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
     >
       {/* Hover background tint */}
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: "rgba(109,113,249,0.04)" }}
       />
-      {service.featured && (
-        <div
-          className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[11px] font-semibold z-10"
-          style={{
-            background: "linear-gradient(135deg, rgba(109,113,249,0.25), rgba(84,193,251,0.25))",
-            border: "1px solid rgba(109,113,249,0.35)",
-            color: "rgba(255,255,255,0.8)",
-          }}
-        >
-          Core Service
-        </div>
-      )}
       {/* Spotlight radial */}
       {shouldAnimate && (
         <div
@@ -126,40 +98,6 @@ function SpotlightCard({ service }: { service: typeof services[number] }) {
       <p className="relative text-white/50 text-sm leading-relaxed mb-5 flex-1">
         {service.description}
       </p>
-
-      {/* Case study callout */}
-      {service.caseStudy && (
-        <div
-          className="relative flex gap-4 rounded-2xl mb-5 p-5"
-          style={{
-            background: "rgba(109,113,249,0.05)",
-            border: "1px solid rgba(109,113,249,0.12)",
-          }}
-        >
-          <div>
-            <span
-              className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] mb-1"
-              style={{ color: "rgba(255,255,255,0.35)" }}
-            >
-              Case Study
-            </span>
-            <p className="text-white text-xs font-semibold mb-1">
-              {service.caseStudy.title}
-            </p>
-            <p className="text-white/45 text-xs leading-relaxed mb-2">
-              {service.caseStudy.text}
-            </p>
-            <Link
-              href={service.caseStudy.href}
-              className="inline-flex items-center gap-1 text-xs font-semibold transition-opacity duration-200 hover:opacity-75"
-              style={{ color: "#6D71F9" }}
-            >
-              Read the full case study
-              <ArrowRight size={11} />
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Learn More - visible on hover */}
       <Link
@@ -206,7 +144,7 @@ export default function ServicesSection() {
             What We Build
           </motion.h2>
           <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
-            Four services. Every project is scoped, built, and shipped by the same senior developer - direct access, no account managers, no dropped context.
+            Web application development is what we do. Automation, ecommerce integrations, and AI workflows extend what we build - they&apos;re tools in service of the product, not the product itself.
           </motion.p>
         </motion.div>
 

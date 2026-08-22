@@ -11,6 +11,8 @@ const footerSections = {
   Services: [
     { href: "/services#web", label: "Web Development" },
     { href: "/services#automation", label: "Automation & Data Pipelines" },
+    { href: "/services#ecommerce", label: "Ecommerce Development" },
+    { href: "/services#ai", label: "AI Workflow Integration" },
   ],
   Connect: [
     { href: "/contact", label: "Contact Us" },
