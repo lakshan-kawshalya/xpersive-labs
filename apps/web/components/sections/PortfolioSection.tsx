@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
-import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const projects = [
   {
@@ -213,8 +212,6 @@ export default function PortfolioSection() {
 
   return (
     <section ref={ref} className="py-28 relative overflow-hidden">
-      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
-
       <motion.div
         className="relative z-10 max-w-7xl mx-auto px-6"
         {...(shouldAnimate

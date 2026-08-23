@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Globe2, Layers, UserCheck } from "lucide-react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
-import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
 
 const reasons = [
   {
@@ -75,8 +74,6 @@ export default function WhyUsSection() {
 
   return (
     <section ref={ref} className="py-28 relative overflow-hidden">
-      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
-
       <motion.div
         className="max-w-7xl mx-auto px-6"
         {...(shouldAnimate

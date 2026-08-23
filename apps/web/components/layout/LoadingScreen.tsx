@@ -14,7 +14,7 @@ const shapeVariants = {
     scale: 1,
     rotate: 0,
     transition: {
-      delay: i * 0.12,
+      delay: i * 0.07,
       type: "spring" as const,
       stiffness: 200,
       damping: 20,
@@ -30,7 +30,7 @@ export default function LoadingScreen() {
     if (sessionStorage.getItem("xp_loaded")) return;
     sessionStorage.setItem("xp_loaded", "1");
     setShow(true);
-    const t = setTimeout(() => setShow(false), shouldAnimate ? 2100 : 400);
+    const t = setTimeout(() => setShow(false), shouldAnimate ? 900 : 400);
     return () => clearTimeout(t);
   }, [shouldAnimate]);
 
@@ -99,7 +99,7 @@ export default function LoadingScreen() {
             key={i}
             initial={shouldAnimate ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
-            transition={shouldAnimate ? { delay: 0.7 + i * 0.04, duration: 0.1 } : undefined}
+            transition={shouldAnimate ? { delay: 0.35 + i * 0.02, duration: 0.08 } : undefined}
           >
             {char === " " ? " " : char}
           </motion.span>
@@ -109,7 +109,7 @@ export default function LoadingScreen() {
       <motion.p
         initial={shouldAnimate ? { opacity: 0 } : false}
         animate={{ opacity: 1 }}
-        transition={shouldAnimate ? { delay: 1.1, duration: 0.4 } : undefined}
+        transition={shouldAnimate ? { delay: 0.65, duration: 0.25 } : undefined}
         style={{
           fontFamily: "DM Sans, ui-sans-serif, system-ui, sans-serif",
           fontWeight: 400,
