@@ -74,10 +74,14 @@ export default function SiteLayout({
         {/* Fixed ambient background — z-index 0, behind everything */}
         <AmbientBackground />
 
+        {/* Rendered outside the z-index:1 stacking context below so its own
+            z-index (9999) isn't trapped beneath higher z-index portaled
+            content (e.g. Radix Select/Dialog, which render to document.body). */}
+        <CustomCursor />
+
         {/* Page content — z-index 1, above background */}
         <div className="relative" style={{ zIndex: 1 }}>
           <LoadingScreen />
-          <CustomCursor />
           <ScrollProgress />
           <Navbar />
           <PageTransitionProvider>

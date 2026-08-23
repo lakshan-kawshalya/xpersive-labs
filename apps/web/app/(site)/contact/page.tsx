@@ -29,11 +29,19 @@ type ServiceOption =
   | "AI Workflow Integration"
   | "Other / General Inquiry";
 
+type BudgetOption =
+  | "Under $5,000"
+  | "$5,000 – $15,000"
+  | "$15,000 – $30,000"
+  | "$30,000+"
+  | "Not sure yet";
+
 interface FormValues {
   name: string;
   email: string;
   company: string;
   service: ServiceOption | "";
+  budget: BudgetOption | "";
   message: string;
 }
 
@@ -49,6 +57,14 @@ const serviceOptions: ServiceOption[] = [
   "Automation & Data Pipelines",
   "AI Workflow Integration",
   "Other / General Inquiry",
+];
+
+const budgetOptions: BudgetOption[] = [
+  "Under $5,000",
+  "$5,000 – $15,000",
+  "$15,000 – $30,000",
+  "$30,000+",
+  "Not sure yet",
 ];
 
 const nextSteps = [
@@ -132,6 +148,7 @@ function ContactPageContent() {
           from_email: data.email,
           company: stripHtml(data.company) || "-",
           service: data.service || "Not specified",
+          budget: data.budget || "Not specified",
           message: stripHtml(data.message),
         },
         EMAILJS_PUBLIC_KEY,
@@ -310,7 +327,7 @@ function ContactPageContent() {
                       </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                       <motion.div {...childProps}>
                         <FloatingField id="company" label="Company (optional)">
                           <input
@@ -379,6 +396,61 @@ function ContactPageContent() {
                           />
                         </FloatingField>
                       </motion.div>
+                      <motion.div {...childProps}>
+                        <FloatingField
+                          id="budget"
+                          label="Budget Range (optional)"
+                          error={errors.budget?.message}
+                        >
+                          <Controller
+                            name="budget"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                              <Select.Root
+                                value={field.value}
+                                onValueChange={field.onChange}
+                              >
+                                <Select.Trigger
+                                  id="budget"
+                                  onBlur={field.onBlur}
+                                  className={`${underlineInput(!!errors.budget)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-white/20`}
+                                >
+                                  <Select.Value placeholder="Select a range…" />
+                                  <Select.Icon>
+                                    <ChevronDown
+                                      size={14}
+                                      className="text-white/30"
+                                    />
+                                  </Select.Icon>
+                                </Select.Trigger>
+                                <Select.Portal>
+                                  <Select.Content
+                                    position="popper"
+                                    sideOffset={8}
+                                    className="z-60 overflow-hidden rounded-xl border border-white/10 shadow-xl"
+                                    style={{ background: "#12122A" }}
+                                  >
+                                    <Select.Viewport className="p-1">
+                                      {budgetOptions.map((b) => (
+                                        <Select.Item
+                                          key={b}
+                                          value={b}
+                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-white outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
+                                        >
+                                          <Select.ItemText>
+                                            {b}
+                                          </Select.ItemText>
+                                        </Select.Item>
+                                      ))}
+                                    </Select.Viewport>
+                                  </Select.Content>
+                                </Select.Portal>
+                              </Select.Root>
+                            )}
+                          />
+                        </FloatingField>
+                      </motion.div>
                     </div>
 
                     <motion.div {...childProps}>
@@ -391,7 +463,7 @@ function ContactPageContent() {
                         <textarea
                           id="message"
                           rows={5}
-                          placeholder="What are you building? Timeline, requirements, budget range…"
+                          placeholder="What are you building? Timeline, requirements, goals…"
                           className={`${underlineInput(!!errors.message)} resize-none`}
                           {...register("message", {
                             required: "Message is required",
