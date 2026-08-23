@@ -16,8 +16,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import LayeredStackIllustration from "@/components/illustrations/LayeredStackIllustration";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 
@@ -83,52 +84,53 @@ const milestones = [
   },
 ];
 
-/* ─── Value card ────────────────────────────────────────────────────── */
-function ValueCard({ v }: { v: typeof values[number] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
-  const [hovered, setHovered] = useState(false);
-  const { shouldAnimate } = useMotionSafe();
+const heroMilestones = [
+  { year: "2024", icon: Flag, title: "Founded" },
+  { year: "2024", icon: Target, title: "First project shipped" },
+  { year: "2026", icon: Compass, title: "Raj Ceylon delivered" },
+];
 
-  const animProps = shouldAnimate ? {
-    variants: scaleIn,
-    whileHover: { y: -8, boxShadow: "0 20px 60px rgba(109,113,249,0.15)" },
-    transition: { type: "spring" as const, stiffness: 200, damping: 22 },
-    onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => {
-      const r = cardRef.current?.getBoundingClientRect();
-      if (r) setSpot({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
-    },
-    onMouseEnter: () => setHovered(true),
-    onMouseLeave: () => { setSpot((s) => ({ ...s, on: false })); setHovered(false); },
-  } : { initial: false };
-
+/* ─── Hero milestone aside ─────────────────────────────────────────── */
+function HeroMilestoneAside({ shouldAnimate }: { shouldAnimate: boolean }) {
   return (
-    <motion.div
-      ref={cardRef}
-      {...animProps}
-      className="group relative flex flex-col rounded-3xl border border-white/6 hover:border-primary/30 overflow-hidden transition-colors duration-350"
-      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
-    >
-      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "rgba(109,113,249,0.04)" }} />
-      {shouldAnimate && (
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ opacity: spot.on ? 1 : 0, transition: "opacity 0.2s ease",
-            background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.08) 0%, transparent 60%)` }} />
-      )}
-      <span className="absolute top-4 right-5 font-display font-extrabold select-none pointer-events-none leading-none"
-        style={{ fontSize: 80, color: "rgba(109,113,249,0.06)" }}>{v.number}</span>
-      <div className="relative inline-flex items-center justify-center w-10 h-10 mb-6 transition-all duration-300 group-hover:rotate-[5deg] shrink-0"
-        style={{ borderRadius: 12, background: "linear-gradient(135deg, rgba(109,113,249,0.2), rgba(84,193,251,0.2))", border: "1px solid rgba(109,113,249,0.3)" }}>
-        <v.icon size={20} className="text-primary" />
+    <aside className="hidden lg:block">
+      <div className="relative pl-6">
+        <div className="absolute left-0 top-1 bottom-1 w-px" style={{ background: "rgba(109,113,249,0.2)" }} />
+        <div className="space-y-7">
+          {heroMilestones.map((m, i) => (
+            <motion.div
+              key={m.title}
+              className="relative flex items-center gap-3"
+              {...(shouldAnimate
+                ? {
+                    variants: slideInRight,
+                    initial: "hidden",
+                    animate: "visible",
+                    transition: { delay: 0.3 + i * 0.12 },
+                  }
+                : { initial: false })}
+            >
+              <div
+                className="absolute -left-6 w-3 h-3 rounded-full border border-primary/40"
+                style={{ background: "#272848" }}
+              />
+              <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                <m.icon size={16} className="text-primary" />
+              </div>
+              <div>
+                <span
+                  className="block text-[11px] font-bold"
+                  style={{ color: "#6D71F9" }}
+                >
+                  {m.year}
+                </span>
+                <span className="text-sm font-semibold text-white/80">{m.title}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-      <h3 className="relative font-display font-bold mb-3 text-white" style={{ fontSize: 20 }}>{v.title}</h3>
-      <p className="relative flex-1 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{v.description}</p>
-      <div className="relative mt-6 h-px" style={{ background: "rgba(255,255,255,0.06)" }}>
-        <div className="absolute inset-y-0 left-0 h-full"
-          style={{ width: hovered ? "100%" : "0%", background: "linear-gradient(90deg, #6D71F9, transparent)", transition: "width 0.4s ease" }} />
-      </div>
-    </motion.div>
+    </aside>
   );
 }
 
@@ -166,18 +168,22 @@ export default function AboutPage() {
           {...ambientProps}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div {...mountProps} className="max-w-3xl">
-            <motion.div {...childProps(fadeUp)} className="flex items-center gap-2 mb-6">
-              <MapPin size={14} className="text-primary" />
-              <span className="text-primary text-xs font-bold uppercase" style={{ letterSpacing: "0.14em" }}>Colombo, Sri Lanka</span>
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 items-center">
+            <motion.div {...mountProps} className="max-w-3xl">
+              <motion.div {...childProps(fadeUp)} className="flex items-center gap-2 mb-6">
+                <MapPin size={14} className="text-primary" />
+                <span className="text-primary text-xs font-bold uppercase" style={{ letterSpacing: "0.14em" }}>Colombo, Sri Lanka</span>
+              </motion.div>
+              <motion.h1 {...childProps(fadeUp)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
+                About <span className="text-gradient">Xpersive Labs</span>
+              </motion.h1>
+              <motion.p {...childProps(fadeUp)} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+                A boutique software studio from Colombo, Sri Lanka - building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US.
+              </motion.p>
             </motion.div>
-            <motion.h1 {...childProps(fadeUp)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
-              About <span className="text-gradient">Xpersive Labs</span>
-            </motion.h1>
-            <motion.p {...childProps(fadeUp)} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
-              A boutique software studio from Colombo, Sri Lanka - building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US.
-            </motion.p>
-          </motion.div>
+
+            <HeroMilestoneAside shouldAnimate={shouldAnimate} />
+          </div>
         </div>
       </section>
 
@@ -208,7 +214,8 @@ export default function AboutPage() {
             </motion.div>
 
             <motion.div {...childProps(fadeUp)} {...(shouldAnimate ? { initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-80px" } } : { initial: false })}>
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 p-10" style={{ background: "rgba(255,255,255,0.02)" }}>
+              <LayeredStackIllustration className="hidden lg:block mb-8 ml-2" />
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 p-10" style={{ background: "var(--surface-card)" }}>
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 60% 20%, rgba(109,113,249,0.12) 0%, transparent 60%)" }} />
                 <div className="relative z-10 space-y-8">
                   {[
@@ -242,7 +249,7 @@ export default function AboutPage() {
             <motion.h2 {...childProps(fadeUp)} className="font-display font-bold" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>Mission &amp; Vision</motion.h2>
           </motion.div>
           <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" {...scrollProps(staggerContainer)}>
-            <motion.div {...childProps(slideInLeft)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-primary/30 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
+            <motion.div {...childProps(slideInLeft)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-primary/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)" }} />
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-7"><Target size={22} className="text-primary" /></div>
@@ -251,7 +258,7 @@ export default function AboutPage() {
                 <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build clean, fast web applications and automation systems that do exactly what the client needs - shipped on time, maintained honestly, and built to last beyond the first deployment.</p>
               </div>
             </motion.div>
-            <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
+            <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(84,193,251,0.1) 0%, transparent 65%)" }} />
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-7"><Compass size={22} className="text-accent" /></div>
@@ -272,7 +279,18 @@ export default function AboutPage() {
             <motion.h2 {...childProps(fadeUp)} className="font-display font-bold" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>Our Values</motion.h2>
           </motion.div>
           <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-6" {...scrollProps(staggerContainer)}>
-            {values.map((v) => <ValueCard key={v.title} v={v} />)}
+            {values.map((v) => (
+              <SpotlightCard
+                key={v.title}
+                icon={v.icon}
+                title={v.title}
+                body={v.description}
+                numberWatermark={v.number}
+                showUnderlineBar
+                iconSize="sm"
+                variants={scaleIn}
+              />
+            ))}
           </motion.div>
         </div>
       </section>
@@ -281,7 +299,7 @@ export default function AboutPage() {
       <section className="py-24 border-t border-white/[0.07]">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div className="text-center mb-16" {...scrollProps(staggerContainer)}>
-            <motion.span {...childProps(fadeUp)} className="inline-block text-xs font-bold uppercase mb-4" style={{ color: "#F59E0B", letterSpacing: "0.14em" }}>Our Journey</motion.span>
+            <motion.span {...childProps(fadeUp)} className="inline-block text-xs font-bold uppercase mb-4" style={{ color: "var(--color-warning)", letterSpacing: "0.14em" }}>Our Journey</motion.span>
             <motion.h2 {...childProps(fadeUp)} className="font-display font-bold" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>Milestones</motion.h2>
           </motion.div>
 
@@ -349,7 +367,7 @@ export default function AboutPage() {
 
 function MilestoneCard({ milestone }: { milestone: typeof milestones[number] }) {
   return (
-    <div className="p-6 rounded-2xl border border-white/6 hover:border-primary/20 transition-colors duration-300" style={{ background: "rgba(255,255,255,0.02)" }}>
+    <div className="p-6 rounded-2xl border border-white/[0.06] hover:border-primary/20 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
       <h3 className="font-display text-lg font-bold mb-2 text-white">{milestone.title}</h3>
       <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{milestone.description}</p>
     </div>

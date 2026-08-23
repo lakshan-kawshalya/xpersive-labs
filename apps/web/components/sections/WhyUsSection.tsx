@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Globe2, Layers, UserCheck } from "lucide-react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 const reasons = [
   {
@@ -23,43 +24,6 @@ const reasons = [
     body: "We understand your market, your expectations, and your timelines. Remote collaboration is not an afterthought here - it's the whole model.",
   },
 ];
-
-function ReasonCard({ reason }: { reason: typeof reasons[number] }) {
-  const { shouldAnimate } = useMotionSafe();
-
-  return (
-    <motion.div
-      {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
-      className="group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-[350ms] border-white/[0.06] hover:border-primary/30"
-      style={{ padding: 32, background: "rgba(255,255,255,0.02)" }}
-    >
-      {/* Hover background tint */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "rgba(109,113,249,0.04)" }}
-      />
-
-      {/* Icon container */}
-      <div
-        className="relative inline-flex items-center justify-center w-12 h-12 mb-7 transition-all duration-300 group-hover:rotate-[5deg]"
-        style={{
-          borderRadius: 14,
-          background: "linear-gradient(135deg, rgba(109,113,249,0.2), rgba(84,193,251,0.2))",
-          border: "1px solid rgba(109,113,249,0.3)",
-        }}
-      >
-        <reason.icon size={24} className="text-primary" />
-      </div>
-
-      <h3 className="relative font-display text-xl font-bold mb-3 text-white">
-        {reason.title}
-      </h3>
-      <p className="relative text-white/50 text-sm leading-relaxed">
-        {reason.body}
-      </p>
-    </motion.div>
-  );
-}
 
 export default function WhyUsSection() {
   const { shouldAnimate } = useMotionSafe();
@@ -95,7 +59,12 @@ export default function WhyUsSection() {
 
         <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" {...scrollProps}>
           {reasons.map((reason) => (
-            <ReasonCard key={reason.title} reason={reason} />
+            <SpotlightCard
+              key={reason.title}
+              icon={reason.icon}
+              title={reason.title}
+              body={reason.body}
+            />
           ))}
         </motion.div>
       </motion.div>

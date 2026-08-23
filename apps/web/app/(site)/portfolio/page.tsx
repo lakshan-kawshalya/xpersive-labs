@@ -6,22 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import DraftingIllustration from "@/components/illustrations/DraftingIllustration";
+import TiltProjectCard, { type Project } from "@/components/ui/TiltProjectCard";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
 type Category = "All" | "Web Development" | "Automation";
-
-interface Project {
-  slug: string;
-  title: string;
-  shortDesc: string;
-  category: Exclude<Category, "All">;
-  tags: string[];
-  coverImage: string;
-  stats?: string[];
-  privateBadge?: boolean;
-}
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
@@ -29,7 +20,7 @@ const projects: Project[] = [
   {
     slug: "raj-ceylon",
     title: "Raj Ceylon Tours",
-    shortDesc:
+    description:
       "Luxury Sri Lanka tourism website with multi-language support, custom itinerary UX, and a unique tree-planting experience tied to each booking.",
     category: "Web Development",
     tags: ["Next.js", "TypeScript", "Framer Motion", "Multilingual", "Tourism"],
@@ -40,7 +31,7 @@ const projects: Project[] = [
   {
     slug: "alibaba-scraper",
     title: "Alibaba Supplier Intelligence",
-    shortDesc:
+    description:
       "Fully automated supplier intelligence platform for an Australian importer - monitoring stores, detecting new launches, and running visual search. Replaces 8-10 hours of manual research per week.",
     category: "Automation",
     tags: ["Python", "Playwright", "Anti-Detection", "CSV", "Data Extraction"],
@@ -96,28 +87,25 @@ export default function PortfolioPage() {
             transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
           } : {})}
         />
-        <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div {...mountProps}>
-            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
-              Selected Work
-            </motion.span>
-            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6">
-              Our{" "}
-              <span className="text-gradient">Portfolio</span>
-            </motion.h1>
-            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
-              Real projects, built with care. Every line of code and design
-              decision made with purpose.
-            </motion.p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 items-center">
+            <motion.div {...mountProps}>
+              <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
+                Selected Work
+              </motion.span>
+              <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6">
+                Our{" "}
+                <span className="text-gradient">Portfolio</span>
+              </motion.h1>
+              <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+                Real projects, built with care. Every line of code and design
+                decision made with purpose.
+              </motion.p>
+            </motion.div>
+
+            <ProjectPreviewCollage projects={projects.slice(0, 2)} shouldAnimate={shouldAnimate} />
+          </div>
         </div>
       </section>
 
@@ -179,7 +167,7 @@ export default function PortfolioPage() {
               } : { initial: false })}
             >
               {filtered.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+                <TiltProjectCard key={project.slug} project={project} headingLevel="h2" />
               ))}
 
               {/* Placeholder card */}
@@ -192,12 +180,7 @@ export default function PortfolioPage() {
                   borderColor: "rgba(255,255,255,0.08)",
                 }}
               >
-                <div
-                  className="w-10 h-10 rounded-full border border-dashed flex items-center justify-center mb-4"
-                  style={{ borderColor: "rgba(255,255,255,0.15)" }}
-                >
-                  <span className="text-white/20 text-xl leading-none">+</span>
-                </div>
+                <DraftingIllustration className="w-20 h-20 mb-4" />
                 <p className="text-[14px] text-white/30">More work on the way</p>
               </motion.div>
             </motion.div>
@@ -232,167 +215,58 @@ export default function PortfolioPage() {
   );
 }
 
-/* ─── ProjectCard ────────────────────────────────────────────────────── */
+/* ─── ProjectPreviewCollage ─────────────────────────────────────────── */
 
-function ProjectCard({ project }: { project: Project }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
-  const [isTouch] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
-  );
-  const { shouldAnimate } = useMotionSafe();
-
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouch || !shouldAnimate) return;
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: ny * 6, y: nx * 4 });
-  };
-
-  const onMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setHovered(false);
-  };
+function ProjectPreviewCollage({
+  projects,
+  shouldAnimate,
+}: {
+  projects: Project[];
+  shouldAnimate: boolean;
+}) {
+  const rotations = [-6, 5];
+  const offsets = [
+    { top: "0%", left: "8%" },
+    { top: "22%", left: "32%" },
+  ];
 
   return (
-    <motion.div
-      ref={ref}
-      {...(shouldAnimate ? { variants: fadeUp, layout: true } : { initial: false })}
-      onMouseMove={onMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={onMouseLeave}
-      style={{
-        transform: shouldAnimate
-          ? `perspective(1000px) rotateX(${-tilt.x}deg) rotateY(${tilt.y}deg)`
-          : undefined,
-        transition: hovered
-          ? "transform 0.1s ease"
-          : "transform 0.5s cubic-bezier(0.23,1,0.32,1)",
-      }}
-      className="relative rounded-[20px] overflow-hidden border border-white/6 bg-white/2"
-    >
-      {/* Sheen */}
-      {shouldAnimate && (
-        <div
-          className="absolute inset-0 pointer-events-none z-20 rounded-[20px]"
+    <div className="relative h-80 sm:h-95 hidden sm:block">
+      {projects.map((project, i) => (
+        <motion.div
+          key={project.slug}
+          className="absolute w-55 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
           style={{
-            background: `linear-gradient(${105 + tilt.y * 5}deg, rgba(255,255,255,${hovered ? 0.04 : 0}) 0%, transparent 60%)`,
-            transition: "background 0.1s ease",
+            top: offsets[i]?.top,
+            left: offsets[i]?.left,
+            zIndex: i + 1,
+            rotate: rotations[i],
+            background: "var(--surface-card)",
           }}
-        />
-      )}
-
-      {/* Cover image */}
-      <div className="relative h-56 overflow-hidden">
-        <Image
-          src={project.coverImage}
-          alt={project.title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover"
-          style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
-        />
-
-        {/* Category badge */}
-        <div className="absolute top-4 left-4 z-10">
-          <span
-            className="px-3 py-1 rounded-full text-white text-xs font-semibold"
-            style={{
-              background: "rgba(15,15,30,0.8)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-            }}
-          >
-            {project.category}
-          </span>
-        </div>
-
-        {/* Hover overlay */}
-        <div
-          className="absolute inset-0 z-10 flex items-center justify-center"
-          style={{ background: "rgba(15,15,30,0.7)", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }}
+          {...(shouldAnimate
+            ? {
+                initial: { opacity: 0, y: 30, rotate: rotations[i] },
+                animate: { opacity: 1, y: 0, rotate: rotations[i] },
+                transition: { duration: 0.7, delay: 0.25 + i * 0.15, ease: [0.215, 0.61, 0.355, 1.0] as const },
+                whileHover: { rotate: 0, scale: 1.04, zIndex: 10 },
+              }
+            : { initial: false })}
         >
-          <motion.div
-            {...(shouldAnimate ? {
-              animate: { y: hovered ? 0 : 10, opacity: hovered ? 1 : 0 },
-              transition: { duration: 0.2, ease: "easeOut" },
-            } : {})}
-          >
-            <Link
-              href={`/portfolio/${project.slug}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold"
-              style={{ background: "rgba(109,113,249,0.9)" }}
-            >
-              Read Case Study
-              <ArrowRight size={14} />
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Info area */}
-      <div className="p-6" style={{ background: "rgba(255,255,255,0.02)" }}>
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <h2
-            className="font-display text-[18px] font-bold transition-colors duration-200"
-            style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
-          >
-            {project.title}
-          </h2>
-          {project.privateBadge && (
-            <span
-              className="px-2.5 py-0.5 rounded-full text-[11px] font-medium"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.4)",
-              }}
-            >
-              Private Repo
-            </span>
-          )}
-        </div>
-        <p className="text-white/50 text-sm leading-relaxed mb-3">
-          {project.shortDesc}
-        </p>
-        {project.stats && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {project.stats.map((stat) => (
-              <span
-                key={stat}
-                style={{
-                  fontSize: 11,
-                  background: "rgba(109,113,249,0.08)",
-                  border: "1px solid rgba(109,113,249,0.15)",
-                  borderRadius: 20,
-                  padding: "3px 10px",
-                  color: "rgba(255,255,255,0.6)",
-                }}
-              >
-                {stat}
-              </span>
-            ))}
+          <div className="relative h-32">
+            <Image
+              src={project.coverImage}
+              alt={project.title}
+              fill
+              sizes="220px"
+              className="object-cover"
+            />
           </div>
-        )}
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1 rounded-full font-mono text-xs text-white/50 transition-all duration-200 hover:text-white"
-              style={{
-                background: "rgba(109,113,249,0.08)",
-                border: "1px solid rgba(109,113,249,0.2)",
-              }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
+          <div className="p-4" style={{ background: "var(--surface-card)" }}>
+            <p className="font-display text-sm font-bold text-white mb-0.5">{project.title}</p>
+            <p className="text-xs text-white/40">{project.category}</p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
   );
 }
