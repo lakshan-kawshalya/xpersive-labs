@@ -29,7 +29,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#1A1A2E", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+    <footer style={{ background: "var(--color-dark-elevated)", borderTop: "1px solid var(--border-subtle)" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
@@ -39,7 +39,7 @@ export default function Footer() {
               Xpersive Labs
             </span>
             <p className="mt-3 text-sm leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Custom software for businesses that are done compromising.
+              One developer. End-to-end. From brief to production.
             </p>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
               Built with passion in Colombo, Sri Lanka 🇱🇰

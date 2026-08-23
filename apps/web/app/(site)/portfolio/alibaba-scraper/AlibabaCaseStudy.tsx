@@ -122,8 +122,8 @@ function FunctionCard({
       {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
       className="relative rounded-[20px] p-8 overflow-hidden"
       style={{
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        background: "var(--surface-card)",
+        border: "1px solid var(--border-subtle)",
       }}
       {...(shouldAnimate
         ? {
@@ -713,7 +713,7 @@ export default function AlibabaCaseStudy() {
                 {...childProps}
                 className="p-6 rounded-xl"
                 style={{
-                  background: "rgba(255,255,255,0.02)",
+                  background: "var(--surface-card)",
                   border: "1px solid rgba(255,255,255,0.07)",
                 }}
               >

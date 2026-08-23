@@ -2,6 +2,7 @@
 
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import * as Select from "@radix-ui/react-select";
 import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -14,7 +15,8 @@ import {
   Send,
 } from "lucide-react";
 import { Suspense, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import EnvelopeCheckIllustration from "@/components/illustrations/EnvelopeCheckIllustration";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
@@ -55,6 +57,12 @@ const nextSteps = [
   { num: "03", text: "We send you a project proposal" },
 ];
 
+const trustStats = [
+  "48h response",
+  "30-day post-launch support",
+  "AU/UK/US clients",
+];
+
 /* ─── Floating label input ──────────────────────────────────────────── */
 function FloatingField({
   id,
@@ -81,7 +89,7 @@ function FloatingField({
       </label>
       {children}
       {error && (
-        <p className="text-xs text-rose-400 flex items-center gap-1 mt-0.5">
+        <p className="text-xs text-danger flex items-center gap-1 mt-0.5">
           <AlertCircle size={11} />
           {error}
         </p>
@@ -95,7 +103,7 @@ const underlineInput = (hasError: boolean) =>
     "w-full bg-transparent pb-2.5 pt-1 text-sm text-white outline-none",
     "border-b transition-colors duration-200 placeholder-white/20",
     hasError
-      ? "border-rose-500/50 focus:border-rose-400"
+      ? "border-danger/50 focus:border-danger"
       : "border-white/10 focus:border-primary",
   ].join(" ");
 
@@ -107,6 +115,7 @@ function ContactPageContent() {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -155,51 +164,12 @@ function ContactPageContent() {
 
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
-  const ambientProps = (delay = 0) =>
-    shouldAnimate
-      ? {
-          animate: { scale: [1, 1.1, 1] as number[] },
-          transition: {
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut" as const,
-            delay,
-          },
-        }
-      : {};
-
   return (
     <div className="bg-dark text-white min-h-screen">
       {/* Hero */}
-      <section className="relative pt-40 pb-20 overflow-hidden">
-        <motion.div
-          className="absolute -top-28 -right-20 w-120 h-120 rounded-full blur-[130px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)",
-          }}
-          {...ambientProps(0)}
-        />
-        <motion.div
-          className="absolute -bottom-10 -left-20 w-95 h-95 rounded-full blur-[110px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)",
-          }}
-          {...(shouldAnimate
-            ? {
-                animate: { scale: [1, 1.15, 1] as number[] },
-                transition: {
-                  duration: 11,
-                  repeat: Infinity,
-                  ease: "easeInOut" as const,
-                  delay: 2,
-                },
-              }
-            : {})}
-        />
+      <section className="relative pt-40 pb-20 text-center">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div {...mountProps}>
+          <motion.div {...mountProps} className="mx-auto max-w-3xl">
             <motion.span
               {...childProps}
               className="inline-block text-primary text-xs font-bold uppercase mb-5"
@@ -209,19 +179,33 @@ function ContactPageContent() {
             </motion.span>
             <motion.h1
               {...childProps}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 max-w-3xl"
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6"
             >
               Let&apos;s Talk About{" "}
               <span className="text-gradient">Your Project</span>
             </motion.h1>
             <motion.p
               {...childProps}
-              className="max-w-xl leading-relaxed"
+              className="mx-auto max-w-xl leading-relaxed"
               style={{ fontSize: 17, color: "rgba(255,255,255,0.55)" }}
             >
               No commitment. No sales pitch. Just an honest conversation about
               what you need and whether we&apos;re the right fit.
             </motion.p>
+            <motion.div
+              {...childProps}
+              className="flex flex-wrap items-center justify-center gap-3 mt-8"
+            >
+              {trustStats.map((stat) => (
+                <span
+                  key={stat}
+                  className="px-4 py-2 rounded-full text-xs font-semibold border border-white/10"
+                  style={{ background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.6)" }}
+                >
+                  {stat}
+                </span>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -261,7 +245,7 @@ function ContactPageContent() {
                               animate: { opacity: 1, y: 0 },
                             }
                           : { initial: false })}
-                        className="flex items-start gap-3 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm"
+                        className="flex items-start gap-3 p-4 rounded-xl bg-danger/10 border border-danger/20 text-danger text-sm"
                       >
                         <AlertCircle size={16} className="shrink-0 mt-0.5" />
                         <span>
@@ -345,29 +329,54 @@ function ContactPageContent() {
                           required
                           error={errors.service?.message}
                         >
-                          <div className="relative">
-                            <select
-                              id="service"
-                              className={`${underlineInput(!!errors.service)} appearance-none pr-8`}
-                              {...register("service", {
-                                required: "Please select a service",
-                              })}
-                              defaultValue=""
-                            >
-                              <option value="" disabled>
-                                Select a service…
-                              </option>
-                              {serviceOptions.map((s) => (
-                                <option key={s} value={s}>
-                                  {s}
-                                </option>
-                              ))}
-                            </select>
-                            <ChevronDown
-                              size={14}
-                              className="absolute right-0 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
-                            />
-                          </div>
+                          <Controller
+                            name="service"
+                            control={control}
+                            defaultValue=""
+                            rules={{ required: "Please select a service" }}
+                            render={({ field }) => (
+                              <Select.Root
+                                value={field.value}
+                                onValueChange={field.onChange}
+                              >
+                                <Select.Trigger
+                                  id="service"
+                                  onBlur={field.onBlur}
+                                  className={`${underlineInput(!!errors.service)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-white/20`}
+                                >
+                                  <Select.Value placeholder="Select a service…" />
+                                  <Select.Icon>
+                                    <ChevronDown
+                                      size={14}
+                                      className="text-white/30"
+                                    />
+                                  </Select.Icon>
+                                </Select.Trigger>
+                                <Select.Portal>
+                                  <Select.Content
+                                    position="popper"
+                                    sideOffset={8}
+                                    className="z-60 overflow-hidden rounded-xl border border-white/10 shadow-xl"
+                                    style={{ background: "#12122A" }}
+                                  >
+                                    <Select.Viewport className="p-1">
+                                      {serviceOptions.map((s) => (
+                                        <Select.Item
+                                          key={s}
+                                          value={s}
+                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-white outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
+                                        >
+                                          <Select.ItemText>
+                                            {s}
+                                          </Select.ItemText>
+                                        </Select.Item>
+                                      ))}
+                                    </Select.Viewport>
+                                  </Select.Content>
+                                </Select.Portal>
+                              </Select.Root>
+                            )}
+                          />
                         </FloatingField>
                       </motion.div>
                     </div>
@@ -432,6 +441,10 @@ function ContactPageContent() {
               className="flex flex-col gap-4 lg:sticky lg:top-28"
               {...scrollProps}
             >
+              <motion.div {...childProps}>
+                <EnvelopeCheckIllustration className="w-10 h-10 mb-1" />
+              </motion.div>
+
               {/* Availability */}
               <motion.div
                 {...childProps}
@@ -463,8 +476,8 @@ function ContactPageContent() {
               {/* Response time */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/6"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Clock size={16} className="text-primary" />
@@ -485,8 +498,8 @@ function ContactPageContent() {
               {/* Fix guarantee */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/6"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
                   <Clock size={16} className="text-accent" />
@@ -508,8 +521,8 @@ function ContactPageContent() {
               {/* Location */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/6"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
                   <MapPin size={16} className="text-accent" />
@@ -530,8 +543,8 @@ function ContactPageContent() {
               {/* What happens next */}
               <motion.div
                 {...childProps}
-                className="p-5 rounded-2xl border border-white/6"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                className="p-5 rounded-2xl border border-white/[0.06]"
+                style={{ background: "var(--surface-card)" }}
               >
                 <p
                   className="text-xs font-bold uppercase mb-4"
@@ -569,8 +582,8 @@ function ContactPageContent() {
               {/* Direct email */}
               <motion.div
                 {...childProps}
-                className="p-5 rounded-2xl border border-white/6"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                className="p-5 rounded-2xl border border-white/[0.06]"
+                style={{ background: "var(--surface-card)" }}
               >
                 <p
                   className="text-xs mb-2"

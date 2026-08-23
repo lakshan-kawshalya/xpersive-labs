@@ -5,7 +5,12 @@ export const alt = "Xpersive Labs — Web Development Studio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const SYNE_BOLD_URL =
+  "https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_3fvj6k.ttf";
+
 export default async function Image() {
+  const syneBold = await fetch(SYNE_BOLD_URL).then((res) => res.arrayBuffer());
+
   return new ImageResponse(
     (
       <div
@@ -52,6 +57,9 @@ export default async function Image() {
         {/* Headline */}
         <div
           style={{
+            display: "flex",
+            gap: "0.25em",
+            fontFamily: "Syne",
             fontSize: 72,
             fontWeight: 800,
             color: "white",
@@ -59,7 +67,7 @@ export default async function Image() {
             marginBottom: 24,
           }}
         >
-          We Build.{" "}
+          <span>We Build.</span>
           <span style={{ color: "#6D71F9" }}>You Scale.</span>
         </div>
 
@@ -78,7 +86,7 @@ export default async function Image() {
             borderRadius: 999,
             background: "rgba(109,113,249,0.15)",
             border: "1px solid rgba(109,113,249,0.3)",
-            width: "fit-content",
+            alignSelf: "flex-start",
           }}
         >
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10B981" }} />
@@ -88,6 +96,15 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Syne",
+          data: syneBold,
+          weight: 700,
+        },
+      ],
+    },
   );
 }

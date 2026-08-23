@@ -82,7 +82,7 @@ function TimelineStep({ step, isLast, shouldAnimate }: StepProps) {
               width: 1,
               background: !shouldAnimate
                 ? "linear-gradient(180deg, #6D71F9, #54C1FB)"
-                : "rgba(255,255,255,0.06)",
+                : "var(--border-subtle)",
             }}
           >
             {shouldAnimate && (

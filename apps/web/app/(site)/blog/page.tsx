@@ -1,5 +1,6 @@
 import { getAllPosts } from "@/lib/blog";
 import BlogList from "@/components/blog/BlogList";
+import OpenBookIllustration from "@/components/illustrations/OpenBookIllustration";
 
 import type { Metadata } from "next";
 
@@ -42,6 +43,8 @@ export default async function BlogPage() {
             backgroundSize: "36px 36px",
           }}
         />
+
+        <OpenBookIllustration className="hidden lg:block absolute top-36 right-10 w-[120px] h-[90px] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <span className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">

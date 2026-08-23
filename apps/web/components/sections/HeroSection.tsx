@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
-import HeroWebPreview from "@/components/sections/HeroWebPreview";
+import CodeEditorIllustration from "@/components/illustrations/CodeEditorIllustration";
 
 /* ─── Word-by-word headline reveal ──────────────────────────────── */
 const HEADLINE_WORDS = ["We", "Build.", "You", "Scale."];
@@ -78,11 +78,11 @@ export default function HeroSection() {
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{
-                    background: "#10B981",
+                    background: "var(--color-success)",
                     animation: "hero-badge-pulse 2s ease-in-out infinite",
                   }}
                 />
-                Web Development · Automation · AI Workflows
+                Web Development · Ecommerce · Automation · AI Workflows
               </span>
             </motion.div>
 
@@ -134,7 +134,7 @@ export default function HeroSection() {
                 transition: { duration: 0.6, delay: 0.8, ease: "easeOut" },
               } : { initial: false })}
             >
-              We design and build custom web applications for businesses in AU, UK, and US — using Next.js, TypeScript, and a relentless focus on performance. Automation and AI built in where it adds value.
+              From custom web applications and ecommerce stores to automation pipelines and AI workflows — we build production-grade software for businesses in AU, UK, and US, using Next.js, TypeScript, and a relentless focus on performance.
             </motion.p>
 
             {/* CTAs */}
@@ -173,7 +173,7 @@ export default function HeroSection() {
               </Link>
             </motion.div>
           </div>
-          <HeroWebPreview />
+          <CodeEditorIllustration className="hidden lg:block w-full" />
         </div>
       </div>
 

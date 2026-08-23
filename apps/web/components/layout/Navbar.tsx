@@ -173,7 +173,7 @@ export default function Navbar() {
             </span>
           </Link>
           <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-medium select-none"
-            style={{ background: "rgba(16,185,129,0.1)", borderColor: "rgba(16,185,129,0.2)", color: "#10B981" }}>
+            style={{ background: "rgba(16,185,129,0.1)", borderColor: "rgba(16,185,129,0.2)", color: "var(--color-success)" }}>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
             Available for projects
           </span>
@@ -243,7 +243,7 @@ export default function Navbar() {
                 key="menu"
                 id="mobile-nav"
                 className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
-                style={{ background: "#1A1A2E" }}
+                style={{ background: "var(--color-dark-elevated)" }}
                 initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
@@ -257,6 +257,16 @@ export default function Navbar() {
                   <X size={22} />
                 </button>
                 <nav className="flex flex-col items-center gap-6">
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0, duration: 0.35, ease: [0.215, 0.61, 0.355, 1.0] }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium select-none"
+                    style={{ background: "rgba(16,185,129,0.1)", borderColor: "rgba(16,185,129,0.2)", color: "var(--color-success)" }}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
+                    Available for projects
+                  </motion.span>
                   {navLinks.map((link, i) => (
                     <motion.div
                       key={link.href}
@@ -307,7 +317,7 @@ export default function Navbar() {
             <div
               id="mobile-nav"
               className="fixed inset-0 z-50 md:hidden flex flex-col items-center justify-center"
-              style={{ background: "#1A1A2E" }}
+              style={{ background: "var(--color-dark-elevated)" }}
             >
               <button
                 className="absolute top-4 right-6 flex items-center justify-center w-9 h-9 text-white/50 hover:text-white transition-colors"
@@ -317,6 +327,13 @@ export default function Navbar() {
                 <X size={22} />
               </button>
               <nav className="flex flex-col items-center gap-6">
+                <span
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium select-none"
+                  style={{ background: "rgba(16,185,129,0.1)", borderColor: "rgba(16,185,129,0.2)", color: "var(--color-success)" }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: "badge-pulse 2s ease-in-out infinite" }} />
+                  Available for projects
+                </span>
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}

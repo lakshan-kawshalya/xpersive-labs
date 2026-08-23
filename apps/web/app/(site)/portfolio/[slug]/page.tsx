@@ -221,8 +221,8 @@ export default async function ProjectPage({
             <CaseBlock
               number="01"
               label="The Challenge"
-              color="text-rose-400"
-              bg="bg-rose-500/10"
+              color="text-danger"
+              bg="bg-danger/10"
               body={project.challenge}
             />
             <CaseBlock

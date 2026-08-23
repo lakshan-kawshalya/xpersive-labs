@@ -152,8 +152,8 @@ function MemberCard({ member }: { member: TeamMember }) {
   return (
     <motion.div
       {...hoverProps}
-      className="group relative p-10 rounded-3xl border border-white/6 hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
-      style={{ background: "rgba(255,255,255,0.02)" }}
+      className="group relative p-10 rounded-3xl border border-white/[0.06] hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
+      style={{ background: "var(--surface-card)" }}
     >
       {/* Hover glow */}
       <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"

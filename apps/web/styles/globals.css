@@ -5,6 +5,13 @@
   --color-accent: #54C1FB;
   --color-dark: #272848;
   --color-subtle-gray: #DCDDE5;
+  --color-warning: #F59E0B;
+  --color-success: #10B981;
+  --color-danger: #F43F5E;
+  --color-dark-elevated: #1A1A2E;
+
+  --surface-card: rgba(255, 255, 255, 0.02);
+  --border-subtle: rgba(255, 255, 255, 0.06);
 
   --font-sans:    var(--font-dm-sans),        ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-syne),           ui-sans-serif, system-ui, sans-serif;
