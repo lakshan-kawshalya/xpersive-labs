@@ -15,7 +15,7 @@ const organizationSchema = {
   url: "https://www.xpersivelabs.com",
   logo: "https://www.xpersivelabs.com/logo/brandmark.svg",
   description:
-    "White-label scraping pipelines and managed data delivery for digital marketing and SEO agencies. 48-hour fix guarantee. Serving agencies in AU, UK, and US.",
+    "Boutique software studio building web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US.",
   foundingDate: "2024",
   founder: {
     "@type": "Person",
@@ -52,7 +52,7 @@ const websiteSchema = {
   "@type": "WebSite",
   name: "Xpersive Labs",
   url: "https://www.xpersivelabs.com",
-  description: "White-label scraping pipelines and web development for digital agencies in AU, UK, and US.",
+  description: "Boutique software studio building web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://www.xpersivelabs.com/blog?q={search_term_string}",
