@@ -43,12 +43,12 @@ export default function TeamPage() {
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <div className="bg-dark text-white">
+    <div className="text-text-primary">
       {/* Hero */}
       <section className="relative pt-40 pb-24 overflow-hidden">
         <motion.div
           className="absolute -top-24 left-1/4 w-110 h-110 rounded-full blur-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.1) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.1, 1], x: [0, 20, 0] },
             transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
@@ -59,10 +59,10 @@ export default function TeamPage() {
             <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase mb-5" style={{ letterSpacing: "0.14em" }}>
               Who We Are
             </motion.span>
-            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
+            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 text-text-primary">
               The <span className="text-gradient">Studio</span>
             </motion.h1>
-            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+            <motion.p {...childProps} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
               One developer, end-to-end. From the first call to production deployment, you work directly with the person writing the code - not an account manager, not a rotating team, not a handoff.
             </motion.p>
           </motion.div>
@@ -70,7 +70,7 @@ export default function TeamPage() {
       </section>
 
       {/* Studio quote */}
-      <section className="pb-10 border-t border-white/[0.07]">
+      <section className="pb-10 border-t border-border-subtle">
         <div className="max-w-3xl mx-auto px-6 pt-16">
           <motion.blockquote
             {...(shouldAnimate ? {
@@ -82,8 +82,9 @@ export default function TeamPage() {
             className="italic leading-relaxed pl-5"
             style={{
               borderLeft: "2px solid #6D71F9",
+              background: "rgba(109,113,249,0.04)",
               fontSize: 18,
-              color: "rgba(255,255,255,0.7)",
+              color: "var(--color-text-primary)",
             }}
           >
             A solo software studio in Colombo, Sri Lanka. Web development, automation, and AI workflows - built end-to-end by one senior developer, without the overhead of a large agency.
@@ -92,7 +93,7 @@ export default function TeamPage() {
       </section>
 
       {/* Team cards */}
-      <section className="py-16 pb-28 border-t border-white/[0.07]">
+      <section className="py-16 pb-28 border-t border-border-subtle">
         <div className="max-w-xl mx-auto px-6">
           <motion.div
             {...(shouldAnimate ? {
@@ -107,7 +108,7 @@ export default function TeamPage() {
         </div>
 
         <motion.p
-          className="text-center text-white/30 text-sm mt-14 max-w-lg mx-auto leading-relaxed px-6"
+          className="text-center text-text-muted text-sm mt-14 max-w-lg mx-auto leading-relaxed px-6"
           {...(shouldAnimate ? {
             initial: { opacity: 0, y: 16 },
             whileInView: { opacity: 1, y: 0 },
@@ -152,8 +153,8 @@ function MemberCard({ member }: { member: TeamMember }) {
   return (
     <motion.div
       {...hoverProps}
-      className="group relative p-10 rounded-3xl border border-white/[0.06] hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
-      style={{ background: "var(--surface-card)" }}
+      className="group relative p-10 rounded-3xl border border-border-subtle hover:border-primary/30 transition-colors duration-350 flex flex-col items-center text-center h-full"
+      style={{ background: "var(--surface-card)", boxShadow: "0 2px 16px rgba(109,113,249,0.06)" }}
     >
       {/* Hover glow */}
       <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -180,12 +181,12 @@ function MemberCard({ member }: { member: TeamMember }) {
             </div>
           )}
         </div>
-        <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-dark" />
+        <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-bg-card" />
       </div>
 
-      <h2 className="relative font-display font-bold mb-1 text-white" style={{ fontSize: 28 }}>{member.name}</h2>
+      <h2 className="relative font-display font-bold mb-1 text-text-primary" style={{ fontSize: 28 }}>{member.name}</h2>
       <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{member.role}</p>
-      <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>
+      <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "var(--color-text-secondary)" }}>
         {member.bio}
       </p>
 
@@ -197,7 +198,7 @@ function MemberCard({ member }: { member: TeamMember }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-white/50 hover:text-primary"
+            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-text-secondary hover:text-primary"
           >
             <Icon size={14} />
             <span>{label}</span>

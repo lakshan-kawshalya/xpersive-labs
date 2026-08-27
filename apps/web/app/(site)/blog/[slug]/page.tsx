@@ -86,16 +86,16 @@ export default async function BlogPostPage({
   };
 
   return (
-    <div className="bg-dark text-white min-h-screen">
+    <div className="text-text-primary min-h-screen">
       <JsonLd data={blogSchema} />
       {/* ── Header band ──────────────────────────────────────────── */}
-      <section className="relative pt-36 pb-14 overflow-hidden border-b border-white/[0.07]">
+      <section className="relative pt-36 pb-14 overflow-hidden border-b border-border-subtle">
         {/* Orb */}
         <div
           className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full blur-[100px] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse, rgba(109,113,249,0.22) 0%, transparent 70%)",
+              "radial-gradient(ellipse, rgba(109,113,249,0.1) 0%, transparent 70%)",
           }}
         />
         <div
@@ -111,7 +111,7 @@ export default async function BlogPostPage({
           {/* Back link */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white/75 transition-colors mb-9"
+            className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors mb-9"
           >
             <ArrowLeft size={14} />
             Back to Blog
@@ -131,17 +131,17 @@ export default async function BlogPostPage({
           </div>
 
           {/* Title */}
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-text-primary">
             {post.title}
           </h1>
 
           {/* Description */}
-          <p className="text-white/55 text-lg leading-relaxed mb-8">
+          <p className="text-text-secondary text-lg leading-relaxed mb-8">
             {post.description}
           </p>
 
           {/* Meta */}
-          <div className="flex items-center gap-5 text-white/35 text-sm">
+          <div className="flex items-center gap-5 text-text-muted text-sm">
             <span className="flex items-center gap-1.5">
               <Calendar size={13} />
               {formattedDate}
@@ -165,20 +165,20 @@ export default async function BlogPostPage({
       </section>
 
       {/* ── Prev / Next nav ──────────────────────────────────────── */}
-      <section className="border-t border-white/[0.07] py-12">
+      <section className="border-t border-border-subtle py-12">
         <div className="max-w-3xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             {prevPost ? (
               <Link
                 href={`/blog/${prevPost.slug}`}
-                className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors max-w-xs"
+                className="group flex items-center gap-3 text-text-muted hover:text-text-primary transition-colors max-w-xs"
               >
                 <ArrowLeft
                   size={16}
                   className="flex-shrink-0 group-hover:-translate-x-1 transition-transform duration-200"
                 />
                 <span>
-                  <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">
+                  <span className="block text-xs text-text-muted uppercase tracking-widest mb-0.5">
                     Older
                   </span>
                   <span className="text-sm font-medium line-clamp-1">
@@ -193,10 +193,10 @@ export default async function BlogPostPage({
             {nextPost && (
               <Link
                 href={`/blog/${nextPost.slug}`}
-                className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors text-right max-w-xs ml-auto"
+                className="group flex items-center gap-3 text-text-muted hover:text-text-primary transition-colors text-right max-w-xs ml-auto"
               >
                 <span>
-                  <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">
+                  <span className="block text-xs text-text-muted uppercase tracking-widest mb-0.5">
                     Newer
                   </span>
                   <span className="text-sm font-medium line-clamp-1">
@@ -214,12 +214,12 @@ export default async function BlogPostPage({
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="border-t border-white/[0.07] py-16">
+      <section className="border-t border-border-subtle py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-white/35 text-sm mb-2 uppercase tracking-widest font-semibold">
+          <p className="text-text-muted text-sm mb-2 uppercase tracking-widest font-semibold">
             Like what you read?
           </p>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6 text-text-primary">
             Let&apos;s build something together.
           </h2>
           <Link
