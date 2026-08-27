@@ -10,14 +10,31 @@
   --color-danger: #F43F5E;
   --color-dark-elevated: #1A1A2E;
 
-  --surface-card: rgba(255, 255, 255, 0.02);
-  --border-subtle: rgba(255, 255, 255, 0.06);
+  /* Light theme base */
+  --color-bg: #F8F9FF;
+  --color-bg-card: #FFFFFF;
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #555577;
+  --color-text-muted: #8888AA;
+  --color-border-light: rgba(109, 113, 249, 0.12);
+
+  /* Card surface + hairline border — light theme values.
+     Referenced via var() (not Tailwind utilities) across SpotlightCard,
+     TiltProjectCard, Footer, and page trust-signal panels, so updating
+     these two swaps every card on the site to the light treatment. */
+  --surface-card: #FFFFFF;
+  --border-subtle: rgba(109, 113, 249, 0.10);
 
   --font-sans:    var(--font-dm-sans),        ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-syne),           ui-sans-serif, system-ui, sans-serif;
   --font-mono:    var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --background-image-gradient-brand: linear-gradient(135deg, #6D71F9, #54C1FB);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
 }
 
 /* Hide default cursor only once the JS cursor confirms it's running */
@@ -81,7 +98,7 @@ html {
    Replaces @tailwindcss/typography (v3 plugin API, incompatible with v4).
 ──────────────────────────────────────────────────────────────────── */
 .mdx-prose {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--color-text-secondary);
   font-size: 1.0625rem;
   line-height: 1.85;
   max-width: none;
@@ -92,7 +109,7 @@ html {
 .mdx-prose h4 {
   font-family: var(--font-display, "Syne", sans-serif);
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
   letter-spacing: -0.01em;
 }
 
@@ -125,7 +142,7 @@ html {
 }
 
 .mdx-prose strong {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
@@ -157,8 +174,8 @@ html {
 .mdx-prose :not(pre) > code {
   font-family: var(--font-mono, "JetBrains Mono", monospace);
   font-size: 0.875em;
-  color: #54C1FB;
-  background: rgba(255, 255, 255, 0.07);
+  color: #3d7ea8;
+  background: rgba(109, 113, 249, 0.08);
   padding: 0.15em 0.45em;
   border-radius: 0.25rem;
 }
@@ -167,8 +184,8 @@ html {
 .mdx-prose pre {
   font-family: var(--font-mono, "JetBrains Mono", monospace);
   font-size: 0.875rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
   border-radius: 0.75rem;
   padding: 1.5rem;
   overflow-x: auto;
@@ -179,24 +196,25 @@ html {
 .mdx-prose pre code {
   background: none;
   padding: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary);
   font-size: inherit;
 }
 
 .mdx-prose hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-subtle);
   margin: 2.5rem 0;
 }
 
 .mdx-prose blockquote {
   border-left: 3px solid #6D71F9;
   padding-left: 1.25rem;
-  color: rgba(255, 255, 255, 0.5);
+  background: rgba(109, 113, 249, 0.04);
+  color: var(--color-text-primary);
   margin: 1.75rem 0;
 }
 
-/* Noise grain overlay */
+/* Noise grain overlay — kept faint on the light theme */
 body::before {
   content: "";
   position: fixed;
@@ -204,12 +222,12 @@ body::before {
   z-index: 9999;
   pointer-events: none;
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSczMDAnIGhlaWdodD0nMzAwJz48ZmlsdGVyIGlkPSdub2lzZSc+PGZlVHVyYnVsZW5jZSB0eXBlPSdmcmFjdGFsTm9pc2UnIGJhc2VGcmVxdWVuY3k9JzAuNjUnIG51bU9jdGF2ZXM9JzMnIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMzAwJyBoZWlnaHQ9JzMwMCcgZmlsdGVyPSd1cmwoI25vaXNlKScgb3BhY2l0eT0nMScvPjwvc3ZnPg==");
-  opacity: 0.025;
+  opacity: 0.015;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #272848; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb { background: #6D71F9; border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: #54C1FB; }
 
