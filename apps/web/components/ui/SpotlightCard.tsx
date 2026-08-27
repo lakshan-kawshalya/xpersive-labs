@@ -18,6 +18,10 @@ interface SpotlightCardProps {
   iconSize?: "md" | "sm";
   interactive?: boolean;
   variants?: Variants;
+  /** "light" (default) renders a white card with dark text, for use on the
+   *  light page background. "dark" renders the original translucent-white-
+   *  on-navy treatment, for sections that intentionally stay dark (e.g. WhyUs). */
+  theme?: "light" | "dark";
 }
 
 function hexToRgbTriplet(hex: string): string {
@@ -40,6 +44,7 @@ export default function SpotlightCard({
   iconSize = "md",
   interactive = true,
   variants = fadeUp,
+  theme = "light",
 }: SpotlightCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
@@ -73,18 +78,27 @@ export default function SpotlightCard({
   const iconBoxSizeClass = iconSize === "sm" ? "w-10 h-10 mb-6" : "w-12 h-12 mb-7";
   const iconBoxRadius = iconSize === "sm" ? 12 : 14;
   const iconPx = iconSize === "sm" ? 20 : 24;
+  const isDark = theme === "dark";
 
   return (
     <motion.div
       ref={cardRef}
       {...animProps}
-      className="group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-[350ms] border-white/[0.06] hover:border-primary/30"
-      style={{ padding: 32, background: "var(--surface-card)" }}
+      className={`group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-350 ${
+        isDark
+          ? "border-white/8 hover:border-white/15"
+          : "border-border-subtle hover:border-primary/30"
+      }`}
+      style={{
+        padding: 32,
+        background: isDark ? "rgba(255,255,255,0.04)" : "var(--surface-card)",
+        boxShadow: isDark ? "none" : "0 2px 12px rgba(109,113,249,0.06)",
+      }}
     >
       {/* Hover background tint */}
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: `rgba(${rgb},0.04)` }}
+        style={{ background: isDark ? "rgba(255,255,255,0.03)" : `rgba(${rgb},0.04)` }}
       />
 
       {/* Spotlight radial */}
@@ -120,8 +134,8 @@ export default function SpotlightCard({
         <Icon size={iconPx} className="text-primary" />
       </div>
 
-      <h3 className="relative font-display text-xl font-bold mb-3 text-white">{title}</h3>
-      <p className={`relative text-white/50 text-sm leading-relaxed flex-1 ${href ? "mb-5" : ""}`}>
+      <h3 className={`relative font-display text-xl font-bold mb-3 ${isDark ? "text-white" : "text-text-primary"}`}>{title}</h3>
+      <p className={`relative text-sm leading-relaxed flex-1 ${isDark ? "text-white/55" : "text-text-secondary"} ${href ? "mb-5" : ""}`}>
         {body}
       </p>
 

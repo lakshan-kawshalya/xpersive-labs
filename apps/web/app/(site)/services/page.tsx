@@ -22,6 +22,8 @@ import {
   Layers,
 } from "lucide-react";
 import Link from "next/link";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
 /* ─── Shared types ──────────────────────────────────────────────────── */
 
@@ -246,6 +248,13 @@ const services: Service[] = [
 
 /* ─── Process timeline ──────────────────────────────────────────────── */
 
+const PROCESS_LOTTIE = [
+  LOTTIE_URLS.processBrief,
+  LOTTIE_URLS.processDesign,
+  LOTTIE_URLS.processBuild,
+  LOTTIE_URLS.processLaunch,
+];
+
 function ProcessTimeline({ steps }: { steps: Step[] }) {
   const { shouldAnimate } = useMotionSafe();
 
@@ -256,6 +265,12 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <div key={step.title} className="flex items-start flex-1">
             <div className="flex flex-col items-center text-center flex-1 px-3">
+              <LottieAnimation
+                src={PROCESS_LOTTIE[i % PROCESS_LOTTIE.length]}
+                style={{ width: 60, height: 60 }}
+                className="mb-2"
+                fallback={<div className="w-[60px] h-[60px]" />}
+              />
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center mb-5 relative z-10 flex-shrink-0"
                 style={{ background: "rgba(109,113,249,0.12)", border: "1px solid rgba(109,113,249,0.3)" }}
@@ -284,10 +299,10 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                   transition: { delay: i * 0.15 + 0.1 },
                 } : { initial: false })}
               >
-                <h3 className="font-semibold text-white mb-2" style={{ fontSize: 20 }}>
+                <h3 className="font-semibold text-text-primary mb-2" style={{ fontSize: 20 }}>
                   {step.title}
                 </h3>
-                <p className="text-white/55 leading-relaxed" style={{ fontSize: 15 }}>
+                <p className="text-text-secondary leading-relaxed" style={{ fontSize: 15 }}>
                   {step.description}
                 </p>
               </motion.div>
@@ -346,8 +361,8 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="font-semibold text-white mb-1" style={{ fontSize: 18 }}>{step.title}</h3>
-              <p className="text-white/55 leading-relaxed" style={{ fontSize: 14 }}>{step.description}</p>
+              <h3 className="font-semibold text-text-primary mb-1" style={{ fontSize: 18 }}>{step.title}</h3>
+              <p className="text-text-secondary leading-relaxed" style={{ fontSize: 14 }}>{step.description}</p>
             </div>
           </motion.div>
         ))}
@@ -372,7 +387,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <section id={service.id} className="py-24 border-t border-white/[0.07] scroll-mt-20">
+    <section id={service.id} className="py-24 border-t border-border-subtle scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           {...scrollProps}
@@ -389,29 +404,28 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               </span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl font-bold leading-tight mb-7">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold leading-tight mb-7 text-text-primary">
               {service.headline}
             </h2>
 
-            <div className="space-y-4 text-white/55 leading-relaxed mb-8">
+            <div className="space-y-4 text-text-secondary leading-relaxed mb-8">
               {service.body.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
 
             <div>
-              <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-3">
+              <p className="text-xs text-text-muted uppercase tracking-widest font-semibold mb-3">
                 Tools &amp; Technologies
               </p>
               <div className="flex flex-wrap gap-2">
                 {service.tools.map((tool, idx) => (
                   <motion.span
                     key={tool}
-                    className="px-3 py-1.5 rounded-full font-mono text-[13px] cursor-default transition-all duration-200 hover:text-white"
+                    className="px-3 py-1.5 rounded-full font-mono text-[13px] cursor-default transition-all duration-200 text-text-secondary"
                     style={{
                       background: "rgba(109,113,249,0.08)",
                       border: "1px solid rgba(109,113,249,0.2)",
-                      color: "rgba(255,255,255,0.7)",
                     }}
                     {...(shouldAnimate ? {
                       initial: { opacity: 0, y: 8 },
@@ -421,7 +435,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
                       whileHover: {
                         backgroundColor: "rgba(109,113,249,0.15)",
                         borderColor: "rgba(109,113,249,0.4)",
-                        color: "#ffffff",
+                        color: "#1A1A2E",
                       },
                     } : { initial: false })}
                   >
@@ -435,9 +449,10 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           {/* Visual accent card */}
           <motion.div {...childProps} className={reversed ? "lg:col-start-1 lg:row-start-1" : ""}>
             <div
-              className={`relative rounded-2xl p-10 border border-white/10 bg-gradient-to-br ${service.gradientFrom} ${service.gradientTo} overflow-hidden h-full min-h-[280px] flex items-center justify-center`}
+              className={`relative rounded-2xl p-10 border border-border-subtle bg-bg-card bg-gradient-to-br ${service.gradientFrom} ${service.gradientTo} overflow-hidden h-full min-h-[280px] flex items-center justify-center`}
+              style={{ boxShadow: "0 2px 16px rgba(109,113,249,0.06)" }}
             >
-              <div className="absolute -bottom-8 -right-8 opacity-5">
+              <div className="absolute -bottom-8 -right-8 opacity-[0.04]">
                 <service.icon size={200} />
               </div>
               <div
@@ -445,10 +460,10 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
                 style={{ background: `radial-gradient(circle, ${service.glowColor} 0%, transparent 70%)` }}
               />
               <div className="relative z-10 text-center">
-                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl ${service.accentBg} mb-5 border border-white/10`}>
+                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl ${service.accentBg} mb-5 border border-border-subtle`}>
                   <service.icon size={38} className={service.accentColor} />
                 </div>
-                <p className="font-display text-2xl font-bold mb-2">{service.label}</p>
+                <p className="font-display text-2xl font-bold mb-2 text-text-primary">{service.label}</p>
                 <p className={`text-sm font-medium ${service.accentColor}`}>
                   End-to-end delivery
                 </p>
@@ -460,7 +475,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
         {/* Process timeline */}
         <div>
           <motion.p
-            className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-10"
+            className="text-xs text-text-muted uppercase tracking-widest font-semibold mb-10"
             {...(shouldAnimate ? {
               initial: { opacity: 0 },
               whileInView: { opacity: 1 },
@@ -494,10 +509,10 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               >
                 Case Study
               </span>
-              <p className="font-display font-bold text-white text-base mb-2">
+              <p className="font-display font-bold text-text-primary text-base mb-2">
                 {service.caseStudy.title}
               </p>
-              <p className="text-white/50 text-sm leading-relaxed mb-3">
+              <p className="text-text-secondary text-sm leading-relaxed mb-3">
                 {service.caseStudy.description}
               </p>
               <Link
@@ -537,12 +552,12 @@ export default function ServicesPage() {
   } : { initial: false };
 
   return (
-    <div className="bg-dark text-white">
+    <div className="text-text-primary">
       {/* ── Hero ───────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-20 overflow-hidden">
         <motion.div
           className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.3) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.12) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.1, 1] },
             transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
@@ -550,7 +565,7 @@ export default function ServicesPage() {
         />
         <motion.div
           className="absolute bottom-0 -left-20 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.2) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.1) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.15, 1] },
             transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
@@ -570,15 +585,15 @@ export default function ServicesPage() {
               What We Offer
             </motion.span>
 
-            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 max-w-3xl">
+            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 max-w-3xl text-text-primary">
               Our{" "}
               <span className="text-gradient">Services</span>
             </motion.h1>
 
-            <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
+            <motion.p {...childProps} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
               Four focused services - web apps, automation pipelines, ecommerce, and AI workflows - built end-to-end for businesses in AU, UK, and US.
             </motion.p>
-            <motion.p {...childProps} className="text-white/45 text-sm leading-relaxed max-w-2xl mb-10">
+            <motion.p {...childProps} className="text-text-muted text-sm leading-relaxed max-w-2xl mb-10">
               One team, end-to-end delivery, no handoffs.{" "}
               <Link href="/contact" className="text-primary font-semibold hover:opacity-75 transition-opacity duration-200">
                 Let&apos;s talk.
@@ -591,7 +606,8 @@ export default function ServicesPage() {
                 <a
                   key={s.id}
                   href={`#${s.id}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03] text-sm font-medium text-white/70 hover:text-white hover:border-white/25 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-subtle bg-bg-card text-sm font-medium text-text-secondary hover:text-text-primary hover:border-primary/25 transition-all duration-200"
+                  style={{ boxShadow: "0 1px 6px rgba(109,113,249,0.05)" }}
                 >
                   <s.icon size={15} className={s.accentColor} />
                   {s.label}
@@ -608,7 +624,7 @@ export default function ServicesPage() {
       ))}
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.07]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="relative rounded-2xl overflow-hidden p-12 sm:p-16 text-center"
