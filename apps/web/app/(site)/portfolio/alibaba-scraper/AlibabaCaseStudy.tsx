@@ -34,8 +34,8 @@ function StatCard({ value, label }: { value: string; label: string }) {
     <div
       className="flex flex-col items-center text-center p-6 rounded-2xl"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--surface-card)",
+        border: "1px solid var(--border-subtle)",
         borderRadius: 16,
       }}
     >
@@ -53,7 +53,7 @@ function StatCard({ value, label }: { value: string; label: string }) {
       </span>
       <span
         className="uppercase tracking-[0.1em] font-medium"
-        style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}
+        style={{ fontSize: 13, color: "var(--color-text-muted)" }}
       >
         {label}
       </span>
@@ -69,7 +69,7 @@ function FieldBadge({ name }: { name: string }) {
         fontSize: 11,
         background: "rgba(109,113,249,0.08)",
         border: "1px solid rgba(109,113,249,0.2)",
-        color: "rgba(255,255,255,0.6)",
+        color: "var(--color-text-secondary)",
       }}
     >
       {name}
@@ -84,7 +84,7 @@ function TechBadge({ name }: { name: string }) {
       style={{
         background: "rgba(109,113,249,0.08)",
         border: "1px solid rgba(109,113,249,0.2)",
-        color: "rgba(255,255,255,0.75)",
+        color: "var(--color-text-secondary)",
       }}
     >
       {name}
@@ -153,7 +153,7 @@ function FunctionCard({
           {icon}
         </div>
 
-        <h3 className="font-display font-bold text-white text-xl mb-3">
+        <h3 className="font-display font-bold text-text-primary text-xl mb-3">
           {title}
         </h3>
 
@@ -170,7 +170,7 @@ function FunctionCard({
           </div>
         )}
 
-        <p className="text-white/55 text-sm leading-relaxed mb-5">{body}</p>
+        <p className="text-text-secondary text-sm leading-relaxed mb-5">{body}</p>
 
         <div className="flex flex-wrap gap-1.5 mb-4">
           {fields.map((f) => (
@@ -188,9 +188,9 @@ function FunctionCard({
                   color: "#54C1FB",
                 }
               : {
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.5)",
+                  background: "var(--surface-card)",
+                  border: "1px solid var(--border-subtle)",
+                  color: "var(--color-text-secondary)",
                 }
           }
         >
@@ -243,21 +243,21 @@ function Function05Card({ shouldAnimate }: { shouldAnimate: boolean }) {
           <Camera size={22} className="text-primary" />
         </div>
 
-        <h3 className="font-display font-bold text-white text-xl mb-1">
+        <h3 className="font-display font-bold text-text-primary text-xl mb-1">
           Visual Product Search
         </h3>
         <p className="text-xs font-medium mb-4" style={{ color: "#6D71F9" }}>
           Powered by reverse-engineered Alibaba visual search API
         </p>
 
-        <p className="text-white/55 text-sm leading-relaxed mb-4">
+        <p className="text-text-secondary text-sm leading-relaxed mb-4">
           The fifth function enables product discovery through visual search
           rather than keyword queries. Instead of a text search, the function
           accepts any Alibaba CDN image URL and returns the products Alibaba
           considers visually similar - up to 1,584 results per query across 33
           pages.
         </p>
-        <p className="text-white/55 text-sm leading-relaxed mb-5">
+        <p className="text-text-secondary text-sm leading-relaxed mb-5">
           The implementation required reverse-engineering two undocumented
           internal Alibaba endpoints. Both operate via pure curl_cffi with no
           Playwright dependency - making this the fastest and most lightweight
@@ -274,7 +274,7 @@ function Function05Card({ shouldAnimate }: { shouldAnimate: boolean }) {
         >
           <p
             className="text-sm leading-relaxed italic"
-            style={{ color: "rgba(255,255,255,0.6)" }}
+            style={{ color: "var(--color-text-secondary)" }}
           >
             The key advantage: visual search bypasses keyword ambiguity
             entirely. A product image returns exact or near-exact matches
@@ -344,15 +344,9 @@ export default function AlibabaCaseStudy() {
     : { initial: false as const };
 
   return (
-    <div className="bg-dark text-white min-h-screen">
+    <div className="text-text-primary min-h-screen">
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section
-        className="relative pt-32 pb-20 overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 60%, rgba(55,58,90,0.85) 0%, #272848 70%)",
-        }}
-      >
+      <section className="relative pt-32 pb-20 overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
@@ -363,15 +357,15 @@ export default function AlibabaCaseStudy() {
         />
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] pointer-events-none"
-          style={{ background: "rgba(109,113,249,0.14)" }}
+          style={{ background: "rgba(109,113,249,0.08)" }}
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           {/* Breadcrumb */}
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-1.5 mb-10 transition-colors duration-200 hover:text-white"
-            style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}
+            className="inline-flex items-center gap-1.5 mb-10 transition-colors duration-200 hover:text-text-primary"
+            style={{ color: "var(--color-text-secondary)", fontSize: 14 }}
           >
             ← Back to Portfolio
           </Link>
@@ -392,7 +386,7 @@ export default function AlibabaCaseStudy() {
 
             <motion.h1
               {...childProps}
-              className="font-display font-extrabold leading-[1.2] mb-7 text-white"
+              className="font-display font-extrabold leading-[1.2] mb-7 text-text-primary"
               style={{ fontSize: "clamp(28px, 5vw, 40px)" }}
             >
               Automated 8 to 10 hours of weekly research for an e-commerce
@@ -402,7 +396,7 @@ export default function AlibabaCaseStudy() {
             <motion.div
               {...childProps}
               className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-12"
-              style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}
+              style={{ color: "var(--color-text-secondary)", fontSize: 14 }}
             >
               {[
                 "Australian Importer",
@@ -413,7 +407,7 @@ export default function AlibabaCaseStudy() {
                 <span key={item} className="flex items-center gap-3">
                   {item}
                   {i < arr.length - 1 && (
-                    <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
+                    <span style={{ color: "var(--color-text-muted)" }}>·</span>
                   )}
                 </span>
               ))}
@@ -446,11 +440,11 @@ export default function AlibabaCaseStudy() {
               <div>
                 <p
                   className="italic mb-2"
-                  style={{ color: "rgba(255,255,255,0.85)", fontSize: 16, lineHeight: 1.6 }}
+                  style={{ color: "var(--color-text-primary)", fontSize: 16, lineHeight: 1.6 }}
                 >
                   The system runs every morning and the sourcing research is just there. We don&apos;t touch it.
                 </p>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
                   — Australian Importer, Alibaba Intelligence Platform
                 </p>
               </div>
@@ -469,7 +463,7 @@ export default function AlibabaCaseStudy() {
 
             <motion.h2
               {...childProps}
-              className="font-display font-bold text-white mb-8"
+              className="font-display font-bold text-text-primary mb-8"
               style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
             >
               Hours wasted. Opportunities missed. Every week.
@@ -477,7 +471,7 @@ export default function AlibabaCaseStudy() {
 
             <motion.div
               {...childProps}
-              className="space-y-5 text-white/60 leading-[1.8] text-base mb-8"
+              className="space-y-5 text-text-secondary leading-[1.8] text-base mb-8"
             >
               <p>
                 Most importers are still doing product research the same way
@@ -511,7 +505,7 @@ export default function AlibabaCaseStudy() {
             >
               <p
                 style={{
-                  color: "rgba(255,255,255,0.75)",
+                  color: "var(--color-text-primary)",
                   fontSize: 17,
                   lineHeight: 1.7,
                 }}
@@ -526,7 +520,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── SOLUTION ─────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div {...scrollProps} className="mb-14">
             <motion.div {...childProps}>
@@ -534,14 +528,14 @@ export default function AlibabaCaseStudy() {
             </motion.div>
             <motion.h2
               {...childProps}
-              className="font-display font-bold text-white mb-4"
+              className="font-display font-bold text-text-primary mb-4"
               style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
             >
               A five-function supplier intelligence platform
             </motion.h2>
             <motion.p
               {...childProps}
-              className="text-white/55 text-base leading-relaxed max-w-3xl"
+              className="text-text-secondary text-base leading-relaxed max-w-3xl"
             >
               Not a generic scraping tool. Built function by function against
               Alibaba&apos;s actual behaviour - evolving from 10 fields per function
@@ -652,7 +646,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── TECHNICAL CHALLENGE ──────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div {...scrollProps} className="mb-12">
             <motion.div {...childProps}>
@@ -660,14 +654,14 @@ export default function AlibabaCaseStudy() {
             </motion.div>
             <motion.h2
               {...childProps}
-              className="font-display font-bold text-white mb-6"
+              className="font-display font-bold text-text-primary mb-6"
               style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
             >
               Alibaba actively blocks automated access
             </motion.h2>
             <motion.div
               {...childProps}
-              className="space-y-4 text-white/60 leading-[1.8] max-w-3xl"
+              className="space-y-4 text-text-secondary leading-[1.8] max-w-3xl"
             >
               <p>
                 Bot detection, CAPTCHAs, and IP-based blocking stop most tools
@@ -714,7 +708,7 @@ export default function AlibabaCaseStudy() {
                 className="p-6 rounded-xl"
                 style={{
                   background: "var(--surface-card)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  border: "1px solid var(--border-subtle)",
                 }}
               >
                 <div
@@ -726,10 +720,10 @@ export default function AlibabaCaseStudy() {
                 >
                   {card.icon}
                 </div>
-                <h4 className="font-display font-bold text-white text-base mb-2">
+                <h4 className="font-display font-bold text-text-primary text-base mb-2">
                   {card.title}
                 </h4>
-                <p className="text-white/55 text-sm leading-relaxed">
+                <p className="text-text-secondary text-sm leading-relaxed">
                   {card.body}
                 </p>
               </motion.div>
@@ -739,7 +733,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── DATA ARCHITECTURE ────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div {...scrollProps} className="mb-10">
             <motion.div {...childProps}>
@@ -747,14 +741,14 @@ export default function AlibabaCaseStudy() {
             </motion.div>
             <motion.h2
               {...childProps}
-              className="font-display font-bold text-white mb-4"
+              className="font-display font-bold text-text-primary mb-4"
               style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
             >
               47 unique fields across the module
             </motion.h2>
             <motion.p
               {...childProps}
-              className="text-white/55 text-base leading-relaxed max-w-3xl"
+              className="text-text-secondary text-base leading-relaxed max-w-3xl"
             >
               The module grew from ~10 fields per function at initial build to
               47 unique fields — the result of QA cycles, client feedback, and
@@ -765,15 +759,15 @@ export default function AlibabaCaseStudy() {
           <motion.div
             {...childProps}
             className="overflow-x-auto rounded-xl"
-            style={{ border: "1px solid rgba(255,255,255,0.07)" }}
+            style={{ border: "1px solid var(--border-subtle)" }}
           >
             <table
               className="w-full text-sm"
-              style={{ background: "rgba(255,255,255,0.01)" }}
+              style={{ background: "var(--surface-card)" }}
             >
               <thead>
                 <tr
-                  style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+                  style={{ borderBottom: "1px solid var(--border-subtle)" }}
                 >
                   {["Function", "Fields", "Key Additional Fields"].map((h) => (
                     <th
@@ -782,7 +776,7 @@ export default function AlibabaCaseStudy() {
                       style={{
                         fontSize: 11,
                         letterSpacing: "0.15em",
-                        color: "rgba(255,255,255,0.35)",
+                        color: "var(--color-text-muted)",
                       }}
                     >
                       {h}
@@ -828,7 +822,7 @@ export default function AlibabaCaseStudy() {
                     style={{
                       borderBottom:
                         i < 4
-                          ? "1px solid rgba(255,255,255,0.05)"
+                          ? "1px solid var(--border-subtle)"
                           : undefined,
                     }}
                   >
@@ -842,13 +836,13 @@ export default function AlibabaCaseStudy() {
                     </td>
                     <td
                       className="px-5 py-4 text-xs font-medium"
-                      style={{ color: "rgba(255,255,255,0.7)" }}
+                      style={{ color: "var(--color-text-secondary)" }}
                     >
                       {row.fields}
                     </td>
                     <td
                       className="px-5 py-4 text-xs"
-                      style={{ color: "rgba(255,255,255,0.45)" }}
+                      style={{ color: "var(--color-text-muted)" }}
                     >
                       {row.extra}
                     </td>
@@ -882,7 +876,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── TECH STACK ───────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div {...scrollProps}>
             <motion.div
@@ -904,7 +898,7 @@ export default function AlibabaCaseStudy() {
             <motion.p
               {...childProps}
               className="leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.35)", fontSize: 12 }}
+              style={{ color: "var(--color-text-muted)", fontSize: 12 }}
             >
               Functions 1-4: Playwright for JS-rendered pages.
               <br />
@@ -915,7 +909,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── OUTCOME ──────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div {...scrollProps}>
             <motion.div {...childProps}>
@@ -923,7 +917,7 @@ export default function AlibabaCaseStudy() {
             </motion.div>
             <motion.h2
               {...childProps}
-              className="font-display font-bold text-white mb-10"
+              className="font-display font-bold text-text-primary mb-10"
               style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
             >
               Research that used to take hours now happens before 8am.
@@ -946,14 +940,14 @@ export default function AlibabaCaseStudy() {
               </span>
               <p
                 className="italic mb-5"
-                style={{ color: "#ffffff", fontSize: 22, lineHeight: 1.6 }}
+                style={{ color: "var(--color-text-primary)", fontSize: 22, lineHeight: 1.6 }}
               >
                 The system runs every morning and the sourcing research is just
                 there. We don&apos;t touch it.
               </p>
               <p
                 className="text-sm"
-                style={{ color: "rgba(255,255,255,0.45)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 — Australian Importer, Alibaba Intelligence Platform
               </p>
@@ -975,7 +969,7 @@ export default function AlibabaCaseStudy() {
                   style={{
                     background: "rgba(109,113,249,0.06)",
                     border: "1px solid rgba(109,113,249,0.15)",
-                    color: "rgba(255,255,255,0.8)",
+                    color: "var(--color-text-primary)",
                   }}
                 >
                   {r}
@@ -985,7 +979,7 @@ export default function AlibabaCaseStudy() {
 
             <motion.div
               {...childProps}
-              className="space-y-4 text-white/60 leading-[1.8]"
+              className="space-y-4 text-text-secondary leading-[1.8]"
             >
               <p>
                 Since deployment in May 2026, the platform replaced 8-10 hours of
@@ -1008,7 +1002,7 @@ export default function AlibabaCaseStudy() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div
             {...scrollProps}
@@ -1020,7 +1014,7 @@ export default function AlibabaCaseStudy() {
           >
             <motion.p
               {...childProps}
-              className="text-white/70 text-lg leading-relaxed mb-8 max-w-xl mx-auto"
+              className="text-text-secondary text-lg leading-relaxed mb-8 max-w-xl mx-auto"
             >
               If you&apos;re doing this kind of research manually, we can build
               the system that does it automatically. Get in touch.
@@ -1040,7 +1034,7 @@ export default function AlibabaCaseStudy() {
             <motion.p
               {...childProps}
               className="text-sm"
-              style={{ color: "rgba(255,255,255,0.3)" }}
+              style={{ color: "var(--color-text-muted)" }}
             >
               Or email us directly at hello@xpersivelabs.com
             </motion.p>
