@@ -54,7 +54,7 @@ function MagneticNavLink({ href, label, isActive }: { href: string; label: strin
   const { ref, offset } = useMagnetic(0.3);
   const { shouldAnimate } = useMotionSafe();
 
-  const linkClass = `relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-[#8285fb]" : "text-white/70"}`;
+  const linkClass = `relative text-sm font-medium transition-colors duration-200 hover:text-primary flex flex-col items-center gap-1 pb-1 ${isActive ? "text-primary" : "text-text-secondary"}`;
 
   if (!shouldAnimate) {
     return (
@@ -152,8 +152,10 @@ export default function Navbar() {
   }, [isMobileOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "backdrop-blur-xl bg-dark/80 border-b border-white/5 shadow-lg" : "bg-transparent"
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl ${
+      isScrolled
+        ? "bg-[rgba(248,249,255,0.95)] border-b border-[rgba(109,113,249,0.15)] shadow-[0_1px_20px_rgba(109,113,249,0.06)]"
+        : "bg-[rgba(248,249,255,0.8)] border-b border-[rgba(109,113,249,0.08)]"
     }`}>
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo + badge */}
@@ -199,7 +201,7 @@ export default function Navbar() {
           <MagneticCTA />
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-9 h-9 text-white rounded-lg hover:bg-white/10 transition-colors"
+            className="md:hidden flex items-center justify-center w-9 h-9 text-text-primary rounded-lg hover:bg-primary/10 transition-colors"
             onClick={() => setIsMobileOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileOpen}
