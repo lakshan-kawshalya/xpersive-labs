@@ -1,4 +1,5 @@
 import AmbientBackground from "@/components/layout/AmbientBackground";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import CustomCursor from "@/components/layout/CustomCursor";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
@@ -89,6 +90,7 @@ export default function SiteLayout({
           </PageTransitionProvider>
           <Footer />
         </div>
+        <CookieConsent />
       </SiteProviders>
     </>
   );
