@@ -14,9 +14,9 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="relative min-h-screen bg-dark flex flex-col items-center justify-center overflow-hidden px-6 text-center">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 text-center">
       <div
-        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
           backgroundSize: "36px 36px",
@@ -26,7 +26,7 @@ export default function Error({ error, reset }: ErrorProps) {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(109,113,249,0.18) 0%, transparent 65%)",
+          background: "radial-gradient(circle, rgba(109,113,249,0.08) 0%, transparent 65%)",
         }}
       />
 
@@ -35,11 +35,11 @@ export default function Error({ error, reset }: ErrorProps) {
           500
         </p>
 
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4 -mt-4">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-text-primary mb-4 -mt-4">
           Something Went Wrong
         </h1>
 
-        <p className="text-white/50 text-base sm:text-lg leading-relaxed mb-10">
+        <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-10">
           An unexpected error occurred. You can try again or head back home.
         </p>
 
@@ -55,7 +55,7 @@ export default function Error({ error, reset }: ErrorProps) {
 
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-white/20 text-white font-semibold text-sm transition-all duration-300 hover:border-primary/50 hover:bg-white/5 hover:scale-105"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border-[1.5px] border-[rgba(26,26,46,0.2)] text-text-primary font-semibold text-sm transition-all duration-300 hover:border-primary hover:text-primary hover:bg-primary/[0.04] hover:scale-[1.02]"
           >
             Go Home
           </Link>

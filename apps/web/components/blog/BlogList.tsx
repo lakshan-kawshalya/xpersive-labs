@@ -33,7 +33,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
   return (
     <>
       {/* ── Tag filter ──────────────────────────────────────────── */}
-      {showFilter && <div className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/[0.07] py-4">
+      {showFilter && <div className="sticky top-16 z-30 bg-[rgba(248,249,255,0.85)] backdrop-blur-md border-b border-border-subtle py-4">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-2 flex-wrap">
             {[ALL, ...allTags].map((tag) => (
@@ -43,7 +43,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
                 className={`relative px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   activeTag === tag
                     ? "text-white"
-                    : "text-white/40 hover:text-white/70"
+                    : "text-text-muted hover:text-text-primary"
                 }`}
               >
                 {activeTag === tag && (
@@ -61,7 +61,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
               </button>
             ))}
 
-            <span className="ml-auto text-xs text-white/25 font-medium">
+            <span className="ml-auto text-xs text-text-muted font-medium">
               {filtered.length} post{filtered.length !== 1 ? "s" : ""}
             </span>
           </div>
@@ -93,7 +93,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
               initial: { opacity: 0 },
               animate: { opacity: 1 },
             } : { initial: false })}
-            className="text-center py-24 text-white/30 text-lg font-medium"
+            className="text-center py-24 text-text-muted text-lg font-medium"
           >
             No posts with this tag yet.
           </motion.p>
@@ -112,7 +112,8 @@ function PostCard({ post }: { post: PostMeta }) {
   return (
     <motion.article
       {...(shouldAnimate ? { variants: fadeUp, layout: true } : { initial: false })}
-      className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] hover:border-primary/25 overflow-hidden transition-colors duration-300"
+      className="group relative flex flex-col rounded-2xl border border-border-subtle bg-bg-card hover:border-primary/25 overflow-hidden transition-colors duration-300"
+      style={{ boxShadow: "0 2px 12px rgba(109,113,249,0.06)" }}
     >
       {/* Top accent line */}
       <div className="h-px w-full bg-gradient-to-r from-primary via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -133,19 +134,19 @@ function PostCard({ post }: { post: PostMeta }) {
 
         {/* Title */}
         <Link href={`/blog/${post.slug}`}>
-          <h2 className="font-display text-lg font-bold leading-snug mb-3 group-hover:text-primary transition-colors duration-200 line-clamp-2">
+          <h2 className="font-display text-lg font-bold leading-snug mb-3 text-text-primary group-hover:text-primary transition-colors duration-200 line-clamp-2">
             {post.title}
           </h2>
         </Link>
 
         {/* Description */}
-        <p className="text-white/50 text-sm leading-relaxed line-clamp-3 flex-1 mb-6">
+        <p className="text-text-secondary text-sm leading-relaxed line-clamp-3 flex-1 mb-6">
           {post.description}
         </p>
 
         {/* Meta + CTA */}
-        <div className="flex items-center justify-between pt-5 border-t border-white/[0.07]">
-          <div className="flex items-center gap-4 text-white/30 text-xs">
+        <div className="flex items-center justify-between pt-5 border-t border-border-subtle">
+          <div className="flex items-center gap-4 text-text-muted text-xs">
             <span className="flex items-center gap-1.5">
               <Calendar size={11} />
               {formattedDate}

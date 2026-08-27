@@ -17,7 +17,7 @@ export default async function BlogPage() {
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort();
 
   return (
-    <div className="bg-dark text-white min-h-screen">
+    <div className="text-text-primary min-h-screen">
       {/* ── Hero ────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-16 overflow-hidden">
         {/* Orbs */}
@@ -25,14 +25,14 @@ export default async function BlogPage() {
           className="absolute -top-24 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle, rgba(109,113,249,0.28) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(109,113,249,0.1) 0%, transparent 70%)",
           }}
         />
         <div
           className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full blur-[100px] pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle, rgba(84,193,251,0.18) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(84,193,251,0.08) 0%, transparent 70%)",
           }}
         />
         <div
@@ -50,10 +50,10 @@ export default async function BlogPage() {
           <span className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
             Insights &amp; Ideas
           </span>
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6">
+          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 text-text-primary">
             Our <span className="text-gradient">Blog</span>
           </h1>
-          <p className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+          <p className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
             Practical writing on web development, mobile engineering, design
             systems, and the craft of building software that lasts.
           </p>
