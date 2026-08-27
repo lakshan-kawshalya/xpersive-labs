@@ -29,7 +29,12 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "var(--color-dark-elevated)", borderTop: "1px solid var(--border-subtle)" }}>
+    <footer style={{ background: "var(--color-dark-elevated)" }}>
+      <div
+        className="h-0.5"
+        style={{ background: "linear-gradient(90deg, #6D71F9, #54C1FB, #6D71F9)" }}
+        aria-hidden="true"
+      />
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
