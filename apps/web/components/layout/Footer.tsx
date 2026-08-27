@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { CookiePreferencesButton } from "@/components/layout/CookiePreferencesButton";
 
 const footerSections = {
   Company: [
@@ -106,6 +107,23 @@ export default function Footer() {
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)" }}>
             © {new Date().getFullYear()} Xpersive Labs. All rights reserved.
           </p>
+          <div className="flex items-center gap-5">
+            <Link
+              href="/privacy-policy"
+              className="text-sm transition-colors duration-200 hover:text-primary"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/cookie-policy"
+              className="text-sm transition-colors duration-200 hover:text-primary"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              Cookie Policy
+            </Link>
+            <CookiePreferencesButton />
+          </div>
         </div>
       </div>
     </footer>
