@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import PageTransitionProvider from "@/components/layout/PageTransitionProvider";
 import ScrollProgress from "@/components/layout/ScrollProgress";
 import SiteProviders from "@/components/layout/SiteProviders";
+import { WhatsAppWidget } from "@/components/layout/WhatsAppWidget";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const organizationSchema = {
@@ -91,6 +92,7 @@ export default function SiteLayout({
           <Footer />
         </div>
         <CookieConsent />
+        <WhatsAppWidget />
       </SiteProviders>
     </>
   );
