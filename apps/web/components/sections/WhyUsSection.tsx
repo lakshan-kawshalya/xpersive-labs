@@ -21,7 +21,7 @@ const reasons = [
   {
     icon: Globe2,
     title: "Built for AU, UK & US clients",
-    body: "We understand your market, your expectations, and your timelines. Remote collaboration is not an afterthought here - it's the whole model.",
+    body: "We understand your market, your expectations, and your timezones. Remote collaboration isn't an afterthought - it's the whole model.",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function WhyUsSection() {
   } : { initial: false };
 
   return (
-    <section ref={ref} className="py-28 relative overflow-hidden">
+    <section ref={ref} className="py-28 relative overflow-hidden" style={{ background: "#272848" }}>
       <motion.div
         className="max-w-7xl mx-auto px-6"
         {...(shouldAnimate
@@ -52,7 +52,7 @@ export default function WhyUsSection() {
           <motion.span {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
             Why Xpersive Labs
           </motion.span>
-          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold">
+          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold text-white">
             The case for working with a boutique studio.
           </motion.h2>
         </motion.div>
@@ -64,9 +64,18 @@ export default function WhyUsSection() {
               icon={reason.icon}
               title={reason.title}
               body={reason.body}
+              theme="dark"
             />
           ))}
         </motion.div>
+
+        <motion.p
+          className="text-center mt-12 font-mono text-[13px]"
+          style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.04em" }}
+          {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
+        >
+          Raj Ceylon Tours · Alibaba Supplier Intelligence · Xpersive Labs Website
+        </motion.p>
       </motion.div>
     </section>
   );
