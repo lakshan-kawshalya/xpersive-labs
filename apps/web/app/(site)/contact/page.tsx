@@ -17,6 +17,8 @@ import {
 import { Suspense, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import EnvelopeCheckIllustration from "@/components/illustrations/EnvelopeCheckIllustration";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
@@ -98,7 +100,7 @@ function FloatingField({
       <label
         htmlFor={id}
         className="text-xs font-semibold uppercase tracking-wider"
-        style={{ color: "rgba(255,255,255,0.4)" }}
+        style={{ color: "var(--color-text-muted)" }}
       >
         {label}
         {required && <span className="text-primary ml-0.5">*</span>}
@@ -116,11 +118,11 @@ function FloatingField({
 
 const underlineInput = (hasError: boolean) =>
   [
-    "w-full bg-transparent pb-2.5 pt-1 text-sm text-white outline-none",
-    "border-b transition-colors duration-200 placeholder-white/20",
+    "w-full bg-transparent pb-2.5 pt-1 text-sm text-text-primary outline-none",
+    "border-b transition-colors duration-200 placeholder-[rgba(26,26,46,0.3)]",
     hasError
       ? "border-danger/50 focus:border-danger"
-      : "border-white/10 focus:border-primary",
+      : "border-[rgba(0,0,0,0.15)] focus:border-primary",
   ].join(" ");
 
 /* ─── Inner page (reads search params) ─────────────────────────────── */
@@ -182,7 +184,7 @@ function ContactPageContent() {
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <div className="bg-dark text-white min-h-screen">
+    <div className="text-text-primary min-h-screen">
       {/* Hero */}
       <section className="relative pt-40 pb-20 text-center">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -196,7 +198,7 @@ function ContactPageContent() {
             </motion.span>
             <motion.h1
               {...childProps}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6"
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 text-text-primary"
             >
               Let&apos;s Talk About{" "}
               <span className="text-gradient">Your Project</span>
@@ -204,7 +206,7 @@ function ContactPageContent() {
             <motion.p
               {...childProps}
               className="mx-auto max-w-xl leading-relaxed"
-              style={{ fontSize: 17, color: "rgba(255,255,255,0.55)" }}
+              style={{ fontSize: 17, color: "var(--color-text-secondary)" }}
             >
               No commitment. No sales pitch. Just an honest conversation about
               what you need and whether we&apos;re the right fit.
@@ -216,8 +218,8 @@ function ContactPageContent() {
               {trustStats.map((stat) => (
                 <span
                   key={stat}
-                  className="px-4 py-2 rounded-full text-xs font-semibold border border-white/10"
-                  style={{ background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.6)" }}
+                  className="px-4 py-2 rounded-full text-xs font-semibold border border-border-subtle"
+                  style={{ background: "var(--surface-card)", color: "var(--color-text-secondary)" }}
                 >
                   {stat}
                 </span>
@@ -359,13 +361,13 @@ function ContactPageContent() {
                                 <Select.Trigger
                                   id="service"
                                   onBlur={field.onBlur}
-                                  className={`${underlineInput(!!errors.service)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-white/20`}
+                                  className={`${underlineInput(!!errors.service)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-text-muted`}
                                 >
                                   <Select.Value placeholder="Select a service…" />
                                   <Select.Icon>
                                     <ChevronDown
                                       size={14}
-                                      className="text-white/30"
+                                      className="text-text-muted"
                                     />
                                   </Select.Icon>
                                 </Select.Trigger>
@@ -373,15 +375,15 @@ function ContactPageContent() {
                                   <Select.Content
                                     position="popper"
                                     sideOffset={8}
-                                    className="z-60 overflow-hidden rounded-xl border border-white/10 shadow-xl"
-                                    style={{ background: "#12122A" }}
+                                    className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl"
+                                    style={{ background: "#ffffff" }}
                                   >
                                     <Select.Viewport className="p-1">
                                       {serviceOptions.map((s) => (
                                         <Select.Item
                                           key={s}
                                           value={s}
-                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-white outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
+                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
                                         >
                                           <Select.ItemText>
                                             {s}
@@ -414,13 +416,13 @@ function ContactPageContent() {
                                 <Select.Trigger
                                   id="budget"
                                   onBlur={field.onBlur}
-                                  className={`${underlineInput(!!errors.budget)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-white/20`}
+                                  className={`${underlineInput(!!errors.budget)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-text-muted`}
                                 >
                                   <Select.Value placeholder="Select a range…" />
                                   <Select.Icon>
                                     <ChevronDown
                                       size={14}
-                                      className="text-white/30"
+                                      className="text-text-muted"
                                     />
                                   </Select.Icon>
                                 </Select.Trigger>
@@ -428,15 +430,15 @@ function ContactPageContent() {
                                   <Select.Content
                                     position="popper"
                                     sideOffset={8}
-                                    className="z-60 overflow-hidden rounded-xl border border-white/10 shadow-xl"
-                                    style={{ background: "#12122A" }}
+                                    className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl"
+                                    style={{ background: "#ffffff" }}
                                   >
                                     <Select.Viewport className="p-1">
                                       {budgetOptions.map((b) => (
                                         <Select.Item
                                           key={b}
                                           value={b}
-                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-white outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
+                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
                                         >
                                           <Select.ItemText>
                                             {b}
@@ -514,7 +516,11 @@ function ContactPageContent() {
               {...scrollProps}
             >
               <motion.div {...childProps}>
-                <EnvelopeCheckIllustration className="w-10 h-10 mb-1" />
+                <LottieAnimation
+                  src={LOTTIE_URLS.contact}
+                  style={{ width: 200, height: 200 }}
+                  fallback={<EnvelopeCheckIllustration className="w-10 h-10 mb-1" />}
+                />
               </motion.div>
 
               {/* Availability */}
@@ -539,7 +545,7 @@ function ContactPageContent() {
                 </div>
                 <p
                   className="text-xs ml-4"
-                  style={{ color: "rgba(255,255,255,0.45)" }}
+                  style={{ color: "var(--color-text-secondary)" }}
                 >
                   Taking on new projects now
                 </p>
@@ -548,19 +554,19 @@ function ContactPageContent() {
               {/* Response time */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
                 style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Clock size={16} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white mb-0.5">
+                  <p className="text-sm font-semibold text-text-primary mb-0.5">
                     We respond within 48 hours
                   </p>
                   <p
                     className="text-xs"
-                    style={{ color: "rgba(255,255,255,0.4)" }}
+                    style={{ color: "var(--color-text-muted)" }}
                   >
                     Usually much faster.
                   </p>
@@ -570,19 +576,19 @@ function ContactPageContent() {
               {/* Fix guarantee */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
                 style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
                   <Clock size={16} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white mb-0.5">
+                  <p className="text-sm font-semibold text-text-primary mb-0.5">
                     30-day post-launch support
                   </p>
                   <p
                     className="text-xs"
-                    style={{ color: "rgba(255,255,255,0.4)" }}
+                    style={{ color: "var(--color-text-muted)" }}
                   >
                     We stay on for 30 days after every launch to catch and
                     fix anything that surfaces in production.
@@ -593,19 +599,19 @@ function ContactPageContent() {
               {/* Location */}
               <motion.div
                 {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-white/[0.06]"
+                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
                 style={{ background: "var(--surface-card)" }}
               >
                 <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
                   <MapPin size={16} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white mb-0.5">
+                  <p className="text-sm font-semibold text-text-primary mb-0.5">
                     Colombo, Sri Lanka
                   </p>
                   <p
                     className="text-xs"
-                    style={{ color: "rgba(255,255,255,0.4)" }}
+                    style={{ color: "var(--color-text-muted)" }}
                   >
                     Working remotely with businesses in AU, UK, and US.
                   </p>
@@ -615,13 +621,13 @@ function ContactPageContent() {
               {/* What happens next */}
               <motion.div
                 {...childProps}
-                className="p-5 rounded-2xl border border-white/[0.06]"
+                className="p-5 rounded-2xl border border-border-subtle"
                 style={{ background: "var(--surface-card)" }}
               >
                 <p
                   className="text-xs font-bold uppercase mb-4"
                   style={{
-                    color: "rgba(255,255,255,0.35)",
+                    color: "var(--color-text-muted)",
                     letterSpacing: "0.12em",
                   }}
                 >
@@ -642,7 +648,7 @@ function ContactPageContent() {
                       />
                       <span
                         className="text-sm"
-                        style={{ color: "rgba(255,255,255,0.6)" }}
+                        style={{ color: "var(--color-text-secondary)" }}
                       >
                         {text}
                       </span>
@@ -654,19 +660,19 @@ function ContactPageContent() {
               {/* Direct email */}
               <motion.div
                 {...childProps}
-                className="p-5 rounded-2xl border border-white/[0.06]"
+                className="p-5 rounded-2xl border border-border-subtle"
                 style={{ background: "var(--surface-card)" }}
               >
                 <p
                   className="text-xs mb-2"
-                  style={{ color: "rgba(255,255,255,0.35)" }}
+                  style={{ color: "var(--color-text-muted)" }}
                 >
                   Prefer email?
                 </p>
                 <button
                   onClick={copyEmail}
                   className="group flex items-center gap-2 text-sm font-medium transition-colors duration-200 hover:text-primary"
-                  style={{ color: "rgba(255,255,255,0.65)" }}
+                  style={{ color: "var(--color-text-secondary)" }}
                 >
                   <span>hello@xpersivelabs.com</span>
                   <AnimatePresence mode="wait">
@@ -695,7 +701,7 @@ function ContactPageContent() {
                             }
                           : { initial: false })}
                         className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ color: "rgba(255,255,255,0.3)" }}
+                        style={{ color: "var(--color-text-muted)" }}
                       >
                         click to copy
                       </motion.span>
@@ -739,7 +745,7 @@ function SuccessBanner({ onReset }: { onReset: () => void }) {
         <h3 className="font-display text-2xl font-bold mb-2">Message sent!</h3>
         <p
           className="text-sm leading-relaxed max-w-sm"
-          style={{ color: "rgba(255,255,255,0.5)" }}
+          style={{ color: "var(--color-text-secondary)" }}
         >
           We&apos;ll review your message and get back to you within 48 hours.
         </p>
