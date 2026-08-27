@@ -20,19 +20,19 @@ interface OrbConfig {
 const ORB_CONFIG: OrbConfig[] = [
   {
     size: 600, top: -200, left: -150,
-    color: "rgba(109, 113, 249, 0.18)",
+    color: "rgba(109, 113, 249, 0.06)",
     blur: 80, duration: 32, parallax: 0.4,
     float: { x: [0, 60, -20, 40, 0], y: [0, -40, 30, 50, 0] },
   },
   {
     size: 500, top: "30%", right: -120,
-    color: "rgba(84, 193, 251, 0.14)",
+    color: "rgba(84, 193, 251, 0.05)",
     blur: 80, duration: 36, parallax: 0.25,
     float: { x: [0, -50, 30, -20, 0], y: [0, 60, -20, 40, 0] },
   },
   {
     size: 400, bottom: -100, left: "25%",
-    color: "rgba(109, 113, 249, 0.12)",
+    color: "rgba(109, 113, 249, 0.04)",
     blur: 80, duration: 40, parallax: -0.2,
     float: { x: [0, 40, -60, 20, 0], y: [0, -30, 50, -50, 0] },
   },
