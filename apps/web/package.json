@@ -17,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^3.5.0",
     "@keystatic/core": "^0.5.50",
     "@keystatic/next": "^5.0.4",
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "@markdoc/markdoc": "^0.5.7",
     "@radix-ui/react-select": "^2.3.7",
     "@types/sanitize-html": "^2.16.1",
