@@ -17,6 +17,8 @@ export interface Project {
   coverImage: string;
   stats?: string[];
   privateBadge?: boolean;
+  featured?: boolean;
+  result?: string;
 }
 
 interface TiltProjectCardProps {
@@ -65,8 +67,11 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           ? "transform 0.1s ease"
           : "transform 0.5s cubic-bezier(0.23,1,0.32,1)",
         background: "var(--surface-card)",
+        boxShadow: hovered
+          ? "0 16px 40px rgba(109,113,249,0.15)"
+          : "0 2px 16px rgba(109,113,249,0.06)",
       }}
-      className="relative rounded-[20px] overflow-hidden border border-white/[0.06]"
+      className="relative rounded-[20px] overflow-hidden border border-border-subtle transition-shadow duration-300"
     >
       {/* Sheen highlight that shifts with tilt */}
       {shouldAnimate && (
@@ -90,24 +95,32 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
         />
 
-        {/* Category badge */}
-        <div className="absolute top-4 left-4 z-10">
+        {/* Category badge + featured badge */}
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
           <span
-            className="px-3 py-1 rounded-full text-white text-xs font-semibold"
+            className="px-3 py-1 rounded-full text-primary text-xs font-semibold"
             style={{
-              background: "rgba(15,15,30,0.8)",
+              background: "rgba(255,255,255,0.95)",
               backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              border: "1px solid rgba(109,113,249,0.2)",
             }}
           >
             {project.category}
           </span>
+          {project.featured && (
+            <span
+              className="px-3 py-1 rounded-full text-white text-xs font-semibold"
+              style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
+            >
+              Client Project
+            </span>
+          )}
         </div>
 
         {/* Hover overlay with pill CTA */}
         <div
           className="absolute inset-0 z-10 flex items-center justify-center"
-          style={{ background: "rgba(15,15,30,0.7)", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }}
+          style={{ background: "rgba(109,113,249,0.85)", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }}
         >
           <motion.div
             {...(shouldAnimate
@@ -119,8 +132,8 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           >
             <Link
               href={`/portfolio/${project.slug}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold"
-              style={{ background: "rgba(109,113,249,0.9)" }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-primary text-sm font-semibold"
+              style={{ background: "#ffffff" }}
             >
               Read Case Study
               <ArrowRight size={14} />
@@ -134,36 +147,38 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
         <div className="flex flex-wrap items-center gap-2 mb-2">
           <Heading
             className="font-display text-[18px] font-bold transition-colors duration-200"
-            style={{ color: hovered ? "#6D71F9" : "#ffffff" }}
+            style={{ color: hovered ? "#6D71F9" : "#1A1A2E" }}
           >
             {project.title}
           </Heading>
           {project.privateBadge && (
             <span
-              className="px-2.5 py-0.5 rounded-full text-[11px] font-medium"
+              className="px-2.5 py-0.5 rounded-full text-[11px] font-medium text-text-muted"
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.4)",
+                background: "rgba(109,113,249,0.05)",
+                border: "1px solid var(--border-subtle)",
               }}
             >
               Private Repo
             </span>
           )}
         </div>
-        <p className="text-white/50 text-sm leading-relaxed mb-3">{project.description}</p>
+        <p className="text-text-secondary text-sm leading-relaxed mb-3">{project.description}</p>
+        {project.result && (
+          <p className="text-primary text-sm font-medium mb-3">{project.result}</p>
+        )}
         {project.stats && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {project.stats.map((stat) => (
               <span
                 key={stat}
+                className="text-text-secondary"
                 style={{
                   fontSize: 11,
                   background: "rgba(109,113,249,0.08)",
                   border: "1px solid rgba(109,113,249,0.15)",
                   borderRadius: 20,
                   padding: "3px 10px",
-                  color: "rgba(255,255,255,0.6)",
                 }}
               >
                 {stat}
@@ -175,7 +190,7 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 rounded-full font-mono text-xs text-white/50 transition-all duration-200 hover:text-white"
+              className="px-3 py-1 rounded-full font-mono text-xs text-text-secondary transition-all duration-200 hover:text-text-primary"
               style={{
                 background: "rgba(109,113,249,0.08)",
                 border: "1px solid rgba(109,113,249,0.2)",

@@ -19,6 +19,8 @@ const projects = [
     coverImage: "/project-covers/raj-ceylon-cover.jpeg",
     stats: ["Multi-language", "Custom itinerary UX", "Live"],
     privateBadge: false,
+    featured: true,
+    result: "Luxury tourism website, multi-language, live",
   },
   {
     slug: "alibaba-scraper",
@@ -67,12 +69,12 @@ export default function PortfolioSection() {
             <motion.span {...childProps} className="inline-block text-accent text-xs font-bold uppercase tracking-[0.2em] mb-4">
               Selected Work
             </motion.span>
-            <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold">
+            <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold text-text-primary">
               Our Work
             </motion.h2>
           </div>
           <motion.div {...childProps}>
-            <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-white/50 hover:text-primary transition-colors duration-200">
+            <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary hover:text-primary transition-colors duration-200">
               View All Projects
               <ArrowRight size={15} />
             </Link>
@@ -98,7 +100,7 @@ export default function PortfolioSection() {
         >
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-base transition-all duration-300 hover:border-primary/50 hover:bg-white/5 hover:scale-105"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full border-[1.5px] border-[rgba(26,26,46,0.2)] text-text-primary font-semibold text-base transition-all duration-300 hover:border-primary hover:text-primary hover:bg-primary/[0.04] hover:scale-[1.02]"
           >
             View All Projects
             <ArrowRight size={17} />

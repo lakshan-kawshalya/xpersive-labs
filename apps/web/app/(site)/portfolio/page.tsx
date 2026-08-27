@@ -27,6 +27,8 @@ const projects: Project[] = [
     coverImage: "/project-covers/raj-ceylon-cover.jpeg",
     stats: ["Multi-language", "Custom itinerary UX", "Live"],
     privateBadge: false,
+    featured: true,
+    result: "Luxury tourism website, multi-language, live",
   },
   {
     slug: "alibaba-scraper",
@@ -68,12 +70,12 @@ export default function PortfolioPage() {
   } : { initial: false };
 
   return (
-    <div className="bg-dark text-white min-h-screen">
+    <div className="text-text-primary min-h-screen">
       {/* ── Hero ───────────────────────────────────────────────────── */}
       <section className="relative pt-40 pb-16 overflow-hidden">
         <motion.div
           className="absolute -top-32 -right-24 w-120 h-120 rounded-full blur-[130px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.32) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.12) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.12, 1] },
             transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
@@ -81,7 +83,7 @@ export default function PortfolioPage() {
         />
         <motion.div
           className="absolute bottom-0 -left-24 w-95 h-95 rounded-full blur-[110px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.22) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.1) 0%, transparent 70%)" }}
           {...(shouldAnimate ? {
             animate: { scale: [1, 1.15, 1] },
             transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
@@ -94,11 +96,11 @@ export default function PortfolioPage() {
               <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
                 Selected Work
               </motion.span>
-              <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6">
+              <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 text-text-primary">
                 Our{" "}
                 <span className="text-gradient">Portfolio</span>
               </motion.h1>
-              <motion.p {...childProps} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+              <motion.p {...childProps} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
                 Real projects, built with care. Every line of code and design
                 decision made with purpose.
               </motion.p>
@@ -110,7 +112,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* ── Filter tabs ────────────────────────────────────────────── */}
-      <section className="sticky top-16 z-30 bg-dark/80 backdrop-blur-md border-b border-white/7 py-4">
+      <section className="sticky top-16 z-30 bg-[rgba(248,249,255,0.85)] backdrop-blur-md border-b border-border-subtle py-4">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="flex items-center gap-2 flex-wrap"
@@ -127,7 +129,7 @@ export default function PortfolioPage() {
                 className={`relative px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   active === cat
                     ? "text-white"
-                    : "text-white/45 hover:text-white/75"
+                    : "text-text-muted hover:text-text-primary"
                 }`}
               >
                 {active === cat && (
@@ -145,7 +147,7 @@ export default function PortfolioPage() {
               </button>
             ))}
 
-            <span className="ml-auto text-xs text-white/30 font-medium">
+            <span className="ml-auto text-xs text-text-muted font-medium">
               {filtered.length} project{filtered.length !== 1 ? "s" : ""}
             </span>
           </motion.div>
@@ -176,12 +178,12 @@ export default function PortfolioPage() {
                 {...(shouldAnimate ? { variants: fadeUp, layout: true } : { initial: false })}
                 className="rounded-[20px] border border-dashed flex flex-col items-center justify-center text-center min-h-[300px] p-8"
                 style={{
-                  background: "rgba(255,255,255,0.01)",
-                  borderColor: "rgba(255,255,255,0.08)",
+                  background: "rgba(109,113,249,0.02)",
+                  borderColor: "rgba(109,113,249,0.15)",
                 }}
               >
                 <DraftingIllustration className="w-20 h-20 mb-4" />
-                <p className="text-[14px] text-white/30">More work on the way</p>
+                <p className="text-[14px] text-text-muted">More work on the way</p>
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -189,13 +191,13 @@ export default function PortfolioPage() {
       </section>
 
       {/* ── Bottom CTA ─────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-white/7">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div className="text-center" {...scrollProps}>
-            <motion.h2 {...childProps} className="font-display text-3xl sm:text-4xl font-bold mb-5">
+            <motion.h2 {...childProps} className="font-display text-3xl sm:text-4xl font-bold mb-5 text-text-primary">
               Ready to be our next project?
             </motion.h2>
-            <motion.p {...childProps} className="text-white/50 mb-8 max-w-md mx-auto">
+            <motion.p {...childProps} className="text-text-secondary mb-8 max-w-md mx-auto">
               Tell us what you&apos;re building and let&apos;s create something remarkable together.
             </motion.p>
             <motion.div {...childProps}>
@@ -235,7 +237,7 @@ function ProjectPreviewCollage({
       {projects.map((project, i) => (
         <motion.div
           key={project.slug}
-          className="absolute w-55 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+          className="absolute w-55 rounded-2xl overflow-hidden border border-border-subtle shadow-2xl"
           style={{
             top: offsets[i]?.top,
             left: offsets[i]?.left,
@@ -262,8 +264,8 @@ function ProjectPreviewCollage({
             />
           </div>
           <div className="p-4" style={{ background: "var(--surface-card)" }}>
-            <p className="font-display text-sm font-bold text-white mb-0.5">{project.title}</p>
-            <p className="text-xs text-white/40">{project.category}</p>
+            <p className="font-display text-sm font-bold text-text-primary mb-0.5">{project.title}</p>
+            <p className="text-xs text-text-muted">{project.category}</p>
           </div>
         </motion.div>
       ))}
