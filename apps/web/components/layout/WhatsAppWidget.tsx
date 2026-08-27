@@ -257,7 +257,7 @@ export function WhatsAppWidget() {
   );
 }
 
-function WhatsAppIcon({ size = 24 }: { size?: number }) {
+export function WhatsAppIcon({ size = 24 }: { size?: number }) {
   return (
     <svg
       width={size}

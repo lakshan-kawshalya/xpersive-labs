@@ -19,6 +19,7 @@ import { Controller, useForm } from "react-hook-form";
 import EnvelopeCheckIllustration from "@/components/illustrations/EnvelopeCheckIllustration";
 import { LottieAnimation } from "@/components/ui/LottieAnimation";
 import { LOTTIE_URLS } from "@/lib/animations-lottie";
+import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
@@ -235,6 +236,25 @@ function ContactPageContent() {
           <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20 items-start">
             {/* LEFT - Form */}
             <motion.div {...scrollProps}>
+              <div className="wa-contact-alt">
+                <div className="wa-contact-alt-inner">
+                  <WhatsAppIcon size={20} />
+                  <div>
+                    <p className="wa-contact-alt-title">Prefer WhatsApp?</p>
+                    <p className="wa-contact-alt-sub">
+                      Message us directly — we reply within a few hours.
+                    </p>
+                  </div>
+                  <a
+                    href="https://wa.me/94742366282?text=Hi%20Xpersive%20Labs!%20I'd%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="wa-contact-alt-btn"
+                  >
+                    Open WhatsApp
+                  </a>
+                </div>
+              </div>
               <AnimatePresence mode="wait">
                 {submitState === "success" ? (
                   <SuccessBanner

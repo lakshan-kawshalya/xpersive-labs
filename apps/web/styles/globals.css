@@ -601,3 +601,68 @@ body::before {
 }
 
 /* ─── End WhatsApp Widget ─────────────────────────── */
+
+/* ─── WhatsApp Contact Page Alternative ───────────── */
+
+.wa-contact-alt {
+  margin-bottom: 24px;
+}
+
+.wa-contact-alt-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #f0fff4;
+  border: 1.5px solid rgba(37, 211, 102, 0.25);
+  border-radius: 16px;
+}
+
+.wa-contact-alt-inner svg path {
+  fill: #25D366;
+}
+
+.wa-contact-alt-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0 0 2px;
+}
+
+.wa-contact-alt-sub {
+  font-size: 13px;
+  color: #555577;
+  margin: 0;
+}
+
+.wa-contact-alt-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: #25D366;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.wa-contact-alt-btn:hover {
+  background: #22c55e;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .wa-contact-alt-inner {
+    flex-wrap: wrap;
+  }
+  .wa-contact-alt-btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ─── End WhatsApp Contact Page Alternative ───────── */
