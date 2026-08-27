@@ -121,7 +121,7 @@ export default async function ProjectPage({
   const nextProject = nextSlug ? getProject(nextSlug) : null;
 
   return (
-    <div className="bg-dark text-white">
+    <div className="text-text-primary">
       {/* ── Hero image area ──────────────────────────────────────── */}
       <section className="relative pt-24 overflow-hidden">
         <div
@@ -142,7 +142,7 @@ export default async function ProjectPage({
                 "radial-gradient(circle at 30% 70%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.2) 0%, transparent 45%)",
             }}
           />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-dark to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
         </div>
       </section>
 
@@ -151,7 +151,7 @@ export default async function ProjectPage({
         <div className="max-w-4xl mx-auto px-6">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors mb-10"
           >
             <ArrowLeft size={15} />
             Back to Portfolio
@@ -163,21 +163,21 @@ export default async function ProjectPage({
               <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
                 {project.category}
               </span>
-              <span className="flex items-center gap-1.5 text-white/35 text-xs font-medium">
+              <span className="flex items-center gap-1.5 text-text-muted text-xs font-medium">
                 <Calendar size={12} />
                 {project.year}
               </span>
-              <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/40 text-xs font-medium">
+              <span className="px-3 py-1 rounded-full bg-bg-card border border-border-subtle text-text-muted text-xs font-medium">
                 {project.status}
               </span>
               {project.privateBadge && (
-                <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/40 text-xs font-medium">
+                <span className="px-3 py-1 rounded-full bg-bg-card border border-border-subtle text-text-muted text-xs font-medium">
                   Private Repository
                 </span>
               )}
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-text-primary">
               {project.title}
             </h1>
 
@@ -185,7 +185,7 @@ export default async function ProjectPage({
               {project.highlight}
             </p>
 
-            <p className="text-white/60 text-lg leading-relaxed mb-7">
+            <p className="text-text-secondary text-lg leading-relaxed mb-7">
               {project.summary}
             </p>
 
@@ -205,7 +205,7 @@ export default async function ProjectPage({
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs text-white/55 font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg-card border border-border-subtle text-xs text-text-secondary font-medium"
                 >
                   <Tag size={10} />
                   {tag}
@@ -214,7 +214,7 @@ export default async function ProjectPage({
             </div>
           </div>
 
-          <div className="border-t border-white/[0.07] mb-12" />
+          <div className="border-t border-border-subtle mb-12" />
 
           {/* Challenge / Solution / Result */}
           <div className="space-y-12">
@@ -241,18 +241,18 @@ export default async function ProjectPage({
             />
           </div>
 
-          <div className="border-t border-white/[0.07] my-12" />
+          <div className="border-t border-border-subtle my-12" />
 
           {/* Tech stack */}
           <div>
-            <p className="text-xs text-white/30 uppercase tracking-widest font-semibold mb-5">
+            <p className="text-xs text-text-muted uppercase tracking-widest font-semibold mb-5">
               Tech Stack
             </p>
             <div className="flex flex-wrap gap-2.5">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white/70 font-medium hover:border-primary/30 hover:text-white transition-colors duration-200"
+                  className="px-4 py-2 rounded-xl bg-bg-card border border-border-subtle text-sm text-text-secondary font-medium hover:border-primary/30 hover:text-text-primary transition-colors duration-200"
                 >
                   {t}
                 </span>
@@ -263,18 +263,18 @@ export default async function ProjectPage({
       </section>
 
       {/* ── Next project + CTA ───────────────────────────────────── */}
-      <section className="border-t border-white/[0.07] py-16">
+      <section className="border-t border-border-subtle py-16">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div>
               {prevSlug && getProject(prevSlug) && (
                 <Link
                   href={`/portfolio/${prevSlug}`}
-                  className="group inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors"
+                  className="group inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors"
                 >
                   <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform duration-200" />
                   <span>
-                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">Previous</span>
+                    <span className="block text-xs text-text-muted uppercase tracking-widest mb-0.5">Previous</span>
                     {getProject(prevSlug)!.title}
                   </span>
                 </Link>
@@ -294,10 +294,10 @@ export default async function ProjectPage({
               {nextProject && (
                 <Link
                   href={`/portfolio/${nextSlug}`}
-                  className="group inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors"
+                  className="group inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors"
                 >
                   <span>
-                    <span className="block text-xs text-white/25 uppercase tracking-widest mb-0.5">Next</span>
+                    <span className="block text-xs text-text-muted uppercase tracking-widest mb-0.5">Next</span>
                     {nextProject.title}
                   </span>
                   <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
@@ -335,7 +335,7 @@ function CaseBlock({
       </div>
       <div className="flex-1 pt-1.5">
         <p className={`text-xs font-bold uppercase tracking-[0.2em] ${color} mb-3`}>{label}</p>
-        <p className="text-white/60 leading-[1.85] text-base">{body}</p>
+        <p className="text-text-secondary leading-[1.85] text-base">{body}</p>
       </div>
     </div>
   );
