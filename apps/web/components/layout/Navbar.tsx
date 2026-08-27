@@ -152,11 +152,15 @@ export default function Navbar() {
   }, [isMobileOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled
         ? "bg-[rgba(248,249,255,0.95)] border-b border-[rgba(109,113,249,0.15)] shadow-[0_1px_20px_rgba(109,113,249,0.06)]"
         : "bg-[rgba(248,249,255,0.8)] border-b border-[rgba(109,113,249,0.08)]"
     }`}>
+      {/* Blur lives on its own layer, not the header itself — backdrop-filter on
+          an ancestor creates a new containing block for position:fixed descendants,
+          which would break the full-screen mobile menu overlay below. */}
+      <div className="absolute inset-0 -z-10 backdrop-blur-xl" aria-hidden="true" />
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo + badge */}
         <div className="flex items-center gap-3">
