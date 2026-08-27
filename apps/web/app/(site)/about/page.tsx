@@ -19,6 +19,8 @@ import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import LayeredStackIllustration from "@/components/illustrations/LayeredStackIllustration";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 
@@ -112,7 +114,7 @@ function HeroMilestoneAside({ shouldAnimate }: { shouldAnimate: boolean }) {
             >
               <div
                 className="absolute -left-6 w-3 h-3 rounded-full border border-primary/40"
-                style={{ background: "#272848" }}
+                style={{ background: "var(--color-bg)" }}
               />
               <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                 <m.icon size={16} className="text-primary" />
@@ -124,7 +126,7 @@ function HeroMilestoneAside({ shouldAnimate }: { shouldAnimate: boolean }) {
                 >
                   {m.year}
                 </span>
-                <span className="text-sm font-semibold text-white/80">{m.title}</span>
+                <span className="text-sm font-semibold text-text-primary">{m.title}</span>
               </div>
             </motion.div>
           ))}
@@ -159,12 +161,12 @@ export default function AboutPage() {
   } : {};
 
   return (
-    <div className="bg-dark text-white overflow-x-hidden">
+    <div className="text-text-primary overflow-x-hidden">
       {/* Hero */}
       <section className="relative pt-40 pb-28 overflow-hidden">
         <motion.div
           className="absolute -top-32 -left-32 w-125 h-125 rounded-full blur-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.35) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.1) 0%, transparent 70%)" }}
           {...ambientProps}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -174,21 +176,28 @@ export default function AboutPage() {
                 <MapPin size={14} className="text-primary" />
                 <span className="text-primary text-xs font-bold uppercase" style={{ letterSpacing: "0.14em" }}>Colombo, Sri Lanka</span>
               </motion.div>
-              <motion.h1 {...childProps(fadeUp)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7">
+              <motion.h1 {...childProps(fadeUp)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 text-text-primary">
                 About <span className="text-gradient">Xpersive Labs</span>
               </motion.h1>
-              <motion.p {...childProps(fadeUp)} className="text-white/55 text-lg sm:text-xl leading-relaxed max-w-2xl">
+              <motion.p {...childProps(fadeUp)} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
                 A boutique software studio from Colombo, Sri Lanka - building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US.
               </motion.p>
             </motion.div>
 
-            <HeroMilestoneAside shouldAnimate={shouldAnimate} />
+            <div className="hidden lg:flex flex-col items-center gap-6">
+              <LottieAnimation
+                src={LOTTIE_URLS.webDev}
+                style={{ width: 220, height: 220 }}
+                fallback={null}
+              />
+              <HeroMilestoneAside shouldAnimate={shouldAnimate} />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Story */}
-      <section className="py-24 border-t border-white/[0.07]">
+      <section className="py-24 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...scrollProps(staggerContainer)}>
@@ -198,7 +207,7 @@ export default function AboutPage() {
               <motion.h2 {...childProps(fadeUp)} className="font-display font-bold mb-7 leading-tight" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
                 Built to <span className="text-gradient">Build Well</span>
               </motion.h2>
-              <motion.div {...childProps(fadeUp)} className="space-y-5 leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <motion.div {...childProps(fadeUp)} className="space-y-5 leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                 <p>Xpersive Labs was founded in 2024 in Colombo, Sri Lanka. The goal was simple: build production-grade software that actually works - clean code, real deliverables, no bloat.</p>
                 <p>We specialise in web application development, automation pipelines, and AI workflow integration for businesses in AU, UK, and US. Every project gets direct senior-developer access from scoping to launch - no account managers, no dropped context.</p>
               </motion.div>
@@ -206,8 +215,8 @@ export default function AboutPage() {
                 <Link href="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline underline-offset-4">
                   View Our Services <ArrowRight size={14} />
                 </Link>
-                <span className="text-white/20">·</span>
-                <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white transition-colors">
+                <span className="text-text-muted">·</span>
+                <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-semibold text-text-secondary hover:text-text-primary transition-colors">
                   See Our Work <ArrowRight size={14} />
                 </Link>
               </motion.div>
@@ -215,7 +224,7 @@ export default function AboutPage() {
 
             <motion.div {...childProps(fadeUp)} {...(shouldAnimate ? { initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-80px" } } : { initial: false })}>
               <LayeredStackIllustration className="hidden lg:block mb-8 ml-2" />
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 p-10" style={{ background: "var(--surface-card)" }}>
+              <div className="relative rounded-2xl overflow-hidden border border-border-subtle p-10" style={{ background: "var(--surface-card)" }}>
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 60% 20%, rgba(109,113,249,0.12) 0%, transparent 60%)" }} />
                 <div className="relative z-10 space-y-8">
                   {[
@@ -229,8 +238,8 @@ export default function AboutPage() {
                         <Icon size={18} className="text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs text-white/35 uppercase tracking-widest font-medium">{label}</p>
-                        <p className="text-white font-semibold">{value}</p>
+                        <p className="text-xs text-text-muted uppercase tracking-widest font-medium">{label}</p>
+                        <p className="text-text-primary font-semibold">{value}</p>
                       </div>
                     </div>
                   ))}
@@ -242,29 +251,29 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-24 border-t border-white/[0.07]">
+      <section className="py-24 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div className="text-center mb-16" {...scrollProps(staggerContainer)}>
             <motion.span {...childProps(fadeUp)} className="inline-block text-accent text-xs font-bold uppercase mb-4" style={{ letterSpacing: "0.14em" }}>Purpose</motion.span>
             <motion.h2 {...childProps(fadeUp)} className="font-display font-bold" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>Mission &amp; Vision</motion.h2>
           </motion.div>
           <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" {...scrollProps(staggerContainer)}>
-            <motion.div {...childProps(slideInLeft)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-primary/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
+            <motion.div {...childProps(slideInLeft)} className="relative p-10 rounded-2xl border border-border-subtle overflow-hidden group hover:border-primary/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(109,113,249,0.1) 0%, transparent 65%)" }} />
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-7"><Target size={22} className="text-primary" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#6D71F9" }}>Mission</p>
                 <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Build software that performs in production</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build clean, fast web applications and automation systems that do exactly what the client needs - shipped on time, maintained honestly, and built to last beyond the first deployment.</p>
+                <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)", fontSize: 15 }}>Build clean, fast web applications and automation systems that do exactly what the client needs - shipped on time, maintained honestly, and built to last beyond the first deployment.</p>
               </div>
             </motion.div>
-            <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-white/10 overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
+            <motion.div {...childProps(slideInRight)} className="relative p-10 rounded-2xl border border-border-subtle overflow-hidden group hover:border-accent/30 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(84,193,251,0.1) 0%, transparent 65%)" }} />
               <div className="relative z-10">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-7"><Compass size={22} className="text-accent" /></div>
                 <p className="text-xs font-bold uppercase mb-3" style={{ letterSpacing: "0.14em", color: "#54C1FB" }}>Vision</p>
                 <h3 className="font-display text-2xl font-bold mb-5 leading-snug">Be the go-to software studio for growing businesses in AU, UK, and US</h3>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>Build a reputation for delivering software that works - consistently, on budget, and without the overhead of a large agency. One senior developer. Full accountability.</p>
+                <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)", fontSize: 15 }}>Build a reputation for delivering software that works - consistently, on budget, and without the overhead of a large agency. One senior developer. Full accountability.</p>
               </div>
             </motion.div>
           </motion.div>
@@ -272,7 +281,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-24 border-t border-white/[0.07]">
+      <section className="py-24 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div className="text-center mb-16" {...scrollProps(staggerContainer)}>
             <motion.span {...childProps(fadeUp)} className="inline-block text-xs font-bold uppercase mb-4" style={{ color: "#6D71F9", letterSpacing: "0.14em" }}>What We Stand For</motion.span>
@@ -296,7 +305,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-24 border-t border-white/[0.07]">
+      <section className="py-24 border-t border-border-subtle">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div className="text-center mb-16" {...scrollProps(staggerContainer)}>
             <motion.span {...childProps(fadeUp)} className="inline-block text-xs font-bold uppercase mb-4" style={{ color: "var(--color-warning)", letterSpacing: "0.14em" }}>Our Journey</motion.span>
@@ -323,8 +332,8 @@ export default function AboutPage() {
                       {isLeft && <MilestoneCard milestone={m} />}
                     </div>
                     <div className="flex flex-col items-center relative z-10 py-3 lg:py-0">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center border border-white/10"
-                        style={{ background: "rgba(109,113,249,0.12)", boxShadow: "0 0 0 5px #272848" }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center border border-border-subtle"
+                        style={{ background: "rgba(109,113,249,0.12)", boxShadow: "0 0 0 5px var(--color-bg)" }}>
                         <m.icon size={18} className="text-primary" />
                       </div>
                       <span className="mt-2 px-3 py-0.5 rounded-full text-xs font-bold"
@@ -347,11 +356,11 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 border-t border-white/[0.07]">
+      <section className="py-20 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div className="text-center" {...scrollProps(staggerContainer)}>
             <motion.h2 {...childProps(fadeUp)} className="font-display text-3xl sm:text-4xl font-bold mb-5">Ready to build together?</motion.h2>
-            <motion.p {...childProps(fadeUp)} className="text-white/50 mb-8 max-w-md mx-auto">Tell us what you need. We will scope it and build it right.</motion.p>
+            <motion.p {...childProps(fadeUp)} className="text-text-secondary mb-8 max-w-md mx-auto">Tell us what you need. We will scope it and build it right.</motion.p>
             <motion.div {...childProps(fadeUp)}>
               <Link href="/contact" className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
                 style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}>
@@ -367,9 +376,9 @@ export default function AboutPage() {
 
 function MilestoneCard({ milestone }: { milestone: typeof milestones[number] }) {
   return (
-    <div className="p-6 rounded-2xl border border-white/[0.06] hover:border-primary/20 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
-      <h3 className="font-display text-lg font-bold mb-2 text-white">{milestone.title}</h3>
-      <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{milestone.description}</p>
+    <div className="p-6 rounded-2xl border border-border-subtle hover:border-primary/20 transition-colors duration-300" style={{ background: "var(--surface-card)" }}>
+      <h3 className="font-display text-lg font-bold mb-2 text-text-primary">{milestone.title}</h3>
+      <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{milestone.description}</p>
     </div>
   );
 }
