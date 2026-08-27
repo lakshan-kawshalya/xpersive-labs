@@ -6,7 +6,7 @@ const CSP = [
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
   "img-src 'self' data: blob:",
-  "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.lottiefiles.com",
   "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
