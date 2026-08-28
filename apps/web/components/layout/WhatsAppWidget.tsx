@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -130,20 +131,14 @@ export function WhatsAppWidget() {
             {/* HEADER */}
             <div className="wa-header">
               <div className="wa-avatar">
-                <svg viewBox="0 0 40 40" width="40" height="40">
-                  <circle cx="20" cy="20" r="20" fill="#6D71F9" />
-                  <text
-                    x="20"
-                    y="26"
-                    textAnchor="middle"
-                    fill="white"
-                    fontSize="14"
-                    fontWeight="700"
-                    fontFamily="sans-serif"
-                  >
-                    XL
-                  </text>
-                </svg>
+                <div className="wa-avatar-circle">
+                  <Image
+                    src="/logo/brandmark.svg"
+                    alt="Xpersive Labs"
+                    width={24}
+                    height={24}
+                  />
+                </div>
                 <span className="wa-online-dot" />
               </div>
               <div className="wa-header-text">

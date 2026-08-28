@@ -331,6 +331,16 @@ body::before {
   display: block;
 }
 
+.wa-avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .wa-online-dot {
   position: absolute;
   bottom: 1px;
