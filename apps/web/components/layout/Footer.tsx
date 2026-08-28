@@ -19,6 +19,7 @@ const footerSections = {
   Connect: [
     { href: "/contact", label: "Contact Us" },
     { href: "mailto:hello@xpersivelabs.com", label: "hello@xpersivelabs.com" },
+    { href: "https://wa.me/94742366282", label: "WhatsApp" },
   ],
 };
 
@@ -82,6 +83,9 @@ export default function Footer() {
                       href={link.href}
                       className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
                       style={{ color: "rgba(255,255,255,0.45)" }}
+                      {...(link.href.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                     >
                       <span className="group-hover/link:text-white transition-colors duration-200">
                         {link.label}
