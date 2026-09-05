@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const LAST_UPDATED = "August 27, 2026";
+const LAST_UPDATED = "September 4, 2026";
 
 const sections = [
   { id: "what-are-cookies", label: "What Are Cookies" },
@@ -47,8 +47,8 @@ export default function CookiePolicyPage() {
 
               <h3>Necessary cookies (always active)</h3>
               <p>
-                This cookie is required for the website to function. You
-                cannot disable it through our cookie preferences panel.
+                These cookies are required for the website to function. You
+                cannot disable them through our cookie preferences panel.
               </p>
               <ul>
                 <li>
@@ -61,6 +61,18 @@ export default function CookiePolicyPage() {
                   <br />
                   <strong>Set by:</strong> xpersivelabs.com
                   (vanilla-cookieconsent)
+                </li>
+                <li>
+                  <strong>Name:</strong> xl_region
+                  <br />
+                  <strong>Purpose:</strong> Remembers your region (based on
+                  your approximate location) so we can show you relevant
+                  content. No personal data or precise location is stored —
+                  only a region code such as &quot;US&quot; or &quot;EU&quot;
+                  <br />
+                  <strong>Duration:</strong> 6 months
+                  <br />
+                  <strong>Set by:</strong> xpersivelabs.com
                 </li>
               </ul>
 
