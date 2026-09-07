@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     question: "How do we communicate given the time difference?",
-    answer: "We overlap with AU, UK, and US working hours and respond within 48 hours, usually faster.",
+    answer: "We overlap with AU, UK, US, and European working hours and respond within 48 hours, usually faster.",
   },
   {
     question: "Do you sign contracts?",
