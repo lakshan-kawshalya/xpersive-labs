@@ -16,11 +16,11 @@ const reasons = [
   {
     icon: Layers,
     title: "Modern stack, every project",
-    body: "Next.js 14, TypeScript, Python. We don't take on projects that need legacy tech - so every codebase we touch stays maintainable.",
+    body: "Next.js, TypeScript, Python. We don't take on projects that need legacy tech - so every codebase we touch stays maintainable.",
   },
   {
     icon: Globe2,
-    title: "Built for AU, UK & US clients",
+    title: "Built for AU, UK, US & EU clients",
     body: "We understand your market, your expectations, and your timezones. Remote collaboration isn't an afterthought - it's the whole model.",
   },
 ];
@@ -37,7 +37,7 @@ export default function WhyUsSection() {
   } : { initial: false };
 
   return (
-    <section ref={ref} className="py-28 relative overflow-hidden" style={{ background: "#272848" }}>
+    <section ref={ref} className="py-28 relative overflow-hidden">
       <motion.div
         className="max-w-7xl mx-auto px-6"
         {...(shouldAnimate
@@ -48,11 +48,11 @@ export default function WhyUsSection() {
             }
           : { initial: false })}
       >
-        <motion.div className="text-center mb-16" {...scrollProps}>
+        <motion.div className="text-center mb-16 max-w-2xl mx-auto" {...scrollProps}>
           <motion.span {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            Why Xpersive Labs
+            Studio Philosophy &amp; Advantage
           </motion.span>
-          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold text-white">
+          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold text-text-primary">
             The case for working with a boutique studio.
           </motion.h2>
         </motion.div>
@@ -64,14 +64,14 @@ export default function WhyUsSection() {
               icon={reason.icon}
               title={reason.title}
               body={reason.body}
-              theme="dark"
+              theme="light"
             />
           ))}
         </motion.div>
 
         <motion.p
-          className="text-center mt-12 font-mono text-[13px]"
-          style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.04em" }}
+          className="text-center mt-12 font-mono text-[13px] text-text-muted"
+          style={{ letterSpacing: "0.04em" }}
           {...(shouldAnimate ? { variants: fadeUp } : { initial: false })}
         >
           Raj Ceylon Tours · Alibaba Supplier Intelligence · Xpersive Labs Website
