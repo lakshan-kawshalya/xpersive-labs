@@ -62,7 +62,7 @@ export default function Footer() {
                   aria-label={label}
                   className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-200 hover:-translate-y-0.5 text-white/50 hover:text-primary bg-white/4 border-white/8 hover:bg-primary/15 hover:border-primary/30"
                 >
-                  <FontAwesomeIcon icon={icon} width={16} height={16} />
+                  <FontAwesomeIcon icon={icon} style={{ width: 16, height: 16 }} />
                 </a>
               ))}
             </div>

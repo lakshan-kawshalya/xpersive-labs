@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, CheckCircle2, Lock, MessageCircle, PhoneCall, Sparkles } from "lucide-react";
+import { ArrowRight, Calendar, CheckCircle2, Lock, PhoneCall, Sparkles } from "lucide-react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const HEADLINE_LINE_1 = ["Built", "Here."];
@@ -128,7 +129,9 @@ export default function HeroSectionLK() {
                   (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
                 }}
               >
-                <MessageCircle size={20} className="transition-transform group-hover:scale-110" aria-hidden="true" />
+                <span className="transition-transform group-hover:scale-110">
+                  <WhatsAppIcon size={20} color="white" />
+                </span>
                 Chat on WhatsApp
                 <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </a>
