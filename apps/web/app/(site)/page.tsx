@@ -13,7 +13,6 @@ import ProcessSectionLK from "@/components/sections/lk/ProcessSectionLK";
 import PhilosophySectionLK from "@/components/sections/lk/PhilosophySectionLK";
 import FAQSectionLK from "@/components/sections/lk/FAQSectionLK";
 import CTASectionLK from "@/components/sections/lk/CTASectionLK";
-import SectionBreak from "@/components/sections/SectionBreak";
 import { DEFAULT_REGION, isRegion } from "@/lib/geo/regions";
 import { REGION_HEADER_NAME } from "@/proxy";
 
@@ -25,17 +24,11 @@ export default async function Home() {
     return (
       <>
         <HeroSectionLK />
-        <SectionBreak />
         <ServicesSectionLK />
-        <SectionBreak />
         <CaseStudiesSectionLK />
-        <SectionBreak />
         <ProcessSectionLK />
-        <SectionBreak />
         <PhilosophySectionLK />
-        <SectionBreak />
         <FAQSectionLK />
-        <SectionBreak />
         <CTASectionLK />
       </>
     );
@@ -44,17 +37,11 @@ export default async function Home() {
   return (
     <>
       <HeroSection />
-      <SectionBreak />
       <ServicesSection />
-      <SectionBreak />
       <PortfolioSection />
-      <SectionBreak />
       <ProcessSection />
-      <SectionBreak />
       <WhyUsSection />
-      <SectionBreak />
       <FAQSection />
-      <SectionBreak />
       <CTASection />
     </>
   );
