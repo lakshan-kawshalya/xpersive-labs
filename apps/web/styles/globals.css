@@ -66,17 +66,6 @@ html.custom-cursor-active * {
   outline: none;
 }
 
-/* Smooth scrolling.
-   scroll-snap-type here is a "magnetic scroll": it gently pulls the
-   viewport to rest on a section boundary once the user stops scrolling
-   near it, without trapping scroll through tall sections the way
-   `mandatory` would. Inert on any page/section that doesn't opt in via
-   `snap-start` (e.g. the LK homepage sections). */
-html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
-}
-
 /* Selection color */
 ::selection {
   background: #6D71F9;
