@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-const WHATSAPP_NUMBER = "94742366282"; // E.164 format, no + or spaces
 const AUTO_OPEN_DELAY_MS = 45_000;
 const PULSE_DURATION_MS = 8_000;
 const AUTO_OPEN_STORAGE_KEY = "wa-widget-opened";
@@ -55,10 +55,6 @@ const QUICK_REPLIES: QuickReply[] = [
   },
 ];
 
-function buildWhatsAppURL(message: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [pulsing, setPulsing] = useState(true);
@@ -99,13 +95,13 @@ export function WhatsAppWidget() {
   }, [isOpen]);
 
   const handleQuickReply = (message: string) => {
-    window.open(buildWhatsAppURL(message), "_blank", "noopener,noreferrer");
+    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
     setIsOpen(false);
   };
 
   const handleCustomMessage = () => {
     window.open(
-      buildWhatsAppURL("Hi Xpersive Labs! I'd like to get in touch."),
+      buildWhatsAppUrl("Hi Xpersive Labs! I'd like to get in touch."),
       "_blank",
       "noopener,noreferrer",
     );
