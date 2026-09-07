@@ -5,30 +5,21 @@ import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  Code2,
+  ArrowUpRight,
+  Bookmark,
+  CheckCircle2,
   Globe,
-  Monitor,
-  PenTool,
-  Play,
-  Rocket,
-  Search,
-  Settings,
-  ShoppingBag,
-  Terminal,
-  Zap,
-  Database,
-  Cpu,
-  CheckCircle,
   Layers,
+  Palette,
+  Smartphone,
+  Terminal,
 } from "lucide-react";
 import Link from "next/link";
-import { LottieAnimation } from "@/components/ui/LottieAnimation";
-import { LOTTIE_URLS } from "@/lib/animations-lottie";
+import { useEffect, useRef, useState } from "react";
 
 /* ─── Shared types ──────────────────────────────────────────────────── */
 
 interface Step {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
   title: string;
   description: string;
 }
@@ -39,13 +30,9 @@ interface Service {
   label: string;
   headline: string;
   body: string[];
-  steps: Step[];
+  toolsLabel: string;
   tools: string[];
-  accentColor: string;
-  accentBg: string;
-  gradientFrom: string;
-  gradientTo: string;
-  glowColor: string;
+  steps: Step[];
   caseStudy?: {
     title: string;
     description: string;
@@ -55,326 +42,193 @@ interface Service {
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
-const webSteps: Step[] = [
-  {
-    icon: Search,
-    title: "Discovery",
-    description:
-      "We talk through what you need, scope the project, and agree on deliverables - before a single line of code is written.",
-  },
-  {
-    icon: PenTool,
-    title: "Design",
-    description:
-      "We map the architecture, user flows, and component structure. You approve the plan before we build.",
-  },
-  {
-    icon: Code2,
-    title: "Development",
-    description:
-      "We ship in stages with weekly check-ins. You see real progress throughout - not a demo at the finish line.",
-  },
-  {
-    icon: Rocket,
-    title: "Launch & Support",
-    description:
-      "We handle deployment, run a full QA pass, and stay available for 30 days post-launch to catch anything that surfaces in production.",
-  },
-];
-
-const automationSteps: Step[] = [
-  {
-    icon: Settings,
-    title: "Requirements",
-    description:
-      "We map your target URLs, data fields, and delivery format, then spec the pipeline before writing a line of code.",
-  },
-  {
-    icon: Code2,
-    title: "Build",
-    description:
-      "Custom Playwright-based scraper built with curl_cffi for TLS fingerprint evasion, Parsel for HTML parsing, and residential proxies for anti-detection.",
-  },
-  {
-    icon: Play,
-    title: "Test",
-    description:
-      "End-to-end validation against live target sources: edge cases, pagination, CAPTCHA flows, proxy rotation, and output schema verification.",
-  },
-  {
-    icon: Monitor,
-    title: "Deploy and Monitor",
-    description:
-      "Scheduled runs, error alerting, and output delivery to CSV, JSON, or your preferred destination.",
-  },
-];
-
-const ecommerceSteps: Step[] = [
-  {
-    icon: Search,
-    title: "Discovery",
-    description:
-      "We audit your current setup, product catalog, integrations, and revenue goals. Then we scope the storefront before any code is written.",
-  },
-  {
-    icon: PenTool,
-    title: "Design",
-    description:
-      "Custom product pages, collection layouts, and cart flows - conversion-focused and built around your brand, not a generic theme.",
-  },
-  {
-    icon: Code2,
-    title: "Build",
-    description:
-      "Custom Shopify storefront or headless build. Product filtering, inventory sync, payment integrations, and automation layers that save your team hours every week.",
-  },
-  {
-    icon: Rocket,
-    title: "Launch & Optimise",
-    description:
-      "Full QA pass, speed audit, and go-live support. Post-launch monitoring and fixes for anything that surfaces in production.",
-  },
-];
-
-const aiSteps: Step[] = [
-  {
-    icon: Search,
-    title: "Audit",
-    description:
-      "We map the manual processes eating your team's time and identify where an AI layer would replace real hours - not just impress in a demo.",
-  },
-  {
-    icon: Layers,
-    title: "Design",
-    description:
-      "We design the data flow: inputs, model selection, outputs, and guardrails. You see and approve the logic before we build anything.",
-  },
-  {
-    icon: Cpu,
-    title: "Build",
-    description:
-      "Implementation using the right tool: LLM APIs, vector search, custom prompt chains, or retrieval-augmented generation - whatever actually solves the problem.",
-  },
-  {
-    icon: CheckCircle,
-    title: "Deploy & Monitor",
-    description:
-      "Production deployment with error handling, monitoring, and human-in-the-loop where it matters. Fully documented so you can maintain it.",
-  },
-];
-
 const services: Service[] = [
   {
-    id: "web",
+    id: "website",
     icon: Globe,
-    label: "Web Application Development",
-    headline: "Fast, Modern Web Applications Built to Last",
+    label: "Website Development",
+    headline: "Fast, Modern Websites Built to Last",
     body: [
-      "We build web applications using Next.js and TypeScript - from marketing sites and client portals to SaaS dashboards and content platforms. Every project is performance-first, SEO-ready, and architected to scale without a rebuild in 18 months.",
-      "From database schema to deployment pipeline, every decision is intentional. You get direct access to the developer building it - no account managers, no handoffs, no dropped context.",
+      "Fast, modern websites built in Next.js and TypeScript — from marketing sites to portfolios and business websites. Optimized for search, speed, and first impressions.",
+      "Direct engineer access from day one. No account managers, no handoffs, no lost context.",
     ],
-    steps: webSteps,
-    tools: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Prisma", "Vercel"],
-    accentColor: "text-primary",
-    accentBg: "bg-primary/10",
-    gradientFrom: "from-primary/20",
-    gradientTo: "to-accent/5",
-    glowColor: "rgba(109,113,249,0.25)",
+    toolsLabel: "Technologies & Architecture",
+    tools: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "SEO", "CMS", "Vercel"],
+    steps: [
+      { title: "Discovery", description: "We clarify scope, sitemap, and content before writing a line of code." },
+      { title: "Design", description: "Page layouts and UI flows approved before development starts." },
+      { title: "Development", description: "Weekly milestone deployments with continuous staging access and zero surprises." },
+      { title: "Launch & Support", description: "Production QA deployment backed by 30 days of dedicated post-launch support." },
+    ],
     caseStudy: {
       title: "Raj Ceylon Tours",
-      description:
-        "Luxury Sri Lanka tourism website with multilingual support, custom itinerary UX, and a tree-planting experience tied to every booking. Built in Next.js 14 with Framer Motion.",
+      description: "High-conversion luxury tourism website with custom itinerary UX and multilingual flows built on Next.js 14.",
       href: "/portfolio/raj-ceylon",
     },
   },
   {
+    id: "mobile",
+    icon: Smartphone,
+    label: "Mobile Application Development",
+    headline: "Apps for iOS and Android Built for Real Use",
+    body: [
+      "Apps for iOS and Android that put your business in your customer's pocket. Built with a single codebase for both platforms, without compromising on native feel.",
+      "Offline support, push notifications, and app store submission handled end-to-end.",
+    ],
+    toolsLabel: "Mobile Stack",
+    tools: ["React Native", "Expo", "TypeScript", "Offline Sync", "Push Notifications", "App Store & Play Store"],
+    steps: [
+      { title: "Discovery", description: "We clarify platforms, offline requirements, and core user flows up front." },
+      { title: "Design", description: "Native-feel screens and navigation approved before development starts." },
+      { title: "Development", description: "Weekly TestFlight/internal builds so you can test real progress throughout." },
+      { title: "Launch & Support", description: "App Store and Play Store submission, plus 30 days of dedicated post-launch support." },
+    ],
+  },
+  {
+    id: "software",
+    icon: Layers,
+    label: "Software Development",
+    headline: "Custom Software Built Around How You Work",
+    body: [
+      "Custom tools and platforms built around how your business actually works — from SaaS dashboards to internal tools and client portals.",
+      "Every decision from database schema to deployment pipeline is intentional, architected to scale without a rebuild in 18 months.",
+    ],
+    toolsLabel: "Technologies & Architecture",
+    tools: ["Next.js", "TypeScript", "React", "PostgreSQL", "Prisma", "Vercel"],
+    steps: [
+      { title: "Discovery", description: "We clarify scope, architecture, and milestones before writing code." },
+      { title: "Design", description: "Interactive system architecture and data flows approved before development starts." },
+      { title: "Development", description: "Weekly milestone deployments with continuous staging access and zero surprises." },
+      { title: "Launch & Support", description: "Production QA deployment backed by 30 days of dedicated post-launch support." },
+    ],
+  },
+  {
     id: "automation",
     icon: Terminal,
-    label: "Automation & Data Pipelines",
+    label: "Automation Development",
     headline: "Custom Scraping and Automation That Stays Live",
     body: [
-      "We build custom scraping tools, API integrations, and data pipelines for businesses that need reliable, structured data at scale. Anti-detection hardened, scheduled, and monitored - with a 48-hour fix guarantee if a target site breaks.",
-      "Structured output delivered to CSV, JSON, Google Sheets, or webhook on your cadence. If it breaks in production, we fix it.",
+      "Custom scrapers, API pipelines, and automated extractions built for resilient scale. Anti-detection hardened with a 48-hour fix guarantee.",
+      "Clean data delivered to CSV, Google Sheets, or webhooks on your schedule.",
     ],
-    steps: automationSteps,
+    toolsLabel: "Engineered Toolset",
     tools: ["Python", "Playwright", "curl_cffi", "Residential Proxies", "CapSolver", "Celery", "CSV", "JSON"],
-    accentColor: "text-accent",
-    accentBg: "bg-accent/10",
-    gradientFrom: "from-accent/20",
-    gradientTo: "to-primary/5",
-    glowColor: "rgba(84,193,251,0.25)",
+    steps: [
+      { title: "Requirements", description: "Target URLs, extraction fields, and export schemas mapped up front." },
+      { title: "Build", description: "Engineered with curl_cffi TLS impersonation, residential proxies, and smart retries." },
+      { title: "Test", description: "Live validation against CAPTCHAs, rate limits, and pagination edge cases." },
+      { title: "Deploy and Monitor", description: "Scheduled execution with automated alerts and failure telemetry." },
+    ],
     caseStudy: {
       title: "Alibaba Supplier Intelligence Platform",
-      description:
-        "Automated supplier monitoring for an Australian importer - replacing 8-10 hours of weekly manual research. 47 data fields extracted daily across 5 automated functions.",
+      description: "Automated supplier intelligence replacing 8-10 hours of manual research with 47 daily monitored fields.",
       href: "/portfolio/alibaba-scraper",
     },
   },
   {
-    id: "ecommerce",
-    icon: ShoppingBag,
-    label: "Ecommerce Development",
-    headline: "Custom Storefronts Built for Conversion",
+    id: "ui-ux",
+    icon: Palette,
+    label: "UI/UX Development",
+    headline: "Design That Makes People Want to Stay",
     body: [
-      "We build custom Shopify storefronts and ecommerce integrations that go beyond themes - product filtering, inventory sync, custom checkout flows, and the automation layers that save your team hours every week.",
-      "Every storefront is designed for conversion first: fast load times, clean product UX, and integrations that actually work with your fulfilment and inventory stack.",
+      "Clean, simple design that makes people want to stay and come back — clear hierarchy, accessible by default, built as a reusable design system rather than one-off screens.",
+      "Wireframes and prototypes reviewed with you before a single screen is built, so there are no surprises at handoff.",
     ],
-    steps: ecommerceSteps,
-    tools: ["Shopify", "Liquid", "Next.js", "TypeScript", "Shopify API", "Klaviyo", "Stripe", "Vercel"],
-    accentColor: "text-warning",
-    accentBg: "bg-warning/10",
-    gradientFrom: "from-warning/15",
-    gradientTo: "to-primary/5",
-    glowColor: "rgba(245,158,11,0.25)",
-  },
-  {
-    id: "ai",
-    icon: Zap,
-    label: "AI Workflow Integration",
-    headline: "AI That Reduces Hours, Not Just Impresses in Demos",
-    body: [
-      "We embed AI into your business processes - LLM-powered content tools, intelligent data extraction, customer response automation, and custom AI applications built for your specific workflow.",
-      "Practical over impressive. We identify where AI saves real time, build the integration, and deploy it with monitoring and human-in-the-loop where it matters. Every project is documented so you can maintain it.",
+    toolsLabel: "Design Systems & Tooling",
+    tools: ["Figma", "Design Systems", "Framer Motion", "Micro-animations", "WCAG AA"],
+    steps: [
+      { title: "Research", description: "We study your users, competitors, and existing brand before sketching a single screen." },
+      { title: "Wireframes", description: "Low-fidelity flows agreed on structure and content before visual design begins." },
+      { title: "Visual Design", description: "High-fidelity, interactive prototypes built as a reusable component system." },
+      { title: "Handoff & QA", description: "Developer-ready specs and assets, with design QA through to production." },
     ],
-    steps: aiSteps,
-    tools: ["OpenAI API", "Anthropic API", "LangChain", "Python", "PostgreSQL + pgvector", "RAG", "Webhooks", "FastAPI"],
-    accentColor: "text-success",
-    accentBg: "bg-success/10",
-    gradientFrom: "from-success/15",
-    gradientTo: "to-accent/5",
-    glowColor: "rgba(16,185,129,0.25)",
   },
 ];
 
-/* ─── Process timeline ──────────────────────────────────────────────── */
+/* ─── Anchor nav with scroll tracking ───────────────────────────────── */
 
-const PROCESS_LOTTIE = [
-  LOTTIE_URLS.processBrief,
-  LOTTIE_URLS.processDesign,
-  LOTTIE_URLS.processBuild,
-  LOTTIE_URLS.processLaunch,
-];
+function AnchorNav() {
+  const [activeId, setActiveId] = useState(services[0].id);
 
-function ProcessTimeline({ steps }: { steps: Step[] }) {
-  const { shouldAnimate } = useMotionSafe();
+  useEffect(() => {
+    const sections = services
+      .map((s) => document.getElementById(s.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-140px 0px -70% 0px" },
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div>
-      {/* Desktop: horizontal */}
-      <div className="hidden lg:flex items-start">
-        {steps.map((step, i) => (
-          <div key={step.title} className="flex items-start flex-1">
-            <div className="flex flex-col items-center text-center flex-1 px-3">
-              <LottieAnimation
-                src={PROCESS_LOTTIE[i % PROCESS_LOTTIE.length]}
-                style={{ width: 60, height: 60 }}
-                className="mb-2"
-                fallback={<div className="w-[60px] h-[60px]" />}
-              />
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center mb-5 relative z-10 flex-shrink-0"
-                style={{ background: "rgba(109,113,249,0.12)", border: "1px solid rgba(109,113,249,0.3)" }}
-              >
-                <div className="w-2 h-2 rounded-full bg-primary" />
-              </div>
-
-              <motion.span
-                className="font-display font-extrabold leading-none select-none mb-3 block"
-                style={{ fontSize: 64, color: "rgba(109,113,249,0.15)" }}
-                {...(shouldAnimate ? {
-                  initial: { opacity: 0 },
-                  whileInView: { opacity: 1 },
-                  viewport: { once: true },
-                  transition: { delay: i * 0.15 },
-                } : { initial: false })}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </motion.span>
-
-              <motion.div
-                {...(shouldAnimate ? {
-                  initial: { opacity: 0, y: 16 },
-                  whileInView: { opacity: 1, y: 0 },
-                  viewport: { once: true },
-                  transition: { delay: i * 0.15 + 0.1 },
-                } : { initial: false })}
-              >
-                <h3 className="font-semibold text-text-primary mb-2" style={{ fontSize: 20 }}>
-                  {step.title}
-                </h3>
-                <p className="text-text-secondary leading-relaxed" style={{ fontSize: 15 }}>
-                  {step.description}
-                </p>
-              </motion.div>
-            </div>
-
-            {i < steps.length - 1 && (
-              <div className="pt-3 flex-shrink-0 w-4">
-                <motion.div
-                  style={{
-                    height: 1,
-                    borderTop: "1px dashed rgba(109,113,249,0.2)",
-                    transformOrigin: "left center",
-                    width: "100%",
-                  }}
-                  {...(shouldAnimate ? {
-                    initial: { scaleX: 0 },
-                    whileInView: { scaleX: 1 },
-                    viewport: { once: true },
-                    transition: { delay: i * 0.15 + 0.3, duration: 0.5, ease: "easeOut" },
-                  } : { initial: false })}
-                />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Mobile: vertical */}
-      <div className="lg:hidden space-y-0">
-        {steps.map((step, i) => (
-          <motion.div
-            key={step.title}
-            className="flex gap-4"
-            {...(shouldAnimate ? {
-              initial: { opacity: 0, x: -16 },
-              whileInView: { opacity: 1, x: 0 },
-              viewport: { once: true },
-              transition: { delay: i * 0.1 },
-            } : { initial: false })}
+    <div className="w-full bg-[rgba(109,113,249,0.05)] rounded-xl p-1.5 flex items-center gap-1.5 overflow-x-auto">
+      {services.map((s) => {
+        const isActive = s.id === activeId;
+        return (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            className={`whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+              isActive ? "bg-bg-card text-primary shadow-sm" : "text-text-secondary hover:text-text-primary hover:bg-bg-card/70"
+            }`}
           >
-            <div className="flex flex-col items-center flex-shrink-0">
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: "rgba(109,113,249,0.12)", border: "1px solid rgba(109,113,249,0.3)" }}
-              >
-                <div className="w-2 h-2 rounded-full bg-primary" />
-              </div>
-              {i < steps.length - 1 && (
-                <div className="w-px flex-1 mt-2 mb-2" style={{ borderLeft: "1px dashed rgba(109,113,249,0.2)" }} />
-              )}
-            </div>
-            <div className="pb-8">
-              <span
-                className="font-display font-extrabold leading-none select-none block mb-2"
-                style={{ fontSize: 40, color: "rgba(109,113,249,0.2)" }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="font-semibold text-text-primary mb-1" style={{ fontSize: 18 }}>{step.title}</h3>
-              <p className="text-text-secondary leading-relaxed" style={{ fontSize: 14 }}>{step.description}</p>
-            </div>
-          </motion.div>
-        ))}
+            <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-primary" : "bg-transparent"}`} />
+            {s.label.replace(" Development", "").replace(" Integration", "").replace(" & Data Pipelines", " & Data")}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ─── Hero geometric visual ─────────────────────────────────────────── */
+
+function HeroPrism() {
+  return (
+    <div
+      className="relative w-full max-w-md aspect-square rounded-2xl bg-bg-card border border-border-subtle overflow-hidden flex items-center justify-center"
+      style={{ boxShadow: "0 12px 40px -4px rgba(39,40,72,0.1)" }}
+    >
+      <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[rgba(84,193,251,0.18)] blur-2xl" />
+      <div className="absolute -bottom-12 -left-12 w-52 h-52 rounded-full bg-[rgba(109,113,249,0.14)] blur-2xl" />
+      <svg className="relative z-10 w-56 h-56" fill="none" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="prismGrad1" x1="20" x2="180" y1="20" y2="180" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#54C1FB" />
+            <stop offset="100%" stopColor="#6D71F9" />
+          </linearGradient>
+          <linearGradient id="subtleGlass" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.25" />
+          </linearGradient>
+        </defs>
+        <rect fill="url(#prismGrad1)" height="96" opacity="0.9" rx="28" transform="rotate(45 100 100)" width="96" x="52" y="52" />
+        <rect fill="url(#subtleGlass)" height="60" rx="18" transform="rotate(45 100 100)" width="60" x="70" y="70" />
+        <circle cx="100" cy="100" fill="#ffffff" r="16" />
+        <circle cx="100" cy="100" fill="#6D71F9" r="8" />
+        <circle cx="100" cy="100" fill="none" r="76" stroke="#6D71F9" strokeDasharray="6 6" strokeOpacity="0.18" />
+        <circle cx="154" cy="46" fill="#54C1FB" r="6" />
+        <circle cx="46" cy="154" fill="#6D71F9" r="4" />
+      </svg>
+      <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between text-[10px] tracking-widest uppercase text-text-muted">
+        <span>XPR-SVCS-01</span>
+        <span>Est. 2025 // Colombo</span>
       </div>
     </div>
   );
 }
 
-/* ─── ServiceRow ────────────────────────────────────────────────────── */
+/* ─── Process band ───────────────────────────────────────────────────── */
 
-function ServiceRow({ service, index }: { service: Service; index: number }) {
-  const reversed = index % 2 !== 0;
+function ProcessBand({ steps }: { steps: Step[] }) {
   const { shouldAnimate } = useMotionSafe();
 
   const scrollProps = shouldAnimate ? {
@@ -387,114 +241,101 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
   return (
-    <section id={service.id} className="py-24 border-t border-border-subtle scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          {...scrollProps}
-          className={`grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-20 ${reversed ? "md:grid-flow-dense" : ""}`}
-        >
-          {/* Text block */}
-          <motion.div {...childProps} className={reversed ? "lg:col-start-2" : ""}>
-            <div className="flex items-center gap-3 mb-5">
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${service.accentBg}`}>
-                <service.icon size={22} className={service.accentColor} />
-              </div>
-              <span className={`text-xs font-bold uppercase tracking-[0.2em] ${service.accentColor}`}>
-                {service.label}
-              </span>
-            </div>
+    <motion.div
+      className="rounded-2xl bg-[rgba(109,113,249,0.035)] p-6 sm:p-10 flex flex-col gap-8"
+      {...scrollProps}
+    >
+      <motion.div {...childProps} className="flex flex-col gap-1">
+        <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">End-to-End Delivery</span>
+        <h3 className="font-display text-xl font-bold text-text-primary">Our Process</h3>
+      </motion.div>
 
-            <h2 className="font-display text-3xl sm:text-4xl font-bold leading-tight mb-7 text-text-primary">
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" {...scrollProps}>
+        {steps.map((step, i) => (
+          <motion.div
+            key={step.title}
+            {...childProps}
+            {...(shouldAnimate ? {
+              whileHover: { y: -4, boxShadow: "0 16px 36px rgba(109,113,249,0.14)" },
+              transition: { type: "spring", stiffness: 220, damping: 24 },
+            } : {})}
+            className="rounded-xl bg-bg-card p-5 flex flex-col gap-2 transition-colors duration-300"
+            style={{ boxShadow: "0 2px 12px rgba(109,113,249,0.05)" }}
+          >
+            <span className="font-display text-lg font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
+            <h4 className="font-display font-bold text-text-primary">{step.title}</h4>
+            <p className="text-sm text-text-secondary leading-relaxed">{step.description}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ─── Service section ────────────────────────────────────────────────── */
+
+function ServiceSection({ service, index }: { service: Service; index: number }) {
+  const { shouldAnimate } = useMotionSafe();
+  const tinted = index % 2 === 1;
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
+
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
+  return (
+    <section
+      id={service.id}
+      className={`py-20 sm:py-24 scroll-mt-36 ${tinted ? "bg-[rgba(109,113,249,0.035)]" : ""}`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-12">
+        <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8" {...scrollProps}>
+          {/* Text block */}
+          <motion.div {...childProps} className="lg:col-span-8 flex flex-col items-start gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary bg-[rgba(109,113,249,0.08)] px-3 py-1 rounded-full">
+                {String(index + 1).padStart(2, "0")} / Capability
+              </span>
+              <span className="text-xs uppercase tracking-widest text-text-muted">{service.label}</span>
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary tracking-tight">
               {service.headline}
             </h2>
-
-            <div className="space-y-4 text-text-secondary leading-relaxed mb-8">
+            <div className="flex flex-col gap-3 text-text-secondary leading-relaxed">
               {service.body.map((para, i) => (
-                <p key={i}>{para}</p>
+                <p key={i} className={i === 0 ? "text-lg" : ""}>{para}</p>
               ))}
-            </div>
-
-            <div>
-              <p className="text-xs text-text-muted uppercase tracking-widest font-semibold mb-3">
-                Tools &amp; Technologies
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {service.tools.map((tool, idx) => (
-                  <motion.span
-                    key={tool}
-                    className="px-3 py-1.5 rounded-full font-mono text-[13px] cursor-default transition-all duration-200 text-text-secondary"
-                    style={{
-                      background: "rgba(109,113,249,0.08)",
-                      border: "1px solid rgba(109,113,249,0.2)",
-                    }}
-                    {...(shouldAnimate ? {
-                      initial: { opacity: 0, y: 8 },
-                      whileInView: { opacity: 1, y: 0 },
-                      viewport: { once: true },
-                      transition: { delay: idx * 0.04, duration: 0.3 },
-                      whileHover: {
-                        backgroundColor: "rgba(109,113,249,0.15)",
-                        borderColor: "rgba(109,113,249,0.4)",
-                        color: "#1A1A2E",
-                      },
-                    } : { initial: false })}
-                  >
-                    {tool}
-                  </motion.span>
-                ))}
-              </div>
             </div>
           </motion.div>
 
-          {/* Visual accent card */}
-          <motion.div {...childProps} className={reversed ? "lg:col-start-1 lg:row-start-1" : ""}>
-            <div
-              className={`relative rounded-2xl p-10 border border-border-subtle bg-bg-card bg-gradient-to-br ${service.gradientFrom} ${service.gradientTo} overflow-hidden h-full min-h-[280px] flex items-center justify-center`}
-              style={{ boxShadow: "0 2px 16px rgba(109,113,249,0.06)" }}
-            >
-              <div className="absolute -bottom-8 -right-8 opacity-[0.04]">
-                <service.icon size={200} />
-              </div>
-              <div
-                className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl pointer-events-none"
-                style={{ background: `radial-gradient(circle, ${service.glowColor} 0%, transparent 70%)` }}
-              />
-              <div className="relative z-10 text-center">
-                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl ${service.accentBg} mb-5 border border-border-subtle`}>
-                  <service.icon size={38} className={service.accentColor} />
-                </div>
-                <p className="font-display text-2xl font-bold mb-2 text-text-primary">{service.label}</p>
-                <p className={`text-sm font-medium ${service.accentColor}`}>
-                  End-to-end delivery
-                </p>
+          {/* Tech stack sidebar */}
+          <motion.div {...childProps} className="lg:col-span-4 flex flex-col justify-end">
+            <div className="rounded-xl bg-bg-card p-6 flex flex-col gap-3" style={{ boxShadow: "0 4px 20px rgba(39,40,72,0.05)" }}>
+              <span className="text-xs uppercase tracking-widest text-text-muted">{service.toolsLabel}</span>
+              <div className="flex flex-wrap gap-2">
+                {service.tools.map((tool) => (
+                  <span
+                    key={tool}
+                    className="font-mono text-xs text-text-secondary px-2.5 py-1 rounded-md bg-[rgba(109,113,249,0.06)]"
+                  >
+                    {tool}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Process timeline */}
-        <div>
-          <motion.p
-            className="text-xs text-text-muted uppercase tracking-widest font-semibold mb-10"
-            {...(shouldAnimate ? {
-              initial: { opacity: 0 },
-              whileInView: { opacity: 1 },
-              viewport: { once: true },
-            } : { initial: false })}
-          >
-            Our Process
-          </motion.p>
-          <ProcessTimeline steps={service.steps} />
-        </div>
+        <ProcessBand steps={service.steps} />
 
-        {/* Case study callout — data-driven */}
         {service.caseStudy && (
           <motion.div
-            className="mt-14 flex gap-4 rounded-2xl p-6"
-            style={{
-              background: "rgba(109,113,249,0.05)",
-              border: "1px solid rgba(109,113,249,0.12)",
-            }}
+            className="rounded-2xl bg-bg-card p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
+            style={{ boxShadow: "0 12px 36px rgba(39,40,72,0.05)" }}
             {...(shouldAnimate ? {
               initial: { opacity: 0, y: 16 },
               whileInView: { opacity: 1, y: 0 },
@@ -502,26 +343,21 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
               transition: { duration: 0.5 },
             } : { initial: false })}
           >
-            <div>
-              <span
-                className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] mb-2"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
+            <div className="lg:col-span-8 flex flex-col items-start gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-primary bg-[rgba(84,193,251,0.14)] px-3 py-1 rounded-full">
+                <Bookmark size={13} aria-hidden="true" />
                 Case Study
               </span>
-              <p className="font-display font-bold text-text-primary text-base mb-2">
-                {service.caseStudy.title}
-              </p>
-              <p className="text-text-secondary text-sm leading-relaxed mb-3">
-                {service.caseStudy.description}
-              </p>
+              <h4 className="font-display text-xl font-bold text-text-primary">{service.caseStudy.title}</h4>
+              <p className="text-text-secondary max-w-3xl">{service.caseStudy.description}</p>
+            </div>
+            <div className="lg:col-span-4 flex justify-start lg:justify-end">
               <Link
                 href={service.caseStudy.href}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity duration-200 hover:opacity-75"
-                style={{ color: "#6D71F9" }}
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
               >
                 Read the full case study
-                <ArrowRight size={13} />
+                <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
               </Link>
             </div>
           </motion.div>
@@ -535,6 +371,21 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
 
 export default function ServicesPage() {
   const { shouldAnimate } = useMotionSafe();
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const [tabBarVisible, setTabBarVisible] = useState(true);
+
+  useEffect(() => {
+    const el = servicesRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setTabBarVisible(entry.isIntersecting),
+      { rootMargin: "-140px 0px 0px 0px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const mountProps = shouldAnimate ? {
     variants: staggerContainer,
@@ -544,131 +395,132 @@ export default function ServicesPage() {
 
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
-  const scrollProps = shouldAnimate ? {
-    variants: staggerContainer,
-    initial: "hidden",
-    whileInView: "visible" as const,
-    viewport: { once: true, margin: "-80px" },
-  } : { initial: false };
+  const ambientProps = shouldAnimate ? {
+    animate: { scale: [1, 1.15, 1] },
+    transition: { duration: 10, repeat: Infinity, ease: "easeInOut" as const },
+  } : {};
 
   return (
     <div className="text-text-primary">
       {/* ── Hero ───────────────────────────────────────────────────── */}
-      <section className="relative pt-40 pb-20 overflow-hidden">
-        <motion.div
-          className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.12) 0%, transparent 70%)" }}
-          {...(shouldAnimate ? {
-            animate: { scale: [1, 1.1, 1] },
-            transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const },
-          } : {})}
-        />
-        <motion.div
-          className="absolute bottom-0 -left-20 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(84,193,251,0.1) 0%, transparent 70%)" }}
-          {...(shouldAnimate ? {
-            animate: { scale: [1, 1.15, 1] },
-            transition: { duration: 11, repeat: Infinity, ease: "easeInOut" as const, delay: 2 },
-          } : {})}
-        />
+      <section className="relative pt-40 pb-16 overflow-hidden">
         <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, #6D71F9 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
+          className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.1) 0%, transparent 70%)" }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div {...mountProps}>
-            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
-              What We Offer
-            </motion.span>
+          <motion.div {...mountProps} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-14">
+            <div className="lg:col-span-7 flex flex-col items-start gap-5">
+              <motion.span {...childProps} className="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-[0.2em] bg-[rgba(109,113,249,0.08)] px-4 py-1.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                What We Offer
+              </motion.span>
 
-            <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-7 max-w-3xl text-text-primary">
-              Our{" "}
-              <span className="text-gradient">Services</span>
-            </motion.h1>
+              <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] text-text-primary">
+                Our Services
+              </motion.h1>
 
-            <motion.p {...childProps} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl mb-4">
-              Four focused services - web apps, automation pipelines, ecommerce, and AI workflows - built end-to-end for businesses in AU, UK, and US.
-            </motion.p>
-            <motion.p {...childProps} className="text-text-muted text-sm leading-relaxed max-w-2xl mb-10">
-              One team, end-to-end delivery, no handoffs.{" "}
-              <Link href="/contact" className="text-primary font-semibold hover:opacity-75 transition-opacity duration-200">
-                Let&apos;s talk.
-              </Link>
-            </motion.p>
+              <motion.div {...childProps} className="flex flex-col gap-2 max-w-xl">
+                <p className="text-text-secondary text-lg leading-relaxed">
+                  Tell us about your project. We&apos;ll scope the right technical solution together.
+                </p>
+                <p className="text-primary font-medium flex items-center gap-2">
+                  <CheckCircle2 size={18} aria-hidden="true" />
+                  One team, end-to-end delivery, no handoffs.
+                </p>
+              </motion.div>
 
-            {/* Service anchors */}
-            <motion.div {...childProps} className="flex flex-wrap gap-3">
-              {services.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-subtle bg-bg-card text-sm font-medium text-text-secondary hover:text-text-primary hover:border-primary/25 transition-all duration-200"
-                  style={{ boxShadow: "0 1px 6px rgba(109,113,249,0.05)" }}
+              <motion.div {...childProps} className="pt-1">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full font-semibold text-base text-white transition-all duration-300 hover:brightness-110 hover:scale-[1.02]"
+                  style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
                 >
-                  <s.icon size={15} className={s.accentColor} />
-                  {s.label}
-                </a>
-              ))}
+                  Let&apos;s Talk
+                  <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              </motion.div>
+            </div>
+
+            <motion.div {...childProps} className="lg:col-span-5 flex justify-center lg:justify-end">
+              <HeroPrism />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── Service rows ───────────────────────────────────────────── */}
-      {services.map((service, index) => (
-        <ServiceRow key={service.id} service={service} index={index} />
-      ))}
+      {/* ── Sticky tab bar — pins below the main nav while scrolling, ─
+          hidden once the last service section has scrolled past and
+          revealed again when a service section comes back into view */}
+      <motion.div
+        className="sticky top-16 z-40 border-b"
+        style={{
+          background: "rgba(248,249,255,0.92)",
+          borderColor: "rgba(109,113,249,0.08)",
+          pointerEvents: tabBarVisible ? "auto" : "none",
+        }}
+        animate={{ opacity: tabBarVisible ? 1 : 0, y: tabBarVisible ? 0 : -8 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 -z-10 backdrop-blur-xl" aria-hidden="true" />
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <AnchorNav />
+        </div>
+      </motion.div>
 
-      {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-border-subtle">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* ── Service sections ──────────────────────────────────────── */}
+      <div ref={servicesRef}>
+        {services.map((service, index) => (
+          <ServiceSection key={service.id} service={service} index={index} />
+        ))}
+      </div>
+
+      {/* ── Closing CTA ────────────────────────────────────────────── */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6">
           <motion.div
-            className="relative rounded-2xl overflow-hidden p-12 sm:p-16 text-center"
-            {...scrollProps}
+            className="relative overflow-hidden rounded-3xl p-12 sm:p-20 text-center flex flex-col items-center border border-border-subtle"
+            style={{
+              background: "linear-gradient(135deg, #FFFFFF 0%, #F1F0FF 55%, #E8E6FF 100%)",
+              boxShadow: "0 8px 40px rgba(109,113,249,0.12)",
+            }}
+            {...(shouldAnimate ? {
+              initial: { opacity: 0, y: 10 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1.0] },
+            } : { initial: false })}
           >
-            <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(135deg, #6D71F9 0%, #5457f5 50%, #54C1FB 100%)" }}
-            />
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
-                backgroundSize: "28px 28px",
-              }}
+            <motion.div
+              className="absolute -top-16 -left-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+              style={{ background: "rgba(84,193,251,0.22)" }}
+              {...ambientProps}
             />
             <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[80px] bg-white/10"
-              {...(shouldAnimate ? {
-                animate: { scale: [1, 1.2, 1] },
-                transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
-              } : {})}
+              className="absolute -bottom-16 -right-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+              style={{ background: "rgba(109,113,249,0.18)" }}
+              {...ambientProps}
             />
 
-            <div className="relative z-10">
-              <motion.h2 {...childProps} className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">
+            <div className="relative z-10 flex flex-col items-center">
+              <span className="inline-block text-primary text-xs font-bold uppercase mb-4" style={{ letterSpacing: "0.14em" }}>
+                Let&apos;s Build Something
+              </span>
+              <h2 className="font-display font-extrabold leading-[1.05] mb-4 text-text-primary" style={{ fontSize: "clamp(32px, 5vw, 44px)" }}>
                 Not sure which service fits?
-              </motion.h2>
-              <motion.p {...childProps} className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
-                Tell us about your project and we&apos;ll scope the right solution
-                together - no commitment required.
-              </motion.p>
-              <motion.div {...childProps}>
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-2.5 px-10 py-4 rounded-full bg-white text-primary font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/20"
-                >
-                  Let&apos;s Talk
-                  <ArrowRight
-                    size={17}
-                    className="group-hover:translate-x-1 transition-transform duration-200"
-                  />
-                </Link>
-              </motion.div>
+              </h2>
+              <p className="text-lg leading-relaxed mb-8 max-w-xl text-text-secondary">
+                Tell us about your project. We&apos;ll scope the right technical solution together.
+              </p>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:scale-[1.02]"
+                style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
+              >
+                Let&apos;s Talk
+                <ArrowRight size={17} className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden="true" />
+              </Link>
             </div>
           </motion.div>
         </div>

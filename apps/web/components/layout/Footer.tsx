@@ -11,10 +11,11 @@ const footerSections = {
     { href: "/portfolio", label: "Portfolio" },
   ],
   Services: [
-    { href: "/services#web", label: "Web Development" },
-    { href: "/services#automation", label: "Automation & Data Pipelines" },
-    { href: "/services#ecommerce", label: "Ecommerce Development" },
-    { href: "/services#ai", label: "AI Workflow Integration" },
+    { href: "/services#website", label: "Website Development" },
+    { href: "/services#mobile", label: "Mobile Application Development" },
+    { href: "/services#software", label: "Software Development" },
+    { href: "/services#automation", label: "Automation Development" },
+    { href: "/services#ui-ux", label: "UI/UX Development" },
   ],
   Connect: [
     { href: "/contact", label: "Contact Us" },

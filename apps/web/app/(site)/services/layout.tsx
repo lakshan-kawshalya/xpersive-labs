@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Services — Web Development, Automation & AI Workflows",
+  title: "Services — Website, Mobile, Software, Automation & UI/UX",
   description:
-    "Four focused services: custom web applications, ecommerce development, automation pipelines, and AI workflow integration. Built end-to-end for businesses in AU, UK, and US.",
+    "Five focused services: website development, mobile applications, custom software, automation, and UI/UX design. Built end-to-end, no handoffs.",
   alternates: { canonical: "https://www.xpersivelabs.com/services" },
   openGraph: {
     type: "website",
     url: "https://www.xpersivelabs.com/services",
-    title: "Services — Web Development, Automation & AI Workflows",
+    title: "Services — Website, Mobile, Software, Automation & UI/UX",
     description:
-      "Four focused services: custom web applications, ecommerce development, automation pipelines, and AI workflow integration. Built end-to-end for businesses in AU, UK, and US.",
+      "Five focused services: website development, mobile applications, custom software, automation, and UI/UX design. Built end-to-end, no handoffs.",
   },
 };
 
@@ -25,9 +25,9 @@ const servicesSchema = {
       position: 1,
       item: {
         "@type": "Service",
-        name: "Web Development",
+        name: "Website Development",
         description:
-          "Custom web applications and dashboards for businesses using Next.js and TypeScript.",
+          "Fast, modern websites built with Next.js and TypeScript, optimized for search and speed.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -37,9 +37,9 @@ const servicesSchema = {
       position: 2,
       item: {
         "@type": "Service",
-        name: "Managed Data Pipelines",
+        name: "Mobile Application Development",
         description:
-          "Scraping pipeline retainer for businesses that need reliable, structured data. Recurring delivery with a 48-hour fix guarantee.",
+          "iOS and Android apps built with React Native and Expo, from a single codebase.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
@@ -49,9 +49,33 @@ const servicesSchema = {
       position: 3,
       item: {
         "@type": "Service",
-        name: "Automation and Web Scraping",
+        name: "Software Development",
+        description:
+          "Custom software, SaaS dashboards, and client portals built with Next.js and TypeScript.",
+        provider: { "@type": "Organization", name: "Xpersive Labs" },
+        areaServed: "Worldwide",
+      },
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      item: {
+        "@type": "Service",
+        name: "Automation Development",
         description:
           "Custom scraping tools and data automation for businesses that need reliable data at scale. Built with Python, Playwright, and residential proxies.",
+        provider: { "@type": "Organization", name: "Xpersive Labs" },
+        areaServed: "Worldwide",
+      },
+    },
+    {
+      "@type": "ListItem",
+      position: 5,
+      item: {
+        "@type": "Service",
+        name: "UI/UX Development",
+        description:
+          "Interface and design system work, from wireframes to developer-ready, accessible prototypes.",
         provider: { "@type": "Organization", name: "Xpersive Labs" },
         areaServed: "Worldwide",
       },
