@@ -7,29 +7,32 @@ import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
+  ArrowRight,
+  ArrowUpRight,
   CheckCircle2,
   ChevronDown,
-  Clock,
   Loader2,
-  MapPin,
+  Mail,
   Send,
 } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Suspense, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import EnvelopeCheckIllustration from "@/components/illustrations/EnvelopeCheckIllustration";
-import { LottieAnimation } from "@/components/ui/LottieAnimation";
-import { LOTTIE_URLS } from "@/lib/animations-lottie";
+import CodeEditorIllustration from "@/components/illustrations/CodeEditorIllustration";
 import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 type ServiceOption =
-  | "Web Application Development"
-  | "Ecommerce Development"
-  | "Automation & Data Pipelines"
-  | "AI Workflow Integration"
+  | "Website Development"
+  | "Mobile Application Development"
+  | "Software Development"
+  | "Automation Development"
+  | "UI/UX Development"
   | "Other / General Inquiry";
 
 type BudgetOption =
@@ -55,10 +58,11 @@ function stripHtml(value: string): string {
 }
 
 const serviceOptions: ServiceOption[] = [
-  "Web Application Development",
-  "Ecommerce Development",
-  "Automation & Data Pipelines",
-  "AI Workflow Integration",
+  "Website Development",
+  "Mobile Application Development",
+  "Software Development",
+  "Automation Development",
+  "UI/UX Development",
   "Other / General Inquiry",
 ];
 
@@ -70,20 +74,42 @@ const budgetOptions: BudgetOption[] = [
   "Not sure yet",
 ];
 
+const connectOptions = [
+  {
+    label: "Email",
+    icon: Mail,
+    description: "Tell us about your project and we'll get back to you.",
+    cta: "Contact us",
+    href: "mailto:hello@xpersivelabs.com",
+    external: false,
+  },
+  {
+    label: "WhatsApp",
+    icon: WhatsAppIcon,
+    description: "Prefer a quick conversation? Chat with us directly on WhatsApp.",
+    cta: "Chat on WhatsApp",
+    href: buildWhatsAppUrl("Hi Xpersive Labs! I'd like to discuss a project."),
+    external: true,
+  },
+  {
+    label: "LinkedIn",
+    icon: null,
+    description: "Connect with Xpersive Labs and stay up to date with what we're building.",
+    cta: "Visit LinkedIn",
+    href: "https://www.linkedin.com/in/xpersive-labs/",
+    external: true,
+  },
+];
+
 const nextSteps = [
-  { num: "01", text: "We review your message" },
-  { num: "02", text: "We schedule a discovery call" },
-  { num: "03", text: "We send you a project proposal" },
+  { num: "01", text: "We review your inquiry." },
+  { num: "02", text: "We get back to you with any questions or next steps." },
+  { num: "03", text: "We discuss the right approach for your project." },
+  { num: "04", text: "If we're a good fit, we start building." },
 ];
 
-const trustStats = [
-  "48h response",
-  "30-day post-launch support",
-  "AU/UK/US clients",
-];
-
-/* ─── Floating label input ──────────────────────────────────────────── */
-function FloatingField({
+/* ─── Floating label field ──────────────────────────────────────────── */
+function FormField({
   id,
   label,
   required,
@@ -97,18 +123,14 @@ function FloatingField({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-1">
-      <label
-        htmlFor={id}
-        className="text-xs font-semibold uppercase tracking-wider"
-        style={{ color: "var(--color-text-muted)" }}
-      >
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-text-muted">
         {label}
         {required && <span className="text-primary ml-0.5">*</span>}
       </label>
       {children}
       {error && (
-        <p className="text-xs text-danger flex items-center gap-1 mt-0.5">
+        <p className="text-xs text-danger flex items-center gap-1">
           <AlertCircle size={11} />
           {error}
         </p>
@@ -117,19 +139,17 @@ function FloatingField({
   );
 }
 
-const underlineInput = (hasError: boolean) =>
+const boxedInput = (hasError: boolean) =>
   [
-    "w-full bg-transparent pb-2.5 pt-1 text-sm text-text-primary outline-none",
-    "border-b transition-colors duration-200 placeholder-[rgba(26,26,46,0.3)]",
+    "w-full px-4 py-3.5 rounded-xl border bg-[rgba(109,113,249,0.03)] text-text-primary placeholder:text-text-muted text-sm outline-none transition-all",
     hasError
       ? "border-danger/50 focus:border-danger"
-      : "border-[rgba(0,0,0,0.15)] focus:border-primary",
+      : "border-border-subtle focus:border-primary focus:bg-bg-card focus:ring-2 focus:ring-primary/15",
   ].join(" ");
 
-/* ─── Inner page (reads search params) ─────────────────────────────── */
+/* ─── Inner page (form logic) ───────────────────────────────────────── */
 function ContactPageContent() {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
-  const [copied, setCopied] = useState(false);
   const { shouldAnimate } = useMotionSafe();
 
   const {
@@ -163,12 +183,6 @@ function ContactPageContent() {
     }
   };
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText("hello@xpersivelabs.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const mountProps = shouldAnimate
     ? { variants: staggerContainer, initial: "hidden", animate: "visible" }
     : { initial: false };
@@ -184,553 +198,379 @@ function ContactPageContent() {
 
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
+  const ambientProps = shouldAnimate ? {
+    animate: { scale: [1, 1.15, 1] },
+    transition: { duration: 10, repeat: Infinity, ease: "easeInOut" as const },
+  } : {};
+
   return (
     <div className="text-text-primary min-h-screen">
-      {/* Hero */}
-      <section className="relative pt-40 pb-20 text-center">
+      {/* ── Hero ───────────────────────────────────────────────────── */}
+      <section className="relative pt-40 pb-16 overflow-hidden">
+        <div
+          className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(109,113,249,0.1) 0%, transparent 70%)" }}
+        />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div {...mountProps} className="mx-auto max-w-3xl">
-            <motion.span
-              {...childProps}
-              className="inline-block text-primary text-xs font-bold uppercase mb-5"
-              style={{ letterSpacing: "0.14em" }}
-            >
-              Get in Touch
-            </motion.span>
-            <motion.h1
-              {...childProps}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 text-text-primary"
-            >
-              Let&apos;s Talk About{" "}
-              <span className="text-gradient">Your Project</span>
-            </motion.h1>
-            <motion.p
-              {...childProps}
-              className="mx-auto max-w-xl leading-relaxed"
-              style={{ fontSize: 17, color: "var(--color-text-secondary)" }}
-            >
-              No commitment. No sales pitch. Just an honest conversation about
-              what you need and whether we&apos;re the right fit.
-            </motion.p>
-            <motion.div
-              {...childProps}
-              className="flex flex-wrap items-center justify-center gap-3 mt-8"
-            >
-              {trustStats.map((stat) => (
-                <span
-                  key={stat}
-                  className="px-4 py-2 rounded-full text-xs font-semibold border border-border-subtle"
-                  style={{ background: "var(--surface-card)", color: "var(--color-text-secondary)" }}
+          <motion.div {...mountProps} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-7 flex flex-col items-start gap-5">
+              <motion.span {...childProps} className="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-[0.2em] bg-[rgba(109,113,249,0.08)] px-4 py-1.5 rounded-full">
+                Get in Touch
+              </motion.span>
+              <motion.h1 {...childProps} className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] text-text-primary">
+                Let&apos;s build something that matters.
+              </motion.h1>
+              <motion.p {...childProps} className="text-text-secondary text-lg leading-relaxed max-w-xl">
+                Have a project, an idea, or a problem that needs solving? Tell us what you&apos;re working on. We&apos;ll get back to you and figure out the best way forward.
+              </motion.p>
+              <motion.div {...childProps} className="pt-1">
+                <a
+                  href="#contact-form"
+                  className="group inline-flex items-center gap-2.5 px-8 py-[14px] rounded-full font-semibold text-base text-white transition-all duration-300 hover:brightness-110 hover:scale-[1.02]"
+                  style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
                 >
-                  {stat}
-                </span>
-              ))}
+                  Start a Conversation
+                  <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </a>
+              </motion.div>
+            </div>
+
+            <motion.div {...childProps} className="lg:col-span-5 flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-md rounded-2xl bg-bg-card border border-border-subtle p-2" style={{ boxShadow: "0 12px 44px -8px rgba(23,24,55,0.09)" }}>
+                <div className="relative rounded-xl overflow-hidden aspect-[4/3] flex items-center justify-center bg-[rgba(109,113,249,0.04)]">
+                  <CodeEditorIllustration className="w-4/5" />
+                  <span className="absolute top-3 left-3 text-[10px] font-mono font-medium text-primary bg-bg-card/90 backdrop-blur-md px-3 py-1 rounded-full">
+                    Xpersive // Colombo HQ Studio
+                  </span>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                    <div className="bg-bg-card/90 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-xs font-medium text-text-primary">Accepting select client projects</span>
+                    </div>
+                    <span className="hidden sm:flex text-[10px] font-mono text-white bg-black/40 backdrop-blur-md px-2 py-1 rounded-full">GMT+5:30</span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Two-column body */}
-      <section className="pb-28">
+      {/* ── Choose how to connect ────────────────────────────────────── */}
+      <section className="py-16 bg-[rgba(109,113,249,0.035)]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20 items-start">
-            {/* LEFT - Form */}
-            <motion.div {...scrollProps}>
-              <div className="wa-contact-alt">
-                <div className="wa-contact-alt-inner">
-                  <WhatsAppIcon size={20} />
-                  <div>
-                    <p className="wa-contact-alt-title">Prefer WhatsApp?</p>
-                    <p className="wa-contact-alt-sub">
-                      Message us directly — we reply within a few hours.
-                    </p>
+          <motion.h2 {...(shouldAnimate ? { initial: { opacity: 0, y: 16 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-80px" } } : { initial: false })} className="font-display text-2xl sm:text-3xl font-bold text-text-primary mb-10">
+            Choose how you&apos;d like to connect.
+          </motion.h2>
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" {...scrollProps}>
+            {connectOptions.map((option) => (
+              <motion.div
+                key={option.label}
+                {...childProps}
+                {...(shouldAnimate ? { whileHover: { y: -4, boxShadow: "0 16px 36px rgba(109,113,249,0.14)" }, transition: { type: "spring", stiffness: 220, damping: 24 } } : {})}
+                className="bg-bg-card rounded-2xl p-8 border border-border-subtle transition-colors duration-300 hover:border-primary/30 flex flex-col justify-between"
+                style={{ boxShadow: "0 2px 12px rgba(23,24,55,0.04)" }}
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-primary">
+                      {option.icon ? <option.icon size={16} /> : <FontAwesomeIcon icon={faLinkedin} style={{ width: 16, height: 16 }} />}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-primary">{option.label}</span>
                   </div>
-                  <a
-                    href="https://wa.me/94742366282?text=Hi%20Xpersive%20Labs!%20I'd%20like%20to%20discuss%20a%20project."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="wa-contact-alt-btn"
-                  >
-                    Open WhatsApp
-                  </a>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-6">{option.description}</p>
                 </div>
+                <a
+                  href={option.href}
+                  {...(option.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="group inline-flex items-center text-sm font-semibold text-text-primary hover:text-primary transition-colors"
+                >
+                  {option.cta}
+                  <ArrowRight size={14} className="ml-1.5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </a>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Contact form ─────────────────────────────────────────────── */}
+      <section className="py-24" id="contact-form">
+        <div className="max-w-4xl mx-auto px-6">
+          <motion.div className="mb-10" {...scrollProps}>
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-3">Start a Project</motion.span>
+            <motion.h2 {...childProps} className="font-display text-3xl sm:text-5xl font-bold text-text-primary tracking-tight mb-4">Tell us what you&apos;re building.</motion.h2>
+            <motion.p {...childProps} className="text-text-secondary text-lg leading-relaxed">A few details are enough to get the conversation started. You don&apos;t need to have everything figured out yet.</motion.p>
+          </motion.div>
+
+          <motion.div {...scrollProps} className="bg-bg-card rounded-3xl p-8 md:p-12 border border-border-subtle" style={{ boxShadow: "0 12px 44px -8px rgba(23,24,55,0.08)" }}>
+            <div className="mb-6">
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-[rgba(37,211,102,0.06)] border border-[rgba(37,211,102,0.2)]">
+                <WhatsAppIcon size={20} color="#25D366" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-text-primary">Prefer WhatsApp?</p>
+                  <p className="text-xs text-text-secondary">Message us directly — we reply within a few hours.</p>
+                </div>
+                <a
+                  href={buildWhatsAppUrl("Hi Xpersive Labs! I'd like to discuss a project.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white transition-all"
+                  style={{ background: "#25D366" }}
+                >
+                  Open WhatsApp
+                  <ArrowUpRight size={12} aria-hidden="true" />
+                </a>
               </div>
-              <AnimatePresence mode="wait">
-                {submitState === "success" ? (
-                  <SuccessBanner
-                    key="success"
-                    onReset={() => setSubmitState("idle")}
-                  />
-                ) : (
-                  <motion.form
-                    key="form"
-                    onSubmit={handleSubmit(onSubmit)}
-                    noValidate
-                    className="space-y-8"
-                    {...(shouldAnimate
-                      ? {
-                          variants: staggerContainer,
-                          initial: "hidden",
-                          animate: "visible",
-                          exit: { opacity: 0 },
-                        }
-                      : { initial: false })}
-                  >
-                    {submitState === "error" && (
-                      <motion.div
-                        {...(shouldAnimate
-                          ? {
-                              initial: { opacity: 0, y: -8 },
-                              animate: { opacity: 1, y: 0 },
-                            }
-                          : { initial: false })}
-                        className="flex items-start gap-3 p-4 rounded-xl bg-danger/10 border border-danger/20 text-danger text-sm"
-                      >
-                        <AlertCircle size={16} className="shrink-0 mt-0.5" />
-                        <span>
-                          Something went wrong. Email us directly at{" "}
-                          <a
-                            href="mailto:hello@xpersivelabs.com"
-                            className="underline"
-                          >
-                            hello@xpersivelabs.com
-                          </a>
-                        </span>
-                      </motion.div>
-                    )}
+            </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                      <motion.div {...childProps}>
-                        <FloatingField
-                          id="name"
-                          label="Your Name"
-                          required
-                          error={errors.name?.message}
-                        >
-                          <input
-                            id="name"
-                            type="text"
-                            placeholder="Jane Smith"
-                            className={underlineInput(!!errors.name)}
-                            {...register("name", {
-                              required: "Name is required",
-                              minLength: {
-                                value: 2,
-                                message: "At least 2 characters",
-                              },
-                              validate: (v) =>
-                                v.trim().length >= 2 ||
-                                "Name cannot be blank",
-                            })}
-                          />
-                        </FloatingField>
-                      </motion.div>
-                      <motion.div {...childProps}>
-                        <FloatingField
-                          id="email"
-                          label="Email Address"
-                          required
-                          error={errors.email?.message}
-                        >
-                          <input
-                            id="email"
-                            type="email"
-                            placeholder="you@company.com"
-                            className={underlineInput(!!errors.email)}
-                            {...register("email", {
-                              required: "Email is required",
-                              pattern: {
-                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "Enter a valid email",
-                              },
-                            })}
-                          />
-                        </FloatingField>
-                      </motion.div>
-                    </div>
+            <AnimatePresence mode="wait">
+              {submitState === "success" ? (
+                <SuccessBanner key="success" onReset={() => setSubmitState("idle")} />
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit(onSubmit)}
+                  noValidate
+                  className="space-y-7"
+                  {...(shouldAnimate ? { variants: staggerContainer, initial: "hidden", animate: "visible", exit: { opacity: 0 } } : { initial: false })}
+                >
+                  {submitState === "error" && (
+                    <motion.div
+                      {...(shouldAnimate ? { initial: { opacity: 0, y: -8 }, animate: { opacity: 1, y: 0 } } : { initial: false })}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-danger/10 border border-danger/20 text-danger text-sm"
+                    >
+                      <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                      <span>
+                        Something went wrong. Email us directly at{" "}
+                        <a href="mailto:hello@xpersivelabs.com" className="underline">hello@xpersivelabs.com</a>
+                      </span>
+                    </motion.div>
+                  )}
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                      <motion.div {...childProps}>
-                        <FloatingField id="company" label="Company (optional)">
-                          <input
-                            id="company"
-                            type="text"
-                            placeholder="Acme Inc."
-                            className={underlineInput(false)}
-                            {...register("company")}
-                          />
-                        </FloatingField>
-                      </motion.div>
-                      <motion.div {...childProps}>
-                        <FloatingField
-                          id="service"
-                          label="Service Interest"
-                          required
-                          error={errors.service?.message}
-                        >
-                          <Controller
-                            name="service"
-                            control={control}
-                            defaultValue=""
-                            rules={{ required: "Please select a service" }}
-                            render={({ field }) => (
-                              <Select.Root
-                                value={field.value}
-                                onValueChange={field.onChange}
-                              >
-                                <Select.Trigger
-                                  id="service"
-                                  onBlur={field.onBlur}
-                                  className={`${underlineInput(!!errors.service)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-text-muted`}
-                                >
-                                  <Select.Value placeholder="Select a service…" />
-                                  <Select.Icon>
-                                    <ChevronDown
-                                      size={14}
-                                      className="text-text-muted"
-                                    />
-                                  </Select.Icon>
-                                </Select.Trigger>
-                                <Select.Portal>
-                                  <Select.Content
-                                    position="popper"
-                                    sideOffset={8}
-                                    className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl"
-                                    style={{ background: "#ffffff" }}
-                                  >
-                                    <Select.Viewport className="p-1">
-                                      {serviceOptions.map((s) => (
-                                        <Select.Item
-                                          key={s}
-                                          value={s}
-                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
-                                        >
-                                          <Select.ItemText>
-                                            {s}
-                                          </Select.ItemText>
-                                        </Select.Item>
-                                      ))}
-                                    </Select.Viewport>
-                                  </Select.Content>
-                                </Select.Portal>
-                              </Select.Root>
-                            )}
-                          />
-                        </FloatingField>
-                      </motion.div>
-                      <motion.div {...childProps}>
-                        <FloatingField
-                          id="budget"
-                          label="Budget Range (optional)"
-                          error={errors.budget?.message}
-                        >
-                          <Controller
-                            name="budget"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                              <Select.Root
-                                value={field.value}
-                                onValueChange={field.onChange}
-                              >
-                                <Select.Trigger
-                                  id="budget"
-                                  onBlur={field.onBlur}
-                                  className={`${underlineInput(!!errors.budget)} flex items-center justify-between gap-2 text-left outline-none focus-visible:border-primary data-placeholder:text-text-muted`}
-                                >
-                                  <Select.Value placeholder="Select a range…" />
-                                  <Select.Icon>
-                                    <ChevronDown
-                                      size={14}
-                                      className="text-text-muted"
-                                    />
-                                  </Select.Icon>
-                                </Select.Trigger>
-                                <Select.Portal>
-                                  <Select.Content
-                                    position="popper"
-                                    sideOffset={8}
-                                    className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl"
-                                    style={{ background: "#ffffff" }}
-                                  >
-                                    <Select.Viewport className="p-1">
-                                      {budgetOptions.map((b) => (
-                                        <Select.Item
-                                          key={b}
-                                          value={b}
-                                          className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary"
-                                        >
-                                          <Select.ItemText>
-                                            {b}
-                                          </Select.ItemText>
-                                        </Select.Item>
-                                      ))}
-                                    </Select.Viewport>
-                                  </Select.Content>
-                                </Select.Portal>
-                              </Select.Root>
-                            )}
-                          />
-                        </FloatingField>
-                      </motion.div>
-                    </div>
-
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <motion.div {...childProps}>
-                      <FloatingField
-                        id="message"
-                        label="Tell Us About Your Project"
-                        required
-                        error={errors.message?.message}
-                      >
-                        <textarea
-                          id="message"
-                          rows={5}
-                          placeholder="What are you building? Timeline, requirements, goals…"
-                          className={`${underlineInput(!!errors.message)} resize-none`}
-                          {...register("message", {
-                            required: "Message is required",
-                            minLength: {
-                              value: 20,
-                              message:
-                                "Please add a bit more detail (20+ chars)",
-                            },
+                      <FormField id="name" label="Full Name" required error={errors.name?.message}>
+                        <input
+                          id="name"
+                          type="text"
+                          placeholder="Alex Morgan"
+                          className={boxedInput(!!errors.name)}
+                          {...register("name", {
+                            required: "Name is required",
+                            minLength: { value: 2, message: "At least 2 characters" },
+                            validate: (v) => v.trim().length >= 2 || "Name cannot be blank",
                           })}
                         />
-                      </FloatingField>
+                      </FormField>
                     </motion.div>
-
                     <motion.div {...childProps}>
-                      <button
-                        type="submit"
-                        disabled={submitState === "loading"}
-                        className="group w-full inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-base transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #6D71F9, #54C1FB)",
-                        }}
-                      >
-                        {submitState === "loading" ? (
-                          <>
-                            <Loader2 size={18} className="animate-spin" />
-                            Sending…
-                          </>
-                        ) : (
-                          <>
-                            <Send
-                              size={16}
-                              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
-                            />
-                            Send Message
-                          </>
-                        )}
-                      </button>
+                      <FormField id="email" label="Email Address" required error={errors.email?.message}>
+                        <input
+                          id="email"
+                          type="email"
+                          placeholder="alex@company.com"
+                          className={boxedInput(!!errors.email)}
+                          {...register("email", {
+                            required: "Email is required",
+                            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email" },
+                          })}
+                        />
+                      </FormField>
                     </motion.div>
-                  </motion.form>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                  </div>
 
-            {/* RIGHT - Trust signals */}
-            <motion.div
-              className="flex flex-col gap-4 lg:sticky lg:top-28"
-              {...scrollProps}
-            >
-              <motion.div {...childProps}>
-                <LottieAnimation
-                  src={LOTTIE_URLS.contact}
-                  style={{ width: 200, height: 200 }}
-                  fallback={<EnvelopeCheckIllustration className="w-10 h-10 mb-1" />}
-                />
-              </motion.div>
-
-              {/* Availability */}
-              <motion.div
-                {...childProps}
-                className="p-5 rounded-2xl"
-                style={{
-                  background: "rgba(16,185,129,0.05)",
-                  border: "1px solid rgba(16,185,129,0.15)",
-                }}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <span
-                    className="w-2 h-2 rounded-full bg-emerald-400"
-                    style={{
-                      animation: "badge-pulse 2s ease-in-out infinite",
-                    }}
-                  />
-                  <span className="text-sm font-semibold text-emerald-400">
-                    Currently available
-                  </span>
-                </div>
-                <p
-                  className="text-xs ml-4"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
-                  Taking on new projects now
-                </p>
-              </motion.div>
-
-              {/* Response time */}
-              <motion.div
-                {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
-                style={{ background: "var(--surface-card)" }}
-              >
-                <div className="shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Clock size={16} className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-text-primary mb-0.5">
-                    We respond within 48 hours
-                  </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--color-text-muted)" }}
-                  >
-                    Usually much faster.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Fix guarantee */}
-              <motion.div
-                {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
-                style={{ background: "var(--surface-card)" }}
-              >
-                <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <Clock size={16} className="text-accent" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-text-primary mb-0.5">
-                    30-day post-launch support
-                  </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--color-text-muted)" }}
-                  >
-                    We stay on for 30 days after every launch to catch and
-                    fix anything that surfaces in production.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Location */}
-              <motion.div
-                {...childProps}
-                className="flex items-start gap-4 p-5 rounded-2xl border border-border-subtle"
-                style={{ background: "var(--surface-card)" }}
-              >
-                <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <MapPin size={16} className="text-accent" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-text-primary mb-0.5">
-                    Colombo, Sri Lanka
-                  </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--color-text-muted)" }}
-                  >
-                    Working remotely with businesses in AU, UK, and US.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* What happens next */}
-              <motion.div
-                {...childProps}
-                className="p-5 rounded-2xl border border-border-subtle"
-                style={{ background: "var(--surface-card)" }}
-              >
-                <p
-                  className="text-xs font-bold uppercase mb-4"
-                  style={{
-                    color: "var(--color-text-muted)",
-                    letterSpacing: "0.12em",
-                  }}
-                >
-                  What happens next
-                </p>
-                <div className="space-y-3">
-                  {nextSteps.map(({ num, text }) => (
-                    <div key={num} className="flex items-center gap-3">
-                      <span
-                        className="shrink-0 font-display font-bold text-xs"
-                        style={{ color: "#6D71F9" }}
-                      >
-                        {num}
-                      </span>
-                      <div
-                        className="h-px flex-1"
-                        style={{ background: "rgba(109,113,249,0.15)" }}
+                  <motion.div {...childProps}>
+                    <FormField id="company" label="Company / Organisation">
+                      <input
+                        id="company"
+                        type="text"
+                        placeholder="Acme Studio / Self"
+                        className={boxedInput(false)}
+                        {...register("company")}
                       />
-                      <span
-                        className="text-sm"
-                        style={{ color: "var(--color-text-secondary)" }}
-                      >
-                        {text}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+                    </FormField>
+                  </motion.div>
 
-              {/* Direct email */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <motion.div {...childProps}>
+                      <FormField id="service" label="What do you need help with?" required error={errors.service?.message}>
+                        <Controller
+                          name="service"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: "Please select a service" }}
+                          render={({ field }) => (
+                            <Select.Root value={field.value} onValueChange={field.onChange}>
+                              <Select.Trigger
+                                id="service"
+                                onBlur={field.onBlur}
+                                className={`${boxedInput(!!errors.service)} flex items-center justify-between gap-2 text-left data-placeholder:text-text-muted`}
+                              >
+                                <Select.Value placeholder="Select a capability" />
+                                <Select.Icon>
+                                  <ChevronDown size={14} className="text-text-muted" />
+                                </Select.Icon>
+                              </Select.Trigger>
+                              <Select.Portal>
+                                <Select.Content position="popper" sideOffset={8} className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl" style={{ background: "#ffffff" }}>
+                                  <Select.Viewport className="p-1">
+                                    {serviceOptions.map((s) => (
+                                      <Select.Item key={s} value={s} className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary">
+                                        <Select.ItemText>{s}</Select.ItemText>
+                                      </Select.Item>
+                                    ))}
+                                  </Select.Viewport>
+                                </Select.Content>
+                              </Select.Portal>
+                            </Select.Root>
+                          )}
+                        />
+                      </FormField>
+                    </motion.div>
+                    <motion.div {...childProps}>
+                      <FormField id="budget" label="Project Budget" error={errors.budget?.message}>
+                        <Controller
+                          name="budget"
+                          control={control}
+                          defaultValue=""
+                          render={({ field }) => (
+                            <Select.Root value={field.value} onValueChange={field.onChange}>
+                              <Select.Trigger
+                                id="budget"
+                                onBlur={field.onBlur}
+                                className={`${boxedInput(!!errors.budget)} flex items-center justify-between gap-2 text-left data-placeholder:text-text-muted`}
+                              >
+                                <Select.Value placeholder="Estimated range" />
+                                <Select.Icon>
+                                  <ChevronDown size={14} className="text-text-muted" />
+                                </Select.Icon>
+                              </Select.Trigger>
+                              <Select.Portal>
+                                <Select.Content position="popper" sideOffset={8} className="z-60 overflow-hidden rounded-xl border border-border-subtle shadow-xl" style={{ background: "#ffffff" }}>
+                                  <Select.Viewport className="p-1">
+                                    {budgetOptions.map((b) => (
+                                      <Select.Item key={b} value={b} className="relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none data-highlighted:bg-primary/15 data-highlighted:text-primary data-[state=checked]:text-primary">
+                                        <Select.ItemText>{b}</Select.ItemText>
+                                      </Select.Item>
+                                    ))}
+                                  </Select.Viewport>
+                                </Select.Content>
+                              </Select.Portal>
+                            </Select.Root>
+                          )}
+                        />
+                      </FormField>
+                    </motion.div>
+                  </div>
+
+                  <motion.div {...childProps}>
+                    <FormField id="message" label="Tell us about your project" required error={errors.message?.message}>
+                      <textarea
+                        id="message"
+                        rows={5}
+                        placeholder="Tell us about your idea, the problem you're trying to solve, or what you'd like us to build…"
+                        className={`${boxedInput(!!errors.message)} resize-none min-h-[140px]`}
+                        {...register("message", {
+                          required: "Message is required",
+                          minLength: { value: 20, message: "Please add a bit more detail (20+ chars)" },
+                        })}
+                      />
+                    </FormField>
+                  </motion.div>
+
+                  <motion.div {...childProps} className="pt-2 space-y-3">
+                    <button
+                      type="submit"
+                      disabled={submitState === "loading"}
+                      className="group inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-semibold text-white text-base transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
+                    >
+                      {submitState === "loading" ? (
+                        <>
+                          <Loader2 size={18} className="animate-spin" />
+                          Sending…
+                        </>
+                      ) : (
+                        <>
+                          Send Inquiry
+                          <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" aria-hidden="true" />
+                        </>
+                      )}
+                    </button>
+                    <p className="text-xs text-text-muted">We&apos;ll only use your information to respond to your inquiry.</p>
+                  </motion.div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── What happens next ─────────────────────────────────────────── */}
+      <section className="py-24 bg-[rgba(109,113,249,0.035)]">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div className="mb-12" {...scrollProps}>
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-2">Process</motion.span>
+            <motion.h2 {...childProps} className="font-display text-2xl sm:text-3xl font-bold text-text-primary tracking-tight">What happens next</motion.h2>
+          </motion.div>
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" {...scrollProps}>
+            {nextSteps.map((step) => (
               <motion.div
+                key={step.num}
                 {...childProps}
-                className="p-5 rounded-2xl border border-border-subtle"
-                style={{ background: "var(--surface-card)" }}
+                {...(shouldAnimate ? { whileHover: { y: -4, boxShadow: "0 16px 36px rgba(109,113,249,0.14)" }, transition: { type: "spring", stiffness: 220, damping: 24 } } : {})}
+                className="p-8 rounded-2xl bg-bg-card border border-border-subtle transition-colors duration-300 hover:border-primary/30"
+                style={{ boxShadow: "0 2px 12px rgba(23,24,55,0.04)" }}
               >
-                <p
-                  className="text-xs mb-2"
-                  style={{ color: "var(--color-text-muted)" }}
-                >
-                  Prefer email?
-                </p>
-                <button
-                  onClick={copyEmail}
-                  className="group flex items-center gap-2 text-sm font-medium transition-colors duration-200 hover:text-primary"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
-                  <span>hello@xpersivelabs.com</span>
-                  <AnimatePresence mode="wait">
-                    {copied ? (
-                      <motion.span
-                        key="check"
-                        {...(shouldAnimate
-                          ? {
-                              initial: { opacity: 0, scale: 0.8 },
-                              animate: { opacity: 1, scale: 1 },
-                              exit: { opacity: 0 },
-                            }
-                          : { initial: false })}
-                        className="text-xs text-emerald-400 font-semibold"
-                      >
-                        Copied!
-                      </motion.span>
-                    ) : (
-                      <motion.span
-                        key="copy"
-                        {...(shouldAnimate
-                          ? {
-                              initial: { opacity: 0 },
-                              animate: { opacity: 1 },
-                              exit: { opacity: 0 },
-                            }
-                          : { initial: false })}
-                        className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ color: "var(--color-text-muted)" }}
-                      >
-                        click to copy
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </button>
+                <div className="font-mono text-sm font-bold text-primary mb-3">{step.num}</div>
+                <p className="text-text-primary font-medium leading-snug">{step.text}</p>
               </motion.div>
-            </motion.div>
-          </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Closing brand statement ───────────────────────────────────── */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6">
+          <motion.div
+            className="relative overflow-hidden rounded-3xl p-12 sm:p-20 text-center flex flex-col items-center border border-border-subtle"
+            style={{
+              background: "linear-gradient(135deg, #FFFFFF 0%, #F1F0FF 55%, #E8E6FF 100%)",
+              boxShadow: "0 8px 40px rgba(109,113,249,0.12)",
+            }}
+            {...scrollProps}
+          >
+            <motion.div
+              className="absolute -top-16 -left-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+              style={{ background: "rgba(84,193,251,0.22)" }}
+              {...ambientProps}
+            />
+            <motion.div
+              className="absolute -bottom-16 -right-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+              style={{ background: "rgba(109,113,249,0.18)" }}
+              {...ambientProps}
+            />
+            <div className="relative z-10 flex flex-col items-center">
+              <motion.h2 {...childProps} className="font-display font-extrabold leading-[1.1] mb-4 text-text-primary" style={{ fontSize: "clamp(28px, 4.5vw, 40px)" }}>
+                Good software starts with a good conversation.
+              </motion.h2>
+              <motion.p {...childProps} className="text-lg leading-relaxed mb-8 max-w-xl text-text-secondary">
+                You don&apos;t need a perfect brief. Just tell us what you&apos;re trying to achieve.
+              </motion.p>
+              <motion.div {...childProps}>
+                <a
+                  href="#contact-form"
+                  className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:scale-[1.02]"
+                  style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
+                >
+                  Let&apos;s Talk
+                  <ArrowRight size={17} className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden="true" />
+                </a>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
@@ -763,17 +603,11 @@ function SuccessBanner({ onReset }: { onReset: () => void }) {
       </div>
       <div>
         <h3 className="font-display text-2xl font-bold mb-2">Message sent!</h3>
-        <p
-          className="text-sm leading-relaxed max-w-sm"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
+        <p className="text-sm leading-relaxed max-w-sm text-text-secondary">
           We&apos;ll review your message and get back to you within 48 hours.
         </p>
       </div>
-      <button
-        onClick={onReset}
-        className="text-sm font-semibold text-primary hover:underline"
-      >
+      <button onClick={onReset} className="text-sm font-semibold text-primary hover:underline">
         Send another message
       </button>
     </motion.div>
