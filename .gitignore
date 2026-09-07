@@ -46,3 +46,5 @@ next-env.d.ts
 
 # graphify knowledge graph output (generated, rebuild with /graphify)
 graphify-out/
+
+.claude
