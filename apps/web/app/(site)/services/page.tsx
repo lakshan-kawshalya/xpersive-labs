@@ -147,8 +147,12 @@ const services: Service[] = [
 
 /* ─── Anchor nav with scroll tracking ───────────────────────────────── */
 
+const CLICK_LOCK_MS = 800;
+
 function AnchorNav() {
   const [activeId, setActiveId] = useState(services[0].id);
+  const clickLockRef = useRef(false);
+  const clickLockTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const sections = services
@@ -157,6 +161,7 @@ function AnchorNav() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (clickLockRef.current) return;
         entries.forEach((entry) => {
           if (entry.isIntersecting) setActiveId(entry.target.id);
         });
@@ -165,23 +170,38 @@ function AnchorNav() {
     );
 
     sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (clickLockTimeout.current) clearTimeout(clickLockTimeout.current);
+    };
   }, []);
 
+  const handleClick = (id: string) => {
+    setActiveId(id);
+    clickLockRef.current = true;
+    if (clickLockTimeout.current) clearTimeout(clickLockTimeout.current);
+    clickLockTimeout.current = setTimeout(() => {
+      clickLockRef.current = false;
+    }, CLICK_LOCK_MS);
+  };
+
   return (
-    <div className="w-full bg-[rgba(109,113,249,0.05)] rounded-xl p-1.5 flex items-center gap-1.5 overflow-x-auto">
+    <div className="w-full bg-[rgba(109,113,249,0.05)] rounded-xl p-1.5 flex items-center gap-1.5">
       {services.map((s) => {
         const isActive = s.id === activeId;
         return (
           <a
             key={s.id}
             href={`#${s.id}`}
-            className={`whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+            onClick={() => handleClick(s.id)}
+            className={`flex-1 basis-0 justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
               isActive ? "bg-bg-card text-primary shadow-sm" : "text-text-secondary hover:text-text-primary hover:bg-bg-card/70"
             }`}
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-primary" : "bg-transparent"}`} />
-            {s.label.replace(" Development", "").replace(" Integration", "").replace(" & Data Pipelines", " & Data")}
+            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isActive ? "bg-primary" : "bg-transparent"}`} />
+            <span className="truncate">
+              {s.label.replace(" Development", "").replace(" Integration", "").replace(" & Data Pipelines", " & Data")}
+            </span>
           </a>
         );
       })}
