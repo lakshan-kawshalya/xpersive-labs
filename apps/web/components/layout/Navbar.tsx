@@ -170,6 +170,7 @@ export default function Navbar() {
               alt="Xpersive Labs mark"
               width={28}
               height={28}
+              className="h-7 w-7"
               priority
               aria-hidden="true"
             />
