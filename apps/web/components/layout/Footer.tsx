@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { CookiePreferencesButton } from "@/components/layout/CookiePreferencesButton";
 
 const footerSections = {
   Company: [
@@ -127,7 +126,13 @@ export default function Footer() {
             >
               Cookie Policy
             </Link>
-            <CookiePreferencesButton />
+            <Link
+              href="/terms-and-conditions"
+              className="text-sm transition-colors duration-200 hover:text-primary"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              Terms and Conditions
+            </Link>
           </div>
         </div>
       </div>

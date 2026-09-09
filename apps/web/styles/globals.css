@@ -38,8 +38,14 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Hide default cursor only once the JS cursor confirms it's running */
-html.custom-cursor-active * {
+/* Hide default cursor only once the JS cursor confirms it's running.
+   Suspended while the cookie consent/preferences modal is open — those
+   panels render at vanilla-cookieconsent's own max z-index, above the custom
+   cursor, so hiding the native cursor there left nothing visible at all.
+   `show--consent` / `show--preferences` are classes vanilla-cookieconsent
+   itself adds to <html> for the lifetime of each modal — targeting its own
+   state directly instead of a callback keeps this in sync automatically. */
+html.custom-cursor-active:not(.show--consent):not(.show--preferences) * {
   cursor: none !important;
 }
 
