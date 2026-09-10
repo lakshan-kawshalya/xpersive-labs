@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@keystatic/core", "@keystatic/next"],
 
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+
   async headers() {
     return [
       {
