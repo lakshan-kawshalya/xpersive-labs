@@ -77,27 +77,30 @@ export default function Footer() {
                 {title}
               </p>
               <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
-                      style={{ color: "rgba(255,255,255,0.45)" }}
-                      {...(link.href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                    >
-                      <span className="group-hover/link:text-white transition-colors duration-200">
-                        {link.label}
-                      </span>
-                      <span
-                        className="text-primary opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200 text-xs"
+                {links.map((link) => {
+                  const isInternal = link.href.startsWith("/");
+                  const isExternalHttp = link.href.startsWith("http");
+                  const LinkTag = isInternal ? Link : "a";
+                  return (
+                    <li key={link.href}>
+                      <LinkTag
+                        href={link.href}
+                        className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
+                        style={{ color: "rgba(255,255,255,0.45)" }}
+                        {...(isExternalHttp ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       >
-                        →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                        <span className="group-hover/link:text-white transition-colors duration-200">
+                          {link.label}
+                        </span>
+                        <span
+                          className="text-primary opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200 text-xs"
+                        >
+                          →
+                        </span>
+                      </LinkTag>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
