@@ -12,24 +12,29 @@ const steps = [
     title: "You Brief Us",
     lottie: LOTTIE_URLS.processBrief,
     desc: "Tell us what you're building — what problem it solves, who it's for, and your rough timeline.",
+    timing: "Day 1 – 3",
   },
   {
     num: "02",
     title: "We Plan It",
     lottie: LOTTIE_URLS.processDesign,
     desc: "We map the architecture, user flows, and component structure. You approve the plan before we write a single line of code.",
+    timing: "Week 1",
   },
   {
     num: "03",
     title: "We Build It",
     lottie: LOTTIE_URLS.processBuild,
     desc: "We ship in stages with weekly check-ins. You see real progress throughout - not a surprise at the finish line.",
+    timing: "Weeks 2 – 4",
   },
   {
     num: "04",
     title: "We Launch It",
     lottie: LOTTIE_URLS.processLaunch,
     desc: "We handle deployment, run a full QA pass, and stay available for 30 days post-launch.",
+    timing: "Launch & 30d Support",
+    accentTiming: true,
   },
 ];
 
@@ -45,11 +50,12 @@ function StepCard({ step, shouldAnimate }: StepCardProps) {
   return (
     <motion.div
       ref={ref}
-      className="relative rounded-[20px] border border-border-subtle bg-bg-card p-7 overflow-hidden"
+      className="group relative rounded-[20px] border border-border-subtle bg-bg-card p-7 overflow-hidden flex flex-col justify-between transition-colors duration-300 hover:border-primary/30"
       style={{ boxShadow: "0 1px 8px rgba(109,113,249,0.04)" }}
       {...(shouldAnimate ? {
         initial: { opacity: 0, y: 20 },
         animate: inView ? { opacity: 1, y: 0 } : {},
+        whileHover: { y: -6, boxShadow: "0 20px 48px rgba(109,113,249,0.16)" },
         transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1.0] },
       } : { initial: false })}
     >
@@ -60,23 +66,29 @@ function StepCard({ step, shouldAnimate }: StepCardProps) {
         {step.num}
       </span>
 
-      <div className="relative w-15 h-15 mb-4">
-        <LottieAnimation
-          src={step.lottie}
-          style={{ width: 60, height: 60 }}
-          fallback={
-            <div
-              className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-[11px] font-bold text-primary"
-              style={{ background: "rgba(109,113,249,0.1)", border: "1px solid rgba(109,113,249,0.3)" }}
-            >
-              {step.num}
-            </div>
-          }
-        />
+      <div>
+        <div className="relative w-15 h-15 mb-4">
+          <LottieAnimation
+            src={step.lottie}
+            style={{ width: 60, height: 60 }}
+            fallback={
+              <div
+                className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-[11px] font-bold text-primary"
+                style={{ background: "rgba(109,113,249,0.1)", border: "1px solid rgba(109,113,249,0.3)" }}
+              >
+                {step.num}
+              </div>
+            }
+          />
+        </div>
+
+        <h3 className="relative font-display font-bold text-lg text-text-primary mb-2">{step.title}</h3>
+        <p className="relative text-sm leading-relaxed text-text-secondary">{step.desc}</p>
       </div>
 
-      <h3 className="relative font-display font-bold text-lg text-text-primary mb-2">{step.title}</h3>
-      <p className="relative text-sm leading-relaxed text-text-secondary">{step.desc}</p>
+      <div className={`relative mt-6 pt-3 border-t border-border-subtle text-[11px] uppercase tracking-wider ${step.accentTiming ? "text-primary font-semibold" : "text-text-muted"}`}>
+        {step.timing}
+      </div>
     </motion.div>
   );
 }

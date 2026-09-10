@@ -2,60 +2,62 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { Globe, ShoppingBag, Terminal, Zap } from "lucide-react";
-import Link from "next/link";
+import { CreditCard, Layers, Palette, Smartphone, Workflow, Globe } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
-import { SectionRevealOverlays } from "@/components/sections/SectionRevealOverlays";
-import CircuitDividerIllustration from "@/components/illustrations/CircuitDividerIllustration";
-import { LottieAnimation } from "@/components/ui/LottieAnimation";
-import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
-const services = [
+interface Service {
+  icon: React.ElementType;
+  discipline: string;
+  title: string;
+  description: string;
+  tags: string;
+  span?: string;
+  badge?: { value: string; label: string };
+}
+
+const services: Service[] = [
   {
     icon: Globe,
-    lottie: LOTTIE_URLS.webDev,
-    label: "Web Application Development",
-    title: "Websites & Web Apps That Win Clients",
-    description:
-      "From marketing sites to client portals and SaaS dashboards — we build fast, modern web products using Next.js. Performance-first, SEO-ready, and built to last.",
-    cta: "Learn more",
-    href: "/services#web",
+    discipline: "Discipline 01",
+    title: "Website Development",
+    description: "Fast, modern websites that make your business easy to find and easy to trust.",
+    tags: "Next.js · Tailwind · SEO",
   },
   {
-    icon: Terminal,
-    lottie: LOTTIE_URLS.automation,
-    label: "Automation & Data Pipelines",
-    title: "Save Hours Every Week With Automation",
-    description:
-      "Scrapers, API integrations, scheduled jobs, and data pipelines. If you're doing it manually and it happens more than once a week, we can automate it.",
-    cta: "See case study",
-    href: "/portfolio/alibaba-scraper",
+    icon: Smartphone,
+    discipline: "Discipline 02",
+    title: "Mobile App Development",
+    description: "Apps for iOS and Android that put your business in your customer's pocket.",
+    tags: "React Native · Flutter · Offline Sync",
   },
   {
-    icon: ShoppingBag,
-    lottie: LOTTIE_URLS.ecommerce,
-    label: "Ecommerce Development",
-    title: "Shopify Stores That Actually Convert",
-    description:
-      "Custom Shopify storefronts built around conversion. Product filtering, checkout flows, inventory automation — the full stack, not just a theme.",
-    cta: "Learn more",
-    href: "/services#ecommerce",
+    icon: Layers,
+    discipline: "Discipline 03",
+    title: "Software Development",
+    description: "Custom tools and platforms built around how your business actually works.",
+    tags: "Cloud SaaS · Distributed Systems",
   },
   {
-    icon: Zap,
-    lottie: LOTTIE_URLS.ai,
-    label: "AI Workflow Integration",
-    title: "AI Tools Built Into Your Business",
-    description:
-      "LLM-powered features, intelligent data processing, and automations that reduce manual work. We embed AI where it actually earns its place — not as a gimmick.",
-    cta: "Learn more",
-    href: "/services#ai",
+    icon: Workflow,
+    discipline: "Discipline 04",
+    title: "Automation",
+    description: "Save hours every week by letting software handle the repetitive work.",
+    tags: "Python Scrapers · Webhooks · Cron Infrastructure",
+    span: "lg:col-span-2",
+    badge: { value: "100%", label: "Human-free pipelines" },
+  },
+  {
+    icon: Palette,
+    discipline: "Discipline 05",
+    title: "UI/UX Development",
+    description: "Clean, simple design that makes people want to stay and come back.",
+    tags: "Design Systems · Micro-animations · WCAG AA",
   },
 ];
 
-function ServiceCard({ service }: { service: (typeof services)[number] }) {
+function ServiceCard({ service }: { service: Service }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0, y: 0, on: false });
   const { shouldAnimate } = useMotionSafe();
@@ -64,7 +66,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
   const animProps = shouldAnimate
     ? {
         variants: fadeUp,
-        whileHover: { y: -6, boxShadow: "0 8px 32px rgba(109,113,249,0.12)" },
+        whileHover: { y: -6, boxShadow: "0 20px 48px rgba(109,113,249,0.16)" },
         transition: { type: "spring" as const, stiffness: 200, damping: 22 },
         onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => {
           const r = cardRef.current?.getBoundingClientRect();
@@ -78,48 +80,48 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
     <motion.div
       ref={cardRef}
       {...animProps}
-      className="group relative flex flex-col rounded-3xl border overflow-hidden transition-colors duration-300 border-border-subtle hover:border-primary/25 bg-bg-card"
-      style={{ padding: 32, boxShadow: "0 2px 12px rgba(109,113,249,0.06)" }}
+      className={`group relative rounded-2xl border border-border-subtle bg-bg-card overflow-hidden p-8 flex flex-col justify-between transition-colors duration-300 hover:border-primary/30 ${service.span ?? ""}`}
+      style={{ boxShadow: "0 2px 12px rgba(109,113,249,0.06)" }}
     >
-      {/* Spotlight radial */}
       {shouldAnimate && (
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             opacity: spot.on ? 1 : 0,
             transition: "opacity 0.2s ease",
-            background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.05) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${spot.x}px ${spot.y}px, rgba(109,113,249,0.06) 0%, transparent 60%)`,
           }}
         />
       )}
 
-      <div className="relative w-20 h-20 mb-5 -ml-2">
-        <LottieAnimation
-          src={service.lottie}
-          style={{ width: 80, height: 80 }}
-          fallback={
-            <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-primary/10 border border-primary/20">
-              <Icon size={24} className="text-primary" />
+      <div className={`relative ${service.badge ? "flex flex-col md:flex-row md:items-start justify-between gap-6" : ""}`}>
+        <div className={service.badge ? "max-w-xl" : ""}>
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-primary"
+            style={{ background: "rgba(109,113,249,0.1)" }}
+          >
+            <Icon size={22} className="text-primary transition-colors duration-300 group-hover:text-white" aria-hidden="true" />
+          </div>
+          <span className="text-[11px] uppercase tracking-wider text-text-muted block mb-1">{service.discipline}</span>
+          <h3 className="font-display text-xl font-bold text-text-primary mb-2">{service.title}</h3>
+          <p className="text-text-secondary leading-relaxed">{service.description}</p>
+        </div>
+
+        {service.badge && (
+          <div className="bg-[rgba(109,113,249,0.05)] px-5 py-3 rounded-xl flex items-center gap-3 self-start shrink-0">
+            <CreditCard size={20} className="text-secondary" aria-hidden="true" />
+            <div className="text-left">
+              <div className="font-display text-lg font-bold text-text-primary leading-tight">{service.badge.value}</div>
+              <div className="text-[11px] uppercase tracking-wider text-text-muted">{service.badge.label}</div>
             </div>
-          }
-        />
+          </div>
+        )}
       </div>
 
-      <span className="relative text-[11px] font-medium text-primary uppercase tracking-[0.1em] mb-2">
-        {service.label}
-      </span>
-      <h3 className="relative font-display text-xl font-bold mb-3 text-text-primary">{service.title}</h3>
-      <p className="relative text-[15px] text-text-secondary leading-relaxed flex-1 mb-5">
-        {service.description}
-      </p>
-
-      <Link
-        href={service.href}
-        className="relative inline-flex items-center gap-1.5 text-sm font-medium text-primary w-fit hover:underline"
-      >
-        {service.cta}
-        <span aria-hidden="true">→</span>
-      </Link>
+      <div className="relative mt-6 pt-4 border-t border-border-subtle flex items-center justify-between text-[11px] uppercase tracking-wider text-text-muted">
+        <span>{service.tags}</span>
+        <span className="text-primary transition-transform duration-200 group-hover:translate-x-1">→</span>
+      </div>
     </motion.div>
   );
 }
@@ -135,10 +137,10 @@ export default function ServicesSection() {
     viewport: { once: true, margin: "-80px" },
   } : { initial: false };
 
-  return (
-    <section ref={ref} className="py-28 relative overflow-hidden">
-      <SectionRevealOverlays inView={inView} shouldAnimate={shouldAnimate} />
+  const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
 
+  return (
+    <section ref={ref} className="py-28 relative overflow-hidden bg-[rgba(109,113,249,0.035)]">
       <motion.div
         className="max-w-7xl mx-auto px-6"
         {...(shouldAnimate
@@ -149,25 +151,29 @@ export default function ServicesSection() {
             }
           : { initial: false })}
       >
-        <motion.div className="text-center mb-16" {...scrollProps}>
-          <motion.span {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            Our Expertise
-          </motion.span>
-          <motion.h2 {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="font-display text-4xl sm:text-5xl font-bold mb-5 text-text-primary">
-            What We Build
-          </motion.h2>
-          <motion.p {...(shouldAnimate ? { variants: fadeUp } : { initial: false })} className="text-text-secondary text-lg max-w-xl mx-auto leading-relaxed">
-            Web application development is what we do. Automation, ecommerce integrations, and AI workflows extend what we build - they&apos;re tools in service of the product, not the product itself.
-          </motion.p>
+        <motion.div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6" {...scrollProps}>
+          <div>
+            <motion.span {...childProps} className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-3">
+              Architectural Disciplines
+            </motion.span>
+            <motion.h2 {...childProps} className="font-display text-4xl sm:text-5xl font-bold text-text-primary">
+              What we build
+            </motion.h2>
+          </div>
+          <motion.div
+            {...childProps}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bg-card border border-border-subtle text-text-primary shadow-sm self-start md:self-auto"
+          >
+            <CreditCard size={16} className="text-primary" aria-hidden="true" />
+            <span className="text-sm font-medium">Engagements starting from $1,500 · Fixed sprint scopes</span>
+          </motion.div>
         </motion.div>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" {...scrollProps}>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" {...scrollProps}>
           {services.map((service) => (
             <ServiceCard key={service.title} service={service} />
           ))}
         </motion.div>
-
-        <CircuitDividerIllustration className="w-full h-12 mt-16" />
       </motion.div>
     </section>
   );

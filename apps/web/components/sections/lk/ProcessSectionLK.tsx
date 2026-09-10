@@ -3,26 +3,32 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
 const steps = [
   {
     num: "01",
     title: "You Tell Us",
+    lottie: LOTTIE_URLS.processBrief,
     desc: "Message us on WhatsApp and tell us what you need. No forms, no jargon required.",
   },
   {
     num: "02",
     title: "We Plan It",
+    lottie: LOTTIE_URLS.processDesign,
     desc: "We map out exactly what will be built and give you a clear price before starting.",
   },
   {
     num: "03",
     title: "We Build It",
+    lottie: LOTTIE_URLS.processBuild,
     desc: "You get updates as we go. No surprises, no disappearing for weeks.",
   },
   {
     num: "04",
     title: "We Launch It",
+    lottie: LOTTIE_URLS.processLaunch,
     desc: "We set everything up, test it thoroughly, and stay available after launch.",
   },
 ];
@@ -39,22 +45,38 @@ function StepCard({ step, shouldAnimate }: StepCardProps) {
   return (
     <motion.div
       ref={ref}
-      className="group relative rounded-2xl border border-border-subtle bg-bg-card p-8 flex flex-col justify-between transition-colors duration-300 hover:border-primary/30"
-      style={{ boxShadow: "0 2px 12px rgba(109,113,249,0.06)" }}
+      className="relative rounded-[20px] border border-border-subtle bg-bg-card p-7 overflow-hidden"
+      style={{ boxShadow: "0 1px 8px rgba(109,113,249,0.04)" }}
       {...(shouldAnimate ? {
         initial: { opacity: 0, y: 20 },
         animate: inView ? { opacity: 1, y: 0 } : {},
-        whileHover: { y: -6, boxShadow: "0 20px 48px rgba(109,113,249,0.16)" },
         transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1.0] },
       } : { initial: false })}
     >
-      <div className="flex flex-col gap-4">
-        <span className="font-display text-4xl font-bold leading-none text-primary/25 transition-colors duration-300 group-hover:text-primary/50">
-          {step.num}
-        </span>
-        <h3 className="font-display text-lg font-bold text-text-primary">{step.title}</h3>
-        <p className="text-text-secondary leading-relaxed">{step.desc}</p>
+      <span
+        className="absolute top-2 right-4 font-display font-extrabold leading-none select-none pointer-events-none"
+        style={{ fontSize: 72, color: "rgba(109,113,249,0.06)" }}
+      >
+        {step.num}
+      </span>
+
+      <div className="relative w-15 h-15 mb-4">
+        <LottieAnimation
+          src={step.lottie}
+          style={{ width: 60, height: 60 }}
+          fallback={
+            <div
+              className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-[11px] font-bold text-primary"
+              style={{ background: "rgba(109,113,249,0.1)", border: "1px solid rgba(109,113,249,0.3)" }}
+            >
+              {step.num}
+            </div>
+          }
+        />
       </div>
+
+      <h3 className="relative font-display font-bold text-lg text-text-primary mb-2">{step.title}</h3>
+      <p className="relative text-sm leading-relaxed text-text-secondary">{step.desc}</p>
     </motion.div>
   );
 }

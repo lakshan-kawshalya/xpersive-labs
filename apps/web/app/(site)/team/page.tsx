@@ -4,32 +4,11 @@ import { useState } from "react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
-import { ArrowRight, Briefcase, Code2, ExternalLink } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  initials: string;
-  avatar: string;
-  social: { icon: React.ElementType; href: string; label: string }[];
-}
-
-const teamMembers: TeamMember[] = [
-  {
-    name: "Lakshan Kawshalya",
-    role: "Founder & Lead Developer",
-    bio: "Building web applications, automation systems, and AI-powered tools for businesses in AU, UK, and US. Based in Colombo, Sri Lanka - shipping production-grade software since 2024.",
-    initials: "LK",
-    avatar: "/team/lakshan-kawshalya.png",
-    social: [
-      { icon: Code2, href: "https://github.com/lakshan-kawshalya", label: "GitHub" },
-      { icon: Briefcase, href: "https://www.linkedin.com/in/lakshan-kawshalya/", label: "LinkedIn" },
-    ],
-  },
-];
+import { TEAM_MEMBERS, type TeamMember } from "@/lib/team";
 
 export default function TeamPage() {
   const { shouldAnimate } = useMotionSafe();
@@ -41,6 +20,13 @@ export default function TeamPage() {
   } : { initial: false };
 
   const childProps = shouldAnimate ? { variants: fadeUp } : { initial: false };
+
+  const scrollProps = shouldAnimate ? {
+    variants: staggerContainer,
+    initial: "hidden",
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: "-80px" },
+  } : { initial: false };
 
   return (
     <div className="text-text-primary">
@@ -63,7 +49,7 @@ export default function TeamPage() {
               The <span className="text-gradient">Studio</span>
             </motion.h1>
             <motion.p {...childProps} className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
-              One developer, end-to-end. From the first call to production deployment, you work directly with the person writing the code - not an account manager, not a rotating team, not a handoff.
+              A small team of builders, designers, and problem-solvers based in Colombo, Sri Lanka. You work directly with the people writing the code — not an account manager, not a rotating team, not a handoff.
             </motion.p>
           </motion.div>
         </div>
@@ -87,23 +73,18 @@ export default function TeamPage() {
               color: "var(--color-text-primary)",
             }}
           >
-            A solo software studio in Colombo, Sri Lanka. Web development, automation, and AI workflows - built end-to-end by one senior developer, without the overhead of a large agency.
+            A small software studio in Colombo, Sri Lanka. Web development, mobile apps, automation, and design — built end-to-end by a team that works closely together, without the overhead of a large agency.
           </motion.blockquote>
         </div>
       </section>
 
       {/* Team cards */}
       <section className="py-16 pb-28 border-t border-border-subtle">
-        <div className="max-w-xl mx-auto px-6">
-          <motion.div
-            {...(shouldAnimate ? {
-              variants: fadeUp,
-              initial: "hidden",
-              whileInView: "visible" as const,
-              viewport: { once: true, margin: "-80px" },
-            } : { initial: false })}
-          >
-            <MemberCard member={teamMembers[0]} />
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-8" {...scrollProps}>
+            {TEAM_MEMBERS.map((member) => (
+              <MemberCard key={member.name} member={member} />
+            ))}
           </motion.div>
         </div>
 
@@ -116,7 +97,7 @@ export default function TeamPage() {
             transition: { duration: 0.6, delay: 0.3 },
           } : { initial: false })}
         >
-          Small on purpose. Every project gets full attention - not a junior dev and a Slack channel.
+          Small on purpose. Every project gets full attention from the people actually building it.
         </motion.p>
 
         <motion.div
@@ -184,28 +165,29 @@ function MemberCard({ member }: { member: TeamMember }) {
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-bg-card" />
       </div>
 
-      <h2 className="relative font-display font-bold mb-1 text-text-primary" style={{ fontSize: 28 }}>{member.name}</h2>
+      <h2 className="relative font-display font-bold mb-1 text-text-primary" style={{ fontSize: 24 }}>{member.name}</h2>
       <p className="relative text-gradient text-sm font-semibold uppercase tracking-wider mb-5">{member.role}</p>
-      <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 16, color: "var(--color-text-secondary)" }}>
+      <p className="relative leading-relaxed mb-8 max-w-sm" style={{ fontSize: 15, color: "var(--color-text-secondary)" }}>
         {member.bio}
       </p>
 
-      {/* Social links */}
-      <div className="relative flex items-center gap-4 mt-auto">
-        {member.social.map(({ icon: Icon, href, label }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-text-secondary hover:text-primary"
-          >
-            <Icon size={14} />
-            <span>{label}</span>
-            <ExternalLink size={11} className="opacity-0 group-hover/link:opacity-100 transition-opacity duration-200" />
-          </a>
-        ))}
-      </div>
+      {member.social.length > 0 && (
+        <div className="relative flex items-center gap-4 mt-auto">
+          {member.social.map(({ icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/link inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-text-secondary hover:text-primary"
+            >
+              <FontAwesomeIcon icon={icon} style={{ width: 14, height: 14 }} />
+              <span>{label}</span>
+              <ExternalLink size={11} className="opacity-0 group-hover/link:opacity-100 transition-opacity duration-200" />
+            </a>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }

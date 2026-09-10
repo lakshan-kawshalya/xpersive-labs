@@ -1,6 +1,13 @@
 "use client";
 
-export function CookiePreferencesButton() {
+import type { ReactNode } from "react";
+
+interface CookiePreferencesButtonProps {
+  className?: string;
+  children?: ReactNode;
+}
+
+export function CookiePreferencesButton({ className, children }: CookiePreferencesButtonProps) {
   const openPreferences = () => {
     import("vanilla-cookieconsent").then((CookieConsent) => {
       CookieConsent.showPreferences();
@@ -11,10 +18,10 @@ export function CookiePreferencesButton() {
     <button
       type="button"
       onClick={openPreferences}
-      className="text-sm transition-colors duration-200 hover:text-primary"
-      style={{ color: "rgba(255,255,255,0.45)" }}
+      className={className ?? "text-sm transition-colors duration-200 hover:text-primary"}
+      style={className ? undefined : { color: "rgba(255,255,255,0.45)" }}
     >
-      Cookie preferences
+      {children ?? "Cookie preferences"}
     </button>
   );
 }

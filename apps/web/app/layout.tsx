@@ -27,18 +27,19 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpersivelabs.com"),
   title: {
-    default: "Xpersive Labs | Web Development Studio — Next.js, Automation, AI",
+    default: "Xpersive Labs | Software Studio — Websites, Mobile, Automation",
     template: "%s | Xpersive Labs",
   },
   description:
-    "Boutique software studio in Colombo, Sri Lanka. Custom web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US. Built by one senior developer - no handoffs.",
+    "Boutique software studio in Colombo, Sri Lanka. Websites, mobile apps, custom software, automation, and UI/UX design for businesses in AU, UK, US, and Europe. Direct engineer access - no handoffs.",
   keywords: [
     "Next.js development studio",
     "custom web application development",
+    "mobile app development studio",
     "web development agency AU UK US",
     "boutique software studio",
-    "automation and AI workflow development",
-    "ecommerce development Next.js",
+    "automation development",
+    "UI/UX design studio",
   ],
   authors: [{ name: "Lakshan Kawshalya", url: "https://www.xpersivelabs.com" }],
   creator: "Xpersive Labs",
@@ -59,15 +60,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.xpersivelabs.com",
     siteName: "Xpersive Labs",
-    title: "Xpersive Labs | Web Development Studio",
+    title: "Xpersive Labs | Software Studio",
     description:
-      "Custom web applications, automation pipelines, and AI workflows. One senior developer. Direct access from brief to launch. Serving AU, UK, and US.",
+      "Websites, mobile apps, custom software, automation, and UI/UX design. Direct engineer access from brief to launch. Serving AU, UK, US, and Europe.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xpersive Labs | Web Development Studio",
+    title: "Xpersive Labs | Software Studio",
     description:
-      "Custom web applications, automation, and AI workflows for businesses in AU, UK, and US.",
+      "Websites, mobile apps, custom software, automation, and UI/UX design for businesses in AU, UK, US, and Europe.",
   },
   alternates: {
     canonical: "https://www.xpersivelabs.com",
@@ -103,19 +104,20 @@ export default function RootLayout({
               "url": "https://www.xpersivelabs.com",
               "logo": "https://www.xpersivelabs.com/logo/brandmark.svg",
               "description":
-                "Boutique software studio building web applications, automation pipelines, and AI workflows for businesses in AU, UK, and US.",
+                "Boutique software studio building websites, mobile apps, custom software, automation, and UI/UX design for businesses in AU, UK, US, and Europe.",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Colombo",
                 "addressCountry": "LK"
               },
               "email": "hello@xpersivelabs.com",
-              "areaServed": ["AU", "GB", "US"],
+              "areaServed": ["AU", "GB", "US", "EU"],
               "serviceType": [
-                "Web Application Development",
-                "Ecommerce Development",
-                "Automation & Data Pipelines",
-                "AI Workflow Integration"
+                "Website Development",
+                "Mobile Application Development",
+                "Software Development",
+                "Automation Development",
+                "UI/UX Development"
               ],
               "sameAs": [
                 "https://github.com/Xpersive-Labs",

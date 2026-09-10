@@ -2,8 +2,9 @@
 
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
+import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export default function CTASectionLK() {
@@ -75,7 +76,7 @@ export default function CTASectionLK() {
               className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:scale-[1.02]"
               style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
             >
-              <MessageCircle size={20} aria-hidden="true" />
+              <WhatsAppIcon size={20} color="white" />
               Chat on WhatsApp
               <ArrowRight size={17} className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden="true" />
             </motion.a>

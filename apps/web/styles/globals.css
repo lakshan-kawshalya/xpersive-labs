@@ -38,8 +38,14 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Hide default cursor only once the JS cursor confirms it's running */
-html.custom-cursor-active * {
+/* Hide default cursor only once the JS cursor confirms it's running.
+   Suspended while the cookie consent/preferences modal is open — those
+   panels render at vanilla-cookieconsent's own max z-index, above the custom
+   cursor, so hiding the native cursor there left nothing visible at all.
+   `show--consent` / `show--preferences` are classes vanilla-cookieconsent
+   itself adds to <html> for the lifetime of each modal — targeting its own
+   state directly instead of a callback keeps this in sync automatically. */
+html.custom-cursor-active:not(.show--consent):not(.show--preferences) * {
   cursor: none !important;
 }
 
@@ -64,17 +70,6 @@ html.custom-cursor-active * {
 /* Don't show focus ring on mouse click (only keyboard nav) */
 :focus:not(:focus-visible) {
   outline: none;
-}
-
-/* Smooth scrolling.
-   scroll-snap-type here is a "magnetic scroll": it gently pulls the
-   viewport to rest on a section boundary once the user stops scrolling
-   near it, without trapping scroll through tall sections the way
-   `mandatory` would. Inert on any page/section that doesn't opt in via
-   `snap-start` (e.g. the LK homepage sections). */
-html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 /* Selection color */
@@ -284,6 +279,16 @@ body::before {
   0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
   70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
   100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* 404 / error page floating logo centerpiece */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 3.5s ease-in-out infinite;
 }
 
 /* Cookie Consent brand overrides */

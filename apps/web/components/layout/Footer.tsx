@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { CookiePreferencesButton } from "@/components/layout/CookiePreferencesButton";
 
 const footerSections = {
   Company: [
@@ -11,10 +10,11 @@ const footerSections = {
     { href: "/portfolio", label: "Portfolio" },
   ],
   Services: [
-    { href: "/services#web", label: "Web Development" },
-    { href: "/services#automation", label: "Automation & Data Pipelines" },
-    { href: "/services#ecommerce", label: "Ecommerce Development" },
-    { href: "/services#ai", label: "AI Workflow Integration" },
+    { href: "/services#website", label: "Website Development" },
+    { href: "/services#mobile", label: "Mobile Application Development" },
+    { href: "/services#software", label: "Software Development" },
+    { href: "/services#automation", label: "Automation Development" },
+    { href: "/services#ui-ux", label: "UI/UX Development" },
   ],
   Connect: [
     { href: "/contact", label: "Contact Us" },
@@ -61,7 +61,7 @@ export default function Footer() {
                   aria-label={label}
                   className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-200 hover:-translate-y-0.5 text-white/50 hover:text-primary bg-white/4 border-white/8 hover:bg-primary/15 hover:border-primary/30"
                 >
-                  <FontAwesomeIcon icon={icon} width={16} height={16} />
+                  <FontAwesomeIcon icon={icon} style={{ width: 16, height: 16 }} />
                 </a>
               ))}
             </div>
@@ -77,27 +77,30 @@ export default function Footer() {
                 {title}
               </p>
               <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
-                      style={{ color: "rgba(255,255,255,0.45)" }}
-                      {...(link.href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                    >
-                      <span className="group-hover/link:text-white transition-colors duration-200">
-                        {link.label}
-                      </span>
-                      <span
-                        className="text-primary opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200 text-xs"
+                {links.map((link) => {
+                  const isInternal = link.href.startsWith("/");
+                  const isExternalHttp = link.href.startsWith("http");
+                  const LinkTag = isInternal ? Link : "a";
+                  return (
+                    <li key={link.href}>
+                      <LinkTag
+                        href={link.href}
+                        className="group/link flex items-center gap-1 text-sm transition-colors duration-200 min-h-11"
+                        style={{ color: "rgba(255,255,255,0.45)" }}
+                        {...(isExternalHttp ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       >
-                        →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                        <span className="group-hover/link:text-white transition-colors duration-200">
+                          {link.label}
+                        </span>
+                        <span
+                          className="text-primary opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200 text-xs"
+                        >
+                          →
+                        </span>
+                      </LinkTag>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
@@ -126,7 +129,13 @@ export default function Footer() {
             >
               Cookie Policy
             </Link>
-            <CookiePreferencesButton />
+            <Link
+              href="/terms-and-conditions"
+              className="text-sm transition-colors duration-200 hover:text-primary"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              Terms and Conditions
+            </Link>
           </div>
         </div>
       </div>

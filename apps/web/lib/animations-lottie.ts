@@ -10,6 +10,8 @@ export const LOTTIE_URLS = {
   processBrief: "https://assets5.lottiefiles.com/packages/lf20_touohxv0.json",
   processDesign: "https://assets4.lottiefiles.com/packages/lf20_ysrn2iwp.json",
   processBuild: "https://assets9.lottiefiles.com/packages/lf20_kkflmtur.json",
-  processLaunch: "https://assets2.lottiefiles.com/packages/lf20_jhu1lcdz.json",
+  // Hosted locally (public/lottie/) instead of the LottieFiles CDN: the
+  // original assets2.lottiefiles.com URL for this one started 403ing.
+  processLaunch: "/lottie/process-launch.json",
   contact: "https://assets10.lottiefiles.com/packages/lf20_u25cckyh.json",
 } as const;

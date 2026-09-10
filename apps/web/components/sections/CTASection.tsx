@@ -6,8 +6,6 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
-import { LottieAnimation } from "@/components/ui/LottieAnimation";
-import { LOTTIE_URLS } from "@/lib/animations-lottie";
 
 export default function CTASection() {
   const { shouldAnimate } = useMotionSafe();
@@ -34,99 +32,68 @@ export default function CTASection() {
   };
 
   return (
-    <section
-      className="relative overflow-hidden py-24"
-      style={{ background: "linear-gradient(135deg, #6D71F9 0%, #54C1FB 100%)" }}
-    >
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,1) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          opacity: 0.06,
-        }}
-      />
+    <section className="relative overflow-hidden py-24">
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        <motion.div
+          className="relative overflow-hidden rounded-3xl p-12 sm:p-20 text-center flex flex-col items-center border border-border-subtle"
+          style={{
+            background: "linear-gradient(135deg, #FFFFFF 0%, #F1F0FF 55%, #E8E6FF 100%)",
+            boxShadow: "0 8px 40px rgba(109,113,249,0.12)",
+          }}
+          {...scrollProps}
+        >
+          {/* Ambient orbs */}
+          <motion.div
+            className="absolute -top-16 -left-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+            style={{ background: "rgba(84,193,251,0.22)" }}
+            {...ambientProps}
+          />
+          <motion.div
+            className="absolute -bottom-16 -right-16 w-72 h-72 rounded-full blur-[90px] pointer-events-none"
+            style={{ background: "rgba(109,113,249,0.18)" }}
+            {...ambientProps}
+          />
 
-      {/* Ambient orb */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%)" }}
-        {...ambientProps}
-      />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
-          <motion.div className="text-center lg:text-left" {...scrollProps}>
-            {/* Eyebrow */}
+          <div className="relative z-10 flex flex-col items-center">
             <motion.span
               {...childProps}
-              className="inline-block text-xs font-bold uppercase mb-6"
-              style={{ color: "rgba(255,255,255,0.7)", letterSpacing: "0.14em" }}
+              className="inline-block text-primary text-xs font-bold uppercase mb-4"
+              style={{ letterSpacing: "0.14em" }}
             >
-              Let&apos;s Build Together
+              Commence Collaboration
             </motion.span>
-
-            {/* Headline */}
             <motion.h2
               {...childProps}
-              className="font-display font-extrabold leading-[1.05] mb-6 text-white"
-              style={{ fontSize: "clamp(40px, 6vw, 56px)" }}
+              className="font-display font-extrabold leading-[1.05] mb-4 text-text-primary"
+              style={{ fontSize: "clamp(36px, 5vw, 48px)" }}
             >
               Ready to Start?
             </motion.h2>
-
-            {/* Subtext */}
             <motion.p
               {...childProps}
-              className="text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0"
-              style={{ color: "rgba(255,255,255,0.8)" }}
+              className="text-lg leading-relaxed mb-10 max-w-xl text-text-secondary"
             >
-              Tell us what you&apos;re building. We&apos;ll scope it, plan it, and
-              ship it - without the agency overhead.
+              Tell us what you&apos;re building. We&apos;ll scope it, plan it, and ship it — without the agency overhead.
             </motion.p>
-
-            {/* CTA */}
-            <motion.div {...childProps} className="flex flex-col items-center lg:items-start gap-4">
+            <motion.div {...childProps}>
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-[1.02]"
-                style={{ background: "#ffffff", color: "#6D71F9" }}
+                className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:scale-[1.02]"
+                style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
               >
                 Start a Project
-                <ArrowRight
-                  size={17}
-                  className="group-hover:translate-x-0.5 transition-transform duration-200"
-                />
+                <ArrowRight size={17} className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden="true" />
               </Link>
-              <button
-                onClick={copyEmail}
-                className="text-sm hover:underline underline-offset-4 transition-opacity"
-                style={{ color: "rgba(255,255,255,0.6)" }}
-              >
-                {copied ? "Copied!" : "Or email hello@xpersivelabs.com"}
-              </button>
             </motion.div>
-          </motion.div>
-
-          {/* Lottie — desktop only */}
-          <motion.div
-            className="hidden lg:flex items-center justify-center"
-            {...(shouldAnimate ? {
-              initial: { opacity: 0, scale: 0.9 },
-              whileInView: { opacity: 1, scale: 1 },
-              viewport: { once: true, margin: "-80px" },
-              transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] },
-            } : { initial: false })}
-          >
-            <LottieAnimation
-              src={LOTTIE_URLS.contact}
-              style={{ width: 240, height: 240, opacity: 0.7 }}
-              fallback={null}
-            />
-          </motion.div>
-        </div>
+            <motion.button
+              {...childProps}
+              onClick={copyEmail}
+              className="text-sm mt-6 text-text-muted hover:text-primary hover:underline underline-offset-4 transition-colors"
+            >
+              {copied ? "Copied!" : "Or email hello@xpersivelabs.com"}
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
