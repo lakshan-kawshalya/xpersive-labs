@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { getClientIp, isPrivateOrLoopbackIp } from "@/lib/geo/ip";
 import { lookupCountryByIp } from "@/lib/geo/ipinfo";
 import { DEFAULT_REGION, isRegion, mapCountryToRegion } from "@/lib/geo/regions";
+import { isKeystaticAuthorized, keystaticAuthChallenge } from "@/lib/auth/keystaticAuth";
 
 export const REGION_COOKIE_NAME = "xl_region";
 export const REGION_HEADER_NAME = "x-xl-region";
@@ -23,6 +24,18 @@ async function detectRegion(request: NextRequest): Promise<string> {
 }
 
 export default async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const isKeystaticPath = pathname === "/keystatic" || pathname.startsWith("/keystatic/");
+
+  // Keystatic's local-storage mode ships with no auth of its own — gate it here since
+  // /api/keystatic/* falls outside this middleware's matcher and gates itself separately.
+  if (isKeystaticPath) {
+    if (!isKeystaticAuthorized(request.headers)) {
+      return keystaticAuthChallenge();
+    }
+    return NextResponse.next({ request });
+  }
+
   const existingRegion = request.cookies.get(REGION_COOKIE_NAME)?.value;
 
   const region = isRegion(existingRegion) ? existingRegion : await detectRegion(request);

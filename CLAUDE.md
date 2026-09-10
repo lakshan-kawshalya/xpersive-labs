@@ -375,14 +375,19 @@ export * from "@prisma/client";
 
 ## Environment Variables (.env at root)
 
+> **Never commit real values here.** This block is a schema reference only — actual
+> credentials live in each environment's `.env.local` / hosting-provider env config
+> (all gitignored) and nowhere else. If a real secret ever ends up in this file again,
+> treat it as compromised and rotate it immediately, since this file is tracked in git.
+
 ```
-DATABASE_URL="postgresql://postgres.ixrcpgqbnttitibttope:Pwd.supabase.Xplbs@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-DIRECT_URL="postgresql://postgres.ixrcpgqbnttitibttope:Pwd.supabase.Xplbs@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"
-NEXT_PUBLIC_SUPABASE_URL="https://ixrcpgqbnttitibttope.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNwZ3FibnR0aXRpYnR0b3BlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzg3MjUsImV4cCI6MjA5MjI1NDcyNX0.IbfpuYzJkwMOv69LC59vPsommYY3BobOOQ6oQTONYDo"
-SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNwZ3FibnR0aXRpYnR0b3BlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY3ODcyNSwiZXhwIjoyMDkyMjU0NzI1fQ.E_SQKhfK5Hz-eMPQ6FprSUgPxCBMUaI_VtX2jsjoIm0"
+DATABASE_URL=
+DIRECT_URL=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 NEXTAUTH_SECRET="run: openssl rand -base64 32"
-RESEND_API_KEY="re_ZpWiuQLe_QHr3PRBH5wHbiipd7nnb53cE"
+RESEND_API_KEY=
 NEXT_PUBLIC_CLIENT_URL="http://localhost:3001"
 NEXT_PUBLIC_ADMIN_URL="http://localhost:3002"
 NEXT_PUBLIC_WEB_URL="http://localhost:3000"
