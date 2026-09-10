@@ -15,6 +15,10 @@ interface LottieAnimationProps {
   loop?: boolean;
   autoplay?: boolean;
   fallback?: React.ReactNode;
+  /** Gates the actual player mount (and its JS chunk fetch) — pass a
+   * viewport-visibility flag so below-the-fold animations don't compete
+   * with initial page load. Defaults to true for immediate playback. */
+  active?: boolean;
 }
 
 export function LottieAnimation({
@@ -24,10 +28,11 @@ export function LottieAnimation({
   loop = true,
   autoplay = true,
   fallback = null,
+  active = true,
 }: LottieAnimationProps) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) return <>{fallback}</>;
+  if (failed || !active) return <>{fallback}</>;
 
   return (
     <Player

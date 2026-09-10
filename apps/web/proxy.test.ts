@@ -5,14 +5,16 @@ const { lookupCountryByIp } = vi.hoisted(() => ({
   lookupCountryByIp: vi.fn(),
 }));
 
-vi.mock("./lib/geo/ipinfo", () => ({ lookupCountryByIp }));
+vi.mock("./lib/geo/geoLookup", () => ({ lookupCountryByIp }));
 
-import proxy, { REGION_COOKIE_NAME, REGION_HEADER_NAME } from "./proxy";
+import proxy, { REGION_COOKIE_NAME } from "./proxy";
 
-function makeRequest(init: { headers?: Record<string, string>; cookie?: string } = {}) {
+function makeRequest(
+  init: { headers?: Record<string, string>; cookie?: string; path?: string } = {},
+) {
   const headers = new Headers(init.headers);
   if (init.cookie) headers.set("cookie", init.cookie);
-  return new NextRequest("https://xpersivelabs.com/about", { headers });
+  return new NextRequest(`https://xpersivelabs.com${init.path ?? "/about"}`, { headers });
 }
 
 describe("proxy", () => {
@@ -71,16 +73,28 @@ describe("proxy", () => {
     expect(response.cookies.get(REGION_COOKIE_NAME)?.value).toBe("US");
   });
 
-  test("forwards the resolved region to the downstream request via the region header", async () => {
+  test("rewrites the homepage to the LK static page for an LK visitor", async () => {
     const response = await proxy(
-      makeRequest({
-        headers: { "x-forwarded-for": "203.0.113.5" },
-        cookie: `${REGION_COOKIE_NAME}=LK`,
-      }),
+      makeRequest({ path: "/", cookie: `${REGION_COOKIE_NAME}=LK` }),
     );
 
-    expect(response.headers.get("x-middleware-override-headers")).toContain(REGION_HEADER_NAME);
-    expect(response.headers.get(`x-middleware-request-${REGION_HEADER_NAME}`)).toBe("LK");
+    expect(response.headers.get("x-middleware-rewrite")).toBe("https://xpersivelabs.com/home-lk");
+  });
+
+  test("does not rewrite the homepage for a non-LK visitor", async () => {
+    const response = await proxy(
+      makeRequest({ path: "/", cookie: `${REGION_COOKIE_NAME}=US` }),
+    );
+
+    expect(response.headers.get("x-middleware-rewrite")).toBeNull();
+  });
+
+  test("does not rewrite other routes even for an LK visitor", async () => {
+    const response = await proxy(
+      makeRequest({ path: "/about", cookie: `${REGION_COOKIE_NAME}=LK` }),
+    );
+
+    expect(response.headers.get("x-middleware-rewrite")).toBeNull();
   });
 
   test("sets the region cookie with a 180-day max age and a lax same-site policy", async () => {
