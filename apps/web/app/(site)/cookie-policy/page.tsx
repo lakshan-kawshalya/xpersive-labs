@@ -267,8 +267,8 @@ export default function CookiePolicyPage() {
               />
 
               <p className="text-sm">
-                <Link href="/privacy-policy" className="text-primary font-semibold hover:underline">
-                  Read our Privacy Policy →
+                <Link href="/terms-and-conditions" className="text-primary font-semibold hover:underline">
+                  Read our Terms and Conditions →
                 </Link>
               </p>
             </div>
