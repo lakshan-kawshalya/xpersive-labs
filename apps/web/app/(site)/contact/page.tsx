@@ -3,7 +3,6 @@
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import * as Select from "@radix-ui/react-select";
-import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
@@ -24,9 +23,6 @@ import CodeEditorIllustration from "@/components/illustrations/CodeEditorIllustr
 import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 interface TurnstileRenderOptions {
@@ -70,10 +66,6 @@ interface FormValues {
 }
 
 type SubmitState = "idle" | "loading" | "success" | "error";
-
-function stripHtml(value: string): string {
-  return value.replace(/<[^>]*>/g, "").trim();
-}
 
 const serviceOptions: ServiceOption[] = [
   "Website Development",
@@ -207,20 +199,22 @@ function ContactPageContent() {
 
     setSubmitState("loading");
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: stripHtml(data.name),
-          from_email: data.email,
-          company: stripHtml(data.company) || "-",
-          service: data.service || "Not specified",
-          budget: data.budget || "Not specified",
-          message: stripHtml(data.message),
-          "cf-turnstile-response": turnstileToken ?? "",
-        },
-        EMAILJS_PUBLIC_KEY,
-      );
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          service: data.service,
+          budget: data.budget,
+          message: data.message,
+          turnstileToken: turnstileToken ?? "",
+        }),
+      });
+
+      if (!response.ok) throw new Error("Request failed");
+
       setSubmitState("success");
       reset();
       if (turnstileWidgetIdRef.current) window.turnstile?.reset(turnstileWidgetIdRef.current);
