@@ -1,16 +1,13 @@
 import type { NextConfig } from "next";
 
-// script-src keeps 'unsafe-inline' (nonce/hash-based CSP would force every page into
-// dynamic rendering — this app is otherwise fully static/SSG — so that's a deliberate
-// trade-off) but drops 'unsafe-eval', which isn't needed by any dependency here.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://vitals.vercel-insights.com https://challenges.cloudflare.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
   "img-src 'self' data: blob:",
-  "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.lottiefiles.com https://challenges.cloudflare.com",
-  "frame-src https://challenges.cloudflare.com",
+  "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.lottiefiles.com",
+  "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
