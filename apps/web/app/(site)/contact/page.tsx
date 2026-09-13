@@ -3,7 +3,6 @@
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import * as Select from "@radix-ui/react-select";
-import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
@@ -17,15 +16,30 @@ import {
 } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { Suspense, useState } from "react";
+import NextScript from "next/script";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CodeEditorIllustration from "@/components/illustrations/CodeEditorIllustration";
 import { WhatsAppIcon } from "@/components/layout/WhatsAppWidget";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+interface TurnstileRenderOptions {
+  sitekey: string;
+  callback: (token: string) => void;
+  "expired-callback"?: () => void;
+  "error-callback"?: () => void;
+}
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: TurnstileRenderOptions) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
 
 type ServiceOption =
   | "Website Development"
@@ -52,10 +66,6 @@ interface FormValues {
 }
 
 type SubmitState = "idle" | "loading" | "success" | "error";
-
-function stripHtml(value: string): string {
-  return value.replace(/<[^>]*>/g, "").trim();
-}
 
 const serviceOptions: ServiceOption[] = [
   "Website Development",
@@ -160,24 +170,55 @@ function ContactPageContent() {
     formState: { errors },
   } = useForm<FormValues>({ mode: "onTouched" });
 
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileScriptReady, setTurnstileScriptReady] = useState(false);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
+  const renderTurnstile = useCallback(() => {
+    if (!TURNSTILE_SITE_KEY || turnstileWidgetIdRef.current) return;
+    if (!window.turnstile || !turnstileContainerRef.current) return;
+
+    turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+      sitekey: TURNSTILE_SITE_KEY,
+      callback: (token) => setTurnstileToken(token),
+      "expired-callback": () => setTurnstileToken(null),
+      "error-callback": () => setTurnstileToken(null),
+    });
+  }, []);
+
+  useEffect(() => {
+    if (turnstileScriptReady) renderTurnstile();
+  }, [turnstileScriptReady, renderTurnstile]);
+
   const onSubmit = async (data: FormValues) => {
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setSubmitState("error");
+      return;
+    }
+
     setSubmitState("loading");
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: stripHtml(data.name),
-          from_email: data.email,
-          company: stripHtml(data.company) || "-",
-          service: data.service || "Not specified",
-          budget: data.budget || "Not specified",
-          message: stripHtml(data.message),
-        },
-        EMAILJS_PUBLIC_KEY,
-      );
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          service: data.service,
+          budget: data.budget,
+          message: data.message,
+          turnstileToken: turnstileToken ?? "",
+        }),
+      });
+
+      if (!response.ok) throw new Error("Request failed");
+
       setSubmitState("success");
       reset();
+      if (turnstileWidgetIdRef.current) window.turnstile?.reset(turnstileWidgetIdRef.current);
+      setTurnstileToken(null);
     } catch {
       setSubmitState("error");
     }
@@ -479,10 +520,14 @@ function ContactPageContent() {
                     </FormField>
                   </motion.div>
 
+                  {TURNSTILE_SITE_KEY && (
+                    <motion.div {...childProps} ref={turnstileContainerRef} />
+                  )}
+
                   <motion.div {...childProps} className="pt-2 space-y-3">
                     <button
                       type="submit"
-                      disabled={submitState === "loading"}
+                      disabled={submitState === "loading" || (!!TURNSTILE_SITE_KEY && !turnstileToken)}
                       className="group inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-semibold text-white text-base transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                       style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)", boxShadow: "0 8px 24px rgba(109,113,249,0.3)" }}
                     >
@@ -503,6 +548,13 @@ function ContactPageContent() {
                 </motion.form>
               )}
             </AnimatePresence>
+            {TURNSTILE_SITE_KEY && (
+              <NextScript
+                src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                strategy="afterInteractive"
+                onLoad={() => setTurnstileScriptReady(true)}
+              />
+            )}
           </motion.div>
         </div>
       </section>

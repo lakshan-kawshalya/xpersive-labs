@@ -3,7 +3,17 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**"]
+      "outputs": [".next/**", "dist/**"],
+      "env": [
+        "IPINFO_TOKEN",
+        "KEYSTATIC_BASIC_AUTH_USER",
+        "KEYSTATIC_BASIC_AUTH_PASSWORD",
+        "EMAILJS_SERVICE_ID",
+        "EMAILJS_TEMPLATE_ID",
+        "EMAILJS_PUBLIC_KEY",
+        "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "TURNSTILE_SECRET"
+      ]
     },
     "dev": {
       "cache": false,
