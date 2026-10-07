@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getClientIp, isPrivateOrLoopbackIp } from "@/lib/geo/ip";
-import { lookupCountryByIp } from "@/lib/geo/ipinfo";
+import { lookupCountryByIp } from "@/lib/geo/geoLookup";
 import { DEFAULT_REGION, isRegion, mapCountryToRegion } from "@/lib/geo/regions";
 import { isKeystaticAuthorized, keystaticAuthChallenge } from "@/lib/auth/keystaticAuth";
 
 export const REGION_COOKIE_NAME = "xl_region";
-export const REGION_HEADER_NAME = "x-xl-region";
 
 const REGION_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180; // 180 days
 
@@ -14,7 +13,7 @@ async function detectRegion(request: NextRequest): Promise<string> {
   const ip = getClientIp(request.headers);
 
   // Localhost/dev, LAN, and undetectable IPs skip the lookup entirely —
-  // ipinfo.io cannot geolocate them, and there's nothing to gain by trying.
+  // there's nothing to geolocate.
   if (!ip || isPrivateOrLoopbackIp(ip)) {
     return DEFAULT_REGION;
   }
@@ -40,10 +39,13 @@ export default async function proxy(request: NextRequest) {
 
   const region = isRegion(existingRegion) ? existingRegion : await detectRegion(request);
 
-  const forwardedHeaders = new Headers(request.headers);
-  forwardedHeaders.set(REGION_HEADER_NAME, region);
-
-  const response = NextResponse.next({ request: { headers: forwardedHeaders } });
+  // The homepage is pre-rendered as two separate static pages (global and LK) so it
+  // stays fully static and CDN-cacheable — this rewrite serves the right one without
+  // changing the URL, rather than branching at render time on a per-request header.
+  const response =
+    pathname === "/" && region === "LK"
+      ? NextResponse.rewrite(new URL("/home-lk", request.url))
+      : NextResponse.next();
 
   // Only write the cookie on first detection. Once set, it's left alone here
   // so a future manual region selector can override it without middleware
