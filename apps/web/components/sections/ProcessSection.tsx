@@ -71,6 +71,7 @@ function StepCard({ step, shouldAnimate }: StepCardProps) {
           <LottieAnimation
             src={step.lottie}
             style={{ width: 60, height: 60 }}
+            active={inView}
             fallback={
               <div
                 className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-[11px] font-bold text-primary"

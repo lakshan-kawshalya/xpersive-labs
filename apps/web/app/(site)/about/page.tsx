@@ -329,7 +329,13 @@ export default function AboutPage() {
               >
                 <div className="w-full aspect-[4/5] rounded-xl overflow-hidden mb-4 relative bg-[rgba(109,113,249,0.06)]">
                   {member.avatar ? (
-                    <Image src={member.avatar} alt={member.name} fill className="object-cover" />
+                    <Image
+                      src={member.avatar}
+                      alt={member.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover"
+                    />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-1 border border-dashed border-border-subtle rounded-xl">
                       <span className="w-10 h-10 rounded-full bg-bg-card flex items-center justify-center text-primary font-display font-bold">
