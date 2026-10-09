@@ -130,12 +130,22 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           {project.badge === "Studio Project" ? (
             <span
               className="px-3 py-1 rounded-full text-xs font-semibold"
-              style={{
-                background: "rgba(84,193,251,0.12)",
-                border: "1px solid rgba(84,193,251,0.3)",
-                color: "#54C1FB",
-                backdropFilter: "blur(8px)",
-              }}
+              style={
+                project.coverImage
+                  ? {
+                      background: "rgba(84,193,251,0.12)",
+                      border: "1px solid rgba(84,193,251,0.3)",
+                      color: "#54C1FB",
+                      backdropFilter: "blur(8px)",
+                    }
+                  : {
+                      // Accent blue is unreadable over the gradient placeholder
+                      background: "rgba(0,0,0,0.35)",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      color: "#FFFFFF",
+                      backdropFilter: "blur(4px)",
+                    }
+              }
             >
               Studio Project
             </span>
