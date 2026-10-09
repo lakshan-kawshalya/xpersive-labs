@@ -3,7 +3,9 @@ import { ImageResponse } from "next/og";
 const SYNE_BOLD_URL = "https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_3fvj6k.ttf";
 const OG_SIZE = { width: 1200, height: 630 };
 
-export interface PartnerOgContent {
+export interface OgContent {
+  /** Small outlined tag next to the brand name, e.g. "PARTNER PROGRAM". */
+  kicker?: string;
   headline: string;
   accent: string;
   subtext: string;
@@ -11,8 +13,8 @@ export interface PartnerOgContent {
   path: string;
 }
 
-/** Brand card for the partner pages, in the same style as app/opengraph-image.tsx. */
-export async function renderPartnerOgImage({ headline, accent, subtext, badge, path }: PartnerOgContent) {
+/** Shared 1200x630 brand card for every page-level Open Graph image. */
+export async function renderOgImage({ kicker, headline, accent, subtext, badge, path }: OgContent) {
   const syneBold = await fetch(SYNE_BOLD_URL).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
@@ -63,19 +65,21 @@ export async function renderPartnerOgImage({ headline, accent, subtext, badge, p
             }}
           />
           <span style={{ color: "rgba(255,255,255,0.75)", fontSize: 26, fontWeight: 600 }}>Xpersive Labs</span>
-          <span
-            style={{
-              marginLeft: 12,
-              padding: "6px 16px",
-              borderRadius: 999,
-              border: "1px solid rgba(84,193,251,0.5)",
-              color: "#54C1FB",
-              fontSize: 18,
-              letterSpacing: 3,
-            }}
-          >
-            PARTNER PROGRAM
-          </span>
+          {kicker && (
+            <span
+              style={{
+                marginLeft: 12,
+                padding: "6px 16px",
+                borderRadius: 999,
+                border: "1px solid rgba(84,193,251,0.5)",
+                color: "#54C1FB",
+                fontSize: 18,
+                letterSpacing: 3,
+              }}
+            >
+              {kicker}
+            </span>
+          )}
         </div>
 
         <div
