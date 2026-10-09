@@ -71,8 +71,7 @@ const projects: PortfolioProject[] = [
       "A cloud-based operations system for a Sri Lanka industrial supplier — replacing notebooks and WhatsApp with alias search, per-client pricing, PO tracking, and invoice management.",
     category: "Systems",
     tags: ["Next.js", "PostgreSQL", "Prisma", "Docker"],
-    // TODO: replace with real RSN system screenshot
-    coverImage: null,
+    coverImage: "/project-covers/rsn-suppliers-cover.jpeg",
     features: ["Alias fuzzy search", "Per-client pricing", "PO-invoice tracking"],
     stats: ["~20 garment factories", "Unlimited per SKU", "Active build"],
     badge: "Client Project",
