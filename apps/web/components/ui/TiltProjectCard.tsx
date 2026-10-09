@@ -19,7 +19,13 @@ export interface Project {
   stats?: string[];
   features?: string[];
   /** Distinguishes in-house builds from client work; takes precedence over `featured` */
-  badge?: "Studio Project";
+  badge?: "Studio Project" | "Client Project";
+  /** Short line under the title, for projects whose name alone doesn't say what they are */
+  subtitle?: string;
+  /** Shows an amber "In Development" pill next to the badge */
+  status?: "in-development";
+  /** Hover-overlay note for projects with no public demo */
+  privateNote?: string;
   demoUrl?: string;
   demoLabel?: string;
   demoNote?: string;

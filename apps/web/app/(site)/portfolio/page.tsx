@@ -12,7 +12,7 @@ import TiltProjectCard, { type Project } from "@/components/ui/TiltProjectCard";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
-type Category = "All" | "Web Development" | "Automation" | "AI";
+type Category = "All" | "Web Development" | "Systems" | "Automation" | "AI";
 
 /** Card data plus the filter tabs the project appears under (besides "All"). */
 type PortfolioProject = Project & { filters: Exclude<Category, "All">[] };
@@ -63,9 +63,26 @@ const projects: PortfolioProject[] = [
     privateBadge: true,
     filters: ["AI"],
   },
+  {
+    slug: "rsn-suppliers",
+    title: "RSN Suppliers",
+    subtitle: "Business Management & Supply Operations System",
+    description:
+      "A cloud-based operations system for a Sri Lanka industrial supplier — replacing notebooks and WhatsApp with alias search, per-client pricing, PO tracking, and invoice management.",
+    category: "Systems",
+    tags: ["Next.js", "PostgreSQL", "Prisma", "Docker"],
+    // TODO: replace with real RSN system screenshot
+    coverImage: null,
+    features: ["Alias fuzzy search", "Per-client pricing", "PO-invoice tracking"],
+    stats: ["~20 garment factories", "Unlimited per SKU", "Active build"],
+    badge: "Client Project",
+    status: "in-development",
+    privateNote: "Private client system",
+    filters: ["Systems"],
+  },
 ];
 
-const categories: Category[] = ["All", "Web Development", "Automation", "AI"];
+const categories: Category[] = ["All", "Web Development", "Systems", "Automation", "AI"];
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 
