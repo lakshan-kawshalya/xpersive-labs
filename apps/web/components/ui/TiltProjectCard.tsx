@@ -3,7 +3,7 @@
 import { fadeUp } from "@/lib/animations";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -14,8 +14,15 @@ export interface Project {
   category: string;
   description: string;
   tags: string[];
-  coverImage: string;
+  /** null renders a gradient placeholder until a real screenshot exists */
+  coverImage: string | null;
   stats?: string[];
+  features?: string[];
+  /** Distinguishes in-house builds from client work; takes precedence over `featured` */
+  badge?: "Studio Project";
+  demoUrl?: string;
+  demoLabel?: string;
+  demoNote?: string;
   privateBadge?: boolean;
   featured?: boolean;
   result?: string;
@@ -86,14 +93,27 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
 
       {/* Image area */}
       <div className="relative h-56 overflow-hidden">
-        <Image
-          src={project.coverImage}
-          alt={project.title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover"
-          style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
-        />
+        {project.coverImage ? (
+          <Image
+            src={project.coverImage}
+            alt={project.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+            style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
+          />
+        ) : (
+          // TODO: replace with real Velora screenshot
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(135deg, #6D71F9 0%, #54C1FB 60%, #272848 100%)",
+              transform: hovered ? "scale(1.05)" : "scale(1)",
+              transition: "transform 0.5s ease",
+            }}
+          />
+        )}
 
         {/* Category badge + featured badge */}
         <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
@@ -107,7 +127,19 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           >
             {project.category}
           </span>
-          {project.featured && (
+          {project.badge === "Studio Project" ? (
+            <span
+              className="px-3 py-1 rounded-full text-xs font-semibold"
+              style={{
+                background: "rgba(84,193,251,0.12)",
+                border: "1px solid rgba(84,193,251,0.3)",
+                color: "#54C1FB",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              Studio Project
+            </span>
+          ) : project.featured && (
             <span
               className="px-3 py-1 rounded-full text-white text-xs font-semibold"
               style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
@@ -123,6 +155,7 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           style={{ background: "rgba(109,113,249,0.85)", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }}
         >
           <motion.div
+            className="flex flex-col items-center gap-2"
             {...(shouldAnimate
               ? {
                   animate: { y: hovered ? 0 : 10, opacity: hovered ? 1 : 0 },
@@ -130,6 +163,18 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
                 }
               : {})}
           >
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-primary text-sm font-semibold"
+                style={{ background: "#ffffff" }}
+              >
+                {project.demoLabel ?? "View Demo"} →
+                <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
+            )}
             <Link
               href={`/portfolio/${project.slug}`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-primary text-sm font-semibold"
@@ -138,6 +183,11 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
               Read Case Study
               <ArrowRight size={14} />
             </Link>
+            {project.demoNote && (
+              <p className="text-[11px] italic" style={{ color: "rgba(255,255,255,0.75)" }}>
+                {project.demoNote}
+              </p>
+            )}
           </motion.div>
         </div>
       </div>
@@ -166,6 +216,25 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
         <p className="text-text-secondary text-sm leading-relaxed mb-3">{project.description}</p>
         {project.result && (
           <p className="text-primary text-sm font-medium mb-3">{project.result}</p>
+        )}
+        {project.features && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {project.features.map((feature) => (
+              <span
+                key={feature}
+                className="text-primary font-medium"
+                style={{
+                  fontSize: 11,
+                  background: "rgba(109,113,249,0.1)",
+                  border: "1px solid rgba(109,113,249,0.25)",
+                  borderRadius: 20,
+                  padding: "3px 10px",
+                }}
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
         )}
         {project.stats && (
           <div className="flex flex-wrap gap-1.5 mb-3">

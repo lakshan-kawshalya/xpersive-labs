@@ -12,11 +12,14 @@ import TiltProjectCard, { type Project } from "@/components/ui/TiltProjectCard";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
-type Category = "All" | "Web Development" | "Automation";
+type Category = "All" | "Web Development" | "Automation" | "AI";
+
+/** Card data plus the filter tabs the project appears under (besides "All"). */
+type PortfolioProject = Project & { filters: Exclude<Category, "All">[] };
 
 /* ─── Data ──────────────────────────────────────────────────────────── */
 
-const projects: Project[] = [
+const projects: PortfolioProject[] = [
   {
     slug: "raj-ceylon",
     title: "Raj Ceylon Tours",
@@ -29,6 +32,7 @@ const projects: Project[] = [
     privateBadge: false,
     featured: true,
     result: "Luxury tourism website, multi-language, live",
+    filters: ["Web Development"],
   },
   {
     slug: "alibaba-scraper",
@@ -40,10 +44,28 @@ const projects: Project[] = [
     coverImage: "/project-covers/alibaba-scraper-cover.jpeg",
     stats: ["8-10 hrs/wk automated", "47 data fields", "Live v1.3.0"],
     privateBadge: true,
+    filters: ["Automation"],
+  },
+  {
+    slug: "velora",
+    title: "Velora",
+    description:
+      "A full multi-brand fashion storefront built in-house to show fashion and apparel clients exactly what we build, not just tell them.",
+    category: "Web Development",
+    tags: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Gemini"],
+    coverImage: null,
+    features: ["AI size advisor", "AI shopping assistant", "Multi-brand admin"],
+    stats: ["28 pieces across 5 brands", "Full cart, checkout & accounts"],
+    badge: "Studio Project",
+    demoUrl: "https://velora.xpersivelabs.com",
+    demoLabel: "View Demo",
+    demoNote: "Demo on free tier — may take a moment to wake up",
+    privateBadge: true,
+    filters: ["AI"],
   },
 ];
 
-const categories: Category[] = ["All", "Web Development", "Automation"];
+const categories: Category[] = ["All", "Web Development", "Automation", "AI"];
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 
@@ -52,7 +74,7 @@ export default function PortfolioPage() {
   const { shouldAnimate } = useMotionSafe();
 
   const filtered =
-    active === "All" ? projects : projects.filter((p) => p.category === active);
+    active === "All" ? projects : projects.filter((p) => p.filters.includes(active));
 
   const mountProps = shouldAnimate ? {
     variants: staggerContainer,
@@ -254,6 +276,7 @@ function ProjectPreviewCollage({
   shouldAnimate: boolean;
 }) {
   const rotations = [-6, 5];
+  const withCovers = projects.filter((p) => p.coverImage);
   const offsets = [
     { top: "0%", left: "8%" },
     { top: "22%", left: "32%" },
@@ -261,7 +284,7 @@ function ProjectPreviewCollage({
 
   return (
     <div className="relative h-80 sm:h-95 hidden sm:block">
-      {projects.map((project, i) => (
+      {withCovers.map((project, i) => (
         <motion.div
           key={project.slug}
           className="absolute w-55 rounded-2xl overflow-hidden border border-border-subtle shadow-2xl"
@@ -283,7 +306,7 @@ function ProjectPreviewCollage({
         >
           <div className="relative h-32">
             <Image
-              src={project.coverImage}
+              src={project.coverImage!}
               alt={project.title}
               fill
               sizes="220px"
