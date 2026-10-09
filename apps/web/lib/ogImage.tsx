@@ -6,6 +6,15 @@ const SYNE_BOLD_URL = "https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRj
 const OG_SIZE = { width: 1200, height: 630 };
 const LOGO_PATH = path.join(process.cwd(), "public", "logo", "brandmark.svg");
 const LOGO_SIZE = 60;
+const LONG_HEADLINE_CHARS = 36;
+const VERY_LONG_HEADLINE_CHARS = 60;
+
+function pickHeadlineSize(headline: string, accent = ""): number {
+  const length = headline.length + accent.length;
+  if (length > VERY_LONG_HEADLINE_CHARS) return 52;
+  if (length > LONG_HEADLINE_CHARS) return 68;
+  return 84;
+}
 
 async function loadLogoDataUri(): Promise<string> {
   const svg = await readFile(LOGO_PATH);
@@ -16,7 +25,8 @@ export interface OgContent {
   /** Small outlined tag next to the brand name, e.g. "PARTNER PROGRAM". */
   kicker?: string;
   headline: string;
-  accent: string;
+  /** Optional second headline line, shown in Cornflower Blue. */
+  accent?: string;
   subtext: string;
   badge: string;
   path: string;
@@ -93,14 +103,14 @@ export async function renderOgImage({ kicker, headline, accent, subtext, badge, 
             display: "flex",
             flexDirection: "column",
             fontFamily: "Syne",
-            fontSize: 84,
+            fontSize: pickHeadlineSize(headline, accent),
             fontWeight: 800,
             lineHeight: 1.05,
             marginBottom: 28,
           }}
         >
           <span style={{ color: "white" }}>{headline}</span>
-          <span style={{ color: "#6D71F9" }}>{accent}</span>
+          {accent && <span style={{ color: "#6D71F9" }}>{accent}</span>}
         </div>
 
         <div style={{ fontSize: 32, lineHeight: 1.35, color: "rgba(255,255,255,0.7)", maxWidth: 1040, marginBottom: 44 }}>
