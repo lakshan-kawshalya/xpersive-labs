@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PartnerDetailPage from "@/components/partners/PartnerDetailPage";
-import { REFERRAL_BLOCKS, REFERRAL_OPTION, WHITE_LABEL_OPTION } from "@/lib/partnerContent";
+import { REFERRAL_OPTION, WHITE_LABEL_OPTION } from "@/lib/partnerContent";
 
 const URL = "https://www.xpersivelabs.com/partners/referral";
 const TITLE = "Referral Partner Option";
@@ -15,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReferralPage() {
-  return <PartnerDetailPage option={REFERRAL_OPTION} otherOption={WHITE_LABEL_OPTION} blocks={REFERRAL_BLOCKS} />;
+  return <PartnerDetailPage option={REFERRAL_OPTION} otherOption={WHITE_LABEL_OPTION} />;
 }

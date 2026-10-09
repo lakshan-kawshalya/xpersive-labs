@@ -1,22 +1,34 @@
 import type { ReactNode } from "react";
+import Reveal from "@/components/partners/Reveal";
 
 export default function PartnerSection({
   id,
+  label,
   title,
   intro,
+  isTinted = false,
   children,
 }: {
   id?: string;
+  label?: string;
   title: string;
   intro?: string;
+  isTinted?: boolean;
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-24 bg-bg px-6 py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl">
-        <h2 className="font-display text-3xl font-bold text-text-primary sm:text-4xl">{title}</h2>
-        {intro && <p className="mt-4 max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg">{intro}</p>}
-        <div className="mt-8">{children}</div>
+    <section id={id} className={`scroll-mt-24 py-16 sm:py-20 ${isTinted ? "bg-[rgba(109,113,249,0.035)]" : ""}`}>
+      <div className="mx-auto max-w-7xl px-6">
+        <Reveal className="mb-10 max-w-2xl">
+          {label && (
+            <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-primary">
+              {label}
+            </span>
+          )}
+          <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">{title}</h2>
+          {intro && <p className="mt-4 text-lg leading-relaxed text-text-secondary">{intro}</p>}
+        </Reveal>
+        {children}
       </div>
     </section>
   );

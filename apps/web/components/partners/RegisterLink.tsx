@@ -1,20 +1,18 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-type Tone = "onDark" | "onLight";
-
-const TONE_CLASSES: Record<Tone, string> = {
-  onDark: "bg-white text-dark hover:bg-subtle-gray",
-  onLight: "bg-dark text-white hover:bg-dark-elevated",
-};
-
-export default function RegisterLink({ tone, className = "" }: { tone: Tone; className?: string }) {
+export default function RegisterLink({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/partners#register"
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold transition-colors duration-200 motion-reduce:transition-none ${TONE_CLASSES[tone]} ${className}`}
+      className={`group inline-flex items-center gap-3 rounded-full bg-gradient-brand px-10 py-4 text-base font-semibold text-white shadow-[0_8px_24px_rgba(109,113,249,0.3)] transition-all duration-300 hover:scale-[1.02] hover:brightness-110 motion-reduce:transition-none motion-reduce:hover:scale-100 ${className}`}
     >
-      Register your interest <ArrowRight size={18} aria-hidden="true" />
+      Register your interest
+      <ArrowRight
+        size={17}
+        className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+        aria-hidden="true"
+      />
     </Link>
   );
 }

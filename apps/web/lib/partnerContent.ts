@@ -1,3 +1,18 @@
+import {
+  BadgeCheck,
+  Banknote,
+  EyeOff,
+  FileText,
+  Handshake,
+  Percent,
+  Receipt,
+  RotateCcw,
+  Tag,
+  UserCheck,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+
 export const PARTNER_SERVICES = [
   "Business websites and landing pages",
   "Online shops and e-commerce stores",
@@ -10,6 +25,7 @@ export const PARTNER_SERVICES = [
 export interface PartnerBlock {
   title: string;
   body: string;
+  icon: LucideIcon;
 }
 
 export interface PartnerOption {
@@ -18,6 +34,7 @@ export interface PartnerOption {
   label: string;
   summary: string;
   highlight: string;
+  icon: LucideIcon;
 }
 
 export const REFERRAL_OPTION: PartnerOption = {
@@ -26,6 +43,7 @@ export const REFERRAL_OPTION: PartnerOption = {
   label: "Referral",
   summary: "You introduce a business that needs something built. We handle the project and the client.",
   highlight: "15% of the net fees we receive from that client for the first project.",
+  icon: Users,
 };
 
 export const WHITE_LABEL_OPTION: PartnerOption = {
@@ -34,6 +52,7 @@ export const WHITE_LABEL_OPTION: PartnerOption = {
   label: "White-label",
   summary: "We build under your brand. Your client sees only you.",
   highlight: "A partner rate agreed in writing before any work starts.",
+  icon: Tag,
 };
 
 export const PARTNER_OPTIONS: readonly PartnerOption[] = [REFERRAL_OPTION, WHITE_LABEL_OPTION];
@@ -42,26 +61,32 @@ export const REFERRAL_BLOCKS: readonly PartnerBlock[] = [
   {
     title: "What you receive",
     body: "You receive 15% of the net fees we receive from that client for the first project, paid within 14 days of each client payment we receive.",
+    icon: Percent,
   },
   {
     title: "What net fees means",
     body: "Net fees means money actually received for the agreed scope, after payment-platform fees and excluding taxes and pass-through costs such as domains, licences, stock assets and ad spend.",
+    icon: Receipt,
   },
   {
     title: "One-time fee",
     body: "Hosting, maintenance, support and other recurring payments are not included.",
+    icon: Banknote,
   },
   {
     title: "When a referral qualifies",
     body: "A referral qualifies when you introduce the client to us in writing, the client confirms interest in writing, and we log it within 5 working days. The first qualified introduction counts. Attribution lasts 12 months.",
+    icon: UserCheck,
   },
   {
     title: "If a client is refunded",
     body: "If a client is refunded, the matching share of the fee is returned.",
+    icon: RotateCcw,
   },
   {
     title: "Confirmed in writing",
     body: "Everything is confirmed in a short written agreement before any referral is counted.",
+    icon: FileText,
   },
 ];
 
@@ -69,18 +94,22 @@ export const WHITE_LABEL_BLOCKS: readonly PartnerBlock[] = [
   {
     title: "Built under your brand",
     body: "We build under your brand. Your client sees only you.",
+    icon: BadgeCheck,
   },
   {
     title: "Your client, your price",
     body: "You own the client relationship and set the client price.",
+    icon: Handshake,
   },
   {
     title: "Partner rate in writing",
     body: "We agree a partner rate in writing before any work starts.",
+    icon: FileText,
   },
   {
     title: "We stay in the background",
     body: "We stay in the background and do not contact your clients about our own services.",
+    icon: EyeOff,
   },
 ];
 

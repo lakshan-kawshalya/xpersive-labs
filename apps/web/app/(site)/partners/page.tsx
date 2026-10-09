@@ -26,13 +26,14 @@ export default function PartnersPage() {
     <>
       <PartnerHero
         label="Partner Program"
-        title="Work with us as a partner."
+        title="Work with us as a"
+        titleAccent="partner."
         intro="For marketing agencies and freelancers. Introduce a business that needs something built, or have us build under your brand. Pick the option that fits how you work."
       >
-        <RegisterLink tone="onDark" />
+        <RegisterLink />
       </PartnerHero>
 
-      <PartnerSection title="Two ways to work with us">
+      <PartnerSection label="Choose your option" title="Two ways to work with us" isTinted>
         <div className="grid gap-6 md:grid-cols-2">
           {PARTNER_OPTIONS.map((option) => (
             <OptionCard key={option.slug} option={option} />
@@ -46,8 +47,10 @@ export default function PartnersPage() {
 
       <PartnerSection
         id="register"
+        label="Get started"
         title="Register your interest"
         intro="Tell us a little about you and which option you are interested in."
+        isTinted
       >
         <div className="max-w-3xl">
           <PartnerInterestForm />

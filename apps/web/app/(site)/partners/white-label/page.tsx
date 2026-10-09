@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PartnerDetailPage from "@/components/partners/PartnerDetailPage";
-import { REFERRAL_OPTION, WHITE_LABEL_BLOCKS, WHITE_LABEL_OPTION } from "@/lib/partnerContent";
+import { REFERRAL_OPTION, WHITE_LABEL_OPTION } from "@/lib/partnerContent";
 
 const URL = "https://www.xpersivelabs.com/partners/white-label";
 const TITLE = "White-label Partner Option";
@@ -15,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function WhiteLabelPage() {
-  return <PartnerDetailPage option={WHITE_LABEL_OPTION} otherOption={REFERRAL_OPTION} blocks={WHITE_LABEL_BLOCKS} />;
+  return <PartnerDetailPage option={WHITE_LABEL_OPTION} otherOption={REFERRAL_OPTION} />;
 }
