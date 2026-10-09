@@ -61,6 +61,7 @@ const features: Feature[] = [
     icon: History,
     title: "What did we charge them last time?",
     body: "Every quote and invoice is logged against the client it was issued to. Before sending a new quote, staff see the last price in one lookup — no digging through paper, no calling the owner. Supplier cost is tracked separately and flags when a quote is about to go out below current cost.",
+    note: "In development · not yet in the demo screens",
   },
   {
     icon: ClipboardCheck,
