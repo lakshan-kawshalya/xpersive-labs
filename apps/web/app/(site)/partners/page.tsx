@@ -51,8 +51,9 @@ export default function PartnersPage() {
         title="Register your interest"
         intro="Tell us a little about you and which option you are interested in."
         isTinted
+        isCentered
       >
-        <div className="max-w-3xl">
+        <div className="mx-auto max-w-3xl">
           <PartnerInterestForm />
         </div>
       </PartnerSection>
