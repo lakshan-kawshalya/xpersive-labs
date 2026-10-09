@@ -1,7 +1,16 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 
 const SYNE_BOLD_URL = "https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_3fvj6k.ttf";
 const OG_SIZE = { width: 1200, height: 630 };
+const LOGO_PATH = path.join(process.cwd(), "public", "logo", "brandmark.svg");
+const LOGO_SIZE = 60;
+
+async function loadLogoDataUri(): Promise<string> {
+  const svg = await readFile(LOGO_PATH);
+  return `data:image/svg+xml;base64,${svg.toString("base64")}`;
+}
 
 export interface OgContent {
   /** Small outlined tag next to the brand name, e.g. "PARTNER PROGRAM". */
@@ -15,7 +24,10 @@ export interface OgContent {
 
 /** Shared 1200x630 brand card for every page-level Open Graph image. */
 export async function renderOgImage({ kicker, headline, accent, subtext, badge, path }: OgContent) {
-  const syneBold = await fetch(SYNE_BOLD_URL).then((res) => res.arrayBuffer());
+  const [syneBold, logoSrc] = await Promise.all([
+    fetch(SYNE_BOLD_URL).then((res) => res.arrayBuffer()),
+    loadLogoDataUri(),
+  ]);
 
   return new ImageResponse(
     (
@@ -56,14 +68,8 @@ export async function renderOgImage({ kicker, headline, accent, subtext, badge, 
         />
 
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 36 }}>
-          <div
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 12,
-              background: "linear-gradient(135deg, #6D71F9, #54C1FB)",
-            }}
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse renders plain <img> */}
+          <img src={logoSrc} width={LOGO_SIZE} height={LOGO_SIZE} alt="" />
           <span style={{ color: "rgba(255,255,255,0.75)", fontSize: 26, fontWeight: 600 }}>Xpersive Labs</span>
           {kicker && (
             <span
