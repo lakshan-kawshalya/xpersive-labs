@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ClipboardCheck, History, Search, ShieldCheck, type LucideIcon } from "lucide-react";
 
@@ -16,12 +17,31 @@ const stats = [
   { value: "2024", label: "Invoice gap closed" },
 ];
 
+interface Screenshot {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
 interface Feature {
   icon: LucideIcon;
   title: string;
   body: string;
   note?: string;
+  screenshot?: Screenshot;
 }
+
+const DEMO_DATA_NOTE = "Illustrative demo data.";
+
+const dashboardShot: Screenshot = {
+  src: "/portfolio/rsn-suppliers/dashboard.jpeg",
+  alt: "RSN Suppliers operations dashboard showing outstanding payments, pending quotations, items needing attention and recent activity",
+  caption: `The operations dashboard. ${DEMO_DATA_NOTE}`,
+  width: 1600,
+  height: 1150,
+};
 
 const features: Feature[] = [
   {
@@ -29,6 +49,13 @@ const features: Feature[] = [
     title: "One item. Every name it goes by.",
     body: "Every catalog item can carry unlimited aliases — supplier part numbers, customer phrasing, common misspellings, garbled WhatsApp descriptions. Staff type whatever they heard and the system finds the right item. When a new name comes up, they add it with one tap. Built on PostgreSQL pg_trgm full-text search, not an external API.",
     note: "PostgreSQL pg_trgm · Full-text search",
+    screenshot: {
+      src: "/portfolio/rsn-suppliers/alias-search.jpeg",
+      alt: "Catalog search for the phrase 'teeth thing under the needle' narrowing 11 items down to a single Feed Dog item",
+      caption: `A vague phrase narrows 11 catalog items to the one the customer meant. ${DEMO_DATA_NOTE}`,
+      width: 1600,
+      height: 680,
+    },
   },
   {
     icon: History,
@@ -39,6 +66,13 @@ const features: Feature[] = [
     icon: ClipboardCheck,
     title: "No invoice left behind.",
     body: "Every purchase order has a matching status. A standing view shows every PO that has not yet been matched to a supplier invoice — the exact gap that caused the 2024 incident. The owner sees it every time they open the system, not six months later when a client calls.",
+    screenshot: {
+      src: "/portfolio/rsn-suppliers/unmatched-invoices.jpeg",
+      alt: "Missing Invoices report listing fulfilled orders with no linked invoice, each with a days-overdue badge and a Create Invoice button",
+      caption: `The Missing Invoices report: every fulfilled order still waiting to be billed. ${DEMO_DATA_NOTE}`,
+      width: 1600,
+      height: 925,
+    },
   },
   {
     icon: ShieldCheck,
@@ -48,6 +82,28 @@ const features: Feature[] = [
 ];
 
 const tech = ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Docker", "Auth.js", "Tailwind CSS", "Resend"];
+
+function ScreenshotFigure({ shot, priority = false }: { shot: Screenshot; priority?: boolean }) {
+  return (
+    <figure className="mt-6">
+      <div
+        className="rounded-xl overflow-hidden border border-border-subtle"
+        style={{ boxShadow: "0 8px 32px rgba(109,113,249,0.12)" }}
+      >
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          sizes="(max-width: 896px) 100vw, 800px"
+          priority={priority}
+          className="w-full h-auto"
+        />
+      </div>
+      <figcaption className="mt-2 text-xs text-text-muted">{shot.caption}</figcaption>
+    </figure>
+  );
+}
 
 function ClientProjectBadge() {
   return (
@@ -125,6 +181,10 @@ export default function RsnSuppliersCaseStudyPage() {
               </div>
             ))}
           </dl>
+
+          <div className="mt-12">
+            <ScreenshotFigure shot={dashboardShot} priority />
+          </div>
         </div>
       </section>
 
@@ -160,7 +220,7 @@ export default function RsnSuppliersCaseStudyPage() {
           <span className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em]">
             The Solution
           </span>
-          {features.map(({ icon: Icon, title, body, note }) => (
+          {features.map(({ icon: Icon, title, body, note, screenshot }) => (
             <article
               key={title}
               className="rounded-2xl p-8 border border-border-subtle flex flex-col sm:flex-row gap-6"
@@ -172,7 +232,7 @@ export default function RsnSuppliersCaseStudyPage() {
               >
                 <Icon size={22} className="text-primary" aria-hidden="true" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-display text-xl font-bold mb-3">{title}</h3>
                 <p className="text-text-secondary leading-[1.8]">{body}</p>
                 {note && (
@@ -183,6 +243,7 @@ export default function RsnSuppliersCaseStudyPage() {
                     {note}
                   </p>
                 )}
+                {screenshot && <ScreenshotFigure shot={screenshot} />}
               </div>
             </article>
           ))}
