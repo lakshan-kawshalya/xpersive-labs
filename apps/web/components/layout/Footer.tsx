@@ -8,6 +8,7 @@ const footerSections = {
     { href: "/about", label: "About Us" },
     { href: "/blog", label: "Blog" },
     { href: "/portfolio", label: "Portfolio" },
+    { href: "/partners", label: "Partners" },
   ],
   Services: [
     { href: "/services#website", label: "Website Development" },
