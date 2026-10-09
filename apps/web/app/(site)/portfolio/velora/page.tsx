@@ -15,7 +15,7 @@ const DEMO_URL = "https://velora.xpersivelabs.com";
 const stats = [
   { value: "5", label: "In-house brands" },
   { value: "28", label: "Catalog pieces" },
-  { value: "3", label: "AI-powered features" },
+  { value: "2", label: "AI features" },
 ];
 
 interface Feature {
