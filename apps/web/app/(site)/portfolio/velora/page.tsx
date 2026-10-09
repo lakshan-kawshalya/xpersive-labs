@@ -50,8 +50,8 @@ const features: Feature[] = [
   {
     icon: Ruler,
     title: "AI-powered size recommendations.",
-    body: "A built-in AI size advisor helps shoppers find the right fit based on their measurements. Powered by Gemini, it reduces returns and increases purchase confidence — two of the biggest friction points in online fashion retail.",
-    chips: ["Powered by Gemini"],
+    body: "A built-in AI size advisor helps shoppers find the right fit based on their measurements. Powered by our own model, built on an open-source base, it reduces returns and increases purchase confidence — two of the biggest friction points in online fashion retail.",
+    chips: ["Our own model, open-source base"],
   },
   {
     icon: Bot,
