@@ -166,7 +166,7 @@ const FAQS = [
   },
   {
     q: "Which modules can I use now?",
-    a: "Atelier Fit and Atelier Confirm are available through our Early Access program. Others are coming soon.",
+    a: "Atelier Fit and Xpersive Confirm are available through our Early Access program. Others are coming soon.",
   },
   {
     q: "How much does it cost?",
@@ -291,9 +291,9 @@ export default function AiPlatformPage() {
             />
             <ModuleCard
               icon={MessageSquare}
-              title="Atelier Confirm"
+              title="Xpersive Confirm"
               subtitle="WhatsApp Order Confirmation"
-              body="Stop shipping orders that never get paid for. Atelier Confirm checks every cash-on-delivery order for risk and asks risky ones to confirm on WhatsApp before you dispatch."
+              body="Stop shipping orders that never get paid for. Xpersive Confirm checks every cash-on-delivery order for risk and asks risky ones to confirm on WhatsApp before you dispatch."
               features={[
                 "Scores each COD order for risk automatically",
                 "Only risky orders wait for confirmation",
