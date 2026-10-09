@@ -1,28 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { contactSchema } from "@/lib/contactSchema";
 import { getClientIp } from "@/lib/geo/ip";
+import { isTrustedOrigin } from "@/lib/isTrustedOrigin";
 import { stripHtml } from "@/lib/stripHtml";
 import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const EMAILJS_SEND_URL = "https://api.emailjs.com/api/v1.0/email/send";
 const EMAILJS_TIMEOUT_MS = 10000;
 
-// API routes get no built-in CSRF protection (unlike Server Actions), so this is
-// verified manually: a cross-site request won't have a matching Origin/Host pair.
-function isTrustedOrigin(request: NextRequest): boolean {
-  const origin = request.headers.get("origin");
-  const host = request.headers.get("host");
-  if (!origin || !host) return false;
-
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
-  }
-}
-
 export async function POST(request: NextRequest) {
-  if (!isTrustedOrigin(request)) {
+  if (!isTrustedOrigin(request.headers)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
