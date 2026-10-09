@@ -53,7 +53,7 @@ const projects: PortfolioProject[] = [
       "A full multi-brand fashion storefront built in-house to show fashion and apparel clients exactly what we build, not just tell them.",
     category: "Web Development",
     tags: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Gemini"],
-    coverImage: null,
+    coverImage: "/project-covers/velora-cover.jpeg",
     features: ["AI size advisor", "AI shopping assistant", "Multi-brand admin"],
     stats: ["28 pieces across 5 brands", "Full cart, checkout & accounts"],
     badge: "Studio Project",
