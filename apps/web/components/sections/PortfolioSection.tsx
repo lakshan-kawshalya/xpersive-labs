@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { useSectionReveal } from "@/hooks/useSectionReveal";
 
+// TODO: add Velora here once a third real client project is added,
+// swapping out one of the existing cards or showing 3 cards
 const caseStudies = [
   {
     slug: "raj-ceylon",
