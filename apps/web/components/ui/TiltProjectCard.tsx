@@ -3,7 +3,7 @@
 import { fadeUp } from "@/lib/animations";
 import { useMotionSafe } from "@/hooks/useMotionSafe";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Database } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -109,20 +109,22 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
             style={{ transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.5s ease" }}
           />
         ) : (
-          // TODO: replace with real Velora screenshot
+          // Placeholder until a real screenshot exists (see the project's `coverImage`)
           <div
             aria-hidden="true"
-            className="absolute inset-0"
+            className="absolute inset-0 flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, #6D71F9 0%, #54C1FB 60%, #272848 100%)",
+              background: "linear-gradient(135deg, #272848 0%, #6D71F9 100%)",
               transform: hovered ? "scale(1.05)" : "scale(1)",
               transition: "transform 0.5s ease",
             }}
-          />
+          >
+            <Database size={56} strokeWidth={1.25} style={{ color: "rgba(255,255,255,0.18)" }} />
+          </div>
         )}
 
         {/* Category badge + featured badge */}
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+        <div className="absolute top-4 left-4 right-4 z-10 flex flex-wrap items-center gap-2">
           <span
             className="px-3 py-1 rounded-full text-primary text-xs font-semibold"
             style={{
@@ -133,17 +135,17 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
           >
             {project.category}
           </span>
-          {project.badge === "Studio Project" ? (
+          {project.badge ? (
             <span
               className="px-3 py-1 rounded-full text-xs font-semibold"
               style={{
                 background: "rgba(0,0,0,0.35)",
-                border: "1px solid rgba(255,255,255,0.2)",
+                border: `1px solid ${project.badge === "Client Project" ? "rgba(109,113,249,0.5)" : "rgba(255,255,255,0.2)"}`,
                 color: "#FFFFFF",
                 backdropFilter: "blur(4px)",
               }}
             >
-              Studio Project
+              {project.badge}
             </span>
           ) : project.featured && (
             <span
@@ -151,6 +153,19 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
               style={{ background: "linear-gradient(135deg, #6D71F9, #54C1FB)" }}
             >
               Client Project
+            </span>
+          )}
+          {project.status === "in-development" && (
+            <span
+              className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+              style={{
+                background: "linear-gradient(rgba(255,193,7,0.12), rgba(255,193,7,0.12)), rgba(39,40,72,0.75)",
+                border: "1px solid rgba(255,193,7,0.3)",
+                color: "#F59E0B",
+                backdropFilter: "blur(4px)",
+              }}
+            >
+              ● In Development
             </span>
           )}
         </div>
@@ -189,6 +204,11 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
               Read Case Study
               <ArrowRight size={14} />
             </Link>
+            {project.privateNote && (
+              <p className="text-[11px] italic" style={{ color: "rgba(255,255,255,0.55)" }}>
+                {project.privateNote}
+              </p>
+            )}
             {project.demoNote && (
               <p className="text-[11px] italic" style={{ color: "rgba(255,255,255,0.75)" }}>
                 {project.demoNote}
@@ -219,6 +239,9 @@ export default function TiltProjectCard({ project, headingLevel = "h3" }: TiltPr
             </span>
           )}
         </div>
+        {project.subtitle && (
+          <p className="text-text-muted text-xs font-medium mb-2">{project.subtitle}</p>
+        )}
         <p className="text-text-secondary text-sm leading-relaxed mb-3">{project.description}</p>
         {project.result && (
           <p className="text-primary text-sm font-medium mb-3">{project.result}</p>
