@@ -1,29 +1,19 @@
 import type { ReactNode } from "react";
 
-export default function SectionHeader({
-  label,
-  heading,
-  children,
-  tone = "light",
-}: {
+interface SectionHeaderProps {
   label?: string;
   heading: string;
   children?: ReactNode;
-  tone?: "light" | "dark" | "onGradient";
-}) {
-  const labelColor = tone === "dark" ? "text-accent" : tone === "onGradient" ? "text-white/80" : "text-primary";
-  const headingColor = tone === "light" ? "text-text-primary" : "text-white";
-  const bodyColor = tone === "light" ? "text-text-secondary" : "text-white/75";
+}
 
+export default function SectionHeader({ label, heading, children }: SectionHeaderProps) {
   return (
-    <div className="mx-auto mb-12 max-w-3xl text-center">
+    <div className="max-w-2xl mx-auto text-center mb-14">
       {label && (
-        <span className={`mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] ${labelColor}`}>
-          {label}
-        </span>
+        <span className="inline-block text-primary text-xs font-bold uppercase tracking-[0.2em] mb-3">{label}</span>
       )}
-      <h2 className={`font-display text-3xl font-bold sm:text-4xl lg:text-5xl ${headingColor}`}>{heading}</h2>
-      {children && <p className={`mt-5 text-base leading-relaxed sm:text-lg ${bodyColor}`}>{children}</p>}
+      <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary">{heading}</h2>
+      {children && <p className="mt-5 text-lg leading-relaxed text-text-secondary">{children}</p>}
     </div>
   );
 }
