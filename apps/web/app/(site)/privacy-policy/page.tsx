@@ -216,6 +216,11 @@ export default function PrivacyPolicyPage() {
                     client relationship or guarantee that Xpersive Labs will accept or undertake a
                     project.
                   </p>
+                  <p>
+                    If you register interest in our partner program, we collect your name,
+                    business name, email, phone number and message, and use them only to respond
+                    about the partner program.
+                  </p>
                   <div className="p-4 rounded-xl bg-[rgba(109,113,249,0.035)] border border-border-subtle">
                     <h3 className="font-display font-bold text-sm text-text-primary mb-1.5">
                       Contractual Boundary

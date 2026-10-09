@@ -92,13 +92,11 @@ export interface PartnerFaqItem {
   a: string;
 }
 
-// TODO(content): "Is there any cost to join?" is deliberately not listed. The approved
-// facts do not state whether joining is free, so it needs a confirmed answer before it
-// can be published.
-// TODO(content): "Do I need to commit to a number of referrals?" and "Can I use both
-// options?" are answered only with what the approved facts support (nothing is
-// exclusive). Confirm explicitly that there is no minimum and that both can be used.
 export const PARTNER_FAQS: readonly PartnerFaqItem[] = [
+  {
+    q: "Does it cost anything to join?",
+    a: "No. Joining is free, and there is no minimum number of referrals.",
+  },
   {
     q: "Do I need to commit to a number of referrals?",
     a: "Neither side is exclusive. Everything is confirmed in a short written agreement before any referral is counted.",
@@ -117,7 +115,7 @@ export const PARTNER_FAQS: readonly PartnerFaqItem[] = [
   },
   {
     q: "Can I use both options?",
-    a: "Neither side is exclusive. Choose Not sure on the form and tell us what you have in mind.",
+    a: "Yes, you can use either option, chosen per project. No referral fee applies to a project you take through white-label.",
   },
 ];
 
