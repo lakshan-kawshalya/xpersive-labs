@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const portfolioPages = [
     "xpersive-labs-website",
     "alibaba-scraper",
+    "velora",
   ].map((slug) => ({
     url: `${baseUrl}/portfolio/${slug}`,
     lastModified: new Date(),
