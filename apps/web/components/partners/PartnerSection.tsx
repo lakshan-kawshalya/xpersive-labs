@@ -7,6 +7,7 @@ export default function PartnerSection({
   title,
   intro,
   isTinted = false,
+  isCentered = false,
   children,
 }: {
   id?: string;
@@ -14,12 +15,13 @@ export default function PartnerSection({
   title: string;
   intro?: string;
   isTinted?: boolean;
+  isCentered?: boolean;
   children: ReactNode;
 }) {
   return (
     <section id={id} className={`scroll-mt-24 py-16 sm:py-20 ${isTinted ? "bg-[rgba(109,113,249,0.035)]" : ""}`}>
       <div className="mx-auto max-w-7xl px-6">
-        <Reveal className="mb-10 max-w-2xl">
+        <Reveal className={`mb-10 max-w-2xl ${isCentered ? "mx-auto text-center" : ""}`}>
           {label && (
             <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-primary">
               {label}

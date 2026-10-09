@@ -4,8 +4,8 @@ import { PARTNER_FAQS } from "@/lib/partnerContent";
 
 export default function PartnerFaq() {
   return (
-    <PartnerSection label="FAQ" title="Common questions">
-      <div className="flex max-w-3xl flex-col gap-4">
+    <PartnerSection label="FAQ" title="Common questions" isCentered>
+      <div className="mx-auto flex max-w-3xl flex-col gap-4">
         {PARTNER_FAQS.map(({ q, a }) => (
           <Reveal key={q}>
             <details
